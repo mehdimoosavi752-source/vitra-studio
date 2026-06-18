@@ -1,91 +1,74 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Volt Shop | Real Demo</title>
+    <title>Moodline | Shop Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="demo-suite.css" />
   </head>
-  <body class="real-demo shop-demo">
-    <header class="shop-nav">
-      <a class="demo-back" href="portfolio.html">Vitra Studio</a>
-      <div class="shop-brand">Volt Shop</div>
+  <body class="suite-demo shop-suite">
+    <header class="suite-nav">
+      <a class="suite-mark" href="portfolio.html">Vitra</a>
+      <strong>Moodline</strong>
       <nav>
-        <a href="demo-shop-category.html">Products</a>
-        <a href="#deals">Deals</a>
-        <a href="#tracking">Track order</a>
+        <a href="#products" data-fa="فروشگاه" data-en="Shop">فروشگاه</a>
+        <a href="#track" data-fa="پیگیری سفارش" data-en="Track order">پیگیری سفارش</a>
       </nav>
-      <a class="shop-cart-link" href="demo-shop-cart.html">Cart <span data-cart-count>0</span></a>
+      <button class="cart-button" data-open-modal="shopCart"><span data-cart-count>0</span> <span data-fa="سبد" data-en="Cart">سبد</span></button>
+      <button class="lang-toggle" data-lang-toggle>EN</button>
     </header>
-
-    <main class="shop-floor">
-      <section class="shop-hero">
-        <div class="shop-copy">
-          <span>Audio gear store</span>
-          <h1>Premium wireless sound with fast cart, deals and product comparison.</h1>
-          <p>An ecommerce demo with product filters, cart state, featured product, discount panel and order tracking.</p>
-          <button data-shop-add="Volt Air Max">Add hero product</button>
-        </div>
-        <div class="product-orbit">
-          <div class="headphone-shape"></div>
-          <div class="deal-badge">-30%</div>
-          <div class="sound-card">Noise cancelling active</div>
-        </div>
-      </section>
-
-      <section class="shop-layout">
-        <aside class="shop-sidebar">
-          <h2>Categories</h2>
-          <button class="is-active" data-shop-filter="all">All</button>
-          <button data-shop-filter="headphone">Headphones</button>
-          <button data-shop-filter="speaker">Speakers</button>
-          <button data-shop-filter="watch">Smart watch</button>
-        </aside>
-
-        <section class="product-grid">
-          <article class="product-card" data-product-type="headphone">
-            <div class="product-art orange"></div>
-            <h3>Volt Air Max</h3>
-            <p>$149 - ANC wireless</p>
-            <button data-shop-add="Volt Air Max">Add to cart</button>
-          </article>
-          <article class="product-card" data-product-type="speaker">
-            <div class="product-art blue"></div>
-            <h3>Pulse Mini</h3>
-            <p>$79 - portable speaker</p>
-            <button data-shop-add="Pulse Mini">Add to cart</button>
-          </article>
-          <article class="product-card" data-product-type="watch">
-            <div class="product-art green"></div>
-            <h3>Volt Band</h3>
-            <p>$99 - fitness watch</p>
-            <button data-shop-add="Volt Band">Add to cart</button>
-          </article>
-        </section>
-
-        <aside class="cart-panel">
-          <h2>Live cart</h2>
-          <div data-cart-lines>No item yet.</div>
-          <a href="demo-shop-cart.html">Checkout</a>
-        </aside>
-      </section>
-
-      <section class="shop-deals" id="deals">
+    <main>
+      <section class="shop-landing">
         <div>
-          <h2>Flash deal</h2>
-          <p>Use coupon VOLT30 for selected audio products.</p>
+          <span class="eyebrow" data-fa="فروشگاه پوشاک کامل" data-en="Complete fashion store">فروشگاه پوشاک کامل</span>
+          <h1 data-fa="فروشگاه پوشاک با دسته بندی، فیلتر، رنگ، مشاهده سریع، سبد و پیگیری سفارش." data-en="Fashion store with categories, filters, colors, quick view, cart and order tracking.">فروشگاه پوشاک با دسته بندی، فیلتر، رنگ، مشاهده سریع، سبد و پیگیری سفارش.</h1>
         </div>
-        <button data-demo-action="shop-coupon">Apply coupon</button>
+        <div class="order-track-mini">
+          <b data-fa="پیگیری سریع سفارش" data-en="Quick order tracking">پیگیری سریع سفارش</b>
+          <input data-order-code placeholder="ML-2048" />
+          <button data-track-order data-fa="پیگیری" data-en="Track">پیگیری</button>
+          <small data-track-output data-fa="کد سفارش را وارد کنید." data-en="Enter order code.">کد سفارش را وارد کنید.</small>
+        </div>
       </section>
-
-      <section class="tracking-card" id="tracking">
-        <h2>Track order</h2>
-        <input placeholder="Order code: VT-2048" />
-        <button data-demo-action="shop-track">Check status</button>
-        <p data-shop-status>Awaiting order code.</p>
+      <section class="suite-section shop-controls">
+        <button class="is-active" data-shop-category="all" data-fa="همه" data-en="All">همه</button>
+        <button data-shop-category="knit" data-fa="بافت" data-en="Knitwear">بافت</button>
+        <button data-shop-category="set" data-fa="ست" data-en="Sets">ست</button>
+        <button data-shop-category="pants" data-fa="شلوار" data-en="Pants">شلوار</button>
+        <button data-shop-category="coat" data-fa="مانتو و پالتو" data-en="Coats">مانتو و پالتو</button>
+        <select data-shop-sort><option value="latest">جدیدترین</option><option value="low">ارزان ترین</option><option value="high">گران ترین</option></select>
+      </section>
+      <section class="suite-section shop-grid" id="products">
+        <article class="fashion-card" data-category="knit" data-price="298000">
+          <div class="cloth-art blue"></div><h2 data-fa="بلوز یقه قایقی" data-en="Boat neck blouse">بلوز یقه قایقی</h2><b>298.000 تومان</b>
+          <div class="swatches"><i style="background:#2563eb"></i><i style="background:#991b1b"></i><i style="background:#111"></i></div>
+          <button data-add-cart="بلوز یقه قایقی" data-price="298000" data-fa="افزودن به سبد" data-en="Add to cart">افزودن به سبد</button><button class="ghost" data-quick-view="بلوز یقه قایقی|298.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">مشاهده سریع</button>
+        </article>
+        <article class="fashion-card" data-category="set" data-price="498000">
+          <div class="cloth-art pink"></div><h2 data-fa="ست بافت طرح ۳۱" data-en="Pattern 31 set">ست بافت طرح ۳۱</h2><b>498.000 تومان</b>
+          <div class="swatches"><i style="background:#f9a8d4"></i><i style="background:#78350f"></i><i style="background:#0f172a"></i></div>
+          <button data-add-cart="ست بافت طرح ۳۱" data-price="498000" data-fa="انتخاب گزینه ها" data-en="Choose options">انتخاب گزینه ها</button><button class="ghost" data-quick-view="ست بافت طرح ۳۱|498.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">مشاهده سریع</button>
+        </article>
+        <article class="fashion-card" data-category="pants" data-price="998000">
+          <div class="cloth-art cream"></div><h2 data-fa="شلوار بگ ایشو" data-en="Issue baggy pants">شلوار بگ ایشو</h2><b>998.000 تومان</b>
+          <div class="swatches"><i style="background:#f5e7ce"></i><i style="background:#111"></i></div>
+          <button data-add-cart="شلوار بگ ایشو" data-price="998000" data-fa="انتخاب گزینه ها" data-en="Choose options">انتخاب گزینه ها</button><button class="ghost" data-quick-view="شلوار بگ ایشو|998.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">مشاهده سریع</button>
+        </article>
+        <article class="fashion-card" data-category="coat" data-price="698000">
+          <div class="cloth-art black"></div><h2 data-fa="کت چرم پوست ماری" data-en="Snake texture jacket">کت چرم پوست ماری</h2><b>698.000 تومان</b>
+          <div class="swatches"><i style="background:#fff"></i><i style="background:#111"></i></div>
+          <button data-add-cart="کت چرم پوست ماری" data-price="698000" data-fa="افزودن به سبد" data-en="Add to cart">افزودن به سبد</button><button class="ghost" data-quick-view="کت چرم پوست ماری|698.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">مشاهده سریع</button>
+        </article>
+      </section>
+      <section class="suite-section track-band" id="track">
+        <h2 data-fa="پیگیری سفارشات سایت" data-en="Track website orders">پیگیری سفارشات سایت</h2>
+        <p data-fa="نمایش وضعیت پرداخت، آماده سازی، ارسال و تحویل برای مشتری." data-en="Shows payment, packing, shipping and delivery status for customers.">نمایش وضعیت پرداخت، آماده سازی، ارسال و تحویل برای مشتری.</p>
       </section>
     </main>
-    <script src="demo-real.js"></script>
+    <div class="suite-modal" id="shopCart" aria-hidden="true"><form><button type="button" class="modal-close" data-close-modal>×</button><h2 data-fa="سبد خرید" data-en="Shopping cart">سبد خرید</h2><div data-cart-lines data-fa="سبد خالی است." data-en="Cart is empty.">سبد خالی است.</div><button type="button" data-submit-demo data-fa="پرداخت آزمایشی" data-en="Demo checkout">پرداخت آزمایشی</button></form></div>
+    <div class="suite-modal" id="quickView" aria-hidden="true"><form><button type="button" class="modal-close" data-close-modal>×</button><h2 data-qv-title>محصول</h2><p data-qv-price></p><button type="button" data-close-modal data-fa="بستن" data-en="Close">بستن</button></form></div>
+    <script src="demo-suite.js"></script>
   </body>
 </html>

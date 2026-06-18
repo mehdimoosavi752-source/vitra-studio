@@ -1,1 +1,1 @@
-﻿Upload the contents of this folder. Demo homepages are real HTML/CSS/JS websites, not screenshots.
+﻿Upload the contents of this folder. Four demo sites are rebuilt from the provided references with bilingual UI and working interactions.

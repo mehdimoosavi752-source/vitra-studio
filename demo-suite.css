@@ -1,0 +1,558 @@
+.suite-demo {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, Vazirmatn, ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.suite-demo *,
+.suite-demo *::before,
+.suite-demo *::after {
+  box-sizing: border-box;
+}
+
+.suite-demo main::before,
+.suite-demo main::after {
+  content: none;
+}
+
+.suite-demo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.suite-demo button,
+.suite-demo input,
+.suite-demo select {
+  font: inherit;
+}
+
+.suite-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px clamp(16px, 4vw, 64px);
+  background: color-mix(in srgb, var(--panel), transparent 12%);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(18px);
+}
+
+.suite-nav nav {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.suite-mark,
+.lang-toggle,
+.cart-button,
+.suite-demo button {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 16px;
+  color: var(--button-ink);
+  background: var(--button);
+  box-shadow: 0 14px 34px var(--glow);
+  cursor: pointer;
+}
+
+.suite-demo button.ghost,
+.ghost {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.suite-demo main {
+  width: min(1220px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 34px 0 80px;
+}
+
+.suite-hero,
+.academy-landing,
+.salon-finder,
+.clinic-search-hero,
+.shop-landing {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: 24px;
+  align-items: stretch;
+  min-height: 520px;
+}
+
+.suite-hero > div,
+.salon-finder > div:first-child,
+.clinic-search-hero,
+.shop-landing > div:first-child {
+  display: grid;
+  align-content: center;
+  padding: clamp(26px, 5vw, 72px);
+  border-radius: 36px;
+  background: var(--panel);
+  box-shadow: 0 30px 90px var(--shadow);
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 950;
+}
+
+.suite-demo h1 {
+  margin: 12px 0 18px;
+  font-size: clamp(34px, 5vw, 68px);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.suite-demo h2 {
+  margin: 0 0 14px;
+  font-size: clamp(24px, 3vw, 38px);
+}
+
+.suite-demo p {
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.suite-actions,
+.pill-tabs,
+.salon-chips,
+.shop-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.suite-section {
+  margin-top: 24px;
+  padding: clamp(20px, 3vw, 34px);
+  border-radius: 32px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 70px var(--shadow);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+}
+
+.stats-row,
+.feature-grid,
+.teachers-strip,
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stats-row article,
+.path-card,
+.teachers-strip article,
+.fashion-card {
+  padding: 22px;
+  border-radius: 26px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.stats-row strong {
+  display: block;
+  font-size: 34px;
+}
+
+.path-card span {
+  color: var(--accent);
+  font-weight: 950;
+}
+
+.path-card button {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  font-size: 24px;
+}
+
+.academy-tools,
+.salon-results,
+.clinic-layout,
+.shop-landing {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 22px;
+}
+
+.academy-tools select,
+.academy-tools input,
+.doctor-search input,
+.doctor-search select,
+.search-panel input,
+.search-panel select,
+.order-track-mini input,
+.suite-modal input,
+.suite-modal select {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0 14px;
+  color: var(--ink);
+  background: white;
+}
+
+.timeline-card,
+.order-track-mini,
+.search-panel {
+  padding: 24px;
+  border-radius: 30px;
+  background: var(--soft);
+}
+
+.timeline-card button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.teachers-strip {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.teachers-strip h2 {
+  grid-column: 1 / -1;
+}
+
+.academy-orbit-card {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  align-content: end;
+  min-height: 430px;
+  padding: 34px;
+  border-radius: 36px;
+  color: white;
+  background: radial-gradient(circle at 50% 34%, var(--accent), transparent 34%), linear-gradient(135deg, #102447, #2563eb);
+}
+
+.orbit-ring {
+  position: absolute;
+  inset: 58px;
+  border: 24px solid rgba(255,255,255,0.22);
+  border-radius: 50%;
+}
+
+.academy-suite {
+  --bg: #edf5ff;
+  --panel: #ffffff;
+  --soft: #eef6ff;
+  --ink: #102447;
+  --muted: #52637d;
+  --accent: #2563eb;
+  --button: linear-gradient(135deg, #2563eb, #7cc7ff);
+  --button-ink: #ffffff;
+  --line: rgba(37, 99, 235, 0.16);
+  --shadow: rgba(37, 99, 235, 0.13);
+  --glow: rgba(37, 99, 235, 0.24);
+}
+
+.salon-suite {
+  --bg: linear-gradient(135deg, #fff6f4, #f7d6df 50%, #42162f);
+  --panel: rgba(255,255,255,0.9);
+  --soft: #fff3f6;
+  --ink: #341126;
+  --muted: #76566a;
+  --accent: #b83f70;
+  --button: linear-gradient(135deg, #42162f, #d75f8e);
+  --button-ink: #ffffff;
+  --line: rgba(66, 22, 47, 0.15);
+  --shadow: rgba(66, 22, 47, 0.15);
+  --glow: rgba(216, 95, 142, 0.28);
+}
+
+.salon-finder {
+  grid-template-columns: 1fr 430px;
+}
+
+.search-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.salon-results {
+  grid-template-columns: 360px 1fr;
+}
+
+.salon-map {
+  position: sticky;
+  top: 96px;
+  min-height: 520px;
+  border-radius: 30px;
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(66,22,47,0.08) 49% 51%, transparent 52%),
+    linear-gradient(0deg, transparent 48%, rgba(66,22,47,0.08) 49% 51%, transparent 52%),
+    #fff7f9;
+}
+
+.salon-map span,
+.salon-map i {
+  position: absolute;
+}
+
+.salon-map span {
+  top: 22px;
+  right: 22px;
+  font-weight: 950;
+}
+
+.salon-map i {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 12px rgba(184,63,112,0.16);
+}
+
+.salon-map i:nth-child(2) { top: 38%; left: 42%; }
+.salon-map i:nth-child(3) { top: 62%; left: 68%; }
+.salon-map i:nth-child(4) { top: 48%; left: 22%; }
+
+.venue-list {
+  display: grid;
+  gap: 16px;
+}
+
+.venue-card {
+  display: grid;
+  grid-template-columns: 160px 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 28px;
+  background: white;
+  border: 1px solid var(--line);
+}
+
+.venue-art,
+.cloth-art {
+  min-height: 150px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #f9a8d4, #7f1d4d);
+}
+
+.venue-art.pearl { background: linear-gradient(135deg, #fff, #c084fc, #4c1d95); }
+.venue-art.jade { background: linear-gradient(135deg, #d1fae5, #10b981, #064e3b); }
+
+.reviews-wall {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.clinic-suite {
+  --bg: #effaf7;
+  --panel: #ffffff;
+  --soft: #e5f8f3;
+  --ink: #102a2f;
+  --muted: #5d7472;
+  --accent: #0f766e;
+  --button: linear-gradient(135deg, #0f766e, #35d6b6);
+  --button-ink: #ffffff;
+  --line: rgba(15, 118, 110, 0.18);
+  --shadow: rgba(15, 118, 110, 0.11);
+  --glow: rgba(15, 118, 110, 0.24);
+}
+
+.clinic-search-hero {
+  min-height: auto;
+}
+
+.doctor-search {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 0.8fr;
+  gap: 12px;
+}
+
+.clinic-layout {
+  grid-template-columns: 280px 1fr;
+  align-items: start;
+}
+
+.clinic-filter-card {
+  position: sticky;
+  top: 96px;
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+  border-radius: 26px;
+  background: var(--soft);
+}
+
+.doctor-list {
+  display: grid;
+  gap: 14px;
+}
+
+.doctor-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 18px;
+  padding: 22px;
+  border-radius: 26px;
+  background: white;
+  border: 1px solid var(--line);
+}
+
+.doctor-card b {
+  font-size: 22px;
+}
+
+.doctor-card div {
+  display: flex;
+  gap: 10px;
+}
+
+.doctor-card strong,
+.doctor-card em {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--soft);
+  font-style: normal;
+}
+
+.shop-suite {
+  --bg: #f6f1eb;
+  --panel: #fffaf3;
+  --soft: #efe4d6;
+  --ink: #2b2118;
+  --muted: #705f51;
+  --accent: #8f4b2f;
+  --button: linear-gradient(135deg, #2b2118, #a4603e);
+  --button-ink: #fffaf3;
+  --line: rgba(43, 33, 24, 0.15);
+  --shadow: rgba(43, 33, 24, 0.12);
+  --glow: rgba(143, 75, 47, 0.22);
+}
+
+.shop-landing {
+  min-height: 430px;
+}
+
+.shop-controls {
+  align-items: center;
+}
+
+.shop-controls select {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  padding: 0 12px;
+}
+
+.shop-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.fashion-card {
+  display: grid;
+  gap: 10px;
+}
+
+.cloth-art.blue { background: linear-gradient(135deg, #dbeafe, #2563eb, #111827); }
+.cloth-art.pink { background: linear-gradient(135deg, #fce7f3, #f472b6, #78350f); }
+.cloth-art.cream { background: linear-gradient(135deg, #fff7ed, #d6b28d, #111827); }
+.cloth-art.black { background: linear-gradient(135deg, #f8fafc, #334155, #020617); }
+
+.swatches {
+  display: flex;
+  gap: 8px;
+}
+
+.swatches i {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.suite-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: none;
+  place-items: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.52);
+}
+
+.suite-modal[aria-hidden="false"] {
+  display: grid;
+}
+
+.suite-modal form {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  width: min(460px, 100%);
+  padding: 28px;
+  border-radius: 30px;
+  color: var(--ink, #111);
+  background: white;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .suite-nav,
+  .suite-hero,
+  .academy-landing,
+  .salon-finder,
+  .clinic-search-hero,
+  .shop-landing,
+  .academy-tools,
+  .salon-results,
+  .clinic-layout,
+  .doctor-search {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row,
+  .feature-grid,
+  .teachers-strip,
+  .shop-grid,
+  .venue-card,
+  .doctor-card {
+    grid-template-columns: 1fr;
+  }
+
+  .salon-map,
+  .clinic-filter-card {
+    position: relative;
+    top: auto;
+  }
+}

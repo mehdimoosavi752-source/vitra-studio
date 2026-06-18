@@ -1,66 +1,76 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sepid Clinic | Real Demo</title>
+    <title>DentaLine | Clinic Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="demo-suite.css" />
   </head>
-  <body class="real-demo clinic-demo">
-    <main class="clinic-app">
-      <aside class="clinic-sidebar">
-        <a class="demo-back" href="portfolio.html">Vitra Studio</a>
-        <div class="clinic-logo">Sepid Clinic</div>
-        <a class="active" href="#overview">Overview</a>
-        <a href="demo-clinic-doctors.html">Doctors</a>
-        <a href="demo-clinic-appointment.html">Appointments</a>
-        <a href="demo-clinic-services.html">Services</a>
-        <button data-demo-action="clinic-emergency">Emergency call</button>
-      </aside>
-
-      <section class="clinic-main" id="overview">
-        <header class="clinic-top">
-          <div>
-            <p>Healthcare dashboard</p>
-            <h1>Appointments, specialists and patient care in one clean panel.</h1>
-          </div>
-          <div class="clinic-search">Search patient, doctor, service</div>
-        </header>
-
-        <section class="clinic-stats">
-          <article><span>Today visits</span><strong data-clinic-visits>42</strong></article>
-          <article><span>Available doctors</span><strong>12</strong></article>
-          <article><span>Patient rating</span><strong>4.9</strong></article>
-        </section>
-
-        <section class="clinic-grid">
-          <div class="clinic-card appointments">
-            <h2>Appointments</h2>
-            <button class="is-active" data-clinic-day="Today">Today</button>
-            <button data-clinic-day="Tomorrow">Tomorrow</button>
-            <div class="appointment-row"><b>09:00</b><span>Cardiology - Dr. Nouri</span><em>Ready</em></div>
-            <div class="appointment-row"><b>11:30</b><span>Dental check - Dr. Rahimi</span><em>New</em></div>
-            <div class="appointment-row"><b>15:45</b><span>Skin care - Dr. Amini</span><em>Paid</em></div>
-            <p data-clinic-output>Showing Today schedule.</p>
-          </div>
-
-          <div class="clinic-card doctors">
-            <h2>Specialists</h2>
-            <div class="doctor-chip"><span>NR</span><div><b>Dr. Nouri</b><p>Cardiology</p></div><button>Call</button></div>
-            <div class="doctor-chip"><span>RA</span><div><b>Dr. Rahimi</b><p>Dentistry</p></div><button>Call</button></div>
-            <div class="doctor-chip"><span>AM</span><div><b>Dr. Amini</b><p>Dermatology</p></div><button>Call</button></div>
-          </div>
-
-          <div class="clinic-card patient">
-            <h2>Patient message</h2>
-            <p>Prescription uploaded, lab result waiting for doctor approval.</p>
-            <textarea placeholder="Write a secure note"></textarea>
-            <button data-demo-action="clinic-note">Send note</button>
-          </div>
-        </section>
+  <body class="suite-demo clinic-suite">
+    <header class="suite-nav">
+      <a class="suite-mark" href="portfolio.html">Vitra</a>
+      <strong>DentaLine</strong>
+      <nav>
+        <a href="#doctors" data-fa="پزشکان" data-en="Doctors">پزشکان</a>
+        <a href="#filters" data-fa="فیلترها" data-en="Filters">فیلترها</a>
+        <a href="#guide" data-fa="راهنما" data-en="Guide">راهنما</a>
+      </nav>
+      <button class="lang-toggle" data-lang-toggle>EN</button>
+    </header>
+    <main>
+      <section class="clinic-search-hero">
+        <h1 data-fa="نوبت آنلاین دندانپزشکی با فیلتر شهر، تخصص، امتیاز و اولین نوبت خالی." data-en="Online dental appointments with city, specialty, rating and earliest slot filters.">نوبت آنلاین دندانپزشکی با فیلتر شهر، تخصص، امتیاز و اولین نوبت خالی.</h1>
+        <div class="doctor-search" id="filters">
+          <input data-doctor-search data-fa-placeholder="نام پزشک یا تخصص" data-en-placeholder="Doctor or specialty" placeholder="نام پزشک یا تخصص" />
+          <select data-city-filter><option value="all">همه شهرها</option><option value="tehran">تهران</option><option value="yazd">یزد</option><option value="isfahan">اصفهان</option></select>
+          <select data-sort-doctors><option value="soon">اولین نوبت</option><option value="rating">بیشترین امتیاز</option><option value="recommend">بیشترین توصیه</option></select>
+        </div>
+      </section>
+      <section class="clinic-layout suite-section">
+        <aside class="clinic-filter-card">
+          <h2 data-fa="نوع خدمت" data-en="Visit type">نوع خدمت</h2>
+          <label><input type="checkbox" checked data-visit-filter="office" /> <span data-fa="نوبت مطب" data-en="Clinic visit">نوبت مطب</span></label>
+          <label><input type="checkbox" checked data-visit-filter="phone" /> <span data-fa="مشاوره تلفنی" data-en="Phone consult">مشاوره تلفنی</span></label>
+          <label><input type="checkbox" checked data-visit-filter="text" /> <span data-fa="مشاوره متنی" data-en="Text consult">مشاوره متنی</span></label>
+          <button data-reset-doctors data-fa="پاک کردن فیلتر" data-en="Reset filters">پاک کردن فیلتر</button>
+        </aside>
+        <div class="doctor-list" id="doctors">
+          <article class="doctor-card" data-city="tehran" data-rating="4.8" data-recommend="96" data-visit="office phone">
+            <b>دکتر آراد نوری</b><span data-fa="متخصص جراحی دهان، فک و صورت" data-en="Oral and maxillofacial surgeon">متخصص جراحی دهان، فک و صورت</span>
+            <p data-fa="تهران - ونک" data-en="Tehran - Vanak">تهران - ونک</p><div><strong>4.8</strong><em>96% recommended</em></div>
+            <small data-fa="اولین نوبت: شنبه ۳۰ خرداد" data-en="Earliest slot: Sat Jun 20">اولین نوبت: شنبه ۳۰ خرداد</small>
+            <button data-open-modal="clinicBooking" data-booking-title="دکتر آراد نوری" data-fa="نوبت بگیرید" data-en="Book appointment">نوبت بگیرید</button>
+          </article>
+          <article class="doctor-card" data-city="yazd" data-rating="4.6" data-recommend="89" data-visit="office text">
+            <b>دکتر مینا فتوحی</b><span data-fa="دندانپزشکی کودکان" data-en="Pediatric dentistry">دندانپزشکی کودکان</span>
+            <p data-fa="یزد - صفاییه" data-en="Yazd - Safaieh">یزد - صفاییه</p><div><strong>4.6</strong><em>89% recommended</em></div>
+            <small data-fa="اولین نوبت: پنج شنبه ۲۸ خرداد" data-en="Earliest slot: Thu Jun 18">اولین نوبت: پنج شنبه ۲۸ خرداد</small>
+            <button data-open-modal="clinicBooking" data-booking-title="دکتر مینا فتوحی" data-fa="نوبت بگیرید" data-en="Book appointment">نوبت بگیرید</button>
+          </article>
+          <article class="doctor-card" data-city="isfahan" data-rating="5" data-recommend="100" data-visit="office phone text">
+            <b>دکتر سامان کاشفی</b><span data-fa="ایمپلنت و جراحی لثه" data-en="Implant and gum surgery">ایمپلنت و جراحی لثه</span>
+            <p data-fa="اصفهان - جلفا" data-en="Isfahan - Jolfa">اصفهان - جلفا</p><div><strong>5.0</strong><em>100% recommended</em></div>
+            <small data-fa="اولین نوبت: یکشنبه ۳۱ خرداد" data-en="Earliest slot: Sun Jun 21">اولین نوبت: یکشنبه ۳۱ خرداد</small>
+            <button data-open-modal="clinicBooking" data-booking-title="دکتر سامان کاشفی" data-fa="نوبت بگیرید" data-en="Book appointment">نوبت بگیرید</button>
+          </article>
+        </div>
+      </section>
+      <section class="suite-section clinic-guide" id="guide">
+        <h2 data-fa="راهنمای انتخاب پزشک" data-en="Doctor selection guide">راهنمای انتخاب پزشک</h2>
+        <p data-fa="کاربر می‌تواند بر اساس امتیاز، توصیه، شهر، نوع مشاوره و اولین زمان آزاد پزشک مناسب را پیدا کند." data-en="Users can select doctors by rating, recommendation, city, consultation type and earliest available slot.">کاربر می‌تواند بر اساس امتیاز، توصیه، شهر، نوع مشاوره و اولین زمان آزاد پزشک مناسب را پیدا کند.</p>
       </section>
     </main>
-    <script src="demo-real.js"></script>
+    <div class="suite-modal" id="clinicBooking" aria-hidden="true">
+      <form>
+        <button type="button" class="modal-close" data-close-modal>×</button>
+        <h2 data-booking-heading data-fa="رزرو نوبت" data-en="Book appointment">رزرو نوبت</h2>
+        <select><option data-fa="نوبت مطب" data-en="Clinic visit">نوبت مطب</option><option data-fa="مشاوره تلفنی" data-en="Phone consult">مشاوره تلفنی</option><option data-fa="مشاوره متنی" data-en="Text consult">مشاوره متنی</option></select>
+        <input type="date" />
+        <button type="button" data-submit-demo data-fa="نوبت ثبت شد" data-en="Appointment saved">نوبت ثبت شد</button>
+      </form>
+    </div>
+    <script src="demo-suite.js"></script>
   </body>
 </html>

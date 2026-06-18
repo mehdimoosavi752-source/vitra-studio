@@ -1,74 +1,93 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Luna Beauty | Real Demo</title>
+    <title>Velora Beauty | Salon Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="demo-suite.css" />
   </head>
-  <body class="real-demo salon-demo">
-    <header class="salon-nav">
-      <a class="demo-back" href="portfolio.html">Vitra Studio</a>
-      <div class="salon-brand">Luna Beauty</div>
+  <body class="suite-demo salon-suite">
+    <header class="suite-nav">
+      <a class="suite-mark" href="portfolio.html">Vitra</a>
+      <strong>Velora</strong>
       <nav>
-        <a href="#services">Services</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#booking">Booking</a>
+        <a href="#search" data-fa="جستجو" data-en="Search">جستجو</a>
+        <a href="#venues" data-fa="سالن ها" data-en="Venues">سالن ها</a>
+        <a href="#reviews" data-fa="نظرات" data-en="Reviews">نظرات</a>
       </nav>
-      <a class="salon-cta" href="demo-salon-booking.html">Book Now</a>
+      <button class="lang-toggle" data-lang-toggle>EN</button>
     </header>
 
-    <main class="salon-stage">
-      <section class="salon-hero">
-        <div class="salon-copy">
-          <span>Luxury salon experience</span>
-          <h1>Beauty appointments with a soft editorial booking journey.</h1>
-          <p>A salon website demo with service packages, stylist choice, gallery wall, booking calendar and customer offers.</p>
-          <button data-demo-action="salon-glow">Reserve a chair</button>
+    <main>
+      <section class="salon-finder" id="search">
+        <div>
+          <span class="eyebrow" data-fa="مارکت پلیس رزرو زیبایی" data-en="Beauty booking marketplace">مارکت پلیس رزرو زیبایی</span>
+          <h1 data-fa="رزرو سالن زیبایی با جستجوی سرویس، موقعیت، تاریخ و ساعت." data-en="Book beauty salons by service, location, date and time.">رزرو سالن زیبایی با جستجوی سرویس، موقعیت، تاریخ و ساعت.</h1>
         </div>
-        <div class="salon-collage">
-          <div class="salon-photo large"></div>
-          <div class="salon-photo warm"></div>
-          <div class="salon-photo detail"></div>
-          <div class="booking-ticket">
-            <b>Next available</b>
-            <strong data-salon-slot>Today, 18:30</strong>
-            <small>Color studio - Luna master</small>
-          </div>
+        <div class="search-panel">
+          <label><span data-fa="سرویس" data-en="Service">سرویس</span><input data-salon-query data-fa-placeholder="مثلا فیشیال یا میکاپ" data-en-placeholder="e.g. Facial or makeup" placeholder="مثلا فیشیال یا میکاپ" /></label>
+          <label><span data-fa="شهر" data-en="City">شهر</span><input value="تهران" data-fa-placeholder="شهر" data-en-placeholder="City" placeholder="شهر" /></label>
+          <label><span data-fa="تاریخ" data-en="Date">تاریخ</span><input type="date" /></label>
+          <label><span data-fa="ساعت" data-en="Time">ساعت</span><input type="time" /></label>
+          <button data-salon-search data-fa="جستجو" data-en="Search">جستجو</button>
         </div>
       </section>
 
-      <section class="salon-services" id="services">
-        <h2>Signature services</h2>
-        <div class="salon-service-list">
-          <button class="is-active" data-salon-service="Hair color|120 min|$90">Hair color <span>$90</span></button>
-          <button data-salon-service="Skin glow facial|70 min|$64">Skin glow <span>$64</span></button>
-          <button data-salon-service="Bridal styling|180 min|$180">Bridal styling <span>$180</span></button>
-        </div>
-        <aside class="salon-service-card">
-          <p>Selected package</p>
-          <h3 data-salon-name>Hair color</h3>
-          <span data-salon-meta>120 min - $90</span>
-          <a href="demo-salon-services.html">View service page</a>
+      <section class="suite-section salon-chips">
+        <button class="is-active" data-salon-chip="all">Beauty Salon</button>
+        <button data-salon-chip="facial">Facial</button>
+        <button data-salon-chip="makeup">Makeup</button>
+        <button data-salon-chip="wax">Waxing</button>
+        <button data-salon-chip="nail">Nail Art</button>
+        <button data-salon-chip="massage">Massage</button>
+      </section>
+
+      <section class="suite-section salon-results" id="venues">
+        <aside class="salon-map">
+          <span data-fa="نقشه زنده" data-en="Live map">نقشه زنده</span>
+          <i></i><i></i><i></i>
         </aside>
+        <div class="venue-list">
+          <article class="venue-card" data-salon-type="facial makeup">
+            <div class="venue-art rose"></div>
+            <div><h2>Rose Lab Beauty</h2><p data-fa="خیابان ولیعصر، تهران" data-en="Valiasr St, Tehran">خیابان ولیعصر، تهران</p><b>5.0 - 3713 reviews</b></div>
+            <ul><li>Facial 45m</li><li>Bridal makeup</li><li>Threading</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Rose Lab Beauty" data-fa="رزرو" data-en="Book">رزرو</button>
+          </article>
+          <article class="venue-card" data-salon-type="nail wax">
+            <div class="venue-art pearl"></div>
+            <div><h2>Pearl Studio</h2><p data-fa="سعادت آباد، تهران" data-en="Saadat Abad, Tehran">سعادت آباد، تهران</p><b>4.9 - 862 reviews</b></div>
+            <ul><li>Nail Art</li><li>Waxing</li><li>Skin care</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Pearl Studio" data-fa="رزرو" data-en="Book">رزرو</button>
+          </article>
+          <article class="venue-card" data-salon-type="massage facial">
+            <div class="venue-art jade"></div>
+            <div><h2>Jade Wellness</h2><p data-fa="الهیه، تهران" data-en="Elahiyeh, Tehran">الهیه، تهران</p><b>4.8 - 421 reviews</b></div>
+            <ul><li>Massage</li><li>Oxygen facial</li><li>Dermaplaning</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Jade Wellness" data-fa="رزرو" data-en="Book">رزرو</button>
+          </article>
+        </div>
       </section>
 
-      <section class="salon-gallery" id="gallery">
-        <div class="gallery-card tall"><span>Color bar</span></div>
-        <div class="gallery-card"><span>Makeup room</span></div>
-        <div class="gallery-card round"><span>Nail lounge</span></div>
-        <div class="gallery-card dark"><span>Stylist desk</span></div>
-      </section>
-
-      <section class="salon-booking" id="booking">
-        <h2>Choose stylist</h2>
-        <button data-salon-stylist="Mina">Mina</button>
-        <button data-salon-stylist="Roya">Roya</button>
-        <button data-salon-stylist="Luna">Luna</button>
-        <p data-salon-output>Your booking preview is ready.</p>
+      <section class="suite-section reviews-wall" id="reviews">
+        <h2 data-fa="نظرات مشتریان" data-en="Customer reviews">نظرات مشتریان</h2>
+        <p data-fa="بهترین تجربه رزرو سریع، نمایش شماره تماس، خدمات و امتیاز سالن." data-en="Fast booking, phone reveal, services and salon rating in one flow.">بهترین تجربه رزرو سریع، نمایش شماره تماس، خدمات و امتیاز سالن.</p>
+        <button data-show-phone data-fa="نمایش شماره تماس" data-en="Show phone number">نمایش شماره تماس</button>
+        <strong data-phone-output>••• ••• •••</strong>
       </section>
     </main>
-    <script src="demo-real.js"></script>
+    <div class="suite-modal" id="salonBooking" aria-hidden="true">
+      <form>
+        <button type="button" class="modal-close" data-close-modal>×</button>
+        <h2 data-booking-heading data-fa="رزرو سالن" data-en="Book salon">رزرو سالن</h2>
+        <select><option>Facial</option><option>Makeup</option><option>Nail Art</option></select>
+        <input type="date" />
+        <input type="time" />
+        <button type="button" data-submit-demo data-fa="رزرو ثبت شد" data-en="Booking saved">رزرو ثبت شد</button>
+      </form>
+    </div>
+    <script src="demo-suite.js"></script>
   </body>
 </html>
