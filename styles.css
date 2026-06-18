@@ -122,18 +122,18 @@ textarea {
 }
 
 .topbar {
-  position: fixed;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: sticky;
+  top: 0;
+  left: auto;
+  transform: none;
   z-index: 50;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(190px, 0.75fr) minmax(0, 1.25fr);
   align-items: center;
-  gap: 18px;
-  width: min(1180px, calc(100% - 28px));
-  margin: 0;
-  padding: 10px;
+  gap: 10px;
+  width: min(1180px, calc(100% - 20px));
+  margin: 10px auto 0;
+  padding: 8px;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: var(--radius);
   background:
@@ -141,6 +141,7 @@ textarea {
     repeating-linear-gradient(90deg, rgba(139, 95, 60, 0.14) 0 2px, transparent 2px 34px);
   box-shadow: 0 20px 70px rgba(0, 0, 0, 0.36);
   backdrop-filter: blur(18px);
+  overflow: hidden;
 }
 
 .brand,
@@ -188,11 +189,12 @@ textarea {
 .nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
   justify-content: flex-end;
   min-width: 0;
-  padding: 5px;
+  max-width: 100%;
+  padding: 4px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: rgba(10, 13, 17, 0.46);
@@ -201,13 +203,13 @@ textarea {
 .nav a,
 .panel-tab,
 .lang-switch {
-  min-height: 40px;
-  padding: 9px 14px;
+  min-height: 38px;
+  padding: 8px 11px;
   border-radius: var(--radius);
   color: #343a46;
   color: rgba(246, 240, 231, 0.78);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
   white-space: nowrap;
   text-align: center;
 }
@@ -1076,8 +1078,9 @@ h3 {
   max-width: none;
   padding: 86px max(14px, calc((100vw - 1180px) / 2));
   background:
-    linear-gradient(120deg, rgba(37, 99, 235, 0.28), transparent 32%),
-    linear-gradient(250deg, rgba(18, 185, 129, 0.2), transparent 34%),
+    radial-gradient(circle at 12% 18%, rgba(223, 137, 86, 0.26), transparent 24%),
+    linear-gradient(90deg, rgba(139, 95, 60, 0.18), transparent 28%, rgba(10, 13, 17, 0.8)),
+    repeating-linear-gradient(90deg, rgba(139,95,60,0.12) 0 2px, transparent 2px 34px),
     var(--night);
   color: white;
 }
@@ -1098,7 +1101,13 @@ h3 {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(145deg, rgba(34, 29, 24, 0.86), rgba(10, 13, 17, 0.92)),
+    repeating-linear-gradient(90deg, rgba(139,95,60,0.10) 0 2px, transparent 2px 32px);
+  box-shadow:
+    0 0 0 1px rgba(255, 168, 91, 0.18) inset,
+    0 0 44px rgba(223, 137, 86, 0.22),
+    0 30px 90px rgba(0, 0, 0, 0.34);
 }
 
 .sidebar-mini {
@@ -1107,7 +1116,8 @@ h3 {
   justify-items: center;
   gap: 18px;
   padding: 18px 12px;
-  background: rgba(0, 0, 0, 0.24);
+  background: rgba(10, 13, 17, 0.62);
+  border-inline-end: 1px solid rgba(255, 168, 91, 0.18);
 }
 
 .sidebar-mini b {
@@ -1116,30 +1126,40 @@ h3 {
   width: 42px;
   height: 42px;
   border-radius: var(--radius);
-  background: var(--cyan);
+  background: linear-gradient(135deg, var(--orange), var(--yellow));
+  color: #16100b;
 }
 
 .sidebar-mini span {
   width: 34px;
   height: 34px;
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 168, 91, 0.18);
+  box-shadow: 0 0 18px rgba(223, 137, 86, 0.18);
 }
 
 .dash-main {
   padding: 22px;
+  display: grid;
+  gap: 14px;
 }
 
 .dash-top,
 .dash-cards span,
 .dash-chart {
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(145deg, rgba(246, 240, 231, 0.12), rgba(246, 240, 231, 0.05)),
+    rgba(10, 13, 17, 0.54);
+  border: 1px solid rgba(255, 168, 91, 0.16);
 }
 
 .dash-top {
-  height: 54px;
-  margin-bottom: 14px;
+  height: 62px;
+  margin-bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(223, 137, 86, 0.36), rgba(63, 183, 180, 0.12)),
+    rgba(255, 255, 255, 0.08);
 }
 
 .dash-cards {
@@ -1157,14 +1177,15 @@ h3 {
   align-items: end;
   gap: 12px;
   height: 170px;
-  margin-top: 14px;
+  margin-top: 0;
   padding: 18px;
 }
 
 .dash-chart i {
   flex: 1;
   border-radius: 999px 999px 0 0;
-  background: linear-gradient(180deg, var(--cyan), var(--green));
+  background: linear-gradient(180deg, var(--orange), var(--yellow));
+  box-shadow: 0 0 18px rgba(223, 137, 86, 0.24);
 }
 
 .portfolio-strip {
@@ -1758,6 +1779,8 @@ textarea {
   background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+  max-width: 100vw;
+  overflow-x: clip;
 }
 
 .demo-nav b {
@@ -1770,6 +1793,7 @@ textarea {
   gap: 16px;
   color: rgba(18, 22, 30, 0.72);
   font-weight: 800;
+  min-width: 0;
 }
 
 .demo-logo {
@@ -1810,13 +1834,17 @@ textarea {
 
 .demo-edu {
   background:
+    linear-gradient(90deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
     radial-gradient(circle at 18% 12%, rgba(36, 99, 235, 0.18), transparent 28%),
     linear-gradient(135deg, #f5fbff, #eef4ff 46%, #ffffff);
+  background-size: 38px 38px, 38px 38px, auto, auto;
   color: #102033;
 }
 
 .demo-salon-page {
   background:
+    radial-gradient(ellipse at 80% 8%, rgba(255, 255, 255, 0.75), transparent 24%),
     radial-gradient(circle at 22% 14%, rgba(232, 91, 143, 0.20), transparent 26%),
     linear-gradient(135deg, #fff7fb, #fff0e1 48%, #ffffff);
   color: #2a1822;
@@ -1824,6 +1852,7 @@ textarea {
 
 .demo-clinic-page {
   background:
+    linear-gradient(120deg, rgba(255,255,255,0.78), transparent 38%),
     radial-gradient(circle at 74% 10%, rgba(26, 188, 156, 0.18), transparent 26%),
     linear-gradient(135deg, #f4fffc, #eef8ff 52%, #ffffff);
   color: #102a34;
@@ -1831,6 +1860,7 @@ textarea {
 
 .demo-shop-page {
   background:
+    linear-gradient(90deg, rgba(38, 23, 15, 0.06) 0 12px, transparent 12px 24px),
     radial-gradient(circle at 18% 12%, rgba(255, 120, 77, 0.22), transparent 28%),
     linear-gradient(135deg, #fff8f1, #fff2e8 40%, #f7fbff);
   color: #26170f;
@@ -1879,6 +1909,7 @@ textarea {
   background:
     linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(24, 183, 176, 0.10)),
     #ffffff;
+  transform: perspective(900px) rotateY(-5deg);
 }
 
 .academy-card {
@@ -1907,6 +1938,7 @@ textarea {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(255, 230, 240, 0.78)),
     #fff;
+  transform: rotate(-2deg);
 }
 
 .salon-frame div {
@@ -1935,6 +1967,7 @@ textarea {
   background:
     linear-gradient(135deg, rgba(8, 165, 184, 0.10), rgba(47, 191, 143, 0.10)),
     #ffffff;
+  border-radius: 12px;
 }
 
 .clinic-dashboard div {
@@ -1961,6 +1994,7 @@ textarea {
   background:
     linear-gradient(135deg, rgba(255, 112, 67, 0.12), rgba(31, 41, 55, 0.08)),
     #ffffff;
+  border-radius: 40px 8px 40px 8px;
 }
 
 .shop-shelf div {
@@ -2174,6 +2208,46 @@ textarea {
 .shop-flow span {
   text-align: center;
   background: #fff3ea;
+}
+
+.demo-layout-academy {
+  grid-template-columns: minmax(0, 0.82fr) minmax(380px, 1fr);
+}
+
+.demo-layout-salon {
+  grid-template-columns: minmax(360px, 0.76fr) minmax(0, 1fr);
+}
+
+.demo-layout-salon > div:first-child {
+  order: 2;
+}
+
+.demo-layout-clinic {
+  grid-template-columns: minmax(0, 1fr) minmax(330px, 0.7fr);
+}
+
+.demo-layout-shop {
+  grid-template-columns: minmax(0, 0.74fr) minmax(430px, 1fr);
+}
+
+.academy-learning-path {
+  border-inline-start: 8px solid #2563eb;
+}
+
+.salon-editorial {
+  transform: rotate(-1deg);
+}
+
+.clinic-records {
+  border-radius: 12px;
+  border-inline-start: 8px solid #08a5b8;
+}
+
+.shop-checkout-flow {
+  border-radius: 38px 8px 38px 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 112, 67, 0.12), rgba(31, 41, 55, 0.06)),
+    rgba(255, 255, 255, 0.82);
 }
 
 .portal-body {
@@ -2567,9 +2641,11 @@ textarea {
   text-align: left;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1120px) {
   .topbar {
     grid-template-columns: minmax(0, 1fr) auto;
+    transform: none;
+    left: auto;
   }
 
   .menu-toggle {
@@ -2581,6 +2657,7 @@ textarea {
     display: none;
     flex-direction: column;
     align-items: stretch;
+    justify-content: stretch;
   }
 
   body.menu-open .nav {
