@@ -20,6 +20,10 @@
   --violet: #6c74a4;
   --wood: #3b2619;
   --wood-soft: #8b5f3c;
+  --neon-warm: rgba(255, 168, 91, 0.78);
+  --neon-warm-soft: rgba(223, 137, 86, 0.28);
+  --neon-cool: rgba(73, 190, 255, 0.82);
+  --neon-cool-soft: rgba(63, 183, 180, 0.30);
   --radius: 8px;
   color-scheme: dark;
 }
@@ -427,6 +431,27 @@ h3 {
 .btn-dark {
   background: #0b0f15;
   color: #f6f0e7;
+}
+
+.btn,
+.menu-toggle,
+.lang-switch button {
+  border-color: var(--neon-warm);
+  box-shadow:
+    0 0 0 1px rgba(255, 207, 151, 0.14) inset,
+    0 0 18px var(--neon-warm-soft),
+    0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+.btn:hover,
+.menu-toggle:hover,
+.lang-switch button:hover {
+  border-color: var(--neon-cool);
+  box-shadow:
+    0 0 0 1px rgba(122, 217, 255, 0.26) inset,
+    0 0 24px var(--neon-cool-soft),
+    0 0 48px rgba(73, 190, 255, 0.18),
+    0 18px 36px rgba(0, 0, 0, 0.28);
 }
 
 .dark-text {
@@ -2243,6 +2268,133 @@ textarea {
 
 .manager-card.wide {
   grid-column: 1 / -1;
+}
+
+.topbar,
+.capability-rail div,
+.room-copy,
+.room-console,
+.execution-grid article,
+.system-map span,
+.feature-stack div,
+.launch-grid a,
+.build-lab,
+.window-frame,
+.lane,
+.work-card,
+.price-grid article,
+.panel-card,
+.stat-card,
+.demo-card,
+.service-detail,
+.contact-panel,
+.login-card,
+.portal-stats article,
+.manager-card,
+.real-hero {
+  position: relative;
+  isolation: isolate;
+  border-color: var(--neon-warm);
+  box-shadow:
+    0 0 0 1px rgba(255, 207, 151, 0.10) inset,
+    0 0 16px var(--neon-warm-soft),
+    0 18px 48px rgba(0, 0, 0, 0.24);
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
+}
+
+.topbar::before,
+.capability-rail div::before,
+.room-copy::before,
+.room-console::before,
+.execution-grid article::before,
+.system-map span::before,
+.feature-stack div::before,
+.launch-grid a::before,
+.build-lab::before,
+.window-frame::before,
+.lane::before,
+.work-card::before,
+.price-grid article::before,
+.panel-card::before,
+.stat-card::before,
+.demo-card::before,
+.service-detail::before,
+.contact-panel::before,
+.login-card::before,
+.portal-stats article::before,
+.manager-card::before,
+.real-hero::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 168, 91, 0.72), rgba(255, 168, 91, 0.08) 42%, rgba(73, 190, 255, 0.08));
+  opacity: 0.68;
+  filter: blur(8px);
+  pointer-events: none;
+  transition: opacity 220ms ease, background 220ms ease, filter 220ms ease;
+}
+
+.topbar:hover,
+.capability-rail div:hover,
+.room-copy:hover,
+.room-console:hover,
+.execution-grid article:hover,
+.system-map span:hover,
+.feature-stack div:hover,
+.launch-grid a:hover,
+.build-lab:hover,
+.window-frame:hover,
+.lane:hover,
+.work-card:hover,
+.price-grid article:hover,
+.panel-card:hover,
+.stat-card:hover,
+.demo-card:hover,
+.service-detail:hover,
+.contact-panel:hover,
+.login-card:hover,
+.portal-stats article:hover,
+.manager-card:hover,
+.real-hero:hover {
+  border-color: var(--neon-cool);
+  box-shadow:
+    0 0 0 1px rgba(122, 217, 255, 0.18) inset,
+    0 0 24px var(--neon-cool-soft),
+    0 0 54px rgba(73, 190, 255, 0.16),
+    0 22px 58px rgba(0, 0, 0, 0.28);
+}
+
+.topbar:hover::before,
+.capability-rail div:hover::before,
+.room-copy:hover::before,
+.room-console:hover::before,
+.execution-grid article:hover::before,
+.system-map span:hover::before,
+.feature-stack div:hover::before,
+.launch-grid a:hover::before,
+.build-lab:hover::before,
+.window-frame:hover::before,
+.lane:hover::before,
+.work-card:hover::before,
+.price-grid article:hover::before,
+.panel-card:hover::before,
+.stat-card:hover::before,
+.demo-card:hover::before,
+.service-detail:hover::before,
+.contact-panel:hover::before,
+.login-card:hover::before,
+.portal-stats article:hover::before,
+.manager-card:hover::before,
+.real-hero:hover::before {
+  background: linear-gradient(135deg, rgba(73, 190, 255, 0.76), rgba(63, 183, 180, 0.22) 46%, rgba(255, 168, 91, 0.08));
+  opacity: 0.94;
+  filter: blur(10px);
 }
 
 [data-reveal] {
