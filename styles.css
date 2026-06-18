@@ -2250,6 +2250,456 @@ textarea {
     rgba(255, 255, 255, 0.82);
 }
 
+.demo-academy-site {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(37,99,235,.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(37,99,235,.08) 1px, transparent 1px),
+    linear-gradient(135deg, #f7fbff, #eaf2ff);
+  background-size: 42px 42px;
+  color: #102033;
+  font-family: VitraSans, "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+.academy-header,
+.academy-hero,
+.academy-course-board,
+.academy-panel-strip {
+  width: min(1180px, calc(100% - 28px));
+  margin-inline: auto;
+}
+
+.academy-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 0;
+  background: rgba(247, 251, 255, .86);
+  backdrop-filter: blur(14px);
+}
+
+.academy-brand,
+.academy-header nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.academy-brand span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #18b7b0);
+  color: white;
+}
+
+.academy-hero {
+  min-height: 650px;
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(380px, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.academy-copy h1 {
+  font-size: clamp(42px, 6vw, 78px);
+  color: #102033;
+}
+
+.academy-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.academy-actions a,
+.academy-panel-strip a {
+  padding: 13px 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2563eb, #18b7b0);
+  color: white;
+  font-weight: 900;
+}
+
+.academy-learning-ui {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 28px;
+  background: white;
+  box-shadow: 0 30px 90px rgba(37, 99, 235, .16);
+  transform: perspective(900px) rotateY(-7deg);
+}
+
+.academy-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.academy-timeline span,
+.academy-learning-ui article,
+.academy-course-board article {
+  border-radius: 22px;
+  background: #eef5ff;
+}
+
+.academy-timeline span {
+  height: 12px;
+}
+
+.academy-learning-ui article,
+.academy-course-board article {
+  padding: 22px;
+}
+
+.academy-course-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.academy-course-board span {
+  display: block;
+  color: #2563eb;
+  font-weight: 900;
+}
+
+.academy-panel-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 60px;
+  padding: 26px;
+  border-radius: 28px;
+  background: #102033;
+  color: white;
+}
+
+.demo-salon-site {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 8%, rgba(232, 91, 143, .24), transparent 28%),
+    linear-gradient(135deg, #fff7fb, #fff0e1 50%, #fff);
+  color: #2a1822;
+  font-family: Georgia, VitraSans, serif;
+}
+
+.salon-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 22px 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  background: rgba(255, 247, 251, .82);
+  backdrop-filter: blur(16px);
+}
+
+.salon-header b {
+  justify-self: center;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.salon-header nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.salon-hero {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  min-height: 680px;
+  display: grid;
+  grid-template-columns: 1fr minmax(340px, .72fr);
+  gap: 42px;
+  align-items: center;
+}
+
+.salon-photo-wall {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  transform: rotate(-2deg);
+}
+
+.salon-photo-wall i {
+  min-height: 220px;
+  border-radius: 42px 42px 12px 12px;
+  background: linear-gradient(145deg, #f9bdd3, #fff1d5);
+  box-shadow: 0 24px 60px rgba(232, 91, 143, .18);
+}
+
+.salon-photo-wall i:nth-child(2) { border-radius: 12px 48px 48px 12px; background: linear-gradient(145deg, #2a1822, #e74c8a); }
+.salon-photo-wall i:nth-child(3) { background: linear-gradient(145deg, #fff, #f6b24f); }
+.salon-photo-wall i:nth-child(4) { border-radius: 48px 12px 48px 12px; background: linear-gradient(145deg, #ffe5ef, #a94b73); }
+
+.salon-intro h1 {
+  font-size: clamp(42px, 5.5vw, 76px);
+  color: #2a1822;
+}
+
+.salon-book {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #e74c8a, #f6b24f);
+  color: white;
+  font-weight: 900;
+}
+
+.salon-service-menu,
+.salon-editorial-block {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 26px;
+}
+
+.salon-service-menu {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.salon-service-menu div,
+.salon-editorial-block {
+  padding: 26px;
+  border-radius: 34px;
+  background: rgba(255,255,255,.78);
+  box-shadow: 0 20px 55px rgba(42,24,34,.10);
+}
+
+.demo-clinic-site {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  background: linear-gradient(135deg, #f4fffc, #eef8ff 60%, #fff);
+  color: #102a34;
+  font-family: VitraSans, "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+.clinic-side-nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  align-content: start;
+  gap: 28px;
+  padding: 20px;
+  background: #0f3139;
+  color: white;
+}
+
+.clinic-side-nav > a {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #08a5b8, #2fbf8f);
+  font-weight: 900;
+}
+
+.clinic-side-nav nav {
+  display: grid;
+  gap: 12px;
+}
+
+.clinic-main {
+  padding: 46px clamp(18px, 5vw, 70px);
+}
+
+.clinic-hero {
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 44px;
+  align-items: center;
+}
+
+.clinic-hero h1 {
+  font-size: clamp(42px, 5.6vw, 78px);
+  color: #102a34;
+}
+
+.clinic-hero a {
+  display: inline-flex;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #08a5b8, #2fbf8f);
+  color: white;
+  font-weight: 900;
+}
+
+.clinic-status-board,
+.clinic-record-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.clinic-status-board article,
+.clinic-record-grid article {
+  padding: 24px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.86);
+  border-inline-start: 7px solid #08a5b8;
+  box-shadow: 0 18px 50px rgba(16,42,52,.10);
+}
+
+.clinic-status-board b {
+  display: block;
+  font-size: 34px;
+}
+
+.clinic-record-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.demo-shop-site {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(38,23,15,.06) 0 12px, transparent 12px 24px),
+    linear-gradient(135deg, #fff8f1, #fff2e8 45%, #f7fbff);
+  color: #26170f;
+  font-family: VitraSans, "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+.shop-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  background: rgba(255,248,241,.84);
+  backdrop-filter: blur(16px);
+}
+
+.shop-logo {
+  padding: 14px 18px;
+  border-radius: 26px 8px 26px 8px;
+  background: linear-gradient(135deg, #ff7043, #111827);
+  color: white;
+  font-weight: 950;
+}
+
+.shop-header nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-weight: 900;
+}
+
+.shop-hero {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto;
+  min-height: 650px;
+  display: grid;
+  grid-template-columns: minmax(0, .76fr) minmax(430px, 1fr);
+  gap: 46px;
+  align-items: center;
+}
+
+.shop-campaign h1 {
+  font-size: clamp(42px, 5.8vw, 82px);
+  color: #26170f;
+}
+
+.shop-campaign a {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 14px 20px;
+  border-radius: 26px 8px 26px 8px;
+  background: linear-gradient(135deg, #ff7043, #111827);
+  color: white;
+  font-weight: 900;
+}
+
+.shop-product-stage {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 44px 10px 44px 10px;
+  background: white;
+  box-shadow: 0 28px 80px rgba(38,23,15,.14);
+}
+
+.shop-product-card {
+  grid-row: span 2;
+  min-height: 360px;
+  display: grid;
+  align-content: end;
+  padding: 26px;
+  border-radius: 34px 8px 34px 8px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.9), transparent 24%),
+    linear-gradient(145deg, #ff7043, #111827);
+  color: white;
+}
+
+.shop-mini-card {
+  min-height: 170px;
+  border-radius: 24px 8px 24px 8px;
+  background: #ffe1d3;
+}
+
+.shop-checkout-lane,
+.shop-merch-grid {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 26px;
+}
+
+.shop-checkout-lane {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 28px;
+  background: white;
+}
+
+.shop-checkout-lane i {
+  height: 3px;
+  background: linear-gradient(90deg, #ff7043, #111827);
+}
+
+.shop-merch-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.shop-merch-grid article {
+  padding: 24px;
+  border-radius: 28px 8px 28px 8px;
+  background: rgba(255,255,255,.78);
+}
+
 .portal-body {
   display: grid;
   grid-template-columns: 292px 1fr;
@@ -2692,8 +3142,34 @@ textarea {
   .build-lab,
   .demo-hero-page,
   .demo-split-feature,
-  .shop-flow {
+  .shop-flow,
+  .academy-hero,
+  .salon-hero,
+  .clinic-hero,
+  .shop-hero,
+  .shop-product-stage,
+  .shop-checkout-lane {
     grid-template-columns: 1fr;
+  }
+
+  .demo-clinic-site {
+    grid-template-columns: 1fr;
+  }
+
+  .clinic-side-nav {
+    position: sticky;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .clinic-side-nav nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .shop-product-card {
+    grid-row: auto;
   }
 
   .app-layout {
@@ -2808,6 +3284,10 @@ textarea {
   .price-editor,
   .demo-manager,
   .real-sidebar nav,
+  .academy-course-board,
+  .salon-service-menu,
+  .clinic-record-grid,
+  .shop-merch-grid,
   .academy-board,
   .salon-frame,
   .clinic-dashboard,
