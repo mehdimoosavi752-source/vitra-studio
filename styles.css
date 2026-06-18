@@ -2786,6 +2786,41 @@ textarea {
   font-weight: 900;
 }
 
+.demo-home-shot {
+  width: min(1440px, calc(100% - 28px));
+  margin: 24px auto 42px;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.18);
+}
+
+.demo-home-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.academy-shot {
+  box-shadow: 0 34px 100px rgba(37, 99, 235, .18);
+}
+
+.salon-shot {
+  border-radius: 36px;
+  box-shadow: 0 34px 100px rgba(42, 24, 34, .22);
+}
+
+.clinic-shot {
+  width: min(1380px, 100%);
+  margin-top: 0;
+  border-radius: 22px;
+  box-shadow: 0 34px 100px rgba(16, 42, 52, .16);
+}
+
+.shop-shot {
+  border-radius: 0 0 34px 34px;
+  box-shadow: 0 34px 110px rgba(255, 112, 67, .22);
+}
+
 .portal-body {
   display: grid;
   grid-template-columns: 292px 1fr;
