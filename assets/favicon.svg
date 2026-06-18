@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+  <defs>
+    <linearGradient id="vitra-prism" x1="12" x2="84" y1="12" y2="84">
+      <stop stop-color="#2563eb"/>
+      <stop offset=".55" stop-color="#00b8d9"/>
+      <stop offset="1" stop-color="#12b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="24" fill="#11131a"/>
+  <path d="M23 24h15l10 34 11-34h14L55 72H41L23 24Z" fill="url(#vitra-prism)"/>
+  <path d="M61 24h12L56 72H44l17-48Z" fill="#fff" opacity=".9"/>
+</svg>
