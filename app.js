@@ -1,10 +1,30 @@
 const menuToggle = document.querySelector(".menu-toggle");
+let activeLanguage = localStorage.getItem("vitra-language") || "fa";
+
+function applyLanguage(lang) {
+  activeLanguage = lang;
+  localStorage.setItem("vitra-language", lang);
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-fa][data-en]").forEach((element) => {
+    element.textContent = element.dataset[lang];
+  });
+  document.querySelectorAll(".lang-switch").forEach((button) => {
+    button.textContent = lang === "fa" ? "EN" : "FA";
+  });
+}
 
 if (menuToggle) {
   menuToggle.addEventListener("click", () => {
     document.body.classList.toggle("menu-open");
   });
 }
+
+document.querySelectorAll(".lang-switch").forEach((button) => {
+  button.addEventListener("click", () => {
+    applyLanguage(activeLanguage === "fa" ? "en" : "fa");
+  });
+});
 
 const currentPage = document.body.dataset.page;
 document.querySelectorAll(".nav a").forEach((link) => {
@@ -33,8 +53,8 @@ panelTabs.forEach((tab) => {
   tab.addEventListener("click", () => setPanelView(tab.dataset.panelTab));
 });
 
-if (location.hash === "#cms") {
-  setPanelView("cms");
+if (["#cms", "#admin", "#client", "#services", "#tools"].includes(location.hash)) {
+  setPanelView(location.hash.replace("#", ""));
 }
 
 const ticketDialog = document.querySelector("[data-ticket-dialog]");
@@ -82,3 +102,5 @@ if (calcPrice) {
     document.querySelector("[data-price-result]").textContent = `حدود ${formatted} تومان`;
   });
 }
+
+applyLanguage(activeLanguage);
