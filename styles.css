@@ -2386,6 +2386,27 @@ textarea {
   color: white;
 }
 
+.academy-syllabus {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 70px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.academy-syllabus div {
+  padding: 22px;
+  border-radius: 22px;
+  background: white;
+  box-shadow: 0 18px 48px rgba(37, 99, 235, .10);
+}
+
+.academy-syllabus span {
+  display: block;
+  color: #2563eb;
+  font-weight: 900;
+}
+
 .demo-salon-site {
   margin: 0;
   min-height: 100vh;
@@ -2486,6 +2507,26 @@ textarea {
   box-shadow: 0 20px 55px rgba(42,24,34,.10);
 }
 
+.salon-booking-strip {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 70px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr 1fr;
+  gap: 14px;
+}
+
+.salon-booking-strip article {
+  padding: 24px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(231,76,138,.12), rgba(246,178,79,.18));
+  border: 1px solid rgba(231,76,138,.18);
+}
+
+.salon-booking-strip span {
+  display: block;
+  color: #7b5667;
+}
+
 .demo-clinic-site {
   margin: 0;
   min-height: 100vh;
@@ -2571,6 +2612,32 @@ textarea {
 
 .clinic-record-grid {
   grid-template-columns: repeat(3, 1fr);
+}
+
+.clinic-care-flow {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.clinic-care-flow div {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  border-radius: 14px;
+  background: #0f3139;
+  color: white;
+}
+
+.clinic-care-flow b {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #08a5b8, #2fbf8f);
 }
 
 .demo-shop-site {
@@ -2698,6 +2765,25 @@ textarea {
   padding: 24px;
   border-radius: 28px 8px 28px 8px;
   background: rgba(255,255,255,.78);
+}
+
+.shop-category-wall {
+  width: min(1180px, calc(100% - 28px));
+  margin: 0 auto 70px;
+  display: grid;
+  grid-template-columns: 1.3fr .8fr .8fr 1fr;
+  gap: 14px;
+}
+
+.shop-category-wall a {
+  min-height: 120px;
+  display: grid;
+  align-content: end;
+  padding: 22px;
+  border-radius: 34px 8px 34px 8px;
+  background: linear-gradient(135deg, #ff7043, #111827);
+  color: white;
+  font-weight: 900;
 }
 
 .portal-body {
@@ -3148,7 +3234,11 @@ textarea {
   .clinic-hero,
   .shop-hero,
   .shop-product-stage,
-  .shop-checkout-lane {
+  .shop-checkout-lane,
+  .academy-syllabus,
+  .salon-booking-strip,
+  .clinic-care-flow,
+  .shop-category-wall {
     grid-template-columns: 1fr;
   }
 
