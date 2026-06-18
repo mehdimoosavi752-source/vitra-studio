@@ -12,20 +12,19 @@
       <section class="login-card">
         <a class="brand" href="index.html">
           <span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" /></span>
-          <span class="brand-text"><strong>Vitra Studio</strong><small data-fa="ورود مشتری و مدیر" data-en="Client and admin login">ورود مشتری و مدیر</small></span>
+          <span class="brand-text"><strong>Vitra Studio</strong><small data-fa="ورود / ثبت‌نام" data-en="Login / Sign up">ورود / ثبت‌نام</small></span>
         </a>
         <div>
           <p class="eyebrow">Vitra Portal</p>
-          <h1 data-fa="ورود به پنل مدیریت خدمات دیجیتال" data-en="Login to the digital services portal">ورود به پنل مدیریت خدمات دیجیتال</h1>
-          <p data-fa="این نسخه نمایشی است؛ با انتخاب نقش وارد محیط پنل می‌شوی." data-en="This is a demo. Choose a role to enter the portal.">این نسخه نمایشی است؛ با انتخاب نقش وارد محیط پنل می‌شوی.</p>
+          <h1 data-fa="ورود به فضای کاری Vitra Studio" data-en="Login to the Vitra Studio workspace">ورود به فضای کاری Vitra Studio</h1>
+          <p data-fa="نام کاربری را وارد کن؛ سیستم به صورت نمایشی سطح دسترسی را تشخیص می‌دهد و پنل مناسب را باز می‌کند." data-en="Enter a username; this demo detects the access level and opens the right portal.">نام کاربری را وارد کن؛ سیستم به صورت نمایشی سطح دسترسی را تشخیص می‌دهد و پنل مناسب را باز می‌کند.</p>
         </div>
-        <form>
-          <label><span data-fa="ایمیل" data-en="Email">ایمیل</span><input type="email" value="demo@vitrastudio.ir" /></label>
+        <form data-login-form>
+          <label><span data-fa="نام کاربری یا ایمیل" data-en="Username or email">نام کاربری یا ایمیل</span><input type="text" value="admin@vitrastudio.ir" data-login-user /></label>
           <label><span data-fa="رمز عبور" data-en="Password">رمز عبور</span><input type="password" value="12345678" /></label>
-          <div class="login-actions">
-            <a class="btn btn-primary" href="admin.html" data-fa="ورود مدیر" data-en="Admin login">ورود مدیر</a>
-            <a class="btn btn-ghost" href="client.html" data-fa="ورود مشتری" data-en="Client login">ورود مشتری</a>
-          </div>
+          <button class="btn btn-primary" type="submit" data-fa="ورود" data-en="Login">ورود</button>
+          <a class="signup-link" href="#" data-fa="ثبت‌نام مشتری جدید" data-en="Create a new client account">ثبت‌نام مشتری جدید</a>
+          <p class="login-hint" data-fa="نمونه‌ها: admin@vitrastudio.ir برای مدیر، client@allamehsokhan.ir برای مشتری علامه" data-en="Examples: admin@vitrastudio.ir for admin, client@allamehsokhan.ir for Allameh client">نمونه‌ها: admin@vitrastudio.ir برای مدیر، client@allamehsokhan.ir برای مشتری علامه</p>
         </form>
         <button class="lang-switch" type="button">EN</button>
       </section>

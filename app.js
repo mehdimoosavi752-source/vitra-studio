@@ -48,6 +48,18 @@ document.querySelectorAll("[data-reveal]").forEach((element) => {
   revealObserver.observe(element);
 });
 
+const loginForm = document.querySelector("[data-login-form]");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const username = document.querySelector("[data-login-user]")?.value.toLowerCase() || "";
+    const isAdmin = username.includes("admin") || username.includes("vitra");
+    const isAllameh = username.includes("allameh") || username.includes("client");
+    window.location.href = isAdmin && !isAllameh ? "admin.html" : "client.html";
+  });
+}
+
 const currentPage = document.body.dataset.page;
 document.querySelectorAll(".nav a").forEach((link) => {
   const href = link.getAttribute("href") || "";
