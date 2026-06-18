@@ -26,6 +26,28 @@ document.querySelectorAll(".lang-switch").forEach((button) => {
   });
 });
 
+document
+  .querySelectorAll(".section, .service-lanes, .capability-rail, .portfolio-grid, .execution-grid, .manager-grid")
+  .forEach((element) => {
+    element.setAttribute("data-reveal", "");
+  });
+
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+
+document.querySelectorAll("[data-reveal]").forEach((element) => {
+  revealObserver.observe(element);
+});
+
 const currentPage = document.body.dataset.page;
 document.querySelectorAll(".nav a").forEach((link) => {
   const href = link.getAttribute("href") || "";
