@@ -73,9 +73,14 @@
 }
 
 .suite-demo main {
-  width: min(1220px, calc(100% - 32px));
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding: 34px 0 80px;
+}
+
+.suite-demo main > section {
+  width: min(1320px, calc(100% - 32px));
+  margin-inline: auto;
 }
 
 .suite-hero,
@@ -140,6 +145,14 @@
   background: var(--panel);
   border: 1px solid var(--line);
   box-shadow: 0 24px 70px var(--shadow);
+}
+
+.suite-hero,
+.academy-landing,
+.salon-finder,
+.clinic-search-hero,
+.shop-landing {
+  width: min(1480px, calc(100% - 24px));
 }
 
 .section-head {
@@ -268,6 +281,76 @@
   --glow: rgba(37, 99, 235, 0.24);
 }
 
+.academy-campus {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.pricing-row,
+.staff-row,
+.clinic-feature-list,
+.article-row,
+.shop-service-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pricing-row article,
+.staff-row article,
+.clinic-feature-list article,
+.article-row article,
+.shop-service-row article {
+  padding: 18px;
+  border-radius: 22px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.pricing-row strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 30px;
+  color: var(--accent);
+}
+
+.campus-visual,
+.clinic-visual-panel,
+.lookbook-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 360px;
+  border-radius: 32px;
+  display: flex;
+  align-items: end;
+  padding: 26px;
+  color: white;
+  font-weight: 950;
+  box-shadow: 0 28px 80px var(--shadow);
+}
+
+.academy-photo {
+  background:
+    linear-gradient(90deg, rgba(16,36,71,0.85), rgba(37,99,235,0.25)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 72px),
+    radial-gradient(circle at 75% 28%, #b9d7ff, transparent 18%),
+    linear-gradient(135deg, #173b72, #85bfff);
+}
+
+.faq-strip {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.faq-strip details {
+  padding: 18px;
+  border-radius: 22px;
+  background: var(--soft);
+}
+
 .salon-suite {
   --bg: linear-gradient(135deg, #fff6f4, #f7d6df 50%, #42162f);
   --panel: rgba(255,255,255,0.9);
@@ -293,6 +376,75 @@
 
 .salon-results {
   grid-template-columns: 360px 1fr;
+}
+
+.salon-editorial {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.salon-photo-wall {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-rows: 190px 190px;
+  gap: 14px;
+}
+
+.salon-shot {
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255,255,255,0.68), transparent 22%),
+    linear-gradient(135deg, #fff0f6, #d94683 45%, #42162f);
+  box-shadow: 0 24px 60px rgba(66, 22, 47, 0.16);
+}
+
+.salon-shot.shot-a {
+  grid-row: span 2;
+}
+
+.salon-shot.shot-b {
+  background: linear-gradient(135deg, #ffe8cf, #e879a4, #4a1233);
+}
+
+.salon-shot.shot-c {
+  background: linear-gradient(135deg, #fff, #f0abfc, #701a75);
+}
+
+.staff-row {
+  margin-top: 16px;
+}
+
+.staff-row article {
+  display: grid;
+  gap: 4px;
+  text-align: center;
+}
+
+.staff-row b {
+  margin: 0 auto;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: var(--button);
+}
+
+.offer-band {
+  display: grid;
+  grid-template-columns: 1fr repeat(2, minmax(0, 260px));
+  gap: 16px;
+  align-items: center;
+}
+
+.offer-band article {
+  padding: 18px;
+  border-radius: 24px;
+  color: white;
+  background: linear-gradient(135deg, #42162f, #d75f8e);
 }
 
 .salon-map {
@@ -376,6 +528,28 @@
   --glow: rgba(15, 118, 110, 0.24);
 }
 
+.clinic-real-sections {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.clinic-visual-panel {
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255,255,255,0.8), transparent 18%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.22) 0 2px, transparent 2px 48px),
+    linear-gradient(135deg, #0f766e, #a7f3d0);
+}
+
+.clinic-feature-list {
+  margin-top: 16px;
+}
+
+.article-row {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .clinic-search-hero {
   min-height: auto;
 }
@@ -445,6 +619,38 @@
   --line: rgba(43, 33, 24, 0.15);
   --shadow: rgba(43, 33, 24, 0.12);
   --glow: rgba(143, 75, 47, 0.22);
+}
+
+.lookbook-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.lookbook-visual {
+  min-height: 420px;
+  background:
+    radial-gradient(circle at 66% 26%, rgba(255,255,255,0.62), transparent 16%),
+    linear-gradient(90deg, rgba(43,33,24,0.84), rgba(143,75,47,0.18)),
+    repeating-linear-gradient(90deg, transparent 0 62px, rgba(255,255,255,0.18) 62px 64px),
+    linear-gradient(135deg, #2b2118, #d7b899);
+}
+
+.size-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.size-row button {
+  width: 52px;
+  height: 52px;
+  padding: 0;
+}
+
+.shop-service-row {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .shop-landing {
@@ -537,7 +743,12 @@
   .academy-tools,
   .salon-results,
   .clinic-layout,
-  .doctor-search {
+  .doctor-search,
+  .academy-campus,
+  .salon-editorial,
+  .offer-band,
+  .clinic-real-sections,
+  .lookbook-section {
     grid-template-columns: 1fr;
   }
 
@@ -546,7 +757,13 @@
   .teachers-strip,
   .shop-grid,
   .venue-card,
-  .doctor-card {
+  .doctor-card,
+  .pricing-row,
+  .staff-row,
+  .clinic-feature-list,
+  .article-row,
+  .shop-service-row,
+  .faq-strip {
     grid-template-columns: 1fr;
   }
 

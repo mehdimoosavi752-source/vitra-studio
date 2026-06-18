@@ -1,1 +1,1 @@
-﻿Upload the contents of this folder. Four demo sites are rebuilt from the provided references with bilingual UI and working interactions.
+﻿Upload the contents of this folder. Demo sites are expanded, full-width, bilingual, and portfolio cards use real homepage screenshots.
