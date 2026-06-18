@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>پنل کاربری و مدیریت | Vitra Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="panel">
+    <div class="app-layout">
+      <aside class="app-sidebar">
+        <a class="panel-brand" href="index.html"><span>V</span><b>Vitra Panel</b></a>
+        <nav>
+          <button class="panel-tab active" data-panel-tab="client">پنل مشتری</button>
+          <button class="panel-tab" data-panel-tab="admin">پنل مدیر</button>
+          <button class="panel-tab" data-panel-tab="cms">مدیریت علامه</button>
+          <button class="panel-tab" data-panel-tab="tools">ابزارهای ساده</button>
+        </nav>
+        <a class="back-site" href="index.html">بازگشت به سایت</a>
+      </aside>
+
+      <main class="panel-main">
+        <section class="panel-top">
+          <div>
+            <p class="eyebrow">Live Demo Panel</p>
+            <h1>پنل نمایشی مشتری و مدیر</h1>
+            <p>این نسخه نمایشی است؛ برای نسخه واقعی باید به دیتابیس، ورود کاربران و بک‌اند وصل شود.</p>
+          </div>
+          <button class="btn btn-primary" type="button" data-open-ticket>تیکت جدید</button>
+        </section>
+
+        <section class="panel-view active" data-panel-view="client">
+          <div class="panel-grid">
+            <article class="stat-card"><span>پروژه فعال</span><strong>۳</strong><small>سایت، پنل، پشتیبانی</small></article>
+            <article class="stat-card"><span>تیکت باز</span><strong data-ticket-count>۲</strong><small>پاسخ در انتظار</small></article>
+            <article class="stat-card"><span>پیشرفت طراحی</span><strong>۷۲٪</strong><small>مرحله طراحی UI</small></article>
+          </div>
+          <div class="workbench">
+            <section class="panel-card">
+              <h2>خدمات درخواستی من</h2>
+              <div class="request-list">
+                <div><b>طراحی سایت شرکتی</b><span>در حال طراحی</span><small>تحویل: ۷ روز دیگر</small></div>
+                <div><b>راه‌اندازی سرور</b><span>تکمیل شده</span><small>SSL و DNS فعال</small></div>
+                <div><b>پنل کاربری</b><span>در انتظار تایید</span><small>نیاز به تایید ساختار</small></div>
+              </div>
+            </section>
+            <section class="panel-card">
+              <h2>ارتباط و تیکت</h2>
+              <div class="ticket-list" data-ticket-list>
+                <div><b>اصلاح رنگ صفحه خدمات</b><span>باز</span><small>آخرین پیام: امروز</small></div>
+                <div><b>افزودن صفحه قیمت‌ها</b><span>در حال بررسی</span><small>آخرین پیام: دیروز</small></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel-view" data-panel-view="admin">
+          <div class="panel-grid">
+            <article class="stat-card hot"><span>بازدید امروز</span><strong>۴۸۶</strong><small>خانه، خدمات، نمونه‌کار</small></article>
+            <article class="stat-card"><span>درخواست جدید</span><strong>۱۲</strong><small>۵ مورد پنل، ۳ مورد سرور</small></article>
+            <article class="stat-card"><span>درآمد پیش‌بینی</span><strong>۸۶M</strong><small>تومان</small></article>
+          </div>
+          <div class="workbench">
+            <section class="panel-card">
+              <h2>رفتار صفحات</h2>
+              <div class="analytics-bars">
+                <div><span style="width:92%"></span><b>خانه</b><small>۲۴۰ بازدید</small></div>
+                <div><span style="width:74%"></span><b>خدمات</b><small>۱۸۰ بازدید</small></div>
+                <div><span style="width:58%"></span><b>نمونه‌کار</b><small>۱۴۱ بازدید</small></div>
+                <div><span style="width:42%"></span><b>پنل</b><small>۱۰۳ بازدید</small></div>
+              </div>
+            </section>
+            <section class="panel-card">
+              <h2>مدیریت خدمات و قیمت‌ها</h2>
+              <div class="editable-list">
+                <label>طراحی سایت <input value="۱۸,۰۰۰,۰۰۰ تومان" /></label>
+                <label>راه‌اندازی سرور <input value="۴,۵۰۰,۰۰۰ تومان" /></label>
+                <label>پشتیبانی ماهانه <input value="۳,۰۰۰,۰۰۰ تومان" /></label>
+                <label>طراحی پنل <input value="۲۴,۰۰۰,۰۰۰ تومان" /></label>
+              </div>
+              <button class="btn btn-dark" type="button">ذخیره نمایشی</button>
+            </section>
+          </div>
+        </section>
+
+        <section id="cms" class="panel-view" data-panel-view="cms">
+          <div class="workbench wide">
+            <section class="panel-card">
+              <h2>مدیریت سایت موسسه علامه سخن</h2>
+              <p>در نسخه واقعی این بخش اجازه می‌دهد صفحه جدید بسازید، متن‌ها را ویرایش کنید، قیمت دوره‌ها را تغییر دهید و خدمات تازه تعریف کنید.</p>
+              <div class="cms-builder">
+                <label>عنوان صفحه جدید <input value="دوره فشرده فن بیان" /></label>
+                <label>قیمت یا نرخ <input value="۲,۴۰۰,۰۰۰ تومان" /></label>
+                <label>نوع خدمت <select><option>دوره آموزشی</option><option>مشاوره</option><option>کارگاه</option></select></label>
+                <label>توضیح کوتاه <textarea>آموزش کاربردی برای ارائه، سخنرانی و ارتباط موثر.</textarea></label>
+                <button class="btn btn-primary" type="button" data-add-page>ایجاد صفحه نمایشی</button>
+              </div>
+            </section>
+            <section class="panel-card">
+              <h2>صفحات و خدمات قابل ویرایش</h2>
+              <div class="page-list" data-page-list>
+                <div><b>صفحه اصلی علامه سخن</b><span>منتشر شده</span></div>
+                <div><b>دوره سخنوری</b><span>قیمت قابل تغییر</span></div>
+                <div><b>مشاوره آموزشی</b><span>در حال ویرایش</span></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel-view" data-panel-view="tools">
+          <div class="tools-grid">
+            <section class="panel-card">
+              <h2>محاسبه سریع قیمت</h2>
+              <label>تعداد صفحات <input type="number" min="1" value="5" data-pages-count /></label>
+              <label>پنل کاربری <select data-panel-level><option value="0">ندارد</option><option value="9000000" selected>معمولی</option><option value="18000000">پیشرفته</option></select></label>
+              <button class="btn btn-primary" type="button" data-calc-price>محاسبه</button>
+              <strong class="tool-result" data-price-result>حدود ۲۴,۰۰۰,۰۰۰ تومان</strong>
+            </section>
+            <section class="panel-card">
+              <h2>چک‌لیست تحویل</h2>
+              <label class="check-row"><input type="checkbox" checked /> طراحی موبایل</label>
+              <label class="check-row"><input type="checkbox" checked /> SSL و امنیت اولیه</label>
+              <label class="check-row"><input type="checkbox" /> اتصال فرم‌ها</label>
+              <label class="check-row"><input type="checkbox" /> آموزش مدیریت محتوا</label>
+            </section>
+            <section class="panel-card">
+              <h2>یادداشت پروژه</h2>
+              <textarea>مشتری رنگ‌بندی مدرن، منوی جذاب، پنل کامل و نمونه‌کارهای چند صنعت می‌خواهد.</textarea>
+              <button class="btn btn-dark" type="button">ذخیره یادداشت</button>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="ticket-dialog" data-ticket-dialog>
+      <form method="dialog">
+        <h2>ثبت تیکت جدید</h2>
+        <label>موضوع <input value="درخواست تغییر صفحه خدمات" data-ticket-title /></label>
+        <label>پیام <textarea>لطفاً رنگ‌بندی و اکشن‌های صفحه خدمات را پررنگ‌تر کنید.</textarea></label>
+        <div class="dialog-actions">
+          <button class="btn btn-ghost dark-text" value="cancel">انصراف</button>
+          <button class="btn btn-primary" value="default" data-submit-ticket>ثبت تیکت</button>
+        </div>
+      </form>
+    </dialog>
+    <script src="app.js"></script>
+  </body>
+</html>
