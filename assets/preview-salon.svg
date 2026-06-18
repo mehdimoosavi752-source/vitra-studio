@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">
+  <defs><linearGradient id="a" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#fff7fb"/><stop offset=".55" stop-color="#fff0e1"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="b" x1="0" x2="1"><stop stop-color="#e74c8a"/><stop offset="1" stop-color="#f6b24f"/></linearGradient></defs>
+  <rect width="960" height="620" rx="34" fill="url(#a)"/>
+  <rect x="44" y="36" width="872" height="64" rx="24" fill="#fff" opacity=".86"/>
+  <rect x="72" y="52" width="44" height="34" rx="12" fill="url(#b)"/><text x="132" y="78" font-family="Arial" font-size="24" font-weight="700" fill="#2a1822">Luna Beauty</text>
+  <rect x="612" y="56" width="62" height="16" rx="8" fill="#edbfd0"/><rect x="696" y="56" width="62" height="16" rx="8" fill="#edbfd0"/><rect x="778" y="49" width="110" height="30" rx="15" fill="url(#b)"/>
+  <text x="72" y="184" font-family="Arial" font-size="54" font-weight="800" fill="#2a1822">Beauty Booking</text><text x="72" y="232" font-family="Arial" font-size="24" fill="#7b5667">services, gallery, stylists and appointment flow</text>
+  <rect x="72" y="282" width="150" height="48" rx="18" fill="url(#b)"/><rect x="240" y="282" width="140" height="48" rx="18" fill="#fff"/>
+  <rect x="548" y="148" width="150" height="190" rx="36" fill="#f9bdd3"/><rect x="718" y="148" width="150" height="190" rx="18" fill="#2a1822"/><rect x="548" y="358" width="150" height="150" rx="28" fill="#f6b24f"/><rect x="718" y="358" width="150" height="150" rx="28" fill="#ffe5ef"/>
+  <rect x="72" y="416" width="130" height="96" rx="24" fill="#fff"/><rect x="222" y="416" width="130" height="96" rx="24" fill="#fff"/><rect x="372" y="416" width="130" height="96" rx="24" fill="#fff"/>
+</svg>

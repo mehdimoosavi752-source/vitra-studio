@@ -1,14 +1,88 @@
 const menuToggle = document.querySelector(".menu-toggle");
 let activeLanguage = localStorage.getItem("vitra-language") || "fa";
 
+const textDictionary = {
+  "خدمات": "Services",
+  "دموها": "Demos",
+  "ورود / ثبت‌نام": "Login / Sign up",
+  "تعرفه‌ها": "Pricing",
+  "شروع پروژه": "Start Project",
+  "خانه": "Home",
+  "دیدن پنل مدیر": "Open Admin Panel",
+  "طراحی لوگو": "Logo Design",
+  "طراحی سایت": "Website Design",
+  "سرور و زیرساخت": "Server and Infrastructure",
+  "پنل کاربری": "User Portal",
+  "پشتیبانی و رشد": "Support and Growth",
+  "داشبورد": "Dashboard",
+  "صفحه‌ساز": "Page Builder",
+  "محتوا": "Content",
+  "خدمات و قیمت": "Services and Pricing",
+  "مشتری‌ها": "Clients",
+  "تیکت‌ها": "Tickets",
+  "شبکه‌های اجتماعی": "Social Networks",
+  "فوتر": "Footer",
+  "خروج از پنل": "Logout",
+  "ساخت صفحه": "Create Page",
+  "تنظیم شبکه‌ها": "Social Settings",
+  "ایجاد صفحه جدید": "Create New Page",
+  "ذخیره متن": "Save Text",
+  "ذخیره خدمت": "Save Service",
+  "محاسبه": "Calculate",
+  "ثبت تیکت داخلی": "Create Internal Ticket",
+  "ذخیره و نمایش در فوتر": "Save and Show in Footer",
+  "ذخیره فوتر": "Save Footer",
+  "ورود": "Login",
+  "ثبت‌نام مشتری جدید": "Create New Client Account",
+  "ورود به دمو": "Open Demo",
+  "مشاهده دوره‌ها": "View Courses",
+  "پنل هنرجو": "Student Portal",
+  "رزرو نوبت": "Book Appointment",
+  "شروع رزرو": "Start Booking",
+  "پنل سالن": "Salon Panel",
+  "گرفتن نوبت": "Book Visit",
+  "پنل پذیرش": "Reception Panel",
+  "دیدن محصول": "View Product",
+  "پنل سفارش‌ها": "Orders Panel",
+  "طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی.": "Future-facing website design, development, portals, demos, and support."
+};
+
+function rememberOriginalText(element) {
+  if (!element.dataset.faOriginal) {
+    element.dataset.faOriginal = element.textContent.trim();
+  }
+}
+
+function translateLooseText(lang) {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach((node) => {
+    const original = node.parentElement?.dataset.faOriginal || node.nodeValue.trim();
+    const clean = original.trim();
+    if (!clean || node.parentElement?.closest("script, style")) return;
+    if (lang === "fa") {
+      if (node.parentElement?.dataset.faOriginal) node.nodeValue = node.parentElement.dataset.faOriginal;
+      return;
+    }
+    if (/[\u0600-\u06FF]/.test(clean)) {
+      node.parentElement.dataset.faOriginal = clean;
+      node.nodeValue = textDictionary[clean] || "Website management content";
+    }
+  });
+}
+
 function applyLanguage(lang) {
   activeLanguage = lang;
   localStorage.setItem("vitra-language", lang);
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
+  document.body.classList.toggle("is-ltr", lang === "en");
   document.querySelectorAll("[data-fa][data-en]").forEach((element) => {
+    rememberOriginalText(element);
     element.textContent = element.dataset[lang];
   });
+  translateLooseText(lang);
   document.querySelectorAll(".lang-switch").forEach((button) => {
     button.textContent = lang === "fa" ? "EN" : "FA";
   });
@@ -71,26 +145,6 @@ document.querySelectorAll(".nav a").forEach((link) => {
   }
 });
 
-const panelTabs = document.querySelectorAll("[data-panel-tab]");
-const panelViews = document.querySelectorAll("[data-panel-view]");
-
-function setPanelView(name) {
-  panelTabs.forEach((tab) => {
-    tab.classList.toggle("active", tab.dataset.panelTab === name);
-  });
-  panelViews.forEach((view) => {
-    view.classList.toggle("active", view.dataset.panelView === name);
-  });
-}
-
-panelTabs.forEach((tab) => {
-  tab.addEventListener("click", () => setPanelView(tab.dataset.panelTab));
-});
-
-if (["#cms", "#admin", "#client", "#services", "#tools"].includes(location.hash)) {
-  setPanelView(location.hash.replace("#", ""));
-}
-
 const ticketDialog = document.querySelector("[data-ticket-dialog]");
 const openTicket = document.querySelector("[data-open-ticket]");
 const submitTicket = document.querySelector("[data-submit-ticket]");
@@ -106,7 +160,10 @@ if (submitTicket && ticketList && ticketTitle) {
   submitTicket.addEventListener("click", (event) => {
     event.preventDefault();
     const item = document.createElement("div");
-    item.innerHTML = `<b>${ticketTitle.value || "تیکت جدید"}</b><span>ثبت شد</span><small>همین الان</small>`;
+    const fallbackTitle = activeLanguage === "fa" ? "تیکت جدید" : "New ticket";
+    const statusText = activeLanguage === "fa" ? "ثبت شد" : "Created";
+    const timeText = activeLanguage === "fa" ? "همین الان" : "Just now";
+    item.innerHTML = `<b>${ticketTitle.value || fallbackTitle}</b><span>${statusText}</span><small>${timeText}</small>`;
     ticketList.prepend(item);
     ticketCount.textContent = String(Number(ticketCount.textContent || 0) + 1);
     ticketDialog.close();
@@ -118,9 +175,9 @@ const pageList = document.querySelector("[data-page-list]");
 
 if (addPage && pageList) {
   addPage.addEventListener("click", () => {
-    const title = document.querySelector(".cms-builder input")?.value || "صفحه جدید";
+    const title = document.querySelector(".cms-builder input")?.value || (activeLanguage === "fa" ? "صفحه جدید" : "New page");
     const item = document.createElement("div");
-    item.innerHTML = `<b>${title}</b><span>پیش‌نویس تازه</span>`;
+    item.innerHTML = `<b>${title}</b><span>${activeLanguage === "fa" ? "پیش‌نویس تازه" : "Fresh draft"}</span>`;
     pageList.prepend(item);
   });
 }
@@ -132,9 +189,59 @@ if (calcPrice) {
     const pages = Number(document.querySelector("[data-pages-count]")?.value || 1);
     const panel = Number(document.querySelector("[data-panel-level]")?.value || 0);
     const total = pages * 3000000 + panel;
-    const formatted = new Intl.NumberFormat("fa-IR").format(total);
-    document.querySelector("[data-price-result]").textContent = `حدود ${formatted} تومان`;
+    const formatted = new Intl.NumberFormat(activeLanguage === "fa" ? "fa-IR" : "en-US").format(total);
+    document.querySelector("[data-price-result]").textContent =
+      activeLanguage === "fa" ? `حدود ${formatted} تومان` : `About ${formatted} Toman`;
   });
 }
 
+const defaultSocials = {
+  instagram: "https://instagram.com/vitrastudio",
+  telegram: "https://t.me/vitrastudio",
+  linkedin: "https://linkedin.com/company/vitrastudio",
+  whatsapp: "https://wa.me/989000000000",
+  email: "mailto:hello@vitrastudio.ir"
+};
+
+function readSocials() {
+  try {
+    return { ...defaultSocials, ...JSON.parse(localStorage.getItem("vitra-socials") || "{}") };
+  } catch {
+    return defaultSocials;
+  }
+}
+
+function applySocialLinks() {
+  const socials = readSocials();
+  document.querySelectorAll("[data-social-link]").forEach((link) => {
+    const key = link.dataset.socialLink;
+    const value = socials[key];
+    if (value) {
+      link.href = value;
+      link.classList.remove("is-empty");
+    } else {
+      link.removeAttribute("href");
+      link.classList.add("is-empty");
+    }
+  });
+  document.querySelectorAll("[data-social-input]").forEach((input) => {
+    input.value = socials[input.dataset.socialInput] || "";
+  });
+}
+
+const saveSocials = document.querySelector("[data-save-socials]");
+
+if (saveSocials) {
+  saveSocials.addEventListener("click", () => {
+    const socials = {};
+    document.querySelectorAll("[data-social-input]").forEach((input) => {
+      socials[input.dataset.socialInput] = input.value.trim();
+    });
+    localStorage.setItem("vitra-socials", JSON.stringify(socials));
+    applySocialLinks();
+    saveSocials.textContent = activeLanguage === "fa" ? "ذخیره شد" : "Saved";
+  });
+}
+
+applySocialLinks();
 applyLanguage(activeLanguage);

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="620" viewBox="0 0 960 620">
+  <defs><linearGradient id="a" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f4fffc"/><stop offset=".55" stop-color="#eef8ff"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="b" x1="0" x2="1"><stop stop-color="#08a5b8"/><stop offset="1" stop-color="#2fbf8f"/></linearGradient></defs>
+  <rect width="960" height="620" rx="34" fill="url(#a)"/>
+  <rect x="46" y="38" width="868" height="62" rx="22" fill="#fff" opacity=".88"/>
+  <rect x="74" y="52" width="42" height="36" rx="12" fill="url(#b)"/><text x="88" y="78" font-family="Arial" font-size="26" font-weight="800" fill="#fff">+</text><text x="134" y="78" font-family="Arial" font-size="24" font-weight="700" fill="#102a34">Sepid Clinic</text>
+  <rect x="600" y="56" width="70" height="18" rx="9" fill="#bfe4e5"/><rect x="694" y="56" width="70" height="18" rx="9" fill="#bfe4e5"/><rect x="790" y="50" width="100" height="30" rx="15" fill="url(#b)"/>
+  <text x="76" y="186" font-family="Arial" font-size="52" font-weight="800" fill="#102a34">Medical Appointments</text><text x="76" y="234" font-family="Arial" font-size="24" fill="#557079">doctors, visits, patient messages and reception</text>
+  <rect x="76" y="286" width="150" height="48" rx="18" fill="url(#b)"/>
+  <rect x="572" y="148" width="270" height="336" rx="30" fill="#fff"/><rect x="606" y="188" width="206" height="70" rx="22" fill="url(#b)"/><rect x="606" y="284" width="206" height="46" rx="16" fill="#eefaf7"/><rect x="606" y="350" width="206" height="46" rx="16" fill="#eefaf7"/><rect x="606" y="416" width="206" height="46" rx="16" fill="#eefaf7"/>
+  <rect x="76" y="420" width="132" height="92" rx="22" fill="#fff"/><rect x="232" y="420" width="132" height="92" rx="22" fill="#fff"/><rect x="388" y="420" width="132" height="92" rx="22" fill="#fff"/>
+</svg>

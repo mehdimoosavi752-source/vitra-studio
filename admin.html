@@ -3,66 +3,101 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>پنل مدیر Vitra Studio</title>
+    <title>پنل مدیریت Vitra Studio</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="portal-body" data-page="admin">
+  <body class="portal-body admin-portal" data-page="admin">
     <aside class="real-sidebar">
       <a class="panel-brand" href="index.html"><span><img src="assets/vitra-logo.svg" alt="" /></span><b>Vitra Admin</b></a>
-      <div class="user-badge"><strong>مدیر سایت</strong><span>admin@vitrastudio.ir</span><small>ID: VITRA-001</small></div>
+      <div class="user-badge"><strong>مدیر Vitra Studio</strong><span>admin@vitrastudio.ir</span><small>ID: VITRA-001</small></div>
       <nav>
         <a href="#overview">داشبورد</a>
-        <a href="#pages">صفحات سایت</a>
-        <a href="#content">محتوا و مطالب</a>
-        <a href="#services">خدمات و قیمت‌ها</a>
+        <a href="#site-builder">صفحه‌ساز</a>
+        <a href="#content">محتوا</a>
+        <a href="#services">خدمات و قیمت</a>
         <a href="#clients">مشتری‌ها</a>
         <a href="#tickets">تیکت‌ها</a>
         <a href="#demos">دموها</a>
-        <a href="#settings">تنظیمات</a>
+        <a href="#socials">شبکه‌های اجتماعی</a>
+        <a href="#footer">فوتر</a>
       </nav>
       <a class="back-site" href="login.html">خروج از پنل</a>
     </aside>
-    <main class="real-main">
+    <main class="real-main admin-workspace">
       <section id="overview" class="real-hero">
-        <div><p class="eyebrow">Business Control Center</p><h1>پنل مدیر برای کنترل کامل سایت، خدمات و مشتری‌ها</h1><p>اینجا نسخه نمایشی پنل واقعی است: صفحات، قیمت‌ها، خدمات، نمونه‌کارها، مشتری‌ها، تیکت‌ها و محتوای سایت از همین محیط مدیریت می‌شوند.</p></div>
-        <div class="quick-actions"><a class="btn btn-primary" href="#pages">ساخت صفحه جدید</a><a class="btn btn-ghost" href="#services">افزودن خدمت</a></div>
+        <div><p class="eyebrow">Vitra Control Room</p><h1>پنل کامل مدیریت سایت، خدمات، محتوا و مشتری‌ها</h1><p>از اینجا می‌توانی صفحه بسازی، متن‌ها را تغییر بدهی، قیمت خدمات را ویرایش کنی، دموها را مدیریت کنی، تیکت‌ها را ببینی و لینک شبکه‌های اجتماعی را به فوتر سایت وصل کنی.</p></div>
+        <div class="quick-actions"><a class="btn btn-primary" href="#site-builder">ساخت صفحه</a><a class="btn btn-ghost" href="#socials">تنظیم شبکه‌ها</a></div>
       </section>
-
       <section class="portal-stats">
-        <article><span>درخواست جدید</span><strong>۱۲</strong><small>۴ مورد امروز</small></article>
-        <article><span>صفحات فعال</span><strong>۲۸</strong><small>سایت و دموها</small></article>
-        <article><span>تیکت باز</span><strong>۷</strong><small>۳ مورد فوری</small></article>
-        <article><span>درآمد احتمالی</span><strong>۸۶M</strong><small>تومان</small></article>
+        <article><span>صفحات فعال</span><strong>۱۸</strong><small>خانه، خدمات، دموها، پنل و صفحات مشتری</small></article>
+        <article><span>خدمات قابل فروش</span><strong>۱۲</strong><small>طراحی، بازطراحی، سرور، پنل و پشتیبانی</small></article>
+        <article><span>درخواست‌های باز</span><strong data-ticket-count>۷</strong><small>تیکت، سفارش و تغییر محتوا</small></article>
+        <article><span>دموهای آماده</span><strong>۴</strong><small>آموزشگاه، سالن، مطب، فروشگاه</small></article>
       </section>
-
-      <section id="pages" class="manager-grid">
-        <article class="manager-card wide"><h2>صفحه‌ساز سایت</h2><div class="form-grid"><label>عنوان صفحه<input value="طراحی پنل مشتری و مدیر" /></label><label>آدرس صفحه<input value="/services/client-portal" /></label><label>نوع صفحه<select><option>خدمت</option><option>نمونه‌کار</option><option>لندینگ</option><option>مطلب</option></select></label><label>وضعیت<select><option>منتشر شده</option><option>پیش‌نویس</option></select></label><label class="full">توضیح کوتاه<textarea>طراحی پنل اختصاصی برای مدیریت مشتری، تیکت، قیمت و محتوا.</textarea></label></div><button class="btn btn-primary" type="button">ایجاد صفحه</button></article>
-        <article class="manager-card"><h2>صفحات قابل ویرایش</h2><div class="mini-list"><div><b>خانه</b><span>ویرایش هرو و دموها</span></div><div><b>خدمات</b><span>۵ خدمت فعال</span></div><div><b>نمونه‌کارها</b><span>۴ دموی اصلی</span></div><div><b>ورود پنل</b><span>مدیر و مشتری</span></div></div></article>
+      <section id="site-builder" class="manager-grid">
+        <article class="manager-card wide cms-builder">
+          <h2>صفحه‌ساز و توسعه سایت</h2>
+          <p>برای ساخت صفحه جدید، لندینگ، صفحه خدمت، نمونه‌کار یا مطلب آموزشی.</p>
+          <div class="form-grid">
+            <label>عنوان صفحه<input value="طراحی لوگو و هویت بصری" /></label>
+            <label>آدرس صفحه<input value="/services/logo-design" /></label>
+            <label>نوع صفحه<select><option>خدمت</option><option>نمونه‌کار</option><option>لندینگ</option><option>مطلب</option></select></label>
+            <label>وضعیت<select><option>منتشر شده</option><option>پیش‌نویس</option><option>در انتظار بررسی</option></select></label>
+            <label class="full">توضیح کوتاه<textarea>طراحی لوگو، رنگ، تایپوگرافی و سیستم هویت بصری برای برندهای دیجیتال.</textarea></label>
+          </div>
+          <button class="btn btn-primary" type="button" data-add-page>ایجاد صفحه جدید</button>
+        </article>
+        <article class="manager-card"><h2>صفحات قابل ویرایش</h2><div class="mini-list" data-page-list><div><b>خانه</b><span>هرو، خدمات، قیمت، CTA</span></div><div><b>خدمات</b><span>۱۲ خدمت قابل تغییر</span></div><div><b>نمونه‌کارها</b><span>۴ دمو با عکس صفحه اول</span></div><div><b>ورود و پنل</b><span>مدیر، مشتری، تیکت</span></div></div></article>
+        <article id="content" class="manager-card"><h2>ویرایش محتوای صفحه</h2><div class="form-grid"><label>بخش<select><option>پوستر صفحه اول</option><option>معرفی خدمات</option><option>نمونه‌کارها</option><option>فوتر</option></select></label><label>زبان<select><option>فارسی</option><option>English</option></select></label><label class="full">متن<textarea>سایت، دمو و پنل واقعی برای فروش خدمات دیجیتال.</textarea></label></div><button class="btn btn-ghost" type="button">ذخیره متن</button></article>
       </section>
-
-      <section id="content" class="manager-grid">
-        <article class="manager-card"><h2>مدیریت مطالب</h2><div class="mini-list"><div><b>راهنمای انتخاب سرور</b><span>پیش‌نویس</span></div><div><b>چرا بازطراحی سایت مهم است؟</b><span>منتشر شده</span></div><div><b>مزیت پنل مشتری</b><span>در حال ویرایش</span></div></div><button class="btn btn-dark" type="button">مطلب جدید</button></article>
-        <article class="manager-card"><h2>بلوک‌های صفحه اصلی</h2><label class="check-row"><input type="checkbox" checked /> پوستر تمام‌صفحه</label><label class="check-row"><input type="checkbox" checked /> دموهای کسب‌وکار</label><label class="check-row"><input type="checkbox" checked /> خدمات و قیمت‌ها</label><label class="check-row"><input type="checkbox" checked /> فرم شروع پروژه</label></article>
-      </section>
-
       <section id="services" class="manager-grid">
-        <article class="manager-card wide"><h2>خدمات و قیمت‌گذاری</h2><div class="price-editor"><label>طراحی لوگو<input value="۶,۵۰۰,۰۰۰ تومان" /></label><label>طراحی سایت<input value="۱۸,۰۰۰,۰۰۰ تومان" /></label><label>پنل مشتری و مدیر<input value="۲۴,۰۰۰,۰۰۰ تومان" /></label><label>راه‌اندازی سرور<input value="۴,۵۰۰,۰۰۰ تومان" /></label><label>پشتیبانی ماهانه<input value="۳,۰۰۰,۰۰۰ تومان" /></label><label>بازطراحی و ارتقا<input value="۱۲,۰۰۰,۰۰۰ تومان" /></label></div><button class="btn btn-primary" type="button">ذخیره قیمت‌ها</button></article>
+        <article class="manager-card wide">
+          <h2>مدیریت خدمات و قیمت‌ها</h2>
+          <div class="price-editor">
+            <label>نام خدمت<input value="طراحی و بازطراحی سایت" /></label>
+            <label>قیمت پایه<input value="۹,۸۰۰,۰۰۰ تومان" /></label>
+            <label>زمان اجرا<input value="۱۴ تا ۲۸ روز" /></label>
+            <label>وضعیت<select><option>فعال</option><option>غیرفعال</option><option>ویژه</option></select></label>
+          </div>
+          <button class="btn btn-primary" type="button">ذخیره خدمت</button>
+        </article>
+        <article class="manager-card"><h2>محاسبه سریع قیمت</h2><div class="form-grid"><label>تعداد صفحات<input type="number" value="6" data-pages-count /></label><label>سطح پنل<select data-panel-level><option value="0">بدون پنل</option><option value="12000000">پنل مشتری</option><option value="22000000">پنل کامل مدیر</option></select></label></div><button class="btn btn-ghost" type="button" data-calc-price>محاسبه</button><p data-price-result>آماده محاسبه</p></article>
+        <article class="manager-card"><h2>پکیج‌های فروش</h2><div class="mini-list"><div><b>شروع سریع</b><span>لندینگ + فرم</span></div><div><b>کسب‌وکار کامل</b><span>سایت چندصفحه‌ای + پنل</span></div><div><b>رشد و پشتیبانی</b><span>بهبود، سئو، محتوا</span></div></div></article>
       </section>
-
       <section id="clients" class="manager-grid">
-        <article class="manager-card"><h2>مشتری‌ها</h2><div class="mini-list"><div><b>موسسه علامه سخن</b><span>سایت آموزشی فعال</span></div><div><b>سالن زیبایی نیلا</b><span>دموی رزرو</span></div><div><b>کلینیک مهر</b><span>درخواست جدید</span></div></div></article>
-        <article id="tickets" class="manager-card"><h2>تیکت‌ها</h2><div class="mini-list"><div><b>ویرایش قیمت دوره علامه</b><span>فوری</span></div><div><b>افزودن صفحه خدمات لوگو</b><span>باز</span></div><div><b>اتصال فرم تماس</b><span>در صف</span></div></div></article>
+        <article class="manager-card"><h2>مشتری‌ها و پروژه‌ها</h2><div class="mini-list"><div><b>موسسه علامه سخن</b><span>سایت آموزشی فعال</span></div><div><b>Luna Beauty</b><span>دموی رزرو سالن</span></div><div><b>کلینیک سپید</b><span>نوبت‌دهی پزشکی</span></div><div><b>Volt Shop</b><span>فروشگاه آزمایشی</span></div></div></article>
+        <article id="tickets" class="manager-card"><h2>تیکت‌ها و ارتباط</h2><div class="mini-list" data-ticket-list><div><b>ویرایش قیمت دوره علامه</b><span>فوری</span><small>امروز</small></div><div><b>افزودن صفحه خدمات لوگو</b><span>باز</span><small>دیروز</small></div><div><b>اتصال فرم تماس</b><span>در صف</span><small>این هفته</small></div></div><button class="btn btn-primary" type="button" data-open-ticket>ثبت تیکت داخلی</button></article>
       </section>
-
-      <section id="demos" class="manager-grid">
-        <article class="manager-card wide"><h2>دموهای قابل ارائه به مشتری</h2><div class="demo-manager"><a href="demo-academy.html">آموزشگاه</a><a href="demo-salon.html">آرایشگاه</a><a href="demo-clinic.html">مطب پزشکی</a><a href="demo-shop.html">فروشگاه</a></div></article>
+      <section id="demos" class="manager-card wide">
+        <h2>مدیریت دموها</h2>
+        <div class="demo-manager"><a href="demo-academy.html">آکادمی نوا</a><a href="demo-salon.html">Luna Beauty</a><a href="demo-clinic.html">کلینیک سپید</a><a href="demo-shop.html">Volt Shop</a></div>
       </section>
-
-      <section id="settings" class="manager-grid">
-        <article class="manager-card"><h2>تنظیمات سایت</h2><label>نام برند<input value="Vitra Studio" /></label><label>ایمیل تماس<input value="hello@vitrastudio.ir" /></label><label>زبان پیش‌فرض<select><option>فارسی</option><option>English</option></select></label></article>
-        <article class="manager-card"><h2>دسترسی‌ها</h2><div class="mini-list"><div><b>مدیر اصلی</b><span>همه دسترسی‌ها</span></div><div><b>ویرایشگر محتوا</b><span>صفحات و مطالب</span></div><div><b>پشتیبانی</b><span>تیکت و مشتری</span></div></div></article>
+      <section id="socials" class="manager-card wide">
+        <h2>شبکه‌های اجتماعی و لینک‌های فوتر</h2>
+        <p>هر لینکی اینجا وارد شود، در فوتر سایت با باز شدن در تب جدید نمایش داده می‌شود.</p>
+        <div class="form-grid">
+          <label>Instagram<input data-social-input="instagram" value="https://instagram.com/vitrastudio" /></label>
+          <label>Telegram<input data-social-input="telegram" value="https://t.me/vitrastudio" /></label>
+          <label>LinkedIn<input data-social-input="linkedin" value="https://linkedin.com/company/vitrastudio" /></label>
+          <label>WhatsApp<input data-social-input="whatsapp" value="https://wa.me/989000000000" /></label>
+          <label class="full">ایمیل کاری<input data-social-input="email" value="mailto:hello@vitrastudio.ir" /></label>
+        </div>
+        <button class="btn btn-primary" type="button" data-save-socials>ذخیره و نمایش در فوتر</button>
+      </section>
+      <section id="footer" class="manager-grid">
+        <article class="manager-card"><h2>تنظیم فوتر</h2><div class="form-grid"><label>عنوان فوتر<input value="Vitra Studio" /></label><label>متن کوتاه<input value="طراحی، توسعه و مدیریت سایت‌های آینده‌نگر" /></label></div><button class="btn btn-ghost" type="button">ذخیره فوتر</button></article>
+        <article class="manager-card"><h2>گزارش رفتار کاربران</h2><div class="mini-list"><div><b>صفحه نمونه‌کار</b><span>بیشترین کلیک</span></div><div><b>ورود پنل</b><span>۱۲ بازدید امروز</span></div><div><b>دموی فروشگاه</b><span>۴ کلیک محصول</span></div></div></article>
       </section>
     </main>
+    <dialog data-ticket-dialog>
+      <form method="dialog" class="manager-card">
+        <h2>ثبت تیکت داخلی</h2>
+        <label>عنوان تیکت<input data-ticket-title placeholder="مثلا تغییر قیمت خدمات" /></label>
+        <label>توضیح<textarea placeholder="جزئیات درخواست"></textarea></label>
+        <button class="btn btn-primary" data-submit-ticket>ثبت</button>
+      </form>
+    </dialog>
+    <script src="app.js"></script>
   </body>
 </html>
