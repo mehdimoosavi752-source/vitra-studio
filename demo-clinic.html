@@ -1,44 +1,66 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>کلینیک سپید | دموی پزشکی</title>
+    <title>Sepid Clinic | Real Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="demo-clinic-site">
-    <aside class="clinic-side-nav">
-      <a href="portfolio.html">سپید</a>
-      <nav><a href="demo-clinic-doctors.html">پزشکان</a><a href="demo-clinic-services.html">خدمات</a><a href="demo-clinic-appointment.html">نوبت</a></nav>
-    </aside>
-    <main class="clinic-main">
-      <section class="demo-home-shot clinic-shot">
-        <img src="assets/preview-clinic-ui.png" alt="نمای کامل صفحه خانه کلینیک سپید" />
-      </section>
-      <section class="clinic-hero">
-        <div>
-          <small>Sepid Medical Center</small>
-          <h1>نوبت‌دهی آرام، معرفی پزشک و پیگیری پیام بیمار.</h1>
-          <p>این دمو برای مطب و مرکز درمانی طراحی شده؛ تمرکز آن اعتماد، نظم پذیرش، کاهش تماس‌های پراکنده و پیگیری بیمار است.</p>
-          <a href="demo-clinic-appointment.html">گرفتن نوبت</a>
-        </div>
-        <div class="clinic-status-board">
-          <article><span>امروز</span><b>۲۴ نوبت</b></article>
-          <article><span>پزشک فعال</span><b>۵ نفر</b></article>
-          <article><span>پیام بیمار</span><b>۱۲ مورد</b></article>
-        </div>
-      </section>
-      <section class="clinic-record-grid">
-        <article><h2>پرونده سبک</h2><p>ثبت وضعیت مراجعه، یادداشت پذیرش و پیام بیمار.</p></article>
-        <article><h2>برنامه پزشک</h2><p>روزهای کاری، ظرفیت و نوع مراجعه قابل ویرایش.</p></article>
-        <article><h2>سوالات پرتکرار</h2><p>مدارک لازم، زمان پاسخ، لغو نوبت و مسیر تماس.</p></article>
-      </section>
-      <section class="clinic-care-flow">
-        <div><b>۱</b><span>انتخاب پزشک</span></div>
-        <div><b>۲</b><span>تکمیل اطلاعات بیمار</span></div>
-        <div><b>۳</b><span>ثبت نوبت و پیام پذیرش</span></div>
+  <body class="real-demo clinic-demo">
+    <main class="clinic-app">
+      <aside class="clinic-sidebar">
+        <a class="demo-back" href="portfolio.html">Vitra Studio</a>
+        <div class="clinic-logo">Sepid Clinic</div>
+        <a class="active" href="#overview">Overview</a>
+        <a href="demo-clinic-doctors.html">Doctors</a>
+        <a href="demo-clinic-appointment.html">Appointments</a>
+        <a href="demo-clinic-services.html">Services</a>
+        <button data-demo-action="clinic-emergency">Emergency call</button>
+      </aside>
+
+      <section class="clinic-main" id="overview">
+        <header class="clinic-top">
+          <div>
+            <p>Healthcare dashboard</p>
+            <h1>Appointments, specialists and patient care in one clean panel.</h1>
+          </div>
+          <div class="clinic-search">Search patient, doctor, service</div>
+        </header>
+
+        <section class="clinic-stats">
+          <article><span>Today visits</span><strong data-clinic-visits>42</strong></article>
+          <article><span>Available doctors</span><strong>12</strong></article>
+          <article><span>Patient rating</span><strong>4.9</strong></article>
+        </section>
+
+        <section class="clinic-grid">
+          <div class="clinic-card appointments">
+            <h2>Appointments</h2>
+            <button class="is-active" data-clinic-day="Today">Today</button>
+            <button data-clinic-day="Tomorrow">Tomorrow</button>
+            <div class="appointment-row"><b>09:00</b><span>Cardiology - Dr. Nouri</span><em>Ready</em></div>
+            <div class="appointment-row"><b>11:30</b><span>Dental check - Dr. Rahimi</span><em>New</em></div>
+            <div class="appointment-row"><b>15:45</b><span>Skin care - Dr. Amini</span><em>Paid</em></div>
+            <p data-clinic-output>Showing Today schedule.</p>
+          </div>
+
+          <div class="clinic-card doctors">
+            <h2>Specialists</h2>
+            <div class="doctor-chip"><span>NR</span><div><b>Dr. Nouri</b><p>Cardiology</p></div><button>Call</button></div>
+            <div class="doctor-chip"><span>RA</span><div><b>Dr. Rahimi</b><p>Dentistry</p></div><button>Call</button></div>
+            <div class="doctor-chip"><span>AM</span><div><b>Dr. Amini</b><p>Dermatology</p></div><button>Call</button></div>
+          </div>
+
+          <div class="clinic-card patient">
+            <h2>Patient message</h2>
+            <p>Prescription uploaded, lab result waiting for doctor approval.</p>
+            <textarea placeholder="Write a secure note"></textarea>
+            <button data-demo-action="clinic-note">Send note</button>
+          </div>
+        </section>
       </section>
     </main>
+    <script src="demo-real.js"></script>
   </body>
 </html>

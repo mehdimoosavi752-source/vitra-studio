@@ -1,45 +1,74 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Luna Beauty | دموی سالن زیبایی</title>
+    <title>Luna Beauty | Real Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="demo-salon-site">
-    <header class="salon-header">
-      <a href="portfolio.html">بازگشت</a>
-      <b>Luna Beauty</b>
-      <nav><a href="demo-salon-services.html">خدمات</a><a href="demo-salon-gallery.html">گالری</a><a href="demo-salon-booking.html">رزرو</a></nav>
+  <body class="real-demo salon-demo">
+    <header class="salon-nav">
+      <a class="demo-back" href="portfolio.html">Vitra Studio</a>
+      <div class="salon-brand">Luna Beauty</div>
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#booking">Booking</a>
+      </nav>
+      <a class="salon-cta" href="demo-salon-booking.html">Book Now</a>
     </header>
-    <main>
-      <section class="demo-home-shot salon-shot">
-        <img src="assets/preview-salon-ui.png" alt="نمای کامل صفحه خانه Luna Beauty" />
-      </section>
+
+    <main class="salon-stage">
       <section class="salon-hero">
-        <div class="salon-photo-wall"><i></i><i></i><i></i><i></i></div>
-        <div class="salon-intro">
-          <small>Beauty Booking Studio</small>
-          <h1>گالری قبل/بعد، خدمات زیبایی و رزرو نوبت با حس لوکس.</h1>
-          <p>این سایت برای سالن زیبایی، ناخن، میکاپ، پوست و کلینیک زیبایی ساخته شده؛ تصویرمحور، رزرو محور و مناسب نمایش نمونه‌کار.</p>
-          <a class="salon-book" href="demo-salon-booking.html">رزرو نوبت</a>
+        <div class="salon-copy">
+          <span>Luxury salon experience</span>
+          <h1>Beauty appointments with a soft editorial booking journey.</h1>
+          <p>A salon website demo with service packages, stylist choice, gallery wall, booking calendar and customer offers.</p>
+          <button data-demo-action="salon-glow">Reserve a chair</button>
+        </div>
+        <div class="salon-collage">
+          <div class="salon-photo large"></div>
+          <div class="salon-photo warm"></div>
+          <div class="salon-photo detail"></div>
+          <div class="booking-ticket">
+            <b>Next available</b>
+            <strong data-salon-slot>Today, 18:30</strong>
+            <small>Color studio - Luna master</small>
+          </div>
         </div>
       </section>
-      <section class="salon-service-menu">
-        <div><span>01</span><h2>رنگ و لایت</h2><p>انتخاب متخصص، روز آزاد و قیمت متغیر.</p></div>
-        <div><span>02</span><h2>میکاپ</h2><p>مشاوره، تست، پکیج مراسم و رزرو فوری.</p></div>
-        <div><span>03</span><h2>پاکسازی پوست</h2><p>پرونده مشتری، یادآوری نوبت و پیام پیگیری.</p></div>
+
+      <section class="salon-services" id="services">
+        <h2>Signature services</h2>
+        <div class="salon-service-list">
+          <button class="is-active" data-salon-service="Hair color|120 min|$90">Hair color <span>$90</span></button>
+          <button data-salon-service="Skin glow facial|70 min|$64">Skin glow <span>$64</span></button>
+          <button data-salon-service="Bridal styling|180 min|$180">Bridal styling <span>$180</span></button>
+        </div>
+        <aside class="salon-service-card">
+          <p>Selected package</p>
+          <h3 data-salon-name>Hair color</h3>
+          <span data-salon-meta>120 min - $90</span>
+          <a href="demo-salon-services.html">View service page</a>
+        </aside>
       </section>
-      <section class="salon-editorial-block">
-        <h2>نمایش نمونه‌کار قبل از رزرو</h2>
-        <p>مشتری قبل از رزرو، سبک کار، نمونه‌ها، متخصص‌ها و قیمت‌ها را می‌بیند؛ بعد با چند کلیک نوبت می‌گیرد.</p>
+
+      <section class="salon-gallery" id="gallery">
+        <div class="gallery-card tall"><span>Color bar</span></div>
+        <div class="gallery-card"><span>Makeup room</span></div>
+        <div class="gallery-card round"><span>Nail lounge</span></div>
+        <div class="gallery-card dark"><span>Stylist desk</span></div>
       </section>
-      <section class="salon-booking-strip">
-        <article><b>انتخاب خدمت</b><span>رنگ، میکاپ، ناخن، پوست</span></article>
-        <article><b>انتخاب متخصص</b><span>نمایش زمان‌های آزاد هر نفر</span></article>
-        <article><b>یادآوری نوبت</b><span>پیامک و پنل مشتری</span></article>
+
+      <section class="salon-booking" id="booking">
+        <h2>Choose stylist</h2>
+        <button data-salon-stylist="Mina">Mina</button>
+        <button data-salon-stylist="Roya">Roya</button>
+        <button data-salon-stylist="Luna">Luna</button>
+        <p data-salon-output>Your booking preview is ready.</p>
       </section>
     </main>
+    <script src="demo-real.js"></script>
   </body>
 </html>

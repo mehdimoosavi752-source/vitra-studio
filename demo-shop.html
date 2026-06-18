@@ -1,48 +1,91 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Volt Shop | دموی فروشگاه</title>
+    <title>Volt Shop | Real Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="demo-shop-site">
-    <header class="shop-header">
-      <a class="shop-logo" href="portfolio.html">Volt</a>
-      <nav><a href="demo-shop-category.html">محصولات</a><a href="demo-shop-product.html">پیشنهاد ویژه</a><a href="demo-shop-cart.html">سبد خرید</a><a href="client.html">پیگیری سفارش</a></nav>
+  <body class="real-demo shop-demo">
+    <header class="shop-nav">
+      <a class="demo-back" href="portfolio.html">Vitra Studio</a>
+      <div class="shop-brand">Volt Shop</div>
+      <nav>
+        <a href="demo-shop-category.html">Products</a>
+        <a href="#deals">Deals</a>
+        <a href="#tracking">Track order</a>
+      </nav>
+      <a class="shop-cart-link" href="demo-shop-cart.html">Cart <span data-cart-count>0</span></a>
     </header>
-    <main>
-      <section class="demo-home-shot shop-shot">
-        <img src="assets/preview-shop-ui.png" alt="نمای کامل صفحه خانه Volt Shop" />
-      </section>
+
+    <main class="shop-floor">
       <section class="shop-hero">
-        <div class="shop-campaign">
-          <small>Campaign ready commerce</small>
-          <h1>فروشگاه محصول‌محور با پیشنهاد ویژه، سبد خرید و پیگیری سفارش.</h1>
-          <p>این دمو برای برندهایی است که محصول، کمپین، تخفیف، موجودی و مسیر خرید سریع می‌خواهند.</p>
-          <a href="demo-shop-product.html">دیدن محصول ویژه</a>
+        <div class="shop-copy">
+          <span>Audio gear store</span>
+          <h1>Premium wireless sound with fast cart, deals and product comparison.</h1>
+          <p>An ecommerce demo with product filters, cart state, featured product, discount panel and order tracking.</p>
+          <button data-shop-add="Volt Air Max">Add hero product</button>
         </div>
-        <div class="shop-product-stage">
-          <div class="shop-product-card"><b>Volt X1</b><span>۱.۲ میلیون</span></div>
-          <div class="shop-mini-card"></div>
-          <div class="shop-mini-card"></div>
+        <div class="product-orbit">
+          <div class="headphone-shape"></div>
+          <div class="deal-badge">-30%</div>
+          <div class="sound-card">Noise cancelling active</div>
         </div>
       </section>
-      <section class="shop-checkout-lane">
-        <span>انتخاب محصول</span><i></i><span>سبد خرید</span><i></i><span>پرداخت</span><i></i><span>پیگیری سفارش</span>
+
+      <section class="shop-layout">
+        <aside class="shop-sidebar">
+          <h2>Categories</h2>
+          <button class="is-active" data-shop-filter="all">All</button>
+          <button data-shop-filter="headphone">Headphones</button>
+          <button data-shop-filter="speaker">Speakers</button>
+          <button data-shop-filter="watch">Smart watch</button>
+        </aside>
+
+        <section class="product-grid">
+          <article class="product-card" data-product-type="headphone">
+            <div class="product-art orange"></div>
+            <h3>Volt Air Max</h3>
+            <p>$149 - ANC wireless</p>
+            <button data-shop-add="Volt Air Max">Add to cart</button>
+          </article>
+          <article class="product-card" data-product-type="speaker">
+            <div class="product-art blue"></div>
+            <h3>Pulse Mini</h3>
+            <p>$79 - portable speaker</p>
+            <button data-shop-add="Pulse Mini">Add to cart</button>
+          </article>
+          <article class="product-card" data-product-type="watch">
+            <div class="product-art green"></div>
+            <h3>Volt Band</h3>
+            <p>$99 - fitness watch</p>
+            <button data-shop-add="Volt Band">Add to cart</button>
+          </article>
+        </section>
+
+        <aside class="cart-panel">
+          <h2>Live cart</h2>
+          <div data-cart-lines>No item yet.</div>
+          <a href="demo-shop-cart.html">Checkout</a>
+        </aside>
       </section>
-      <section class="shop-merch-grid">
-        <article><h2>کد تخفیف</h2><p>کمپین، زمان پایان و محدودیت استفاده.</p></article>
-        <article><h2>وضعیت سفارش</h2><p>ثبت، آماده‌سازی، ارسال و تحویل.</p></article>
-        <article><h2>گزارش فروش</h2><p>محصول پرفروش، سبدهای رهاشده و درآمد.</p></article>
+
+      <section class="shop-deals" id="deals">
+        <div>
+          <h2>Flash deal</h2>
+          <p>Use coupon VOLT30 for selected audio products.</p>
+        </div>
+        <button data-demo-action="shop-coupon">Apply coupon</button>
       </section>
-      <section class="shop-category-wall">
-        <a href="demo-shop-category.html">لوازم هوشمند</a>
-        <a href="demo-shop-product.html">پیشنهاد روز</a>
-        <a href="demo-shop-cart.html">سبد خرید</a>
-        <a href="client.html">پیگیری سفارش</a>
+
+      <section class="tracking-card" id="tracking">
+        <h2>Track order</h2>
+        <input placeholder="Order code: VT-2048" />
+        <button data-demo-action="shop-track">Check status</button>
+        <p data-shop-status>Awaiting order code.</p>
       </section>
     </main>
+    <script src="demo-real.js"></script>
   </body>
 </html>

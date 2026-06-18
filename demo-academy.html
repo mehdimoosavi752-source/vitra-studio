@@ -1,48 +1,103 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>آکادمی نوا | دموی آموزشگاهی</title>
+    <title>Nova Academy | Real Demo</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="demo-academy-site">
-    <header class="academy-header">
-      <a class="academy-brand" href="portfolio.html"><span>نـ</span><b>آکادمی نوا</b></a>
-      <nav><a href="demo-academy-courses.html">دوره‌ها</a><a href="demo-academy-teachers.html">مدرس‌ها</a><a href="demo-academy-register.html">ثبت‌نام</a><a href="client.html">پنل هنرجو</a></nav>
+  <body class="real-demo academy-demo">
+    <header class="academy-nav">
+      <a class="demo-back" href="portfolio.html">Vitra Studio</a>
+      <div class="academy-brand"><span>N</span>Nova Academy</div>
+      <nav>
+        <a href="#courses">Courses</a>
+        <a href="#teachers">Teachers</a>
+        <a href="#calendar">Calendar</a>
+      </nav>
+      <a class="academy-cta" href="demo-academy-register.html">Enroll</a>
     </header>
-    <main>
-      <section class="demo-home-shot academy-shot">
-        <img src="assets/preview-academy-ui.png" alt="نمای کامل صفحه خانه آکادمی نوا" />
-      </section>
+
+    <main class="academy-shell">
       <section class="academy-hero">
         <div class="academy-copy">
-          <small>Nova Learning Platform</small>
-          <h1>مسیر یادگیری، کلاس آنلاین و پنل هنرجو در یک سایت آموزشی.</h1>
-          <p>این دمو برای آموزشگاه زبان، مهارت، کنکور و دوره‌های آنلاین طراحی شده؛ تمرکز آن روی نظم آموزشی، برنامه کلاس، مدرس، فایل تمرین، پرداخت و پیگیری پیشرفت است.</p>
-          <div class="academy-actions"><a href="demo-academy-courses.html">دیدن دوره‌ها</a><a href="demo-academy-register.html">ثبت‌نام سریع</a></div>
+          <p class="academy-kicker">Online learning platform</p>
+          <h1>Build future skills with live classes, mentors and progress tracking.</h1>
+          <p>Nova Academy is a complete education website demo with course discovery, teacher profiles, live schedule, student dashboard and enrollment flow.</p>
+          <div class="academy-actions">
+            <button data-demo-action="academy-focus">Start learning</button>
+            <a href="demo-academy-courses.html">Explore courses</a>
+          </div>
         </div>
-        <div class="academy-learning-ui">
-          <div class="academy-timeline"><span></span><span></span><span></span><span></span></div>
-          <article><small>دوره فعال</small><h2>مکالمه پیشرفته</h2><p>۱۲ جلسه، فایل تمرین، آزمون پایان دوره</p></article>
-          <article><small>پیشرفت هنرجو</small><strong>۷۸٪</strong><p>۳ تمرین باقی مانده</p></article>
+        <aside class="academy-dashboard">
+          <div class="academy-search">
+            <span>Search course</span>
+            <strong>UI Design</strong>
+          </div>
+          <div class="academy-progress">
+            <div>
+              <p>Weekly progress</p>
+              <strong data-progress-value>68%</strong>
+            </div>
+            <input data-demo-range="progress" type="range" min="20" max="100" value="68" />
+          </div>
+          <div class="academy-live-card">
+            <span class="live-dot"></span>
+            <div>
+              <b>Live now</b>
+              <p>Product Strategy with Sara Lee</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="academy-grid" id="courses">
+        <div class="academy-section-title">
+          <h2>Popular courses</h2>
+          <div class="academy-filters">
+            <button class="is-active" data-filter-course="all">All</button>
+            <button data-filter-course="design">Design</button>
+            <button data-filter-course="code">Code</button>
+            <button data-filter-course="business">Business</button>
+          </div>
         </div>
+        <article class="course-card" data-course="design">
+          <span>Design</span>
+          <h3>UX Research Sprint</h3>
+          <p>8 modules, mentor review, certificate.</p>
+          <button data-demo-action="academy-selected">Add to path</button>
+        </article>
+        <article class="course-card" data-course="code">
+          <span>Code</span>
+          <h3>Frontend Lab</h3>
+          <p>Components, dashboards and launch-ready UI.</p>
+          <button data-demo-action="academy-selected">Add to path</button>
+        </article>
+        <article class="course-card" data-course="business">
+          <span>Business</span>
+          <h3>Digital Growth</h3>
+          <p>Analytics, funnels, pricing and campaigns.</p>
+          <button data-demo-action="academy-selected">Add to path</button>
+        </article>
       </section>
-      <section class="academy-course-board">
-        <article><b>زبان انگلیسی</b><span>۳.۲ میلیون</span><p>سطح‌بندی، ظرفیت و مدرس قابل تغییر.</p></article>
-        <article><b>طراحی رابط کاربری</b><span>۴.۸ میلیون</span><p>پروژه عملی، نقد نمونه‌کار و فایل تمرین.</p></article>
-        <article><b>مشاوره آزمون</b><span>۴۵۰ هزار</span><p>آزمون آزمایشی، گزارش نتیجه و برنامه مطالعه.</p></article>
-      </section>
-      <section class="academy-panel-strip">
-        <div><h2>پنل هنرجو</h2><p>برنامه کلاس، فایل‌ها، پیام مدرس، وضعیت پرداخت، تیکت و پیشرفت آموزشی.</p></div>
-        <a href="client.html">ورود به پنل نمونه</a>
-      </section>
-      <section class="academy-syllabus">
-        <div><span>Week 01</span><b>تعیین سطح و هدف‌گذاری</b></div>
-        <div><span>Week 04</span><b>تمرین، کلاس زنده و فایل تکلیف</b></div>
-        <div><span>Week 08</span><b>آزمون، گزارش پیشرفت و گواهی</b></div>
+
+      <section class="academy-bottom" id="teachers">
+        <div class="teacher-panel">
+          <h2>Mentor team</h2>
+          <div class="teacher-row"><span>SL</span><div><b>Sara Lee</b><p>Product Design</p></div><button>Book</button></div>
+          <div class="teacher-row"><span>AM</span><div><b>Arman Miles</b><p>Frontend Systems</p></div><button>Book</button></div>
+          <div class="teacher-row"><span>NK</span><div><b>Nina Kim</b><p>Startup Growth</p></div><button>Book</button></div>
+        </div>
+        <div class="calendar-panel" id="calendar">
+          <h2>Today schedule</h2>
+          <button data-schedule="09:30">09:30 - UI critique</button>
+          <button data-schedule="12:00">12:00 - Code review</button>
+          <button data-schedule="17:30">17:30 - Growth clinic</button>
+          <p data-schedule-output>Pick a class to preview the booking state.</p>
+        </div>
       </section>
     </main>
+    <script src="demo-real.js"></script>
   </body>
 </html>

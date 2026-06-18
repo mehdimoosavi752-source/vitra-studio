@@ -1,15 +1,1 @@
-﻿Vitra Studio - MATCHED DEMO VERSION
-
-این پوشه نسخه تمیز و جدید سایت است.
-برای آپلود، فقط محتویات همین پوشه را در GitHub بارگذاری کن.
-
-در این نسخه، هر صفحه دمو در ابتدای خودش همان تصویر خانه‌ای را نشان می‌دهد که در صفحه نمونه‌کارها دیده می‌شود.
-
-فایل اصلی سایت:
-index.html
-
-صفحه نمونه کارها و دموها:
-portfolio.html
-
-پنل مدیر:
-admin.html
+﻿Upload the contents of this folder. Demo homepages are real HTML/CSS/JS websites, not screenshots.

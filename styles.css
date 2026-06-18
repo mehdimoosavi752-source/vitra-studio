@@ -3433,3 +3433,993 @@ textarea {
     min-height: auto;
   }
 }
+/* Pixel-matched demo homepages: the first screen uses the approved preview image directly. */
+.exact-demo-page {
+  margin: 0;
+  min-height: 100vh;
+  background: #0b0f15;
+}
+
+.exact-demo-page main.exact-home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #0b0f15;
+}
+
+.exact-demo-page main::before,
+.exact-demo-page main::after {
+  content: none;
+}
+
+.exact-home img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  border-radius: 12px;
+}
+
+.hotspot:focus-visible {
+  outline: 3px solid rgba(73, 190, 255, 0.9);
+  outline-offset: 3px;
+}
+
+.academy-courses { top: 3.2%; left: 42%; width: 9%; height: 5%; }
+.academy-teachers { top: 3.2%; left: 51.5%; width: 9%; height: 5%; }
+.academy-enroll { top: 2%; right: 2.4%; width: 9%; height: 5.4%; }
+.exact-academy .back-portfolio { top: 2%; left: 1.2%; width: 15%; height: 6%; }
+
+.salon-services { top: 24%; left: 10%; width: 8%; height: 5%; }
+.salon-gallery { top: 24%; left: 20%; width: 8%; height: 5%; }
+.salon-booking { top: 23.5%; left: 29.5%; width: 10%; height: 5.8%; }
+.exact-salon .back-portfolio { top: 7%; left: 10%; width: 22%; height: 12%; }
+
+.clinic-doctors { top: 25%; left: 2%; width: 10%; height: 7%; }
+.clinic-appointments { top: 33%; left: 2%; width: 11%; height: 7%; }
+.clinic-services { top: 16%; left: 2%; width: 11%; height: 7%; }
+.exact-clinic .back-portfolio { top: 3%; left: 1%; width: 12%; height: 10%; }
+
+.shop-products { top: 1.5%; left: 39%; width: 9%; height: 5%; }
+.shop-deals { top: 1.5%; left: 48%; width: 8%; height: 5%; }
+.shop-cart { top: 1.2%; right: 1.4%; width: 10%; height: 5.8%; }
+.exact-shop .back-portfolio { top: 1.2%; left: 1%; width: 15%; height: 6%; }
+
+@media (max-width: 700px) {
+  .exact-demo-page main.exact-home {
+    overflow-x: auto;
+  }
+
+  .exact-home img {
+    width: 1680px;
+    max-width: none;
+  }
+}
+
+/* Real portfolio demo websites */
+.real-demo {
+  margin: 0;
+  min-height: 100vh;
+  color: #111827;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.real-demo *,
+.real-demo *::before,
+.real-demo *::after {
+  box-sizing: border-box;
+}
+
+.real-demo main::before,
+.real-demo main::after {
+  content: none;
+}
+
+.real-demo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.real-demo button,
+.real-demo input,
+.real-demo textarea {
+  font: inherit;
+}
+
+.real-demo button,
+.real-demo .demo-back,
+.real-demo a[class*="cta"],
+.shop-cart-link {
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.real-demo button:hover,
+.real-demo .demo-back:hover,
+.real-demo a[class*="cta"]:hover,
+.shop-cart-link:hover {
+  transform: translateY(-2px);
+}
+
+.demo-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.academy-demo {
+  background: radial-gradient(circle at 78% 18%, #c7dbff 0 18%, transparent 32%), linear-gradient(135deg, #f8fbff, #edf4ff 55%, #d8e8ff);
+}
+
+.academy-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px clamp(18px, 4vw, 64px);
+  background: rgba(248, 251, 255, 0.84);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(76, 116, 180, 0.16);
+}
+
+.academy-brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 900;
+  color: #0d2b6c;
+}
+
+.academy-brand span {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  color: white;
+  background: linear-gradient(135deg, #2563eb, #69b8ff);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.3);
+}
+
+.academy-nav nav,
+.salon-nav nav,
+.shop-nav nav {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.academy-cta,
+.academy-demo .demo-back {
+  color: #0d2b6c;
+  background: white;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+}
+
+.academy-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 54px 0 80px;
+}
+
+.academy-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+.academy-copy {
+  padding: clamp(28px, 5vw, 72px);
+  border-radius: 34px;
+  color: #102447;
+  background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(233,242,255,0.82));
+  box-shadow: 0 28px 80px rgba(53, 103, 184, 0.16);
+}
+
+.academy-kicker {
+  color: #2563eb;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.academy-copy h1,
+.salon-copy h1,
+.clinic-top h1,
+.shop-copy h1 {
+  margin: 10px 0 18px;
+  font-size: clamp(34px, 5vw, 68px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.academy-copy p,
+.salon-copy p,
+.shop-copy p {
+  max-width: 640px;
+  color: #52637d;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.academy-actions,
+.shop-copy {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.academy-actions button,
+.academy-actions a,
+.course-card button,
+.teacher-row button,
+.calendar-panel button {
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-weight: 900;
+}
+
+.academy-actions button,
+.course-card button {
+  color: white;
+  background: linear-gradient(135deg, #2563eb, #59b7ff);
+  box-shadow: 0 16px 34px rgba(37, 99, 235, 0.25);
+}
+
+.academy-actions a,
+.teacher-row button,
+.calendar-panel button {
+  color: #174077;
+  background: #eaf2ff;
+}
+
+.academy-dashboard {
+  display: grid;
+  gap: 16px;
+  align-content: center;
+  padding: 24px;
+  border-radius: 34px;
+  background: #102447;
+  color: white;
+  box-shadow: 0 30px 80px rgba(16, 36, 71, 0.24);
+}
+
+.academy-search,
+.academy-progress,
+.academy-live-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.academy-progress input {
+  width: 100%;
+  accent-color: #7cc7ff;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 99px;
+  background: #5df1b5;
+  box-shadow: 0 0 0 8px rgba(93, 241, 181, 0.14);
+}
+
+.academy-grid,
+.academy-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.academy-section-title {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.academy-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.academy-filters button,
+.shop-sidebar button,
+.clinic-card > button,
+.salon-service-list button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 900;
+}
+
+.academy-filters .is-active,
+.shop-sidebar .is-active,
+.clinic-card > .is-active,
+.salon-service-list .is-active {
+  color: white;
+  background: #2563eb;
+}
+
+.course-card,
+.teacher-panel,
+.calendar-panel {
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 18px 50px rgba(53, 103, 184, 0.12);
+}
+
+.course-card span {
+  color: #2563eb;
+  font-weight: 900;
+}
+
+.academy-bottom {
+  grid-template-columns: 1fr 1fr;
+}
+
+.teacher-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #e5efff;
+}
+
+.teacher-row span,
+.doctor-chip span {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  font-weight: 900;
+}
+
+.teacher-row span {
+  color: #0d2b6c;
+  background: #dcecff;
+}
+
+.calendar-panel button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  text-align: left;
+}
+
+.salon-demo {
+  color: #321425;
+  background: linear-gradient(135deg, #fff5f4, #f8dbe3 48%, #4b1835 48%, #220c1d);
+}
+
+.salon-nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  padding: 24px clamp(18px, 5vw, 72px);
+}
+
+.salon-brand {
+  font-family: Georgia, serif;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.salon-demo .demo-back,
+.salon-cta,
+.salon-copy button,
+.salon-booking button,
+.salon-service-card a {
+  border: 1px solid rgba(75, 24, 53, 0.18);
+  border-radius: 999px;
+  padding: 13px 18px;
+  color: #4b1835;
+  background: rgba(255,255,255,0.76);
+  box-shadow: 0 16px 40px rgba(75, 24, 53, 0.12);
+}
+
+.salon-stage {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding-bottom: 72px;
+}
+
+.salon-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(380px, 1.1fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.salon-copy {
+  padding: clamp(30px, 6vw, 78px) 0;
+}
+
+.salon-copy span {
+  color: #a84269;
+  font-weight: 900;
+}
+
+.salon-copy button {
+  margin-top: 18px;
+  color: white;
+  background: #4b1835;
+}
+
+.salon-collage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr;
+  grid-template-rows: 230px 210px;
+  gap: 16px;
+  min-height: 460px;
+}
+
+.salon-photo,
+.gallery-card {
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,0.7), transparent 24%),
+    linear-gradient(135deg, #f4a5b8, #87365a 62%, #3b132b);
+  box-shadow: 0 28px 80px rgba(62, 20, 45, 0.24);
+}
+
+.salon-photo.large {
+  grid-row: span 2;
+}
+
+.salon-photo.warm {
+  background: linear-gradient(135deg, #ffd8bb, #d26b80, #5b1c3c);
+}
+
+.salon-photo.detail {
+  background: linear-gradient(135deg, #fff0f6, #b94069, #2a0d20);
+}
+
+.booking-ticket {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  gap: 6px;
+  width: min(300px, 70%);
+  padding: 20px;
+  border-radius: 24px;
+  color: #321425;
+  background: rgba(255,255,255,0.86);
+  backdrop-filter: blur(18px);
+}
+
+.salon-services {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 22px;
+  align-items: end;
+  margin-top: 34px;
+  padding: 28px;
+  border-radius: 34px;
+  background: rgba(255,255,255,0.72);
+}
+
+.salon-services h2 {
+  grid-column: 1 / -1;
+}
+
+.salon-service-list {
+  display: grid;
+  gap: 12px;
+}
+
+.salon-service-list button {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px;
+  color: #4b1835;
+  background: #fff;
+}
+
+.salon-service-list .is-active {
+  background: #4b1835;
+}
+
+.salon-service-card {
+  padding: 24px;
+  border-radius: 28px;
+  color: white;
+  background: linear-gradient(135deg, #4b1835, #8b3c5f);
+}
+
+.salon-service-card a {
+  display: inline-flex;
+  margin-top: 14px;
+}
+
+.salon-gallery {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.1fr;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.gallery-card {
+  min-height: 190px;
+  display: flex;
+  align-items: end;
+  padding: 18px;
+  color: white;
+  font-weight: 900;
+}
+
+.gallery-card.tall {
+  min-height: 260px;
+}
+
+.gallery-card.round {
+  border-radius: 999px 999px 34px 34px;
+}
+
+.gallery-card.dark {
+  background: linear-gradient(135deg, #341126, #0c0610);
+}
+
+.salon-booking {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  padding: 24px;
+  border-radius: 30px;
+  background: #fff;
+}
+
+.clinic-demo {
+  background: #edf7f5;
+}
+
+.clinic-app {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.clinic-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px;
+  color: white;
+  background: linear-gradient(180deg, #0f2430, #122f37);
+}
+
+.clinic-logo {
+  margin: 18px 0 22px;
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.clinic-sidebar a:not(.demo-back),
+.clinic-sidebar button,
+.clinic-demo .demo-back {
+  border: 0;
+  border-radius: 18px;
+  padding: 14px 16px;
+  color: white;
+  background: rgba(255,255,255,0.08);
+  text-align: left;
+  font-weight: 900;
+}
+
+.clinic-sidebar .active,
+.clinic-sidebar button {
+  background: #23c7a8;
+  color: #06231f;
+}
+
+.clinic-main {
+  padding: clamp(22px, 4vw, 54px);
+}
+
+.clinic-top {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 360px);
+  gap: 24px;
+  align-items: center;
+}
+
+.clinic-top p {
+  color: #1f927f;
+  font-weight: 900;
+}
+
+.clinic-top h1 {
+  max-width: 780px;
+  color: #0f2430;
+}
+
+.clinic-search {
+  padding: 20px;
+  border-radius: 22px;
+  color: #5d7472;
+  background: white;
+  box-shadow: 0 18px 50px rgba(15, 36, 48, 0.08);
+}
+
+.clinic-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.clinic-stats article,
+.clinic-card {
+  padding: 24px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 18px 60px rgba(15, 36, 48, 0.1);
+}
+
+.clinic-stats strong {
+  display: block;
+  margin-top: 8px;
+  color: #0f766e;
+  font-size: 34px;
+}
+
+.clinic-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 18px;
+}
+
+.clinic-card.patient {
+  grid-column: 1 / -1;
+}
+
+.clinic-card textarea {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  margin: 12px 0;
+  border: 1px solid #cce4df;
+  border-radius: 18px;
+  padding: 14px;
+  resize: vertical;
+}
+
+.appointment-row,
+.doctor-chip {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #f1faf8;
+}
+
+.appointment-row em {
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #0f766e;
+  background: #d8f5ee;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.doctor-chip span {
+  color: #06231f;
+  background: #c8f2e8;
+}
+
+.doctor-chip button,
+.clinic-card.patient button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  color: white;
+  background: #0f766e;
+  font-weight: 900;
+}
+
+.shop-demo {
+  color: #f8fafc;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(255, 130, 36, 0.26), transparent 30%),
+    linear-gradient(135deg, #09090b, #171717 58%, #2b1208);
+}
+
+.shop-nav {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 18px;
+  align-items: center;
+  padding: 20px clamp(18px, 5vw, 70px);
+  background: rgba(9, 9, 11, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.shop-brand {
+  color: #ff8a2a;
+  font-size: 24px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.shop-demo .demo-back,
+.shop-cart-link,
+.shop-copy button,
+.product-card button,
+.cart-panel a,
+.shop-deals button,
+.tracking-card button {
+  border: 1px solid rgba(255, 138, 42, 0.36);
+  border-radius: 16px;
+  padding: 12px 16px;
+  color: #fff7ed;
+  background: rgba(255, 138, 42, 0.12);
+  box-shadow: 0 0 24px rgba(255, 138, 42, 0.13);
+}
+
+.shop-floor {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 78px;
+}
+
+.shop-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 30px;
+  align-items: center;
+}
+
+.shop-copy {
+  display: block;
+}
+
+.shop-copy span {
+  color: #ff8a2a;
+  font-weight: 900;
+}
+
+.shop-copy p {
+  color: #b7bdc9;
+}
+
+.shop-copy button,
+.product-card button,
+.shop-deals button,
+.tracking-card button {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #ff7a18, #ffb347);
+  color: #1a0d05;
+  font-weight: 950;
+}
+
+.product-orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 460px;
+  border-radius: 40px;
+  background: radial-gradient(circle, rgba(255,138,42,0.18), rgba(255,255,255,0.04) 55%, rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.headphone-shape {
+  width: 300px;
+  height: 300px;
+  border: 34px solid #ff8a2a;
+  border-bottom-color: transparent;
+  border-radius: 50% 50% 35% 35%;
+  filter: drop-shadow(0 30px 60px rgba(255, 138, 42, 0.32));
+}
+
+.headphone-shape::before,
+.headphone-shape::after {
+  content: "";
+  position: absolute;
+  width: 74px;
+  height: 128px;
+  top: 210px;
+  border-radius: 28px;
+  background: #f8fafc;
+}
+
+.headphone-shape::before {
+  left: 130px;
+}
+
+.headphone-shape::after {
+  right: 130px;
+}
+
+.deal-badge,
+.sound-card {
+  position: absolute;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.deal-badge {
+  top: 40px;
+  right: 46px;
+  color: #ffbf75;
+  font-size: 28px;
+  font-weight: 950;
+}
+
+.sound-card {
+  left: 40px;
+  bottom: 46px;
+}
+
+.shop-layout {
+  display: grid;
+  grid-template-columns: 210px 1fr 260px;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.shop-sidebar,
+.cart-panel,
+.shop-deals,
+.tracking-card {
+  padding: 22px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.09);
+}
+
+.shop-sidebar button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  color: #f8fafc;
+  background: rgba(255,255,255,0.08);
+  text-align: left;
+}
+
+.shop-sidebar .is-active {
+  color: #1a0d05;
+  background: #ff8a2a;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  padding: 18px;
+  border-radius: 28px;
+  background: #f8fafc;
+  color: #111827;
+}
+
+.product-art {
+  height: 150px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 50% 35%, #fff, transparent 24%), linear-gradient(135deg, #ff8a2a, #1f2937);
+}
+
+.product-art.blue {
+  background: radial-gradient(circle at 50% 35%, #fff, transparent 24%), linear-gradient(135deg, #38bdf8, #172554);
+}
+
+.product-art.green {
+  background: radial-gradient(circle at 50% 35%, #fff, transparent 24%), linear-gradient(135deg, #86efac, #14532d);
+}
+
+.cart-panel a {
+  display: inline-flex;
+  margin-top: 16px;
+}
+
+.shop-deals,
+.tracking-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.tracking-card input {
+  min-height: 46px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  padding: 0 14px;
+  color: white;
+  background: rgba(255,255,255,0.08);
+}
+
+@media (max-width: 900px) {
+  .academy-nav,
+  .salon-nav,
+  .shop-nav,
+  .academy-hero,
+  .salon-hero,
+  .clinic-app,
+  .clinic-top,
+  .shop-hero,
+  .shop-layout,
+  .salon-services {
+    grid-template-columns: 1fr;
+  }
+
+  .academy-nav nav,
+  .salon-nav nav,
+  .shop-nav nav {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .academy-grid,
+  .academy-bottom,
+  .clinic-stats,
+  .clinic-grid,
+  .product-grid,
+  .salon-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .clinic-sidebar {
+    position: relative;
+    height: auto;
+  }
+
+  .shop-deals,
+  .tracking-card,
+  .salon-booking {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .salon-collage,
+  .product-orbit {
+    min-height: 360px;
+  }
+}
