@@ -58,6 +58,7 @@ function translateLooseText(lang) {
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach((node) => {
+    if (node.parentElement?.closest("[data-fa][data-en]")) return;
     const original = node.parentElement?.dataset.faOriginal || node.nodeValue.trim();
     const clean = original.trim();
     if (!clean || node.parentElement?.closest("script, style")) return;
@@ -82,10 +83,15 @@ function applyLanguage(lang) {
     rememberOriginalText(element);
     element.textContent = element.dataset[lang];
   });
+  document.querySelectorAll("[data-fa-placeholder][data-en-placeholder]").forEach((element) => {
+    element.placeholder = element.dataset[`${lang}Placeholder`];
+  });
   translateLooseText(lang);
   document.querySelectorAll(".lang-switch").forEach((button) => {
     button.textContent = lang === "fa" ? "EN" : "FA";
   });
+  updateBudgetOutput();
+  updateProjectEstimate();
 }
 
 if (menuToggle) {
@@ -195,6 +201,94 @@ if (calcPrice) {
   });
 }
 
+const budgetRange = document.querySelector("[data-budget-range]");
+const budgetOutput = document.querySelector("[data-budget-output]");
+
+function updateBudgetOutput() {
+  if (!budgetRange || !budgetOutput) return;
+  const value = Number(budgetRange.value || 28);
+  budgetOutput.textContent =
+    activeLanguage === "fa"
+      ? `حدود ${new Intl.NumberFormat("fa-IR").format(value)} میلیون تومان`
+      : `About ${new Intl.NumberFormat("en-US").format(value)}M toman`;
+}
+
+if (budgetRange) {
+  budgetRange.addEventListener("input", updateBudgetOutput);
+}
+
+const buildRequest = document.querySelector("[data-build-request]");
+
+if (buildRequest) {
+  buildRequest.addEventListener("click", () => {
+    const type = document.querySelector("[data-wizard-type]")?.selectedOptions?.[0]?.textContent || "";
+    const features = [...document.querySelectorAll("[data-price-addon]:checked")].length;
+    const summary = document.querySelector("[data-wizard-summary]");
+    if (summary) {
+      summary.textContent =
+        activeLanguage === "fa"
+          ? `درخواست ${type} با ${new Intl.NumberFormat("fa-IR").format(features)} قابلیت اصلی آماده شد.`
+          : `${type} request with ${features} main features is ready.`;
+    }
+    buildRequest.textContent = activeLanguage === "fa" ? "درخواست ساخته شد" : "Request created";
+  });
+}
+
+const estimateButton = document.querySelector("[data-estimate-project]");
+
+function updateProjectEstimate() {
+  const result = document.querySelector("[data-estimate-result]");
+  if (!result) return;
+  const pages = Number(document.querySelector("[data-est-pages]")?.value || 1);
+  const languages = Number(document.querySelector("[data-est-lang]")?.value || 1);
+  const panel = Number(document.querySelector("[data-est-panel]")?.value || 0);
+  const addOns = [...document.querySelectorAll("[data-price-addon]:checked")].length * 3;
+  const total = Math.round(pages * 2.4 + languages * 4 + panel + addOns);
+  const minDays = Math.max(12, pages * 3 + panel);
+  const maxDays = minDays + 10;
+  result.textContent =
+    activeLanguage === "fa"
+      ? `حدود ${new Intl.NumberFormat("fa-IR").format(total)} میلیون تومان - ${new Intl.NumberFormat("fa-IR").format(minDays)} تا ${new Intl.NumberFormat("fa-IR").format(maxDays)} روز کاری`
+      : `About ${new Intl.NumberFormat("en-US").format(total)}M toman - ${minDays} to ${maxDays} working days`;
+}
+
+if (estimateButton) {
+  estimateButton.addEventListener("click", updateProjectEstimate);
+}
+
+document.querySelectorAll("[data-est-pages], [data-est-lang], [data-est-panel], [data-price-addon]").forEach((element) => {
+  element.addEventListener("input", updateProjectEstimate);
+  element.addEventListener("change", updateProjectEstimate);
+});
+
+const scoreButton = document.querySelector("[data-calc-score]");
+
+function updateProjectScore() {
+  const result = document.querySelector("[data-score-result]");
+  if (!result) return;
+  const score = [...document.querySelectorAll("[data-score-item]:checked")]
+    .reduce((sum, item) => sum + Number(item.value || 0), 0);
+  let fa = "پکیج Starter برای شروع کافی است.";
+  let en = "Starter is enough to begin.";
+  if (score >= 4 && score < 8) {
+    fa = "پکیج Business مناسب‌تر است؛ پنل و مسیر سفارش لازم دارید.";
+    en = "Business is more suitable; you need a panel and order flow.";
+  }
+  if (score >= 8) {
+    fa = "پکیج Command پیشنهاد می‌شود؛ شما به سیستم کامل دیجیتال نیاز دارید.";
+    en = "Command is recommended; you need a complete digital system.";
+  }
+  result.textContent = activeLanguage === "fa" ? fa : en;
+}
+
+if (scoreButton) {
+  scoreButton.addEventListener("click", updateProjectScore);
+}
+
+document.querySelectorAll("[data-score-item]").forEach((item) => {
+  item.addEventListener("change", updateProjectScore);
+});
+
 const defaultSocials = {
   instagram: "https://instagram.com/vitrastudio",
   telegram: "https://t.me/vitrastudio",
@@ -245,3 +339,6 @@ if (saveSocials) {
 
 applySocialLinks();
 applyLanguage(activeLanguage);
+updateBudgetOutput();
+updateProjectEstimate();
+updateProjectScore();
