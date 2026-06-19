@@ -5629,3 +5629,250 @@ main::after {
     grid-template-columns: 1fr;
   }
 }
+
+/* Hero cleanup: keep the poster cinematic and quiet, without extra copy cards. */
+.hero-proof-strip,
+.hero-quality-panel {
+  display: none !important;
+}
+
+.hero-system {
+  overflow: hidden;
+}
+
+.hero-system .hero-copy {
+  max-width: 720px;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid rgba(255, 236, 212, 0.16);
+  border-radius: 26px;
+  background:
+    linear-gradient(135deg, rgba(10, 7, 5, 0.78), rgba(10, 7, 5, 0.48)),
+    radial-gradient(circle at 0% 0%, rgba(255, 143, 69, 0.12), transparent 32%);
+  backdrop-filter: blur(10px);
+}
+
+.hero-image-stage::after {
+  background:
+    linear-gradient(90deg, rgba(7, 5, 4, 0.88), rgba(7, 5, 4, 0.50) 44%, rgba(7, 5, 4, 0.16)),
+    linear-gradient(0deg, rgba(7, 5, 4, 0.72), rgba(7, 5, 4, 0.08) 54%, rgba(7, 5, 4, 0.42)),
+    radial-gradient(circle at 18% 38%, rgba(255, 143, 69, 0.11), transparent 26%);
+}
+
+.hero-image-float {
+  left: auto;
+  right: clamp(18px, 5vw, 72px);
+  bottom: clamp(18px, 5vw, 70px);
+  max-width: 270px;
+  background: rgba(8, 6, 5, 0.66);
+  border-color: rgba(255, 236, 212, 0.18);
+  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.26);
+}
+
+@media (max-width: 760px) {
+  .hero-system .hero-copy {
+    padding: 20px;
+    border-radius: 22px;
+  }
+
+  .hero-image-float {
+    display: none;
+  }
+}
+
+/* Professional layout polish: stronger containers, readable copy, no text escaping cards. */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.section,
+.manager-card,
+.service-detail,
+.work-card,
+.demo-card,
+.compare-table article,
+.wizard-step,
+.admin-feature-grid article,
+.trust-grid article,
+.case-grid article,
+.blog-grid article,
+.score-box,
+.checklist-grid article,
+.faq-grid details,
+.premium-case-grid article,
+.process-grid article,
+.advisor-grid article,
+.care-grid article,
+.portal-stats article {
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.section {
+  padding: clamp(24px, 4.2vw, 56px);
+  border-radius: clamp(22px, 3vw, 34px);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: end;
+}
+
+.section-head > div,
+.section-head h2,
+.section-head p {
+  min-width: 0;
+}
+
+.section h2,
+.manager-card h2,
+.service-detail h2,
+.contact-panel h2 {
+  max-width: 980px;
+  line-height: 1.35;
+}
+
+.section h3,
+.work-card h3,
+.premium-case-grid h3,
+.compare-table h3 {
+  line-height: 1.45;
+}
+
+.section p,
+.manager-card p,
+.service-detail p,
+.work-card p,
+.premium-case-grid p,
+.process-grid p,
+.contact-panel p,
+.faq-grid details p {
+  max-width: 78ch;
+  line-height: 2;
+}
+
+.work-card,
+.premium-case-grid article,
+.process-grid article,
+.compare-table article,
+.admin-feature-grid article,
+.wizard-step,
+.manager-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.work-card p,
+.premium-case-grid p,
+.process-grid p,
+.admin-feature-grid p,
+.compare-table li {
+  font-size: clamp(14px, 1.35vw, 16px);
+}
+
+.portfolio-grid {
+  align-items: stretch;
+}
+
+.work-card {
+  min-height: 320px;
+  justify-content: flex-end;
+  padding: clamp(20px, 2.4vw, 30px);
+}
+
+.work-card h3 {
+  margin: 0 0 10px;
+}
+
+.premium-case-grid article {
+  min-height: 100%;
+  justify-content: space-between;
+}
+
+.premium-case-grid a,
+.text-link {
+  width: fit-content;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.compare-table article ul,
+.before-after ul {
+  margin: 16px 0 0;
+  padding-inline-start: 20px;
+}
+
+.compare-table article li,
+.service-detail li {
+  margin: 8px 0;
+  line-height: 1.9;
+}
+
+.calc-board label,
+.lead-form label,
+.form-grid label,
+.price-editor label {
+  min-width: 0;
+}
+
+.calc-board input,
+.calc-board select,
+.lead-form input,
+.lead-form select,
+.lead-form textarea,
+.form-grid input,
+.form-grid select,
+.form-grid textarea,
+.price-editor input,
+.price-editor select {
+  max-width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
+}
+
+.contact-panel {
+  align-items: stretch;
+}
+
+.lead-form {
+  min-width: 0;
+  border: 1px solid rgba(255, 236, 212, 0.18);
+  border-radius: 24px;
+  background: rgba(8, 7, 6, 0.58);
+  padding: clamp(18px, 2.8vw, 28px);
+}
+
+.hero-system .hero-copy {
+  width: min(720px, 100%);
+}
+
+.hero-system h1 {
+  max-width: 13ch;
+}
+
+.hero-system .hero-copy p {
+  color: rgba(255, 244, 230, 0.86);
+}
+
+@media (max-width: 920px) {
+  .section-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .section p,
+  .manager-card p,
+  .service-detail p,
+  .work-card p,
+  .premium-case-grid p,
+  .process-grid p,
+  .contact-panel p {
+    max-width: none;
+  }
+
+  .hero-system h1 {
+    max-width: 100%;
+  }
+}
