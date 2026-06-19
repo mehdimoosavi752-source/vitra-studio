@@ -3,58 +3,164 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>پنل مشتری علامه سخن</title>
+    <title>پنل مشتری | Vitra Studio</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="portal-body client-portal" data-page="client">
     <aside class="real-sidebar client-side">
-      <a class="panel-brand" href="index.html"><span><img src="assets/vitra-logo.svg" alt="" /></span><b>Allameh Panel</b></a>
-      <div class="user-badge"><strong>موسسه علامه سخن</strong><span>client@allamehsokhan.ir</span><small>ID: ALLAMEH-102</small></div>
+      <a class="panel-brand" href="index.html">
+        <span><img src="assets/vitra-logo.svg" alt="" /></span>
+        <b>Vitra Client</b>
+      </a>
+      <div class="user-badge">
+        <strong data-fa="موسسه علامه سخن" data-en="Allameh Sokhan Institute">موسسه علامه سخن</strong>
+        <span>client@allamehsokhan.ir</span>
+        <small>ID: ALLAMEH-102</small>
+      </div>
       <nav>
-        <a href="#dashboard">داشبورد پروژه</a>
-        <a href="#site">سایت علامه</a>
-        <a href="#courses">دوره‌ها و قیمت‌ها</a>
-        <a href="#pages">صفحات و مطالب</a>
-        <a href="#tickets">تیکت‌ها</a>
-        <a href="#files">فایل‌ها</a>
+        <a href="#dashboard" data-fa="داشبورد" data-en="Dashboard">داشبورد</a>
+        <a href="#timeline" data-fa="مسیر پروژه" data-en="Project Timeline">مسیر پروژه</a>
+        <a href="#services" data-fa="خدمات فعال" data-en="Active Services">خدمات فعال</a>
+        <a href="#content" data-fa="درخواست محتوا" data-en="Content Requests">درخواست محتوا</a>
+        <a href="#tickets" data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</a>
+        <a href="#files" data-fa="فایل‌ها" data-en="Files">فایل‌ها</a>
+        <a href="#billing" data-fa="مالی" data-en="Billing">مالی</a>
+        <a href="#activity" data-fa="فعالیت‌ها" data-en="Activity">فعالیت‌ها</a>
       </nav>
-      <a class="back-site" href="login.html">خروج از پنل</a>
+      <button class="lang-switch" type="button">EN</button>
+      <a class="back-site" href="login.html" data-fa="خروج از پنل" data-en="Exit Panel">خروج از پنل</a>
     </aside>
+
     <main class="real-main">
       <section id="dashboard" class="real-hero">
-        <div><p class="eyebrow">Allameh Sokhan Client Portal</p><h1>پنل مشتری برای مدیریت سایت علامه سخن</h1><p>اینجا مشتری وضعیت پروژه، تیکت‌ها، فایل‌ها، دوره‌ها، صفحات و قیمت‌های قابل ویرایش سایت علامه را می‌بیند و درخواست تغییر ثبت می‌کند.</p></div>
-        <div class="quick-actions"><a class="btn btn-primary" href="#tickets">ثبت تیکت</a><a class="btn btn-ghost" href="demo-allameh.html">دیدن سایت دمو</a></div>
+        <div>
+          <p class="eyebrow" data-fa="پنل مشتری Vitra" data-en="Vitra Client Portal">پنل مشتری Vitra</p>
+          <h1 data-fa="مرکز کنترل پروژه، تیکت، فایل و تغییرات سایت" data-en="Project, ticket, file and website change command center">مرکز کنترل پروژه، تیکت، فایل و تغییرات سایت</h1>
+          <p data-fa="مشتری اینجا وضعیت پروژه، زمان‌بندی، خدمات فعال، درخواست‌های تغییر محتوا، فایل‌های تحویلی و پرداخت‌ها را می‌بیند و بدون تماس پراکنده با تیم ارتباط می‌گیرد." data-en="Clients can track project progress, timelines, active services, content changes, delivered files and payments, then contact the team without scattered messages.">مشتری اینجا وضعیت پروژه، زمان‌بندی، خدمات فعال، درخواست‌های تغییر محتوا، فایل‌های تحویلی و پرداخت‌ها را می‌بیند و بدون تماس پراکنده با تیم ارتباط می‌گیرد.</p>
+        </div>
+        <div class="quick-actions">
+          <a class="btn btn-primary" href="#tickets" data-fa="ثبت تیکت" data-en="New Ticket">ثبت تیکت</a>
+          <a class="btn btn-ghost" href="demo-allameh.html" data-fa="دیدن سایت دمو" data-en="View Demo Site">دیدن سایت دمو</a>
+        </div>
       </section>
 
-      <section class="portal-stats">
-        <article><span>پیشرفت پروژه</span><strong>۸۲٪</strong><small>مرحله محتوا</small></article>
-        <article><span>دوره فعال</span><strong>۶</strong><small>۳ قیمت قابل تغییر</small></article>
-        <article><span>صفحات سایت</span><strong>۹</strong><small>۲ پیش‌نویس</small></article>
-        <article><span>تیکت باز</span><strong>۳</strong><small>۱ فوری</small></article>
+      <section class="portal-stats" aria-label="project stats">
+        <article><span data-fa="پیشرفت پروژه" data-en="Project Progress">پیشرفت پروژه</span><strong>82%</strong><small data-fa="مرحله محتوا و تست" data-en="Content and testing phase">مرحله محتوا و تست</small></article>
+        <article><span data-fa="تیکت باز" data-en="Open Tickets">تیکت باز</span><strong data-ticket-count>3</strong><small data-fa="یک مورد فوری" data-en="One urgent item">یک مورد فوری</small></article>
+        <article><span data-fa="تحویل‌ها" data-en="Deliverables">تحویل‌ها</span><strong>14</strong><small data-fa="طراحی، فایل و گزارش" data-en="Design, files and reports">طراحی، فایل و گزارش</small></article>
+        <article><span data-fa="پرداخت بعدی" data-en="Next Payment">پرداخت بعدی</span><strong data-fa="۲۵ خرداد" data-en="Jun 25">۲۵ خرداد</strong><small data-fa="مرحله دوم پروژه" data-en="Second project milestone">مرحله دوم پروژه</small></article>
       </section>
 
-      <section id="site" class="manager-grid">
-        <article class="manager-card wide"><h2>ویرایش محتوای صفحه اصلی علامه</h2><div class="form-grid"><label>تیتر اصلی<input value="مسیر حرفه‌ای سخنرانی، فن بیان و رشد فردی" /></label><label>دکمه اصلی<input value="مشاهده دوره‌ها" /></label><label class="full">متن معرفی<textarea>آموزش و مشاوره تخصصی برای ارائه، سخنرانی و ارتباط موثر.</textarea></label></div><button class="btn btn-primary" type="button">ارسال درخواست ویرایش</button></article>
+      <section id="timeline" class="manager-grid">
+        <article class="manager-card wide">
+          <h2 data-fa="مسیر اجرای پروژه" data-en="Project Timeline">مسیر اجرای پروژه</h2>
+          <div class="timeline-steps">
+            <div><b data-fa="شناخت و معماری" data-en="Discovery and Architecture">شناخت و معماری</b><span data-fa="تکمیل شد" data-en="Done">تکمیل شد</span><p data-fa="ساختار صفحات، نقش کاربران و نیازهای محتوایی مشخص شد." data-en="Pages, user roles and content needs have been mapped.">ساختار صفحات، نقش کاربران و نیازهای محتوایی مشخص شد.</p></div>
+            <div><b data-fa="طراحی رابط" data-en="Interface Design">طراحی رابط</b><span data-fa="تکمیل شد" data-en="Done">تکمیل شد</span><p data-fa="صفحه خانه، صفحات دوره و فرم ثبت‌نام طراحی شدند." data-en="Home, course pages and registration forms were designed.">صفحه خانه، صفحات دوره و فرم ثبت‌نام طراحی شدند.</p></div>
+            <div><b data-fa="محتوا و قیمت‌ها" data-en="Content and Pricing">محتوا و قیمت‌ها</b><span data-fa="در حال انجام" data-en="In Progress">در حال انجام</span><p data-fa="متن‌ها، دوره‌ها و جدول قیمت برای انتشار نهایی آماده می‌شوند." data-en="Copy, courses and pricing tables are being prepared for launch.">متن‌ها، دوره‌ها و جدول قیمت برای انتشار نهایی آماده می‌شوند.</p></div>
+            <div><b data-fa="تحویل و آموزش" data-en="Handoff and Training">تحویل و آموزش</b><span data-fa="برنامه‌ریزی شده" data-en="Scheduled">برنامه‌ریزی شده</span><p data-fa="ویدئوی آموزش مدیریت محتوا و چک‌لیست تحویل آماده می‌شود." data-en="CMS training video and launch checklist will be prepared.">ویدئوی آموزش مدیریت محتوا و چک‌لیست تحویل آماده می‌شود.</p></div>
+          </div>
+        </article>
       </section>
 
-      <section id="courses" class="manager-grid">
-        <article class="manager-card wide"><h2>دوره‌ها و قیمت‌ها</h2><div class="price-editor"><label>دوره فن بیان<input value="۲,۴۰۰,۰۰۰ تومان" /></label><label>مشاوره سخنرانی<input value="۹۵۰,۰۰۰ تومان" /></label><label>کارگاه ارائه<input value="۳,۸۰۰,۰۰۰ تومان" /></label><label>دوره اعتماد به نفس<input value="۱,۷۰۰,۰۰۰ تومان" /></label></div><button class="btn btn-primary" type="button">درخواست تغییر قیمت‌ها</button></article>
+      <section id="services" class="manager-grid">
+        <article class="manager-card">
+          <h2 data-fa="خدمات فعال" data-en="Active Services">خدمات فعال</h2>
+          <div class="mini-list">
+            <div><b data-fa="طراحی سایت آموزشگاهی" data-en="Education Website Design">طراحی سایت آموزشگاهی</b><span data-fa="فعال" data-en="Active">فعال</span></div>
+            <div><b data-fa="پنل مدیریت محتوا" data-en="Content Management Panel">پنل مدیریت محتوا</b><span data-fa="فعال" data-en="Active">فعال</span></div>
+            <div><b data-fa="بهینه‌سازی سرعت" data-en="Speed Optimization">بهینه‌سازی سرعت</b><span data-fa="در صف" data-en="Queued">در صف</span></div>
+            <div><b data-fa="پشتیبانی ماهانه" data-en="Monthly Support">پشتیبانی ماهانه</b><span data-fa="قابل تمدید" data-en="Renewable">قابل تمدید</span></div>
+          </div>
+        </article>
+        <article class="manager-card">
+          <h2 data-fa="درخواست سرویس جدید" data-en="Request New Service">درخواست سرویس جدید</h2>
+          <div class="form-grid single">
+            <label><span data-fa="نوع سرویس" data-en="Service Type">نوع سرویس</span><select><option data-fa="صفحه جدید" data-en="New Page">صفحه جدید</option><option data-fa="طراحی لوگو" data-en="Logo Design">طراحی لوگو</option><option data-fa="اتصال درگاه پرداخت" data-en="Payment Gateway">اتصال درگاه پرداخت</option></select></label>
+            <label><span data-fa="توضیح کوتاه" data-en="Short Description">توضیح کوتاه</span><textarea data-fa-placeholder="مثلا صفحه معرفی دوره جدید" data-en-placeholder="Example: a new course landing page" placeholder="مثلا صفحه معرفی دوره جدید"></textarea></label>
+          </div>
+          <button class="btn btn-primary" type="button" data-fa="ارسال درخواست" data-en="Send Request">ارسال درخواست</button>
+        </article>
       </section>
 
-      <section id="pages" class="manager-grid">
-        <article class="manager-card"><h2>ساخت صفحه جدید</h2><label>عنوان صفحه<input value="دوره فشرده سخنوری" /></label><label>نوع محتوا<select><option>دوره</option><option>مطلب آموزشی</option><option>مشاوره</option></select></label><label>توضیح<textarea>صفحه اختصاصی برای معرفی دوره جدید و فرم ثبت‌نام.</textarea></label><button class="btn btn-dark" type="button">ارسال برای ساخت</button></article>
-        <article class="manager-card"><h2>مطالب سایت</h2><div class="mini-list"><div><b>اصول فن بیان</b><span>منتشر شده</span></div><div><b>تمرین سخنرانی</b><span>پیش‌نویس</span></div><div><b>مشاوره قبل از ارائه</b><span>در حال ویرایش</span></div></div></article>
+      <section id="content" class="manager-grid">
+        <article class="manager-card wide">
+          <h2 data-fa="درخواست تغییر محتوا و قیمت‌ها" data-en="Content and Pricing Change Request">درخواست تغییر محتوا و قیمت‌ها</h2>
+          <div class="form-grid">
+            <label><span data-fa="صفحه" data-en="Page">صفحه</span><input value="صفحه دوره فن بیان" data-fa-value="صفحه دوره فن بیان" data-en-value="Public Speaking Course Page" /></label>
+            <label><span data-fa="نوع تغییر" data-en="Change Type">نوع تغییر</span><select><option data-fa="قیمت" data-en="Pricing">قیمت</option><option data-fa="متن" data-en="Copy">متن</option><option data-fa="عکس" data-en="Image">عکس</option><option data-fa="فرم" data-en="Form">فرم</option></select></label>
+            <label class="full"><span data-fa="توضیح" data-en="Description">توضیح</span><textarea data-fa-value="قیمت دوره فن بیان به ۲,۷۰۰,۰۰۰ تومان تغییر کند و یک ظرفیت محدود کنار دکمه ثبت‌نام نمایش داده شود." data-en-value="Change the public speaking course price to 2,700,000 toman and show limited capacity beside the registration button.">قیمت دوره فن بیان به ۲,۷۰۰,۰۰۰ تومان تغییر کند و یک ظرفیت محدود کنار دکمه ثبت‌نام نمایش داده شود.</textarea></label>
+          </div>
+          <button class="btn btn-primary" type="button" data-fa="ثبت درخواست تغییر" data-en="Submit Change Request">ثبت درخواست تغییر</button>
+        </article>
       </section>
 
       <section id="tickets" class="manager-grid">
-        <article class="manager-card"><h2>تیکت جدید</h2><label>موضوع<input value="تغییر قیمت دوره فن بیان" /></label><label>پیام<textarea>لطفاً قیمت دوره فن بیان در سایت به ۲,۷۰۰,۰۰۰ تومان تغییر کند.</textarea></label><button class="btn btn-primary" type="button">ثبت تیکت</button></article>
-        <article class="manager-card"><h2>تیکت‌های اخیر</h2><div class="mini-list"><div><b>ویرایش متن صفحه اصلی</b><span>در حال انجام</span></div><div><b>افزودن عکس مدرس</b><span>باز</span></div><div><b>اتصال فرم ثبت‌نام</b><span>تکمیل شد</span></div></div></article>
+        <article class="manager-card">
+          <h2 data-fa="تیکت سریع" data-en="Quick Ticket">تیکت سریع</h2>
+          <label><span data-fa="موضوع" data-en="Subject">موضوع</span><input data-ticket-title value="تغییر متن صفحه اصلی" data-fa-value="تغییر متن صفحه اصلی" data-en-value="Homepage copy change" /></label>
+          <label><span data-fa="پیام" data-en="Message">پیام</span><textarea data-fa-placeholder="پیام خود را بنویسید" data-en-placeholder="Write your message" data-fa-value="لطفا متن معرفی صفحه اصلی کوتاه‌تر و رسمی‌تر شود." data-en-value="Please make the homepage intro shorter and more formal." placeholder="پیام خود را بنویسید">لطفا متن معرفی صفحه اصلی کوتاه‌تر و رسمی‌تر شود.</textarea></label>
+          <button class="btn btn-primary" type="button" data-submit-ticket data-fa="ثبت تیکت" data-en="Create Ticket">ثبت تیکت</button>
+        </article>
+        <article class="manager-card">
+          <h2 data-fa="تیکت‌های اخیر" data-en="Recent Tickets">تیکت‌های اخیر</h2>
+          <div class="mini-list" data-ticket-list>
+            <div><b data-fa="ویرایش متن صفحه اصلی" data-en="Homepage copy edit">ویرایش متن صفحه اصلی</b><span data-fa="در حال انجام" data-en="In Progress">در حال انجام</span><small data-fa="امروز" data-en="Today">امروز</small></div>
+            <div><b data-fa="افزودن عکس مدرس" data-en="Add instructor photo">افزودن عکس مدرس</b><span data-fa="باز" data-en="Open">باز</span><small data-fa="دیروز" data-en="Yesterday">دیروز</small></div>
+            <div><b data-fa="اتصال فرم ثبت‌نام" data-en="Registration form connection">اتصال فرم ثبت‌نام</b><span data-fa="تکمیل شد" data-en="Done">تکمیل شد</span><small data-fa="این هفته" data-en="This week">این هفته</small></div>
+          </div>
+        </article>
       </section>
 
       <section id="files" class="manager-grid">
-        <article class="manager-card wide"><h2>فایل‌ها و تحویل‌ها</h2><div class="demo-manager"><a href="#">وایرفریم سایت</a><a href="#">طرح صفحه اصلی</a><a href="#">فهرست دوره‌ها</a><a href="#">راهنمای مدیریت محتوا</a></div></article>
+        <article class="manager-card wide">
+          <h2 data-fa="فایل‌ها و تحویل‌ها" data-en="Files and Deliverables">فایل‌ها و تحویل‌ها</h2>
+          <div class="deliverable-grid">
+            <a href="#"><b data-fa="وایرفریم سایت" data-en="Website Wireframe">وایرفریم سایت</b><span data-fa="PDF" data-en="PDF">PDF</span></a>
+            <a href="#"><b data-fa="طرح صفحه اصلی" data-en="Homepage Design">طرح صفحه اصلی</b><span data-fa="Figma" data-en="Figma">Figma</span></a>
+            <a href="#"><b data-fa="راهنمای مدیریت محتوا" data-en="CMS Guide">راهنمای مدیریت محتوا</b><span data-fa="Video" data-en="Video">Video</span></a>
+            <a href="#"><b data-fa="گزارش سرعت" data-en="Speed Report">گزارش سرعت</b><span data-fa="Report" data-en="Report">Report</span></a>
+          </div>
+        </article>
+      </section>
+
+      <section id="billing" class="manager-grid">
+        <article class="manager-card">
+          <h2 data-fa="صورت‌حساب‌ها" data-en="Invoices">صورت‌حساب‌ها</h2>
+          <div class="invoice-list">
+            <div><b data-fa="پیش‌پرداخت طراحی" data-en="Design Deposit">پیش‌پرداخت طراحی</b><span data-fa="پرداخت شد" data-en="Paid">پرداخت شد</span><strong data-fa="۸,۰۰۰,۰۰۰ تومان" data-en="$160">۸,۰۰۰,۰۰۰ تومان</strong></div>
+            <div><b data-fa="مرحله توسعه" data-en="Development Milestone">مرحله توسعه</b><span data-fa="در انتظار" data-en="Pending">در انتظار</span><strong data-fa="۱۲,۰۰۰,۰۰۰ تومان" data-en="$240">۱۲,۰۰۰,۰۰۰ تومان</strong></div>
+          </div>
+        </article>
+        <article class="manager-card">
+          <h2 data-fa="پیشنهاد تمدید" data-en="Renewal Suggestion">پیشنهاد تمدید</h2>
+          <p data-fa="برای بعد از تحویل، بسته پشتیبانی ماهانه شامل بکاپ، امنیت، تغییرات کوچک، گزارش بازدید و مانیتورینگ پیشنهاد می‌شود." data-en="After launch, a monthly support package with backup, security, small updates, traffic reports and monitoring is recommended.">برای بعد از تحویل، بسته پشتیبانی ماهانه شامل بکاپ، امنیت، تغییرات کوچک، گزارش بازدید و مانیتورینگ پیشنهاد می‌شود.</p>
+          <button class="btn btn-ghost" type="button" data-fa="درخواست پیشنهاد" data-en="Request Offer">درخواست پیشنهاد</button>
+        </article>
+      </section>
+
+      <section id="activity" class="manager-grid">
+        <article class="manager-card wide">
+          <h2 data-fa="گزارش فعالیت و شفافیت کار" data-en="Activity and Work Transparency">گزارش فعالیت و شفافیت کار</h2>
+          <div class="activity-feed">
+            <div><b data-fa="طراحی صفحه دوره‌ها به‌روزرسانی شد" data-en="Courses page design updated">طراحی صفحه دوره‌ها به‌روزرسانی شد</b><span data-fa="۲ ساعت پیش" data-en="2 hours ago">۲ ساعت پیش</span></div>
+            <div><b data-fa="فایل راهنمای مدیریت محتوا بارگذاری شد" data-en="CMS guide file uploaded">فایل راهنمای مدیریت محتوا بارگذاری شد</b><span data-fa="دیروز" data-en="Yesterday">دیروز</span></div>
+            <div><b data-fa="درخواست تغییر قیمت در صف اجرا قرار گرفت" data-en="Pricing change request queued">درخواست تغییر قیمت در صف اجرا قرار گرفت</b><span data-fa="این هفته" data-en="This week">این هفته</span></div>
+          </div>
+        </article>
       </section>
     </main>
+
+    <dialog class="ticket-dialog" data-ticket-dialog>
+      <form method="dialog" class="login-card">
+        <h2 data-fa="ثبت تیکت جدید" data-en="Create New Ticket">ثبت تیکت جدید</h2>
+        <label><span data-fa="موضوع" data-en="Subject">موضوع</span><input data-ticket-title data-fa-placeholder="موضوع تیکت" data-en-placeholder="Ticket subject" placeholder="موضوع تیکت" /></label>
+        <label><span data-fa="شرح درخواست" data-en="Request Details">شرح درخواست</span><textarea data-fa-placeholder="درخواست خود را بنویسید" data-en-placeholder="Write your request" placeholder="درخواست خود را بنویسید"></textarea></label>
+        <button class="btn btn-primary" data-submit-ticket type="submit" data-fa="ثبت" data-en="Create">ثبت</button>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
   </body>
 </html>

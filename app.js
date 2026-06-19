@@ -1,52 +1,6 @@
 const menuToggle = document.querySelector(".menu-toggle");
 let activeLanguage = localStorage.getItem("vitra-language") || "fa";
 
-const textDictionary = {
-  "خدمات": "Services",
-  "دموها": "Demos",
-  "ورود / ثبت‌نام": "Login / Sign up",
-  "تعرفه‌ها": "Pricing",
-  "شروع پروژه": "Start Project",
-  "خانه": "Home",
-  "دیدن پنل مدیر": "Open Admin Panel",
-  "طراحی لوگو": "Logo Design",
-  "طراحی سایت": "Website Design",
-  "سرور و زیرساخت": "Server and Infrastructure",
-  "پنل کاربری": "User Portal",
-  "پشتیبانی و رشد": "Support and Growth",
-  "داشبورد": "Dashboard",
-  "صفحه‌ساز": "Page Builder",
-  "محتوا": "Content",
-  "خدمات و قیمت": "Services and Pricing",
-  "مشتری‌ها": "Clients",
-  "تیکت‌ها": "Tickets",
-  "شبکه‌های اجتماعی": "Social Networks",
-  "فوتر": "Footer",
-  "خروج از پنل": "Logout",
-  "ساخت صفحه": "Create Page",
-  "تنظیم شبکه‌ها": "Social Settings",
-  "ایجاد صفحه جدید": "Create New Page",
-  "ذخیره متن": "Save Text",
-  "ذخیره خدمت": "Save Service",
-  "محاسبه": "Calculate",
-  "ثبت تیکت داخلی": "Create Internal Ticket",
-  "ذخیره و نمایش در فوتر": "Save and Show in Footer",
-  "ذخیره فوتر": "Save Footer",
-  "ورود": "Login",
-  "ثبت‌نام مشتری جدید": "Create New Client Account",
-  "ورود به دمو": "Open Demo",
-  "مشاهده دوره‌ها": "View Courses",
-  "پنل هنرجو": "Student Portal",
-  "رزرو نوبت": "Book Appointment",
-  "شروع رزرو": "Start Booking",
-  "پنل سالن": "Salon Panel",
-  "گرفتن نوبت": "Book Visit",
-  "پنل پذیرش": "Reception Panel",
-  "دیدن محصول": "View Product",
-  "پنل سفارش‌ها": "Orders Panel",
-  "طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی.": "Future-facing website design, development, portals, demos, and support."
-};
-
 function rememberOriginalText(element) {
   if (!element.dataset.faOriginal) {
     element.dataset.faOriginal = element.textContent.trim();
@@ -54,21 +8,37 @@ function rememberOriginalText(element) {
 }
 
 function translateLooseText(lang) {
+  const dictionary = {
+    "خدمات": "Services",
+    "دموها": "Demos",
+    "ورود / ثبت‌نام": "Login / Sign up",
+    "پکیج‌ها": "Packages",
+    "سوالات": "FAQ",
+    "شروع پروژه": "Start project",
+    "خانه": "Home",
+    "محاسبه": "Calculate",
+    "ذخیره خدمت": "Save Service",
+    "ذخیره متن": "Save Copy",
+    "ذخیره و نمایش در فوتر": "Save and Show in Footer",
+    "خروج از پنل": "Exit Panel"
+  };
+
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const nodes = [];
   while (walker.nextNode()) nodes.push(walker.currentNode);
   nodes.forEach((node) => {
     if (node.parentElement?.closest("[data-fa][data-en]")) return;
+    if (node.parentElement?.closest("script, style, textarea, input, select")) return;
     const original = node.parentElement?.dataset.faOriginal || node.nodeValue.trim();
     const clean = original.trim();
-    if (!clean || node.parentElement?.closest("script, style")) return;
+    if (!clean) return;
     if (lang === "fa") {
       if (node.parentElement?.dataset.faOriginal) node.nodeValue = node.parentElement.dataset.faOriginal;
       return;
     }
-    if (/[\u0600-\u06FF]/.test(clean)) {
+    if (/[\u0600-\u06FF]/.test(clean) && dictionary[clean]) {
       node.parentElement.dataset.faOriginal = clean;
-      node.nodeValue = textDictionary[clean] || "Website management content";
+      node.nodeValue = dictionary[clean];
     }
   });
 }
@@ -79,13 +49,21 @@ function applyLanguage(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
   document.body.classList.toggle("is-ltr", lang === "en");
+
   document.querySelectorAll("[data-fa][data-en]").forEach((element) => {
     rememberOriginalText(element);
     element.textContent = element.dataset[lang];
   });
+
   document.querySelectorAll("[data-fa-placeholder][data-en-placeholder]").forEach((element) => {
     element.placeholder = element.dataset[`${lang}Placeholder`];
   });
+
+  document.querySelectorAll("[data-fa-value][data-en-value]").forEach((element) => {
+    element.value = element.dataset[`${lang}Value`];
+    if (element.tagName === "TEXTAREA") element.textContent = element.dataset[`${lang}Value`];
+  });
+
   translateLooseText(lang);
   document.querySelectorAll(".lang-switch").forEach((button) => {
     button.textContent = lang === "fa" ? "EN" : "FA";
@@ -108,28 +86,26 @@ document.querySelectorAll(".lang-switch").forEach((button) => {
 
 document
   .querySelectorAll(".section, .service-lanes, .capability-rail, .portfolio-grid, .execution-grid, .manager-grid")
-  .forEach((element) => {
-    element.setAttribute("data-reveal", "");
-  });
+  .forEach((element) => element.setAttribute("data-reveal", ""));
 
-const revealObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.12 }
-);
-
-document.querySelectorAll("[data-reveal]").forEach((element) => {
-  revealObserver.observe(element);
-});
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
+} else {
+  document.querySelectorAll("[data-reveal]").forEach((element) => element.classList.add("is-visible"));
+}
 
 const loginForm = document.querySelector("[data-login-form]");
-
 if (loginForm) {
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -143,42 +119,36 @@ if (loginForm) {
 const currentPage = document.body.dataset.page;
 document.querySelectorAll(".nav a").forEach((link) => {
   const href = link.getAttribute("href") || "";
-  if (
-    (currentPage === "home" && href === "index.html") ||
-    (currentPage && href.startsWith(`${currentPage}.html`))
-  ) {
+  if ((currentPage === "home" && href === "index.html") || (currentPage && href.startsWith(`${currentPage}.html`))) {
     link.setAttribute("aria-current", "page");
   }
 });
 
 const ticketDialog = document.querySelector("[data-ticket-dialog]");
-const openTicket = document.querySelector("[data-open-ticket]");
-const submitTicket = document.querySelector("[data-submit-ticket]");
-const ticketTitle = document.querySelector("[data-ticket-title]");
-const ticketList = document.querySelector("[data-ticket-list]");
-const ticketCount = document.querySelector("[data-ticket-count]");
+document.querySelectorAll("[data-open-ticket]").forEach((openTicket) => {
+  if (ticketDialog) openTicket.addEventListener("click", () => ticketDialog.showModal());
+});
 
-if (openTicket && ticketDialog) {
-  openTicket.addEventListener("click", () => ticketDialog.showModal());
-}
-
-if (submitTicket && ticketList && ticketTitle) {
+document.querySelectorAll("[data-submit-ticket]").forEach((submitTicket) => {
   submitTicket.addEventListener("click", (event) => {
     event.preventDefault();
+    const ticketList = document.querySelector("[data-ticket-list]");
+    if (!ticketList) return;
+    const ticketTitle = submitTicket.closest("form, article")?.querySelector("[data-ticket-title]");
     const item = document.createElement("div");
     const fallbackTitle = activeLanguage === "fa" ? "تیکت جدید" : "New ticket";
     const statusText = activeLanguage === "fa" ? "ثبت شد" : "Created";
     const timeText = activeLanguage === "fa" ? "همین الان" : "Just now";
-    item.innerHTML = `<b>${ticketTitle.value || fallbackTitle}</b><span>${statusText}</span><small>${timeText}</small>`;
+    item.innerHTML = `<b>${ticketTitle?.value || fallbackTitle}</b><span>${statusText}</span><small>${timeText}</small>`;
     ticketList.prepend(item);
-    ticketCount.textContent = String(Number(ticketCount.textContent || 0) + 1);
-    ticketDialog.close();
+    const ticketCount = document.querySelector("[data-ticket-count]");
+    if (ticketCount) ticketCount.textContent = String(Number(ticketCount.textContent || 0) + 1);
+    if (ticketDialog?.open) ticketDialog.close();
   });
-}
+});
 
 const addPage = document.querySelector("[data-add-page]");
 const pageList = document.querySelector("[data-page-list]");
-
 if (addPage && pageList) {
   addPage.addEventListener("click", () => {
     const title = document.querySelector(".cms-builder input")?.value || (activeLanguage === "fa" ? "صفحه جدید" : "New page");
@@ -189,21 +159,19 @@ if (addPage && pageList) {
 }
 
 const calcPrice = document.querySelector("[data-calc-price]");
-
 if (calcPrice) {
   calcPrice.addEventListener("click", () => {
     const pages = Number(document.querySelector("[data-pages-count]")?.value || 1);
     const panel = Number(document.querySelector("[data-panel-level]")?.value || 0);
     const total = pages * 3000000 + panel;
     const formatted = new Intl.NumberFormat(activeLanguage === "fa" ? "fa-IR" : "en-US").format(total);
-    document.querySelector("[data-price-result]").textContent =
-      activeLanguage === "fa" ? `حدود ${formatted} تومان` : `About ${formatted} Toman`;
+    const result = document.querySelector("[data-price-result]");
+    if (result) result.textContent = activeLanguage === "fa" ? `حدود ${formatted} تومان` : `About ${formatted} toman`;
   });
 }
 
 const budgetRange = document.querySelector("[data-budget-range]");
 const budgetOutput = document.querySelector("[data-budget-output]");
-
 function updateBudgetOutput() {
   if (!budgetRange || !budgetOutput) return;
   const value = Number(budgetRange.value || 28);
@@ -212,13 +180,9 @@ function updateBudgetOutput() {
       ? `حدود ${new Intl.NumberFormat("fa-IR").format(value)} میلیون تومان`
       : `About ${new Intl.NumberFormat("en-US").format(value)}M toman`;
 }
-
-if (budgetRange) {
-  budgetRange.addEventListener("input", updateBudgetOutput);
-}
+if (budgetRange) budgetRange.addEventListener("input", updateBudgetOutput);
 
 const buildRequest = document.querySelector("[data-build-request]");
-
 if (buildRequest) {
   buildRequest.addEventListener("click", () => {
     const type = document.querySelector("[data-wizard-type]")?.selectedOptions?.[0]?.textContent || "";
@@ -233,8 +197,6 @@ if (buildRequest) {
     buildRequest.textContent = activeLanguage === "fa" ? "درخواست ساخته شد" : "Request created";
   });
 }
-
-const estimateButton = document.querySelector("[data-estimate-project]");
 
 function updateProjectEstimate() {
   const result = document.querySelector("[data-estimate-result]");
@@ -252,93 +214,56 @@ function updateProjectEstimate() {
       : `About ${new Intl.NumberFormat("en-US").format(total)}M toman - ${minDays} to ${maxDays} working days`;
 }
 
-if (estimateButton) {
-  estimateButton.addEventListener("click", updateProjectEstimate);
-}
-
-document.querySelectorAll("[data-est-pages], [data-est-lang], [data-est-panel], [data-price-addon]").forEach((element) => {
-  element.addEventListener("input", updateProjectEstimate);
-  element.addEventListener("change", updateProjectEstimate);
+document.querySelectorAll("[data-est-pages], [data-est-lang], [data-est-panel], [data-price-addon]").forEach((input) => {
+  input.addEventListener("input", updateProjectEstimate);
+  input.addEventListener("change", updateProjectEstimate);
 });
+
+const estimateButton = document.querySelector("[data-estimate-project]");
+if (estimateButton) estimateButton.addEventListener("click", updateProjectEstimate);
 
 const scoreButton = document.querySelector("[data-calc-score]");
-
-function updateProjectScore() {
-  const result = document.querySelector("[data-score-result]");
-  if (!result) return;
-  const score = [...document.querySelectorAll("[data-score-item]:checked")]
-    .reduce((sum, item) => sum + Number(item.value || 0), 0);
-  let fa = "پکیج Starter برای شروع کافی است.";
-  let en = "Starter is enough to begin.";
-  if (score >= 4 && score < 8) {
-    fa = "پکیج Business مناسب‌تر است؛ پنل و مسیر سفارش لازم دارید.";
-    en = "Business is more suitable; you need a panel and order flow.";
-  }
-  if (score >= 8) {
-    fa = "پکیج Command پیشنهاد می‌شود؛ شما به سیستم کامل دیجیتال نیاز دارید.";
-    en = "Command is recommended; you need a complete digital system.";
-  }
-  result.textContent = activeLanguage === "fa" ? fa : en;
-}
-
 if (scoreButton) {
-  scoreButton.addEventListener("click", updateProjectScore);
-}
-
-document.querySelectorAll("[data-score-item]").forEach((item) => {
-  item.addEventListener("change", updateProjectScore);
-});
-
-const defaultSocials = {
-  instagram: "https://instagram.com/vitrastudio",
-  telegram: "https://t.me/vitrastudio",
-  linkedin: "https://linkedin.com/company/vitrastudio",
-  whatsapp: "https://wa.me/989000000000",
-  email: "mailto:hello@vitrastudio.ir"
-};
-
-function readSocials() {
-  try {
-    return { ...defaultSocials, ...JSON.parse(localStorage.getItem("vitra-socials") || "{}") };
-  } catch {
-    return defaultSocials;
-  }
-}
-
-function applySocialLinks() {
-  const socials = readSocials();
-  document.querySelectorAll("[data-social-link]").forEach((link) => {
-    const key = link.dataset.socialLink;
-    const value = socials[key];
-    if (value) {
-      link.href = value;
-      link.classList.remove("is-empty");
+  scoreButton.addEventListener("click", () => {
+    const score = [...document.querySelectorAll("[data-score-item]:checked")].reduce((sum, item) => sum + Number(item.value || 0), 0);
+    const result = document.querySelector("[data-score-result]");
+    if (!result) return;
+    if (score >= 7) {
+      result.textContent = activeLanguage === "fa" ? "پیشنهاد: پکیج Command با پنل کامل و پشتیبانی ماهانه." : "Recommendation: Command package with full panel and monthly support.";
+    } else if (score >= 4) {
+      result.textContent = activeLanguage === "fa" ? "پیشنهاد: پکیج Business با پنل مشتری و مسیر سفارش." : "Recommendation: Business package with client portal and order flow.";
     } else {
-      link.removeAttribute("href");
-      link.classList.add("is-empty");
+      result.textContent = activeLanguage === "fa" ? "پیشنهاد: پکیج Starter برای شروع سریع." : "Recommendation: Starter package for a fast launch.";
     }
   });
-  document.querySelectorAll("[data-social-input]").forEach((input) => {
-    input.value = socials[input.dataset.socialInput] || "";
+}
+
+function syncSocialLinks() {
+  document.querySelectorAll("[data-social-link]").forEach((link) => {
+    const key = link.dataset.socialLink;
+    const stored = localStorage.getItem(`vitra-social-${key}`);
+    const defaultMap = {
+      instagram: "https://instagram.com/vitrastudio",
+      telegram: "https://t.me/vitrastudio",
+      linkedin: "https://linkedin.com/company/vitrastudio",
+      whatsapp: "https://wa.me/989000000000",
+      email: "mailto:hello@vitrastudio.ir"
+    };
+    const href = stored || defaultMap[key] || "";
+    link.href = href;
+    link.classList.toggle("is-empty", !href);
   });
 }
 
-const saveSocials = document.querySelector("[data-save-socials]");
-
-if (saveSocials) {
-  saveSocials.addEventListener("click", () => {
-    const socials = {};
+document.querySelectorAll("[data-save-socials]").forEach((button) => {
+  button.addEventListener("click", () => {
     document.querySelectorAll("[data-social-input]").forEach((input) => {
-      socials[input.dataset.socialInput] = input.value.trim();
+      localStorage.setItem(`vitra-social-${input.dataset.socialInput}`, input.value);
     });
-    localStorage.setItem("vitra-socials", JSON.stringify(socials));
-    applySocialLinks();
-    saveSocials.textContent = activeLanguage === "fa" ? "ذخیره شد" : "Saved";
+    syncSocialLinks();
+    button.textContent = activeLanguage === "fa" ? "ذخیره شد" : "Saved";
   });
-}
+});
 
-applySocialLinks();
+syncSocialLinks();
 applyLanguage(activeLanguage);
-updateBudgetOutput();
-updateProjectEstimate();
-updateProjectScore();
