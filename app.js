@@ -1,6 +1,33 @@
 const menuToggle = document.querySelector(".menu-toggle");
 let activeLanguage = localStorage.getItem("vitra-language") || "fa";
 
+function enhanceSiteFooters() {
+  document.querySelectorAll(".site-footer").forEach((footer) => {
+    if (footer.dataset.enhanced === "true") return;
+    footer.dataset.enhanced = "true";
+    const panel = document.createElement("div");
+    panel.className = "footer-professional";
+    panel.innerHTML = `
+      <div class="footer-service-map">
+        <a href="services.html" data-fa="خدمات طراحی و توسعه" data-en="Design and development">خدمات طراحی و توسعه</a>
+        <a href="portfolio.html" data-fa="دموهای قابل اجرا" data-en="Live working demos">دموهای قابل اجرا</a>
+        <a href="packages.html" data-fa="پکیج و برآورد قیمت" data-en="Packages and pricing">پکیج و برآورد قیمت</a>
+        <a href="order.html" data-fa="شروع سفارش مرحله‌ای" data-en="Start a guided order">شروع سفارش مرحله‌ای</a>
+      </div>
+      <div class="footer-proof">
+        <span><b>CMS</b><small data-fa="ویرایش محتوا و قیمت" data-en="Content and pricing control">ویرایش محتوا و قیمت</small></span>
+        <span><b>CRM</b><small data-fa="مدیریت مشتری و پروژه" data-en="Client and project tracking">مدیریت مشتری و پروژه</small></span>
+        <span><b>Ticket</b><small data-fa="پشتیبانی منظم" data-en="Organized support">پشتیبانی منظم</small></span>
+      </div>
+      <div class="footer-status">
+        <strong data-fa="تحویل شفاف، توسعه‌پذیر و قابل پیگیری" data-en="Transparent, scalable and trackable delivery">تحویل شفاف، توسعه‌پذیر و قابل پیگیری</strong>
+        <p data-fa="هر پروژه با صفحه سفارش، پنل، وضعیت اجرا، فایل‌ها، تیکت‌ها و مسیر رشد بعد از تحویل طراحی می‌شود." data-en="Every project is designed with order flow, portal, execution status, files, tickets and a growth path after launch.">هر پروژه با صفحه سفارش، پنل، وضعیت اجرا، فایل‌ها، تیکت‌ها و مسیر رشد بعد از تحویل طراحی می‌شود.</p>
+      </div>
+    `;
+    footer.append(panel);
+  });
+}
+
 function rememberOriginalText(element) {
   if (!element.dataset.faOriginal) {
     element.dataset.faOriginal = element.textContent.trim();
@@ -44,6 +71,7 @@ function translateLooseText(lang) {
 }
 
 function applyLanguage(lang) {
+  enhanceSiteFooters();
   activeLanguage = lang;
   localStorage.setItem("vitra-language", lang);
   document.documentElement.lang = lang;
