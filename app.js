@@ -266,4 +266,121 @@ document.querySelectorAll("[data-save-socials]").forEach((button) => {
 });
 
 syncSocialLinks();
+
+// Project request flow for the dedicated order page.
+function vitraFieldValue(form, name) {
+  const field = form.querySelector(`[name="${name}"]`);
+  if (!field) return "";
+  if (field.tagName === "SELECT") return field.selectedOptions?.[0]?.textContent?.trim() || field.value;
+  return field.value.trim();
+}
+
+function vitraTrackingCode() {
+  const now = new Date();
+  const datePart = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}`;
+  return `VITRA-${datePart}-${Math.floor(1000 + Math.random() * 9000)}`;
+}
+
+document.querySelectorAll("[data-build-request]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = document.querySelector("#project-form");
+    button.textContent = activeLanguage === "fa" ? "ادامه در فرم پروژه" : "Continue to project form";
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+});
+
+document.querySelectorAll("[data-project-form]").forEach((form) => {
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const features = [...form.querySelectorAll('[name="features"]:checked')].map((item) => item.closest("label")?.innerText.trim() || item.value);
+    const request = {
+      code: vitraTrackingCode(),
+      name: vitraFieldValue(form, "name"),
+      phone: vitraFieldValue(form, "phone"),
+      email: vitraFieldValue(form, "email"),
+      project: vitraFieldValue(form, "project"),
+      current: vitraFieldValue(form, "current"),
+      service: vitraFieldValue(form, "service"),
+      package: vitraFieldValue(form, "package"),
+      budget: vitraFieldValue(form, "budget"),
+      timeline: vitraFieldValue(form, "timeline"),
+      features,
+      brief: vitraFieldValue(form, "brief"),
+      createdAt: new Date().toISOString()
+    };
+
+    const requests = JSON.parse(localStorage.getItem("vitra-project-requests") || "[]");
+    requests.unshift(request);
+    localStorage.setItem("vitra-project-requests", JSON.stringify(requests.slice(0, 20)));
+
+    const preview = document.querySelector("[data-order-preview]");
+    if (preview) {
+      preview.innerHTML = `
+        <div><b>${activeLanguage === "fa" ? "کد پیگیری" : "Tracking code"}</b><strong>${request.code}</strong></div>
+        <div><b>${activeLanguage === "fa" ? "پروژه" : "Project"}</b><span>${request.project}</span></div>
+        <div><b>${activeLanguage === "fa" ? "خدمت" : "Service"}</b><span>${request.service}</span></div>
+        <div><b>${activeLanguage === "fa" ? "بودجه / زمان" : "Budget / timeline"}</b><span>${request.budget} - ${request.timeline}</span></div>
+        <div><b>${activeLanguage === "fa" ? "امکانات" : "Features"}</b><span>${request.features.join("، ") || "-"}</span></div>
+      `;
+    }
+
+    const result = document.querySelector("[data-order-result]");
+    if (result) {
+      result.hidden = false;
+      result.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    const submit = form.querySelector('[type="submit"]');
+    if (submit) submit.textContent = activeLanguage === "fa" ? "درخواست ثبت شد" : "Request submitted";
+  });
+});
+
+function renderStoredRequests() {
+  const requests = JSON.parse(localStorage.getItem("vitra-project-requests") || "[]");
+  document.querySelectorAll("[data-admin-requests], [data-client-requests]").forEach((list) => {
+    if (!requests.length) {
+      list.innerHTML = `<div class="empty-state"><b>${activeLanguage === "fa" ? "هنوز درخواستی ثبت نشده" : "No requests yet"}</b><span>${activeLanguage === "fa" ? "از صفحه شروع پروژه یک درخواست تستی ثبت کن." : "Create a test request from the start project page."}</span></div>`;
+      return;
+    }
+    list.innerHTML = requests
+      .map(
+        (request) => `
+          <article>
+            <div><b>${request.project || "-"}</b><span>${request.code}</span></div>
+            <p>${request.service || "-"} · ${request.budget || "-"} · ${request.timeline || "-"}</p>
+            <small>${(request.features || []).join("، ") || "-"}</small>
+            <a class="text-link" href="order.html">${activeLanguage === "fa" ? "ثبت درخواست مشابه" : "Create similar request"}</a>
+          </article>
+        `
+      )
+      .join("");
+  });
+}
+
+renderStoredRequests();
+
+const orderParams = new URLSearchParams(window.location.search);
+const preferredPackage = orderParams.get("package");
+const preferredService = orderParams.get("service");
+if (preferredPackage || preferredService) {
+  const packageSelect = document.querySelector('[name="package"]');
+  const serviceSelect = document.querySelector('[name="service"]');
+  if (packageSelect && preferredPackage) {
+    [...packageSelect.options].forEach((option) => {
+      if (option.textContent.trim().toLowerCase().includes(preferredPackage.toLowerCase())) packageSelect.value = option.value;
+    });
+  }
+  if (serviceSelect && preferredService) {
+    [...serviceSelect.options].forEach((option) => {
+      if (option.textContent.trim().toLowerCase().includes(preferredService.toLowerCase())) serviceSelect.value = option.value;
+    });
+  }
+  document.querySelector("#project-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 applyLanguage(activeLanguage);
