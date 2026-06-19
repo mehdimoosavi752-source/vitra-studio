@@ -5963,3 +5963,106 @@ main::after {
     font-size: clamp(34px, 12vw, 54px);
   }
 }
+
+/* Visible command deck update */
+.hero-system .hero-copy {
+  display: grid;
+  gap: 20px;
+  width: min(940px, calc(100% - 28px));
+  max-width: 940px;
+  min-height: min(620px, calc(100svh - 160px));
+  align-content: center;
+  padding: clamp(34px, 5.6vw, 76px);
+  border-radius: clamp(30px, 4vw, 52px);
+  border: 1px solid rgba(255, 236, 212, 0.30);
+  background:
+    linear-gradient(145deg, rgba(12, 8, 5, 0.92), rgba(12, 8, 5, 0.62)),
+    radial-gradient(circle at 0% 0%, rgba(255, 143, 69, 0.22), transparent 34%),
+    radial-gradient(circle at 100% 86%, rgba(83, 240, 223, 0.12), transparent 34%);
+  box-shadow:
+    0 46px 130px rgba(0, 0, 0, 0.52),
+    0 0 0 1px rgba(255, 143, 69, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.hero-system .eyebrow {
+  margin: 0;
+  padding: 10px 16px;
+  border-color: rgba(83, 240, 223, 0.34);
+  background:
+    linear-gradient(135deg, rgba(83, 240, 223, 0.12), rgba(255, 143, 69, 0.08)),
+    rgba(5, 5, 5, 0.46);
+  color: #bffef6;
+  text-transform: uppercase;
+  font-weight: 950;
+}
+
+.hero-system h1 {
+  max-width: 17ch;
+  margin: 0;
+  font-size: clamp(44px, 6.4vw, 92px);
+  line-height: 1.16;
+}
+
+.hero-system .hero-copy p:not(.eyebrow) {
+  margin: 0;
+  max-width: 820px;
+}
+
+.command-modules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.command-modules span {
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 236, 212, 0.18);
+  border-radius: 18px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.022)),
+    rgba(6, 5, 4, 0.58);
+}
+
+.command-modules b,
+.command-modules small {
+  display: block;
+}
+
+.command-modules b {
+  color: var(--copper);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.command-modules small {
+  margin-top: 8px;
+  color: #eadcca;
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: 850;
+}
+
+.hero-system .action-row {
+  margin-top: 6px;
+}
+
+@media (max-width: 760px) {
+  .hero-system .hero-copy {
+    min-height: 0;
+    width: min(100% - 24px, 940px);
+    padding: 24px;
+    gap: 16px;
+  }
+
+  .command-modules {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-system h1 {
+    max-width: 100%;
+    font-size: clamp(34px, 11vw, 56px);
+  }
+}
