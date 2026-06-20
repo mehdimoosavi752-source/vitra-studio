@@ -155,6 +155,166 @@ function enhanceConversionLayer() {
   enhanceHomePage();
 }
 
+function setBilingualCopy(selector, fa, en, lang, options = {}) {
+  const nodes = options.all ? document.querySelectorAll(selector) : [document.querySelector(selector)];
+  nodes.forEach((element) => {
+    if (!element) return;
+    element.dataset.fa = fa;
+    element.dataset.en = en;
+    element.textContent = lang === "en" ? en : fa;
+  });
+}
+
+function polishMarketingCopy(lang) {
+  const page = document.body.dataset.page || "";
+
+  if (page === "home") {
+    setBilingualCopy(
+      ".hero-system h1",
+      "وب‌سایت و پنل اختصاصی برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند و سفارش بیشتری بگیرند.",
+      "Custom websites and portals for businesses that need to look professional and win more inquiries.",
+      lang
+    );
+    setBilingualCopy(
+      ".hero-system .hero-copy p:not(.eyebrow)",
+      "سایت شما باید بیشتر از یک ظاهر زیبا باشد: باید اعتماد بسازد، مسیر انتخاب را کوتاه کند، درخواست مشتری را ثبت کند و بعد از تحویل با پنل قابل مدیریت بماند. Vitra Studio طراحی سایت، بازطراحی، فروشگاه، رزرو، پنل مدیریت، پنل مشتری، سئو پایه و پشتیبانی ماهانه را یکپارچه اجرا می‌کند.",
+      "Your website should do more than look good: it should build trust, shorten the buying path, collect inquiries and stay manageable after launch. Vitra Studio delivers website design, redesign, ecommerce, booking, admin portals, client portals, baseline SEO and monthly support as one system.",
+      lang
+    );
+    setBilingualCopy(
+      ".home-service-paths .section-head h2",
+      "مسیر مناسب کسب‌وکار خود را انتخاب کنید",
+      "Choose the right path for your business",
+      lang
+    );
+    setBilingualCopy(
+      ".home-service-paths .section-head p",
+      "اگر تازه شروع می‌کنید، سایت معرفی می‌خواهید. اگر سایت فعلی نتیجه نمی‌دهد، بازطراحی لازم دارید. اگر سفارش، مشتری، محتوا و قیمت‌ها باید قابل مدیریت باشند، پنل اختصاصی بهترین مسیر است.",
+      "If you are launching, start with a business website. If your current site is not converting, choose redesign. If orders, clients, content and pricing need control, a custom portal is the right path.",
+      lang
+    );
+    setBilingualCopy(
+      ".demo-decision-layer h2",
+      "دموهایی ببینید که مثل پروژه واقعی کار می‌کنند",
+      "Explore demos that work like real projects",
+      lang
+    );
+    setBilingualCopy(
+      ".demo-decision-layer p",
+      "قبل از سفارش، مشتری می‌تواند نمونه‌های قابل کلیک را بررسی کند: ثبت‌نام آموزشگاه، رزرو سالن، نوبت‌دهی کلینیک و فروشگاه پوشاک با محصول، سبد و پیگیری سفارش.",
+      "Before ordering, clients can inspect clickable demos: academy enrollment, salon booking, clinic appointments and a fashion store with products, cart and order tracking.",
+      lang
+    );
+    setBilingualCopy(
+      ".vitra-panel-product h2",
+      "پنل Vitra؛ کنترل سایت، مشتری و سفارش‌ها در یک محیط",
+      "Vitra Panel: control website, clients and orders in one place",
+      lang
+    );
+    setBilingualCopy(
+      ".vitra-panel-product p",
+      "بعد از تحویل، برای تغییر متن، قیمت، خدمات، صفحات، تیکت‌ها و لینک‌های فوتر منتظر طراح نمی‌مانید. پنل Vitra مدیریت روزمره سایت را ساده و قابل پیگیری می‌کند.",
+      "After launch, you do not wait for a designer to edit copy, prices, services, pages, tickets or footer links. Vitra Panel keeps daily website management simple and trackable.",
+      lang
+    );
+    setBilingualCopy(
+      ".calculator-trust-note b",
+      "بودجه پروژه را سریع و شفاف تخمین بزنید",
+      "Estimate your project budget quickly and clearly",
+      lang
+    );
+    setBilingualCopy(
+      ".calculator-trust-note span",
+      "این عدد برای تصمیم‌گیری اولیه است. قیمت نهایی بعد از بررسی تعداد صفحات، محتوا، امکانات، سطح پنل، زبان‌ها و پشتیبانی مورد نیاز مشخص می‌شود.",
+      "This estimate helps with early decisions. Final pricing depends on pages, content, features, panel level, languages and support needs.",
+      lang
+    );
+  }
+
+  const heroCopy = {
+    services: {
+      h1: ["خدمات طراحی سایت، پنل و رشد برای کسب‌وکارهایی که نتیجه می‌خواهند", "Website, portal and growth services for businesses that want measurable outcomes"],
+      p: ["از راه‌اندازی سرور تا طراحی سایت، بازطراحی، فروشگاه، رزرو، پنل مشتری، مدیریت محتوا، سئو پایه و پشتیبانی ماهانه را به صورت مرحله‌ای و قابل توسعه اجرا می‌کنیم.", "From server setup to website design, redesign, ecommerce, booking, client portals, content management, baseline SEO and monthly support, we build in clear scalable phases."]
+    },
+    portfolio: {
+      h1: ["نمونه‌کارهایی که مشتری می‌تواند ببیند، کلیک کند و کیفیت اجرا را لمس کند", "Portfolio demos clients can view, click and evaluate before ordering"],
+      p: ["هر دمو فقط یک تصویر نیست؛ برای یک نوع کسب‌وکار طراحی شده و امکانات واقعی همان حوزه را نشان می‌دهد تا تصمیم‌گیری برای مشتری آسان‌تر شود.", "Each demo is more than a picture; it is designed for a business type and shows realistic features so clients can decide with confidence."]
+    },
+    packages: {
+      h1: ["پکیج‌هایی شفاف برای شروع سریع، رشد جدی و سیستم کامل مدیریت", "Clear packages for fast launch, serious growth and complete management systems"],
+      p: ["به جای قیمت مبهم، هر پکیج با خروجی مشخص، سطح پنل، امکانات، زمان اجرا و مسیر ارتقا تعریف شده تا بدانید دقیقاً چه چیزی تحویل می‌گیرید.", "Instead of vague pricing, every package defines deliverables, portal level, features, timeline and upgrade path so you know exactly what you receive."]
+    },
+    process: {
+      h1: ["فرایندی شفاف از تحلیل تا طراحی، اجرا، آموزش و پشتیبانی", "A clear process from discovery to design, build, training and support"],
+      p: ["پروژه با شناخت نیاز و هدف شروع می‌شود، با طراحی و اجرای مرحله‌ای جلو می‌رود و با آموزش پنل، تحویل دسترسی‌ها و برنامه رشد ماهانه کامل می‌شود.", "Each project starts with goals and needs, moves through phased design and build, and finishes with portal training, access handoff and a monthly growth plan."]
+    },
+    faq: {
+      h1: ["پاسخ‌های کوتاه و روشن قبل از سفارش سایت یا پنل", "Clear answers before ordering a website or portal"],
+      p: ["زمان اجرا، هزینه، مالکیت سایت، پشتیبانی، پنل و مسیر توسعه را قبل از شروع شفاف می‌کنیم تا تصمیم‌گیری ساده‌تر باشد.", "We clarify timeline, pricing, ownership, support, portal scope and upgrade path before the project starts."]
+    },
+    about: {
+      h1: ["Vitra Studio برای ساخت سایت‌هایی شکل گرفته که فقط دیده نمی‌شوند، کار می‌کنند", "Vitra Studio builds websites that do more than look good; they work"],
+      p: ["تمرکز ما ترکیب طراحی مدرن، متن فروشنده، تجربه کاربری، پنل مدیریت و پشتیبانی است تا سایت شما بعد از تحویل قابل رشد و قابل مدیریت بماند.", "We combine modern design, conversion-focused copy, user experience, management portals and support so your website stays manageable and ready to grow after launch."]
+    },
+    order: {
+      h1: ["سفارش پروژه را مرحله‌ای ثبت کنید تا مسیر اجرا دقیق‌تر شروع شود", "Submit your project step by step so execution starts with clarity"],
+      p: ["نوع کسب‌وکار، امکانات، بودجه، زمان‌بندی و نیازهای پنل را وارد کنید تا پیشنهاد اولیه و مسیر اجرای مناسب برای شما مشخص شود.", "Enter your business type, features, budget, timeline and portal needs so the right proposal and execution path can be prepared."]
+    },
+    panel: {
+      h1: ["پنل Vitra برای مدیریت سایت، مشتری، سفارش، محتوا و پشتیبانی", "Vitra Panel for managing website, clients, orders, content and support"],
+      p: ["با پنل Vitra، سایت بعد از تحویل وابسته نمی‌ماند. محتوا، قیمت‌ها، خدمات، صفحات، تیکت‌ها، فایل‌ها، شبکه‌های اجتماعی و گزارش‌ها در یک محیط قابل کنترل هستند.", "With Vitra Panel, your website does not stay dependent after launch. Content, prices, services, pages, tickets, files, social links and reports are managed in one controlled workspace."]
+    }
+  };
+
+  if (heroCopy[page]) {
+    setBilingualCopy(".page-hero h1", heroCopy[page].h1[0], heroCopy[page].h1[1], lang);
+    setBilingualCopy(".page-hero p:not(.eyebrow):not(.section-kicker)", heroCopy[page].p[0], heroCopy[page].p[1], lang);
+  }
+}
+
+function polishFooterCTA(lang) {
+  document.querySelectorAll(".site-footer").forEach((footer) => {
+    footer.classList.add("footer-cta");
+    const brandTitle = footer.querySelector(":scope > div:first-child strong");
+    const brandCopy = footer.querySelector(":scope > div:first-child p");
+    if (brandTitle) {
+      brandTitle.dataset.fa = "برای سایت بعدی‌تان یک ویترین قابل مدیریت بسازیم";
+      brandTitle.dataset.en = "Build a manageable digital storefront for your next project";
+      brandTitle.textContent = lang === "en" ? brandTitle.dataset.en : brandTitle.dataset.fa;
+    }
+    if (brandCopy) {
+      brandCopy.dataset.fa = "اگر سایت شما باید مشتری جذب کند، سفارش ثبت کند، قابل ویرایش باشد و بعد از تحویل رشد کند، Vitra Studio مسیر طراحی، پنل و پشتیبانی را یکپارچه اجرا می‌کند.";
+      brandCopy.dataset.en = "If your website should attract clients, collect inquiries, stay editable and keep growing after launch, Vitra Studio delivers design, portal and support as one system.";
+      brandCopy.textContent = lang === "en" ? brandCopy.dataset.en : brandCopy.dataset.fa;
+    }
+
+    const professional = footer.querySelector(".footer-professional");
+    if (professional && !professional.querySelector(".footer-main-cta")) {
+      professional.insertAdjacentHTML(
+        "afterbegin",
+        `<div class="footer-main-cta">
+          <span data-fa="قدم بعدی" data-en="Next step">قدم بعدی</span>
+          <b data-fa="پروژه را با چند سوال ساده شروع کنید" data-en="Start with a few focused questions">پروژه را با چند سوال ساده شروع کنید</b>
+          <p data-fa="نوع سایت، امکانات، بودجه و نیاز پنل را وارد کنید تا مسیر مناسب طراحی و اجرا مشخص شود." data-en="Share website type, features, budget and portal needs so the right build path becomes clear.">نوع سایت، امکانات، بودجه و نیاز پنل را وارد کنید تا مسیر مناسب طراحی و اجرا مشخص شود.</p>
+          <div>
+            <a class="footer-primary-action" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+            <a class="footer-secondary-action" href="portfolio.html" data-fa="دیدن دموها" data-en="View demos">دیدن دموها</a>
+          </div>
+        </div>`
+      );
+    }
+
+    setBilingualCopy(".footer-status strong", "تحویل با آموزش، دسترسی کامل و مسیر رشد", "Launch with training, full access and a growth path", lang, { all: true });
+    setBilingualCopy(
+      ".footer-status p",
+      "در پایان پروژه فقط فایل تحویل نمی‌گیرید؛ پنل، آموزش مدیریت، چک‌لیست دسترسی، برنامه پشتیبانی و مسیر ارتقای بعدی هم مشخص می‌شود.",
+      "At launch you do not just receive files; you receive the portal, management training, access checklist, support plan and next upgrade path.",
+      lang,
+      { all: true }
+    );
+  });
+}
+
 function rememberOriginalText(element) {
   if (!element.dataset.faOriginal) {
     element.dataset.faOriginal = element.textContent.trim();
@@ -200,6 +360,8 @@ function translateLooseText(lang) {
 function applyLanguage(lang) {
   enhanceConversionLayer();
   enhanceSiteFooters();
+  polishMarketingCopy(lang);
+  polishFooterCTA(lang);
   activeLanguage = lang;
   localStorage.setItem("vitra-language", lang);
   document.documentElement.lang = lang;
