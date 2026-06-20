@@ -8323,3 +8323,47 @@ body[data-page="home"] .hero-system .hero-copy {
     grid-template-columns: 1fr;
   }
 }
+
+/* Final nav lock: keep the island menu above the poster while scrolling. */
+.topbar {
+  position: fixed !important;
+  top: max(10px, env(safe-area-inset-top)) !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  isolation: isolate;
+}
+
+.topbar::before,
+.topbar::after {
+  z-index: -1;
+}
+
+.site-shell {
+  padding-top: 0;
+}
+
+main {
+  overflow: clip;
+}
+
+.hero,
+.page-hero,
+.hero-system,
+.hero-stage,
+.hero-image-stage,
+.hero-image-stage img {
+  z-index: auto;
+}
+
+.hero-system .hero-copy {
+  z-index: 2;
+}
+
+@media (max-width: 1120px) {
+  .topbar {
+    width: min(100% - 20px, 1120px) !important;
+  }
+}
