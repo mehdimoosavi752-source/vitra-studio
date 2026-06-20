@@ -7821,3 +7821,284 @@ body[data-page="home"] .hero-system .hero-copy {
     width: min(100% - 24px, 1080px);
   }
 }
+
+/* Conversion architecture: clearer service paths, demo proof and panel positioning. */
+.home-service-paths,
+.demo-decision-layer,
+.vitra-panel-product {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 236, 212, 0.16);
+  background:
+    linear-gradient(145deg, rgba(18, 12, 8, 0.94), rgba(7, 6, 5, 0.88)),
+    radial-gradient(circle at 10% 0%, rgba(255, 148, 77, 0.12), transparent 34%),
+    radial-gradient(circle at 92% 16%, rgba(100, 242, 228, 0.10), transparent 32%);
+}
+
+.home-service-paths::before,
+.demo-decision-layer::before,
+.vitra-panel-product::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 74px 74px;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.home-service-paths > *,
+.demo-decision-layer > *,
+.vitra-panel-product > * {
+  position: relative;
+  z-index: 1;
+}
+
+.service-path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service-path-grid article,
+.panel-product-screen div,
+.demo-proof-list span,
+.calculator-trust-note {
+  border: 1px solid rgba(255, 236, 212, 0.15);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.078), rgba(255, 255, 255, 0.024)),
+    rgba(5, 5, 5, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 32px rgba(255, 132, 64, 0.055);
+}
+
+.service-path-grid article {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 28px);
+  border-radius: 26px;
+}
+
+.service-path-grid article.featured {
+  border-color: rgba(100, 242, 228, 0.28);
+  background:
+    linear-gradient(145deg, rgba(100, 242, 228, 0.10), rgba(255, 148, 77, 0.08)),
+    rgba(5, 5, 5, 0.56);
+}
+
+.service-path-grid span,
+.panel-product-screen b {
+  color: #ff944d;
+  font-weight: 800;
+}
+
+.service-path-grid h3,
+.vitra-panel-product h2,
+.demo-decision-layer h2 {
+  color: #fff4e6;
+}
+
+.service-path-grid p,
+.demo-decision-layer p,
+.vitra-panel-product p,
+.calculator-trust-note span {
+  color: #d8c7b3;
+  line-height: 1.9;
+}
+
+.service-path-grid a {
+  justify-self: start;
+  padding: 11px 15px;
+  border-radius: 999px;
+  color: #120b06;
+  text-decoration: none;
+  background: linear-gradient(135deg, #ff944d, #64f2e4);
+  box-shadow: 0 0 24px rgba(255, 132, 64, 0.18);
+}
+
+.demo-decision-layer,
+.vitra-panel-product {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: clamp(18px, 3vw, 34px);
+  align-items: center;
+}
+
+.demo-proof-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.demo-proof-list span {
+  min-height: 92px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border-radius: 22px;
+  color: #fff4e6;
+  text-align: center;
+}
+
+.panel-product-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.panel-product-screen {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  min-height: 360px;
+  padding: 18px;
+  border-radius: 30px;
+  border: 1px solid rgba(100, 242, 228, 0.20);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 148, 77, 0.18), transparent 34%),
+    radial-gradient(circle at 80% 20%, rgba(100, 242, 228, 0.16), transparent 36%),
+    rgba(3, 4, 5, 0.54);
+}
+
+.panel-product-screen div {
+  display: grid;
+  align-content: end;
+  gap: 8px;
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 24px;
+}
+
+.panel-product-screen span {
+  color: #fff4e6;
+}
+
+.calculator-trust-note {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding: 16px 18px;
+  border-radius: 22px;
+}
+
+.calculator-trust-note b {
+  color: #64f2e4;
+}
+
+@media (max-width: 980px) {
+  .service-path-grid,
+  .demo-decision-layer,
+  .vitra-panel-product {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-product-screen {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .demo-proof-list,
+  .panel-product-screen {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dedicated Vitra Panel page */
+.panel-page-hero {
+  min-height: auto;
+  padding-top: clamp(92px, 13vw, 150px);
+  border-color: rgba(100, 242, 228, 0.22);
+  background:
+    linear-gradient(145deg, rgba(18, 12, 8, 0.92), rgba(7, 6, 5, 0.90)),
+    radial-gradient(circle at 14% 0%, rgba(255, 148, 77, 0.16), transparent 34%),
+    radial-gradient(circle at 86% 16%, rgba(100, 242, 228, 0.14), transparent 34%);
+}
+
+.panel-page-hero h1 {
+  max-width: 980px;
+}
+
+.panel-page-hero p:not(.section-kicker) {
+  max-width: 860px;
+}
+
+.panel-product-system,
+.panel-role-system {
+  border: 1px solid rgba(255, 236, 212, 0.16);
+  background:
+    linear-gradient(145deg, rgba(18, 12, 8, 0.92), rgba(7, 6, 5, 0.88)),
+    radial-gradient(circle at 4% 0%, rgba(255, 148, 77, 0.10), transparent 32%),
+    radial-gradient(circle at 95% 12%, rgba(100, 242, 228, 0.10), transparent 30%);
+}
+
+.panel-module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.panel-module-grid article,
+.role-cards article {
+  min-width: 0;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 236, 212, 0.14);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.074), rgba(255, 255, 255, 0.026)),
+    rgba(5, 5, 5, 0.46);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.panel-module-grid article {
+  display: grid;
+  gap: 10px;
+}
+
+.panel-module-grid b {
+  color: #64f2e4;
+}
+
+.panel-module-grid h3,
+.role-cards strong {
+  color: #fff4e6;
+}
+
+.panel-module-grid p,
+.panel-role-system p,
+.role-cards span {
+  color: #d8c7b3;
+  line-height: 1.85;
+}
+
+.panel-role-system {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.role-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.role-cards article {
+  display: grid;
+  gap: 12px;
+  min-height: 180px;
+  align-content: center;
+}
+
+@media (max-width: 980px) {
+  .panel-module-grid,
+  .panel-role-system,
+  .role-cards {
+    grid-template-columns: 1fr;
+  }
+}

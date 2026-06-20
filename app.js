@@ -25,7 +25,134 @@ function enhanceSiteFooters() {
       </div>
     `;
     footer.append(panel);
+    const footerMap = footer.querySelector(".footer-service-map");
+    if (footerMap && !footerMap.querySelector('a[href="panel.html"]')) {
+      const panelLink = document.createElement("a");
+      panelLink.href = "panel.html";
+      panelLink.dataset.fa = "پنل مدیریت Vitra";
+      panelLink.dataset.en = "Vitra management panel";
+      panelLink.textContent = "پنل مدیریت Vitra";
+      footerMap.insertBefore(panelLink, footerMap.querySelector('a[href="packages.html"]'));
+    }
   });
+}
+
+function enhancePrimaryNav() {
+  document.querySelectorAll(".nav").forEach((nav) => {
+    if (nav.dataset.vitraEnhanced === "true") return;
+    nav.dataset.vitraEnhanced = "true";
+    const orderLink = nav.querySelector('a[href="order.html"]');
+    const panelLink = document.createElement("a");
+    panelLink.href = "panel.html";
+    panelLink.dataset.fa = "پنل Vitra";
+    panelLink.dataset.en = "Vitra Panel";
+    panelLink.textContent = "پنل Vitra";
+    nav.insertBefore(panelLink, orderLink || null);
+  });
+}
+
+function enhanceHomePage() {
+  if (document.body.dataset.page !== "home") return;
+
+  const capabilityRail = document.querySelector(".capability-rail");
+  if (capabilityRail && !document.querySelector(".home-service-paths")) {
+    capabilityRail.insertAdjacentHTML(
+      "afterend",
+      `
+      <section class="section home-service-paths">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Service Paths</p>
+            <h2 data-fa="مشتری باید از همان صفحه اول مسیر مناسب خودش را پیدا کند" data-en="Clients should find the right path from the first page">مشتری باید از همان صفحه اول مسیر مناسب خودش را پیدا کند</h2>
+            <p data-fa="به جای اینکه همه چیز در یک متن طولانی بماند، خدمات در سه مسیر قابل انتخاب چیده شده‌اند: ساخت سایت، بازطراحی و سیستم اختصاصی." data-en="Instead of a long generic message, services are organized into three clear choices: new website, redesign and custom system.">به جای اینکه همه چیز در یک متن طولانی بماند، خدمات در سه مسیر قابل انتخاب چیده شده‌اند: ساخت سایت، بازطراحی و سیستم اختصاصی.</p>
+          </div>
+          <a class="text-link" href="services.html" data-fa="جزئیات خدمات" data-en="Service details">جزئیات خدمات</a>
+        </div>
+        <div class="service-path-grid">
+          <article>
+            <span>01</span>
+            <h3 data-fa="طراحی سایت جدید" data-en="New website design">طراحی سایت جدید</h3>
+            <p data-fa="برای کسب‌وکارهایی که می‌خواهند سریع و حرفه‌ای وارد فضای آنلاین شوند، صفحه خدمات، نمونه کار، فرم سفارش و مسیر تماس ساخته می‌شود." data-en="For businesses launching online with service pages, portfolio, order form and clear contact flow.">برای کسب‌وکارهایی که می‌خواهند سریع و حرفه‌ای وارد فضای آنلاین شوند، صفحه خدمات، نمونه کار، فرم سفارش و مسیر تماس ساخته می‌شود.</p>
+            <a href="order.html?service=website" data-fa="شروع این مسیر" data-en="Start this path">شروع این مسیر</a>
+          </article>
+          <article>
+            <span>02</span>
+            <h3 data-fa="بازطراحی و ارتقا" data-en="Redesign and upgrade">بازطراحی و ارتقا</h3>
+            <p data-fa="برای سایت‌هایی که ظاهر قدیمی، مسیر فروش ضعیف، سرعت پایین یا متن نامطمئن دارند، ساختار، محتوا و تجربه کاربر بازسازی می‌شود." data-en="For outdated websites with weak sales flow, slow speed or unclear copy, structure, content and UX are rebuilt.">برای سایت‌هایی که ظاهر قدیمی، مسیر فروش ضعیف، سرعت پایین یا متن نامطمئن دارند، ساختار، محتوا و تجربه کاربر بازسازی می‌شود.</p>
+            <a href="order.html?service=redesign" data-fa="درخواست بازطراحی" data-en="Request redesign">درخواست بازطراحی</a>
+          </article>
+          <article class="featured">
+            <span>03</span>
+            <h3 data-fa="پنل و سیستم اختصاصی" data-en="Portal and custom system">پنل و سیستم اختصاصی</h3>
+            <p data-fa="برای مدیریت محتوا، قیمت‌ها، خدمات، تیکت، مشتری، فایل‌ها و گزارش‌ها، پنل مدیر و مشتری به سایت وصل می‌شود." data-en="Admin and client portals manage content, prices, services, tickets, clients, files and reports.">برای مدیریت محتوا، قیمت‌ها، خدمات، تیکت، مشتری، فایل‌ها و گزارش‌ها، پنل مدیر و مشتری به سایت وصل می‌شود.</p>
+            <a href="panel.html" data-fa="دیدن پنل Vitra" data-en="View Vitra Panel">دیدن پنل Vitra</a>
+          </article>
+        </div>
+      </section>`
+    );
+  }
+
+  const demos = document.querySelector("#demos");
+  if (demos && !document.querySelector(".demo-decision-layer")) {
+    demos.insertAdjacentHTML(
+      "beforebegin",
+      `
+      <section class="section demo-decision-layer">
+        <div>
+          <p class="section-kicker">Demo Strategy</p>
+          <h2 data-fa="قبل از ورود به دمو، مشتری می‌فهمد هر نمونه چه قابلیتی را ثابت می‌کند" data-en="Before opening a demo, clients know what each demo proves">قبل از ورود به دمو، مشتری می‌فهمد هر نمونه چه قابلیتی را ثابت می‌کند</h2>
+          <p data-fa="دموها فقط تصویر نیستند. هر دمو باید یک سناریوی واقعی را نشان بدهد: رزرو، ثبت نام، فیلتر، سبد خرید، پیگیری سفارش، نوبت‌دهی یا مدیریت محتوا." data-en="Demos are not just visuals. Each demo shows a real scenario: booking, enrollment, filters, cart, order tracking, appointments or content management.">دموها فقط تصویر نیستند. هر دمو باید یک سناریوی واقعی را نشان بدهد: رزرو، ثبت نام، فیلتر، سبد خرید، پیگیری سفارش، نوبت‌دهی یا مدیریت محتوا.</p>
+        </div>
+        <div class="demo-proof-list">
+          <span data-fa="صفحه خانه واقعی" data-en="Real homepage">صفحه خانه واقعی</span>
+          <span data-fa="صفحات داخلی" data-en="Inner pages">صفحات داخلی</span>
+          <span data-fa="فرم و اکشن" data-en="Forms and actions">فرم و اکشن</span>
+          <span data-fa="هویت جداگانه" data-en="Separate identity">هویت جداگانه</span>
+        </div>
+      </section>`
+    );
+  }
+
+  const panelTour = document.querySelector("#panel-tour");
+  if (panelTour && !document.querySelector(".vitra-panel-product")) {
+    panelTour.insertAdjacentHTML(
+      "beforebegin",
+      `
+      <section class="section vitra-panel-product">
+        <div class="panel-product-copy">
+          <p class="section-kicker">Vitra Panel</p>
+          <h2 data-fa="پنل، محصول اصلی پشت سایت است" data-en="The panel is the main product behind the website">پنل، محصول اصلی پشت سایت است</h2>
+          <p data-fa="ظاهر سایت ویترین است، اما پنل باعث می‌شود سایت بعد از تحویل زنده بماند. مدیر می‌تواند صفحه بسازد، قیمت تغییر دهد، خدمت اضافه کند، تیکت ببیند و شبکه‌های اجتماعی فوتر را کنترل کند." data-en="The website is the storefront, but the portal keeps it alive after launch. Admins can create pages, edit pricing, add services, view tickets and control footer social links.">ظاهر سایت ویترین است، اما پنل باعث می‌شود سایت بعد از تحویل زنده بماند. مدیر می‌تواند صفحه بسازد، قیمت تغییر دهد، خدمت اضافه کند، تیکت ببیند و شبکه‌های اجتماعی فوتر را کنترل کند.</p>
+          <div class="action-row">
+            <a class="btn btn-primary" href="panel.html" data-fa="صفحه معرفی پنل" data-en="Panel overview">صفحه معرفی پنل</a>
+            <a class="btn btn-ghost" href="admin.html" data-fa="ورود به پنل مدیر" data-en="Open admin panel">ورود به پنل مدیر</a>
+          </div>
+        </div>
+        <div class="panel-product-screen" aria-label="Vitra Panel preview">
+          <div><b>CMS</b><span data-fa="صفحه، محتوا، قیمت" data-en="Pages, content, pricing">صفحه، محتوا، قیمت</span></div>
+          <div><b>CRM</b><span data-fa="مشتری، پروژه، فایل" data-en="Clients, projects, files">مشتری، پروژه، فایل</span></div>
+          <div><b>Ticket</b><span data-fa="پشتیبانی و پیگیری" data-en="Support and follow-up">پشتیبانی و پیگیری</span></div>
+          <div><b>Growth</b><span data-fa="گزارش و ارتقا" data-en="Reports and upgrades">گزارش و ارتقا</span></div>
+        </div>
+      </section>`
+    );
+  }
+
+  const calculator = document.querySelector("#calculator");
+  if (calculator && !calculator.querySelector(".calculator-trust-note")) {
+    calculator.insertAdjacentHTML(
+      "afterbegin",
+      `<div class="calculator-trust-note">
+        <b data-fa="برآورد سریع، نه قیمت قطعی" data-en="Fast estimate, not final pricing">برآورد سریع، نه قیمت قطعی</b>
+        <span data-fa="این ماشین حساب کمک می‌کند مشتری محدوده بودجه و زمان را بفهمد. قیمت نهایی بعد از بررسی محتوا، امکانات و سطح پنل مشخص می‌شود." data-en="This calculator helps clients understand budget and timeline range. Final pricing depends on content, features and panel level.">این ماشین حساب کمک می‌کند مشتری محدوده بودجه و زمان را بفهمد. قیمت نهایی بعد از بررسی محتوا، امکانات و سطح پنل مشخص می‌شود.</span>
+      </div>`
+    );
+  }
+}
+
+function enhanceConversionLayer() {
+  enhancePrimaryNav();
+  enhanceHomePage();
 }
 
 function rememberOriginalText(element) {
@@ -71,6 +198,7 @@ function translateLooseText(lang) {
 }
 
 function applyLanguage(lang) {
+  enhanceConversionLayer();
   enhanceSiteFooters();
   activeLanguage = lang;
   localStorage.setItem("vitra-language", lang);

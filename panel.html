@@ -3,18 +3,89 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>انتخاب پنل | Vitra Studio</title>
+    <title>Vitra Panel | پنل مدیریت سایت و مشتری</title>
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="description" content="Vitra Panel is a bilingual admin and client portal for content, pricing, services, tickets, files and project tracking." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="panel">
-    <main class="login-page">
-      <section class="login-card">
-        <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" /></span><span class="brand-text"><strong>Vitra Studio</strong><small>انتخاب محیط پنل</small></span></a>
-        <div><p class="eyebrow">Portal Selector</p><h1>کدام پنل را می‌خواهی ببینی؟</h1><p>پنل مدیر برای کنترل کل سایت و خدمات Vitra است. پنل مشتری برای موسسه علامه سخن و مدیریت سایت آموزشی آن ساخته شده است.</p></div>
-        <div class="login-actions"><a class="btn btn-primary" href="admin.html">پنل مدیر Vitra</a><a class="btn btn-ghost" href="client.html">پنل مشتری علامه</a></div>
-      </section>
-      <section class="login-visual"><img src="assets/studio-command-hero.png" alt="" /></section>
-    </main>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Vitra Studio">
+          <span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" /></span>
+          <span class="brand-text"><strong>Vitra Studio</strong><small data-fa="استودیوی ساخت سیستم دیجیتال" data-en="Digital system studio">استودیوی ساخت سیستم دیجیتال</small></span>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="باز کردن منو"><span></span><span></span><span></span></button>
+        <button class="lang-switch lang-switch-top" type="button" aria-label="Language">EN</button>
+        <nav class="nav">
+          <a href="index.html" data-fa="خانه" data-en="Home">خانه</a>
+          <a href="services.html" data-fa="خدمات" data-en="Services">خدمات</a>
+          <a href="portfolio.html" data-fa="دموها" data-en="Demos">دموها</a>
+          <a href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
+          <a href="process.html" data-fa="فرایند" data-en="Process">فرایند</a>
+          <a href="faq.html" data-fa="سوالات" data-en="FAQ">سوالات</a>
+          <a href="about.html" data-fa="درباره" data-en="About">درباره</a>
+          <a href="login.html" data-fa="ورود / ثبت‌نام" data-en="Login / Sign up">ورود / ثبت‌نام</a>
+          <a class="nav-action" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero panel-page-hero">
+          <p class="section-kicker">Vitra Panel</p>
+          <h1 data-fa="پنلی برای اینکه سایت بعد از تحویل زنده، قابل مدیریت و قابل رشد بماند" data-en="A portal that keeps the website alive, manageable and scalable after launch">پنلی برای اینکه سایت بعد از تحویل زنده، قابل مدیریت و قابل رشد بماند</h1>
+          <p data-fa="Vitra Panel برای مدیر و مشتری ساخته می‌شود: مدیر محتوا، قیمت، خدمات، صفحات، تیکت‌ها، شبکه‌های اجتماعی و گزارش‌ها را مدیریت می‌کند؛ مشتری هم سفارش، فایل‌ها، وضعیت اجرا و ارتباطات را می‌بیند." data-en="Vitra Panel is built for admin and client. Admins manage content, pricing, services, pages, tickets, social links and reports. Clients see orders, files, project status and communication.">Vitra Panel برای مدیر و مشتری ساخته می‌شود: مدیر محتوا، قیمت، خدمات، صفحات، تیکت‌ها، شبکه‌های اجتماعی و گزارش‌ها را مدیریت می‌کند؛ مشتری هم سفارش، فایل‌ها، وضعیت اجرا و ارتباطات را می‌بیند.</p>
+          <div class="action-row">
+            <a class="btn btn-primary" href="admin.html" data-fa="دیدن پنل مدیر" data-en="View admin panel">دیدن پنل مدیر</a>
+            <a class="btn btn-ghost" href="client.html" data-fa="دیدن پنل مشتری" data-en="View client panel">دیدن پنل مشتری</a>
+          </div>
+        </section>
+
+        <section class="section panel-product-system">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Core Modules</p>
+              <h2 data-fa="ماژول‌هایی که برای کار واقعی لازم هستند" data-en="Modules required for real work">ماژول‌هایی که برای کار واقعی لازم هستند</h2>
+              <p data-fa="پنل باید فقط نمایشی نباشد. هر بخش باید یک کار مشخص را سریع‌تر، شفاف‌تر یا قابل پیگیری‌تر کند." data-en="The portal should not be decorative. Every module must make a real workflow faster, clearer or more trackable.">پنل باید فقط نمایشی نباشد. هر بخش باید یک کار مشخص را سریع‌تر، شفاف‌تر یا قابل پیگیری‌تر کند.</p>
+            </div>
+            <a class="text-link" href="order.html?service=panel" data-fa="سفارش پنل" data-en="Order a portal">سفارش پنل</a>
+          </div>
+          <div class="panel-module-grid">
+            <article><b>CMS</b><h3 data-fa="مدیریت صفحات و محتوا" data-en="Pages and content management">مدیریت صفحات و محتوا</h3><p data-fa="ساخت صفحه جدید، ویرایش متن، تصویر، بخش‌ها، پرسش‌ها و محتوای خدمات." data-en="Create pages, edit copy, images, sections, FAQs and service content.">ساخت صفحه جدید، ویرایش متن، تصویر، بخش‌ها، پرسش‌ها و محتوای خدمات.</p></article>
+            <article><b>Pricing</b><h3 data-fa="قیمت‌گذاری و پکیج‌ها" data-en="Pricing and packages">قیمت‌گذاری و پکیج‌ها</h3><p data-fa="تغییر قیمت پایه، تعریف خدمت جدید، افزودن امکانات اضافه و مدیریت پیشنهادها." data-en="Edit base prices, define services, add add-ons and manage offers.">تغییر قیمت پایه، تعریف خدمت جدید، افزودن امکانات اضافه و مدیریت پیشنهادها.</p></article>
+            <article><b>CRM</b><h3 data-fa="مشتری و پروژه" data-en="Client and project">مشتری و پروژه</h3><p data-fa="لیست مشتری‌ها، وضعیت پروژه، فایل‌ها، یادداشت‌ها، تاریخچه تصمیم‌ها و فاکتور." data-en="Clients, project status, files, notes, decision history and invoice.">لیست مشتری‌ها، وضعیت پروژه، فایل‌ها، یادداشت‌ها، تاریخچه تصمیم‌ها و فاکتور.</p></article>
+            <article><b>Ticket</b><h3 data-fa="تیکت و ارتباط" data-en="Tickets and communication">تیکت و ارتباط</h3><p data-fa="درخواست‌ها، پشتیبانی، پیوست فایل، پاسخ مدیر و وضعیت رسیدگی در یک مسیر مشخص." data-en="Requests, support, file attachments, admin replies and clear handling status.">درخواست‌ها، پشتیبانی، پیوست فایل، پاسخ مدیر و وضعیت رسیدگی در یک مسیر مشخص.</p></article>
+            <article><b>Growth</b><h3 data-fa="گزارش و رشد" data-en="Reports and growth">گزارش و رشد</h3><p data-fa="بازدید، رفتار کاربر، درخواست‌ها، نرخ تبدیل، کارهای ماهانه و مسیر ارتقا." data-en="Visits, user behavior, requests, conversion, monthly tasks and upgrade path.">بازدید، رفتار کاربر، درخواست‌ها، نرخ تبدیل، کارهای ماهانه و مسیر ارتقا.</p></article>
+            <article><b>Social</b><h3 data-fa="شبکه‌های اجتماعی و فوتر" data-en="Social links and footer">شبکه‌های اجتماعی و فوتر</h3><p data-fa="ثبت لینک اینستاگرام، تلگرام، واتساپ، لینکدین و ایمیل برای نمایش در فوتر سایت." data-en="Add Instagram, Telegram, WhatsApp, LinkedIn and email links to the site footer.">ثبت لینک اینستاگرام، تلگرام، واتساپ، لینکدین و ایمیل برای نمایش در فوتر سایت.</p></article>
+          </div>
+        </section>
+
+        <section class="section panel-role-system">
+          <div>
+            <p class="section-kicker">Roles</p>
+            <h2 data-fa="سطح دسترسی مدیر و مشتری جداست" data-en="Admin and client access levels are separated">سطح دسترسی مدیر و مشتری جداست</h2>
+            <p data-fa="ورود یک صفحه دارد، اما سیستم با شناسه کاربر تشخیص می‌دهد چه کسی مدیر است و چه کسی مشتری. این باعث می‌شود تجربه ورود ساده بماند ولی دسترسی‌ها کنترل شده باشند." data-en="There is one login page, but the system detects whether the user is admin or client by identity. Login stays simple while access remains controlled.">ورود یک صفحه دارد، اما سیستم با شناسه کاربر تشخیص می‌دهد چه کسی مدیر است و چه کسی مشتری. این باعث می‌شود تجربه ورود ساده بماند ولی دسترسی‌ها کنترل شده باشند.</p>
+          </div>
+          <div class="role-cards">
+            <article><strong data-fa="مدیر" data-en="Admin">مدیر</strong><span data-fa="ایجاد صفحه، ویرایش قیمت، مدیریت تیکت، گزارش، شبکه‌های اجتماعی" data-en="Create pages, edit prices, manage tickets, reports and social links">ایجاد صفحه، ویرایش قیمت، مدیریت تیکت، گزارش، شبکه‌های اجتماعی</span></article>
+            <article><strong data-fa="مشتری" data-en="Client">مشتری</strong><span data-fa="دیدن سفارش، وضعیت پروژه، فایل‌ها، فاکتور، تیکت و پیام‌ها" data-en="View order, project status, files, invoice, tickets and messages">دیدن سفارش، وضعیت پروژه، فایل‌ها، فاکتور، تیکت و پیام‌ها</span></article>
+          </div>
+        </section>
+
+        <section class="section home-cta-band">
+          <div>
+            <p class="section-kicker">Next Step</p>
+            <h2 data-fa="اگر سایت قرار است فقط زیبا نباشد و واقعاً کار کند، پنل باید از اول در معماری دیده شود" data-en="If the website should work, not only look good, the portal must be planned from the start">اگر سایت قرار است فقط زیبا نباشد و واقعاً کار کند، پنل باید از اول در معماری دیده شود</h2>
+          </div>
+          <a class="btn btn-primary" href="order.html?service=panel" data-fa="شروع سفارش پنل" data-en="Start portal order">شروع سفارش پنل</a>
+        </section>
+
+        <footer class="site-footer">
+          <div><strong>Vitra Studio</strong><p data-fa="طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی." data-en="Future-facing website design, development, portals, demos and support.">طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی.</p></div>
+          <div class="footer-socials" aria-label="شبکه‌های اجتماعی"><a data-social-link="instagram" target="_blank" rel="noopener">IG</a><a data-social-link="telegram" target="_blank" rel="noopener">TG</a><a data-social-link="linkedin" target="_blank" rel="noopener">IN</a><a data-social-link="whatsapp" target="_blank" rel="noopener">WA</a><a data-social-link="email" target="_blank" rel="noopener">@</a></div>
+        </footer>
+      </main>
+    </div>
+    <script src="app.js"></script>
   </body>
 </html>
