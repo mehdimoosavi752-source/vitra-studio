@@ -8324,6 +8324,413 @@ body[data-page="home"] .hero-system .hero-copy {
   }
 }
 
+.offer-system,
+.audience-fit,
+.trust-stack,
+.demo-sales-layer,
+.consult-strip,
+.care-package-grid,
+.panel-advantage-strip,
+.entry-offer {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 184, 108, 0.18);
+  background:
+    linear-gradient(145deg, rgba(255, 148, 77, 0.08), rgba(100, 242, 228, 0.035)),
+    radial-gradient(circle at 12% 0%, rgba(255, 148, 77, 0.12), transparent 34%),
+    radial-gradient(circle at 88% 12%, rgba(100, 242, 228, 0.10), transparent 32%),
+    rgba(9, 7, 5, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(100, 242, 228, 0.045),
+    0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.service-product-cards,
+.audience-grid,
+.trust-grid,
+.care-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.service-product-cards article,
+.audience-grid article,
+.trust-grid article,
+.care-grid article {
+  min-width: 0;
+  border: 1px solid rgba(255, 236, 212, 0.13);
+  border-radius: 22px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    rgba(4, 4, 4, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 26px rgba(255, 132, 64, 0.06);
+}
+
+.service-product-cards article {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  padding: 20px;
+}
+
+.service-product-cards span,
+.care-grid span,
+.entry-offer span {
+  width: fit-content;
+  color: #06110f;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #ff944d, #64f2e4);
+  box-shadow: 0 0 22px rgba(255, 132, 64, 0.20);
+}
+
+.service-product-cards h3,
+.care-grid h3 {
+  margin: 0;
+  color: #fff4e6;
+  font-size: clamp(18px, 1.7vw, 24px);
+  line-height: 1.45;
+}
+
+.service-product-cards p,
+.care-grid p,
+.demo-sales-layer p,
+.consult-strip p,
+.panel-advantage-strip p,
+.entry-offer p {
+  margin: 0;
+  color: #d9c8b6;
+  line-height: 1.8;
+}
+
+.service-product-cards a {
+  width: fit-content;
+  margin-top: 4px;
+  color: #fff4e6;
+  text-decoration: none;
+  font-weight: 900;
+  border: 1px solid rgba(100, 242, 228, 0.25);
+  border-radius: 999px;
+  padding: 9px 13px;
+  background: rgba(100, 242, 228, 0.07);
+  box-shadow: 0 0 20px rgba(100, 242, 228, 0.08);
+}
+
+.audience-grid article {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.audience-grid b {
+  color: #fff4e6;
+  font-size: 18px;
+}
+
+.audience-grid span,
+.panel-advantage-list span,
+.demo-sales-points span,
+.consult-questions span {
+  color: #d9c8b6;
+  line-height: 1.65;
+}
+
+.trust-stack {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.35fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.trust-stack h2,
+.demo-sales-layer h2,
+.consult-strip h2,
+.panel-advantage-strip h2,
+.entry-offer h2 {
+  margin: 0 0 12px;
+  color: #fff4e6;
+  font-size: clamp(26px, 3.4vw, 48px);
+  line-height: 1.35;
+}
+
+.trust-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.trust-grid article {
+  color: #fff4e6;
+  padding: 16px 18px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.demo-sales-layer,
+.consult-strip,
+.panel-advantage-strip,
+.entry-offer {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(260px, 0.72fr);
+  gap: 18px;
+  align-items: center;
+}
+
+.demo-sales-points,
+.consult-questions,
+.panel-advantage-list {
+  display: grid;
+  gap: 10px;
+}
+
+.demo-sales-points span,
+.consult-questions span,
+.panel-advantage-list span {
+  border: 1px solid rgba(255, 236, 212, 0.14);
+  border-radius: 999px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.care-grid article {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+}
+
+.entry-offer {
+  padding-block: clamp(22px, 4vw, 42px);
+}
+
+.entry-offer .btn {
+  justify-self: end;
+}
+
+.service-deep,
+.service-faq-mini,
+.smart-recommendation,
+.audit-workspace {
+  border: 1px solid rgba(255, 184, 108, 0.18);
+  background:
+    linear-gradient(145deg, rgba(255, 148, 77, 0.075), rgba(100, 242, 228, 0.04)),
+    rgba(7, 6, 5, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 22px 70px rgba(0, 0, 0, 0.24);
+}
+
+.service-deep {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(260px, 0.9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.service-deep-copy h2,
+.audit-checklist h2 {
+  margin: 0 0 12px;
+  color: #fff4e6;
+  font-size: clamp(26px, 3.2vw, 46px);
+  line-height: 1.35;
+}
+
+.service-deep-copy p,
+.service-deep-outcome p,
+.audit-points span,
+.audit-result p {
+  margin: 0;
+  color: #d9c8b6;
+  line-height: 1.8;
+}
+
+.service-deep-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.service-deep-grid article,
+.service-deep-outcome,
+.service-faq-mini article,
+.audit-points article,
+.audit-result {
+  border: 1px solid rgba(255, 236, 212, 0.14);
+  border-radius: 22px;
+  background:
+    linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+    rgba(5, 5, 5, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 24px rgba(100, 242, 228, 0.06);
+}
+
+.service-deep-grid article {
+  padding: 15px 17px;
+  color: #fff4e6;
+  font-weight: 850;
+  line-height: 1.6;
+}
+
+.service-deep-outcome {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+}
+
+.service-deep-outcome b,
+.service-faq-mini b,
+.audit-points b,
+.audit-result b {
+  color: #fff4e6;
+  font-size: 18px;
+}
+
+.service-deep-outcome p {
+  flex: 1 1 320px;
+}
+
+.service-faq-mini {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.service-faq-mini article,
+.audit-points article {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.service-faq-mini p {
+  margin: 0;
+  color: #d9c8b6;
+  line-height: 1.75;
+}
+
+.smart-recommendation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 24px;
+}
+
+.smart-recommendation span {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #07100d;
+  font-weight: 900;
+  background: linear-gradient(135deg, #ff944d, #64f2e4);
+}
+
+.smart-recommendation b {
+  display: block;
+  margin-top: 8px;
+  color: #fff4e6;
+  font-size: clamp(20px, 2vw, 28px);
+}
+
+.smart-recommendation p {
+  max-width: 760px;
+  margin: 6px 0 0;
+  color: #d9c8b6;
+  line-height: 1.7;
+}
+
+.audit-workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.audit-points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.audit-form {
+  position: sticky;
+  top: 110px;
+}
+
+.audit-result {
+  grid-column: 1 / -1;
+  padding: 18px;
+}
+
+.audit-result .btn {
+  margin-top: 12px;
+}
+
+@media (max-width: 980px) {
+  .service-product-cards,
+  .audience-grid,
+  .care-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trust-stack,
+  .demo-sales-layer,
+  .consult-strip,
+  .panel-advantage-strip,
+  .entry-offer,
+  .service-deep,
+  .audit-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-offer .btn {
+    justify-self: start;
+  }
+
+  .audit-form {
+    position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .service-product-cards,
+  .audience-grid,
+  .trust-grid,
+  .care-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-product-cards article,
+  .audience-grid article,
+  .care-grid article,
+  .service-faq-mini article,
+  .audit-points article {
+    border-radius: 18px;
+    padding: 16px;
+  }
+
+  .service-faq-mini,
+  .audit-points {
+    grid-template-columns: 1fr;
+  }
+
+  .smart-recommendation {
+    border-radius: 20px;
+  }
+}
+
 /* Final nav lock: keep the island menu above the poster while scrolling. */
 .topbar {
   position: fixed !important;

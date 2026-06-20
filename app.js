@@ -2,6 +2,16 @@ const menuToggle = document.querySelector(".menu-toggle");
 let activeLanguage = localStorage.getItem("vitra-language") || "fa";
 
 function enhanceSiteFooters() {
+  if (!document.querySelector(".site-footer")) {
+    const main = document.querySelector("main");
+    main?.insertAdjacentHTML(
+      "beforeend",
+      `<footer class="site-footer">
+        <div><strong>Vitra Studio</strong><p data-fa="طراحی سایت، پنل، بازطراحی، سئو و پشتیبانی برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند و قابل مدیریت رشد کنند." data-en="Website design, portals, redesign, SEO and support for businesses that want to look professional and grow with control.">طراحی سایت، پنل، بازطراحی، سئو و پشتیبانی برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند و قابل مدیریت رشد کنند.</p></div>
+        <div class="footer-socials"><a data-social-link="instagram" target="_blank" rel="noopener">IG</a><a data-social-link="telegram" target="_blank" rel="noopener">TG</a><a data-social-link="linkedin" target="_blank" rel="noopener">IN</a><a data-social-link="whatsapp" target="_blank" rel="noopener">WA</a><a data-social-link="email" target="_blank" rel="noopener">@</a></div>
+      </footer>`
+    );
+  }
   document.querySelectorAll(".site-footer").forEach((footer) => {
     if (footer.dataset.enhanced === "true") return;
     footer.dataset.enhanced = "true";
@@ -34,7 +44,16 @@ function enhanceSiteFooters() {
       panelLink.textContent = "پنل مدیریت Vitra";
       footerMap.insertBefore(panelLink, footerMap.querySelector('a[href="packages.html"]'));
     }
+    if (footerMap && !footerMap.querySelector('a[href="audit.html"]')) {
+      const auditLink = document.createElement("a");
+      auditLink.href = "audit.html";
+      auditLink.dataset.fa = "بررسی رایگان سایت";
+      auditLink.dataset.en = "Free website review";
+      auditLink.textContent = "بررسی رایگان سایت";
+      footerMap.insertBefore(auditLink, footerMap.querySelector('a[href="order.html"]'));
+    }
   });
+  if (typeof syncSocialLinks === "function") syncSocialLinks();
 }
 
 function enhancePrimaryNav() {
@@ -315,6 +334,416 @@ function polishFooterCTA(lang) {
   });
 }
 
+function createOfferCard(number, titleFa, titleEn, textFa, textEn, link, actionFa, actionEn) {
+  return `
+    <article>
+      <span>${number}</span>
+      <h3 data-fa="${titleFa}" data-en="${titleEn}">${titleFa}</h3>
+      <p data-fa="${textFa}" data-en="${textEn}">${textFa}</p>
+      <a href="${link}" data-fa="${actionFa}" data-en="${actionEn}">${actionFa}</a>
+    </article>`;
+}
+
+function enhanceBusinessOfferLayers() {
+  const page = document.body.dataset.page || "";
+  const file = window.location.pathname.split("/").pop() || "index.html";
+
+  if (page === "services" && file === "services.html" && !document.querySelector(".service-product-cards")) {
+    const serviceIndex = document.querySelector(".service-index");
+    if (serviceIndex && !serviceIndex.querySelector('a[href="audit.html"]')) {
+      serviceIndex.insertAdjacentHTML("beforeend", `<a href="audit.html" data-fa="بررسی رایگان سایت" data-en="Free website review">بررسی رایگان سایت</a>`);
+    }
+    const anchor = document.querySelector(".service-lanes, .services-grid, .section");
+    const html = `
+      <section class="section offer-system">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Productized Services</p>
+            <h2 data-fa="خدماتی که مشتری دقیق می‌فهمد برای چه چیزی هزینه می‌کند" data-en="Services clients can understand, compare and order">خدماتی که مشتری دقیق می‌فهمد برای چه چیزی هزینه می‌کند</h2>
+            <p data-fa="هر خدمت با خروجی مشخص، زمان‌بندی قابل پیگیری و مسیر ارتقا تعریف شده تا تصمیم‌گیری ساده‌تر و اعتماد اولیه سریع‌تر ساخته شود." data-en="Every service has a clear deliverable, trackable timeline and upgrade path so decisions become easier and trust forms faster.">هر خدمت با خروجی مشخص، زمان‌بندی قابل پیگیری و مسیر ارتقا تعریف شده تا تصمیم‌گیری ساده‌تر و اعتماد اولیه سریع‌تر ساخته شود.</p>
+          </div>
+          <a class="text-link" href="order.html" data-fa="شروع مشاوره پروژه" data-en="Start project consultation">شروع مشاوره پروژه</a>
+        </div>
+        <div class="service-product-cards">
+          ${createOfferCard("01", "سایت معرفی کسب‌وکار", "Business website", "صفحه خانه، خدمات، نمونه‌کار، درباره ما، سوالات، فرم تماس و ساختار محتوایی آماده جذب مشتری.", "Home, services, portfolio, about, FAQ, contact flow and conversion-focused content structure.", "order.html?service=business", "درخواست سایت معرفی", "Request business site")}
+          ${createOfferCard("02", "فروشگاه یا رزرو آنلاین", "Ecommerce or booking", "محصول، فیلتر، سبد خرید، رزرو نوبت، پیامک/ایمیل، پیگیری سفارش و مسیر پرداخت قابل توسعه.", "Products, filters, cart, appointment booking, notifications, order tracking and scalable payment flow.", "order.html?service=commerce", "طراحی مسیر فروش", "Design sales flow")}
+          ${createOfferCard("03", "بازطراحی سایت فعلی", "Website redesign sprint", "بررسی ضعف‌های ظاهری، متن، سرعت، CTA، موبایل و تبدیل آن به ساختاری حرفه‌ای‌تر و قابل فروش‌تر.", "Audit visual quality, copy, speed, CTAs and mobile experience, then rebuild for stronger conversion.", "order.html?service=redesign", "درخواست بازطراحی", "Request redesign")}
+          ${createOfferCard("04", "پنل مدیریت اختصاصی", "Custom management panel", "ویرایش صفحات، محتوا، قیمت‌ها، خدمات، شبکه‌های اجتماعی، تیکت‌ها، فایل‌ها و گزارش‌ها در یک پنل.", "Manage pages, content, prices, services, social links, tickets, files and reports in one portal.", "panel.html", "دیدن پنل", "View panel")}
+          ${createOfferCard("05", "سئو و محتوای پایه", "SEO and content starter", "ساختار صفحات، عنوان‌ها، توضیحات، کلمات کلیدی محلی، متن‌های فروشنده و آماده‌سازی برای رشد گوگل.", "Page structure, titles, descriptions, local keywords, sales copy and a foundation for organic growth.", "order.html?service=seo", "بررسی سئو", "Audit SEO")}
+          ${createOfferCard("06", "پشتیبانی و رشد ماهانه", "Monthly care and growth", "آپدیت، بکاپ، امنیت، تغییرات محتوا، گزارش عملکرد و پیشنهادهای ماهانه برای بهتر شدن سایت.", "Updates, backups, security, content changes, performance reports and monthly improvement ideas.", "packages.html#monthly-care", "دیدن پکیج‌ها", "View packages")}
+        </div>
+      </section>`;
+    anchor?.insertAdjacentHTML("beforebegin", html);
+  }
+
+  if ((page === "home" || (page === "services" && file === "services.html")) && !document.querySelector(".audience-fit")) {
+    const anchor = page === "home" ? document.querySelector(".home-service-paths, #demos") : document.querySelector(".offer-system, .service-product-cards")?.closest(".section");
+    const html = `
+      <section class="section audience-fit">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Who It Fits</p>
+            <h2 data-fa="برای کسب‌وکارهایی که سایت را ابزار فروش و مدیریت می‌بینند" data-en="For businesses that see the website as a sales and management tool">برای کسب‌وکارهایی که سایت را ابزار فروش و مدیریت می‌بینند</h2>
+            <p data-fa="ساختار سایت و پنل بر اساس نیاز واقعی هر صنف طراحی می‌شود؛ نه یک قالب تکراری با چند کلمه متفاوت." data-en="The website and portal are shaped around each business type, not a repeated template with changed words.">ساختار سایت و پنل بر اساس نیاز واقعی هر صنف طراحی می‌شود؛ نه یک قالب تکراری با چند کلمه متفاوت.</p>
+          </div>
+        </div>
+        <div class="audience-grid">
+          <article><b data-fa="آموزشگاه" data-en="Academies">آموزشگاه</b><span data-fa="دوره، ثبت‌نام، مدرس، تقویم کلاس و پرداخت" data-en="Courses, enrollment, tutors, schedule and payment">دوره، ثبت‌نام، مدرس، تقویم کلاس و پرداخت</span></article>
+          <article><b data-fa="کلینیک و مطب" data-en="Clinics">کلینیک و مطب</b><span data-fa="نوبت‌دهی، پزشک، خدمات، پرونده و یادآوری" data-en="Appointments, doctors, services, records and reminders">نوبت‌دهی، پزشک، خدمات، پرونده و یادآوری</span></article>
+          <article><b data-fa="سالن و زیبایی" data-en="Beauty salons">سالن و زیبایی</b><span data-fa="رزرو، نمونه‌کار، پکیج خدمات و وفادارسازی" data-en="Booking, gallery, service bundles and loyalty">رزرو، نمونه‌کار، پکیج خدمات و وفادارسازی</span></article>
+          <article><b data-fa="فروشگاه" data-en="Stores">فروشگاه</b><span data-fa="محصول، فیلتر، سبد، کوپن و پیگیری سفارش" data-en="Products, filters, cart, coupons and order tracking">محصول، فیلتر، سبد، کوپن و پیگیری سفارش</span></article>
+          <article><b data-fa="شرکت خدماتی" data-en="Service companies">شرکت خدماتی</b><span data-fa="خدمات، درخواست قیمت، قرارداد و تیکت" data-en="Services, quote request, contract and tickets">خدمات، درخواست قیمت، قرارداد و تیکت</span></article>
+          <article><b data-fa="استارتاپ" data-en="Startups">استارتاپ</b><span data-fa="لندینگ، داشبورد، کاربر، پرداخت و توسعه مرحله‌ای" data-en="Landing, dashboard, users, payment and phased growth">لندینگ، داشبورد، کاربر، پرداخت و توسعه مرحله‌ای</span></article>
+        </div>
+      </section>`;
+    anchor?.insertAdjacentHTML(page === "home" ? "beforebegin" : "afterend", html);
+  }
+
+  if ((page === "home" || (page === "services" && file === "services.html")) && !document.querySelector(".trust-stack")) {
+    const anchor = document.querySelector(".audience-fit") || document.querySelector(".service-product-cards")?.closest(".section");
+    const html = `
+      <section class="section trust-stack">
+        <div>
+          <p class="section-kicker">Trust System</p>
+          <h2 data-fa="قبل از شروع، مسیر تحویل و مالکیت پروژه شفاف می‌شود" data-en="Before we start, delivery and ownership are clear">قبل از شروع، مسیر تحویل و مالکیت پروژه شفاف می‌شود</h2>
+          <p data-fa="برای کم کردن ریسک مشتری، پروژه با مرحله‌بندی، گزارش، نسخه قابل مشاهده، آموزش پنل و چک‌لیست دسترسی تحویل می‌شود." data-en="To reduce client risk, projects are delivered with phases, reports, preview builds, portal training and an access checklist.">برای کم کردن ریسک مشتری، پروژه با مرحله‌بندی، گزارش، نسخه قابل مشاهده، آموزش پنل و چک‌لیست دسترسی تحویل می‌شود.</p>
+        </div>
+        <div class="trust-grid">
+          <article data-fa="بررسی نیاز و پیشنهاد مسیر" data-en="Discovery and build direction">بررسی نیاز و پیشنهاد مسیر</article>
+          <article data-fa="طراحی قابل مشاهده قبل از اجرا" data-en="Visible design before build">طراحی قابل مشاهده قبل از اجرا</article>
+          <article data-fa="تحویل مرحله‌ای و قابل پیگیری" data-en="Trackable phased delivery">تحویل مرحله‌ای و قابل پیگیری</article>
+          <article data-fa="آموزش پنل مدیریت" data-en="Admin panel training">آموزش پنل مدیریت</article>
+          <article data-fa="چک‌لیست دامنه، هاست و دسترسی‌ها" data-en="Domain, hosting and access checklist">چک‌لیست دامنه، هاست و دسترسی‌ها</article>
+          <article data-fa="برنامه پشتیبانی و رشد بعد از لانچ" data-en="Support and growth plan after launch">برنامه پشتیبانی و رشد بعد از لانچ</article>
+        </div>
+      </section>`;
+    anchor?.insertAdjacentHTML("afterend", html);
+  }
+
+  if ((page === "home" || (page === "services" && file === "services.html") || page === "packages") && !document.querySelector(".entry-offer")) {
+    const anchor = document.querySelector(".trust-stack") || document.querySelector(".package-compare") || document.querySelector(".site-footer");
+    const html = `
+      <section class="section entry-offer">
+        <div>
+          <span data-fa="پیشنهاد شروع" data-en="Entry offer">پیشنهاد شروع</span>
+          <h2 data-fa="بررسی رایگان سایت فعلی یا ایده پروژه در ۲۰ دقیقه" data-en="Free 20-minute review of your current website or project idea">بررسی رایگان سایت فعلی یا ایده پروژه در ۲۰ دقیقه</h2>
+          <p data-fa="اگر هنوز نمی‌دانید سایت جدید، بازطراحی، فروشگاه یا پنل برای شما مناسب‌تر است، مسیر درست را با چند سوال کوتاه مشخص می‌کنیم." data-en="If you are unsure whether you need a new site, redesign, ecommerce or portal, we clarify the right path with a few focused questions.">اگر هنوز نمی‌دانید سایت جدید، بازطراحی، فروشگاه یا پنل برای شما مناسب‌تر است، مسیر درست را با چند سوال کوتاه مشخص می‌کنیم.</p>
+        </div>
+        <a class="btn btn-primary" href="order.html?service=audit" data-fa="درخواست بررسی رایگان" data-en="Request free review">درخواست بررسی رایگان</a>
+      </section>`;
+    anchor?.insertAdjacentHTML(anchor.classList?.contains("site-footer") ? "beforebegin" : "afterend", html);
+  }
+}
+
+function enhancePortfolioSalesLayer() {
+  if (document.body.dataset.page !== "portfolio" || document.querySelector(".demo-sales-layer")) return;
+  const anchor = document.querySelector(".portfolio-grid, .demo-grid, .portfolio-method");
+  anchor?.insertAdjacentHTML(
+    "beforebegin",
+    `<section class="section demo-sales-layer">
+      <div>
+        <p class="section-kicker">Sales Portfolio</p>
+        <h2 data-fa="نمونه‌کار باید به مشتری حس پروژه واقعی بدهد، نه فقط یک تصویر زیبا" data-en="A portfolio should feel like a real project, not only a nice picture">نمونه‌کار باید به مشتری حس پروژه واقعی بدهد، نه فقط یک تصویر زیبا</h2>
+        <p data-fa="برای هر دمو، صفحه خانه، صفحات داخلی، اکشن‌های اصلی، فرم‌ها و سناریوی کاربر طراحی شده تا مشتری قبل از سفارش بداند چه سطحی از اجرا دریافت می‌کند." data-en="Each demo includes homepage, inner pages, key actions, forms and user scenarios so clients understand the execution quality before ordering.">برای هر دمو، صفحه خانه، صفحات داخلی، اکشن‌های اصلی، فرم‌ها و سناریوی کاربر طراحی شده تا مشتری قبل از سفارش بداند چه سطحی از اجرا دریافت می‌کند.</p>
+      </div>
+      <div class="demo-sales-points">
+        <span data-fa="اسکرین‌شات صفحه اول" data-en="Homepage screenshot">اسکرین‌شات صفحه اول</span>
+        <span data-fa="دموی قابل کلیک" data-en="Clickable demo">دموی قابل کلیک</span>
+        <span data-fa="امکانات مخصوص هر صنف" data-en="Industry-specific features">امکانات مخصوص هر صنف</span>
+        <span data-fa="مسیر سفارش مشابه پروژه واقعی" data-en="Real project order flow">مسیر سفارش مشابه پروژه واقعی</span>
+      </div>
+    </section>`
+  );
+}
+
+function enhanceOrderConsultLayer() {
+  if (document.body.dataset.page !== "order" || document.querySelector(".consult-strip")) return;
+  const anchor = document.querySelector(".smart-order, .order-workspace, .project-form");
+  anchor?.insertAdjacentHTML(
+    "beforebegin",
+    `<section class="section consult-strip">
+      <div>
+        <p class="section-kicker">Project Consultation</p>
+        <h2 data-fa="فرم سفارش مثل یک جلسه مشاوره کوتاه طراحی شده" data-en="The order form works like a short consultation">فرم سفارش مثل یک جلسه مشاوره کوتاه طراحی شده</h2>
+        <p data-fa="به جای دریافت یک پیام مبهم، فرم مشخص می‌کند کسب‌وکار شما چیست، چه هدفی دارید، چه امکاناتی لازم است، بودجه و زمان‌بندی چقدر است و پنل چه سطحی از کنترل باید بدهد." data-en="Instead of a vague message, the form clarifies business type, goals, required features, budget, timeline and the level of portal control needed.">به جای دریافت یک پیام مبهم، فرم مشخص می‌کند کسب‌وکار شما چیست، چه هدفی دارید، چه امکاناتی لازم است، بودجه و زمان‌بندی چقدر است و پنل چه سطحی از کنترل باید بدهد.</p>
+      </div>
+      <div class="consult-questions">
+        <span data-fa="هدف اصلی پروژه چیست؟" data-en="What is the main goal?">هدف اصلی پروژه چیست؟</span>
+        <span data-fa="مخاطب باید چه کاری انجام دهد؟" data-en="What should visitors do?">مخاطب باید چه کاری انجام دهد؟</span>
+        <span data-fa="کدام امکانات ضروری است؟" data-en="Which features are essential?">کدام امکانات ضروری است؟</span>
+        <span data-fa="چه چیزی باید در پنل قابل ویرایش باشد؟" data-en="What should be editable in the panel?">چه چیزی باید در پنل قابل ویرایش باشد؟</span>
+      </div>
+    </section>`
+  );
+}
+
+function enhanceSupportPackages() {
+  if (document.body.dataset.page !== "packages" || document.querySelector(".care-package-grid")) return;
+  const anchor = document.querySelector(".monthly-care, #monthly-care, .package-compare");
+  anchor?.insertAdjacentHTML(
+    "afterend",
+    `<section class="section care-package-grid">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Monthly Care</p>
+          <h2 data-fa="پشتیبانی ماهانه را به پکیج قابل انتخاب تبدیل کنید" data-en="Choose monthly support as a clear package">پشتیبانی ماهانه را به پکیج قابل انتخاب تبدیل کنید</h2>
+          <p data-fa="سایت بعد از لانچ نیاز به مراقبت، تغییر محتوا، امنیت، گزارش و رشد دارد. هر پکیج سطح مشخصی از همراهی را پوشش می‌دهد." data-en="After launch, a website needs care, content changes, security, reporting and growth. Each package covers a clear level of support.">سایت بعد از لانچ نیاز به مراقبت، تغییر محتوا، امنیت، گزارش و رشد دارد. هر پکیج سطح مشخصی از همراهی را پوشش می‌دهد.</p>
+        </div>
+      </div>
+      <div class="care-grid">
+        <article><span>Care</span><h3 data-fa="پایه" data-en="Basic">پایه</h3><p data-fa="آپدیت، بکاپ، بررسی امنیت و رفع خطاهای کوچک برای سایت‌های تازه راه‌اندازی‌شده." data-en="Updates, backups, security checks and small fixes for newly launched websites.">آپدیت، بکاپ، بررسی امنیت و رفع خطاهای کوچک برای سایت‌های تازه راه‌اندازی‌شده.</p></article>
+        <article><span>Growth</span><h3 data-fa="رشد" data-en="Growth">رشد</h3><p data-fa="تغییرات محتوا، بهبود صفحات، گزارش ماهانه و پیشنهادهای عملی برای جذب مشتری بیشتر." data-en="Content changes, page improvements, monthly reports and practical ideas to win more clients.">تغییرات محتوا، بهبود صفحات، گزارش ماهانه و پیشنهادهای عملی برای جذب مشتری بیشتر.</p></article>
+        <article><span>Pro</span><h3 data-fa="حرفه‌ای" data-en="Professional">حرفه‌ای</h3><p data-fa="کمپین، توسعه امکانات، بهبود پنل، صفحات جدید و همراهی نزدیک برای کسب‌وکارهای فعال." data-en="Campaigns, feature growth, panel improvements, new pages and closer support for active businesses.">کمپین، توسعه امکانات، بهبود پنل، صفحات جدید و همراهی نزدیک برای کسب‌وکارهای فعال.</p></article>
+      </div>
+    </section>`
+  );
+}
+
+function enhancePanelAdvantage() {
+  if (document.body.dataset.page !== "panel" || document.querySelector(".panel-advantage-strip")) return;
+  const anchor = document.querySelector(".panel-dashboard, .manager-grid, .section");
+  anchor?.insertAdjacentHTML(
+    "beforebegin",
+    `<section class="section panel-advantage-strip">
+      <div>
+        <p class="section-kicker">Control Center</p>
+        <h2 data-fa="مزیت اصلی Vitra Studio فقط طراحی ظاهر نیست؛ کنترل بعد از تحویل است" data-en="Vitra Studio’s main advantage is not only visual design; it is control after launch">مزیت اصلی Vitra Studio فقط طراحی ظاهر نیست؛ کنترل بعد از تحویل است</h2>
+        <p data-fa="پنل باید کاری کند مدیر سایت برای تغییر قیمت، ساخت صفحه، افزودن خدمت، دیدن تیکت، مدیریت مشتری و لینک شبکه‌های اجتماعی وابسته نماند." data-en="The panel should let website owners change prices, create pages, add services, view tickets, manage clients and update social links without dependency.">پنل باید کاری کند مدیر سایت برای تغییر قیمت، ساخت صفحه، افزودن خدمت، دیدن تیکت، مدیریت مشتری و لینک شبکه‌های اجتماعی وابسته نماند.</p>
+      </div>
+      <div class="panel-advantage-list">
+        <span data-fa="ساخت صفحه جدید" data-en="Create new pages">ساخت صفحه جدید</span>
+        <span data-fa="ویرایش قیمت و خدمات" data-en="Edit prices and services">ویرایش قیمت و خدمات</span>
+        <span data-fa="مدیریت تیکت و مشتری" data-en="Manage tickets and clients">مدیریت تیکت و مشتری</span>
+        <span data-fa="کنترل فوتر و شبکه‌ها" data-en="Control footer and socials">کنترل فوتر و شبکه‌ها</span>
+      </div>
+    </section>`
+  );
+}
+
+function enhanceDedicatedServicePages() {
+  const file = window.location.pathname.split("/").pop() || "";
+  const configs = {
+    "website-design.html": {
+      kicker: "Website Design",
+      titleFa: "خروجی طراحی سایت دقیقا چه چیزهایی است؟",
+      titleEn: "What exactly is delivered with website design?",
+      copyFa: "این سرویس برای کسب‌وکارهایی است که می‌خواهند یک سایت چندصفحه‌ای، سریع، دوزبانه و آماده جذب مشتری داشته باشند؛ با متن فروش‌محور، مسیر تماس روشن و امکان توسعه به پنل.",
+      copyEn: "This service is for businesses that need a fast, bilingual, multi-page website ready to attract clients, with conversion copy, clear contact paths and room for portal expansion.",
+      items: [
+        ["معماری صفحه خانه و مسیر CTA", "Homepage architecture and CTA path"],
+        ["صفحات خدمات، درباره، نمونه‌کار و سوالات", "Services, about, portfolio and FAQ pages"],
+        ["متن‌های فروشنده و قابل اعتماد", "Trust-building sales copy"],
+        ["نسخه موبایل، سرعت و سئوی پایه", "Mobile version, speed and baseline SEO"]
+      ],
+      outcomeFa: "مناسب برای شروع حرفه‌ای، گرفتن تماس بیشتر و ساختن ویترینی که بعدا به پنل، فروشگاه یا رزرو وصل شود.",
+      outcomeEn: "Best for a professional launch, more inquiries and a storefront that can later connect to a portal, store or booking flow.",
+      ctaFa: "درخواست طراحی سایت",
+      ctaEn: "Request website design",
+      service: "website"
+    },
+    "redesign.html": {
+      kicker: "Redesign Sprint",
+      titleFa: "بازطراحی فقط زیباتر کردن سایت نیست؛ اصلاح مسیر فروش است",
+      titleEn: "Redesign is not only visual polish; it fixes the sales path",
+      copyFa: "در بازطراحی، ضعف‌های صفحه اول، متن، سرعت، موبایل، اعتماد، CTA و ساختار خدمات بررسی می‌شود و سایت به نسخه‌ای مدرن‌تر و قابل فروش‌تر تبدیل می‌شود.",
+      copyEn: "In redesign, homepage, copy, speed, mobile, trust, CTAs and service structure are audited and rebuilt into a more modern, sales-ready experience.",
+      items: [
+        ["تحلیل مشکل سایت فعلی و رقبا", "Current website and competitor audit"],
+        ["بازنویسی پیام اصلی و CTAها", "Rewrite main message and CTAs"],
+        ["بهبود خوانایی، موبایل و سرعت", "Improve readability, mobile and speed"],
+        ["آماده‌سازی برای پنل و رشد بعدی", "Prepare for portal and future growth"]
+      ],
+      outcomeFa: "مناسب برای سایت‌هایی که ظاهر قدیمی دارند، اعتماد نمی‌سازند یا بازدید را به درخواست تبدیل نمی‌کنند.",
+      outcomeEn: "Best for websites that feel outdated, fail to build trust or do not turn visits into inquiries.",
+      ctaFa: "درخواست بازطراحی",
+      ctaEn: "Request redesign",
+      service: "redesign"
+    },
+    "portal.html": {
+      kicker: "Portal System",
+      titleFa: "پنل اختصاصی برای اینکه سایت بعد از تحویل زنده بماند",
+      titleEn: "A custom portal keeps the website alive after launch",
+      copyFa: "پنل برای مدیریت صفحه‌ها، خدمات، قیمت‌ها، مشتری‌ها، تیکت‌ها، فایل‌ها و لینک‌های شبکه اجتماعی طراحی می‌شود تا مدیر سایت وابسته نماند.",
+      copyEn: "The portal manages pages, services, prices, clients, tickets, files and social links so the website owner stays independent.",
+      items: [
+        ["ساخت و ویرایش صفحه و خدمت", "Create and edit pages and services"],
+        ["کنترل قیمت‌ها و محتوای سایت", "Control prices and site content"],
+        ["تیکت، فایل و وضعیت پروژه", "Tickets, files and project status"],
+        ["سطح دسترسی مدیر و مشتری", "Admin and client access levels"]
+      ],
+      outcomeFa: "مناسب برای کسب‌وکارهایی که تغییرات مداوم، سفارش، مشتری و پشتیبانی دارند.",
+      outcomeEn: "Best for businesses with frequent changes, orders, clients and support needs.",
+      ctaFa: "درخواست پنل اختصاصی",
+      ctaEn: "Request custom portal",
+      service: "portal"
+    },
+    "seo-growth.html": {
+      kicker: "SEO Growth",
+      titleFa: "سئو و محتوا باید از همان ساختار سایت شروع شود",
+      titleEn: "SEO and content should start from the website structure",
+      copyFa: "این سرویس ساختار عنوان‌ها، متن صفحات، کلمات کلیدی، لینک‌سازی داخلی، سرعت، متاتگ‌ها و مسیر تولید محتوای بعدی را آماده می‌کند.",
+      copyEn: "This service prepares headings, page copy, keywords, internal links, speed, meta tags and the next content growth path.",
+      items: [
+        ["سئوی پایه و فنی صفحات", "Baseline and technical page SEO"],
+        ["متن خدمات با هدف جذب مشتری", "Service copy built for inquiries"],
+        ["پیشنهاد محتوای ماهانه", "Monthly content ideas"],
+        ["گزارش رشد و اولویت‌های بعدی", "Growth report and next priorities"]
+      ],
+      outcomeFa: "مناسب برای سایت‌هایی که می‌خواهند بعد از طراحی هم دیده شوند و رشد کنند.",
+      outcomeEn: "Best for websites that need visibility and growth after launch.",
+      ctaFa: "درخواست بررسی سئو",
+      ctaEn: "Request SEO review",
+      service: "seo"
+    },
+    "monthly-support.html": {
+      kicker: "Monthly Care",
+      titleFa: "پشتیبانی ماهانه برای نگهداری، تغییر و رشد سایت",
+      titleEn: "Monthly care for maintenance, changes and growth",
+      copyFa: "بعد از لانچ، سایت نیاز به بکاپ، امنیت، آپدیت، تغییر محتوا، گزارش و پیشنهادهای رشد دارد. این سرویس سایت را فعال و قابل اعتماد نگه می‌دارد.",
+      copyEn: "After launch, a website needs backups, security, updates, content changes, reports and growth ideas. This service keeps it active and reliable.",
+      items: [
+        ["بکاپ، امنیت و آپدیت", "Backups, security and updates"],
+        ["تغییرات محتوایی و صفحه جدید", "Content changes and new pages"],
+        ["گزارش ماهانه و پیشنهاد رشد", "Monthly report and growth ideas"],
+        ["تیکت پشتیبانی و اولویت‌بندی", "Support tickets and prioritization"]
+      ],
+      outcomeFa: "مناسب برای سایت‌هایی که قرار نیست بعد از تحویل رها شوند.",
+      outcomeEn: "Best for websites that should not be abandoned after launch.",
+      ctaFa: "انتخاب پشتیبانی ماهانه",
+      ctaEn: "Choose monthly support",
+      service: "support"
+    },
+    "server.html": {
+      kicker: "Infrastructure",
+      titleFa: "زیرساخت تمیز یعنی سایت سریع‌تر، امن‌تر و قابل توسعه‌تر",
+      titleEn: "Clean infrastructure means a faster, safer and more scalable website",
+      copyFa: "هاست، VPS، دامنه، SSL، ایمیل سازمانی، بکاپ، مانیتورینگ و مستندات دسترسی به شکلی تنظیم می‌شود که پروژه از پایه مطمئن شروع شود.",
+      copyEn: "Hosting, VPS, domain, SSL, business email, backups, monitoring and access documentation are prepared so the project starts on a reliable base.",
+      items: [
+        ["انتخاب هاست یا سرور مناسب", "Choose suitable hosting or server"],
+        ["اتصال دامنه، DNS و SSL", "Connect domain, DNS and SSL"],
+        ["ایمیل سازمانی و بکاپ", "Business email and backups"],
+        ["مستندات تحویل و امنیت", "Delivery docs and security"]
+      ],
+      outcomeFa: "مناسب برای پروژه‌هایی که سرعت، پایداری و مالکیت دسترسی‌ها مهم است.",
+      outcomeEn: "Best for projects where speed, reliability and access ownership matter.",
+      ctaFa: "درخواست راه‌اندازی زیرساخت",
+      ctaEn: "Request infrastructure setup",
+      service: "server"
+    }
+  };
+  const config = configs[file];
+  if (!config || document.querySelector(".service-deep")) return;
+  const anchor = document.querySelector(".page-hero");
+  const items = config.items
+    .map(([fa, en]) => `<article><span data-fa="${fa}" data-en="${en}">${fa}</span></article>`)
+    .join("");
+  anchor?.insertAdjacentHTML(
+    "afterend",
+    `<section class="section service-deep">
+      <div class="service-deep-copy">
+        <p class="section-kicker">${config.kicker}</p>
+        <h2 data-fa="${config.titleFa}" data-en="${config.titleEn}">${config.titleFa}</h2>
+        <p data-fa="${config.copyFa}" data-en="${config.copyEn}">${config.copyFa}</p>
+      </div>
+      <div class="service-deep-grid">${items}</div>
+      <div class="service-deep-outcome">
+        <b data-fa="خروجی قابل لمس" data-en="Tangible outcome">خروجی قابل لمس</b>
+        <p data-fa="${config.outcomeFa}" data-en="${config.outcomeEn}">${config.outcomeFa}</p>
+        <a class="btn btn-primary" href="order.html?service=${config.service}" data-fa="${config.ctaFa}" data-en="${config.ctaEn}">${config.ctaFa}</a>
+      </div>
+    </section>
+    <section class="section service-faq-mini">
+      <article><b data-fa="از کجا شروع می‌شود؟" data-en="Where does it start?">از کجا شروع می‌شود؟</b><p data-fa="با بررسی هدف، مخاطب، رقبا، محتوای موجود و سطح پنل مورد نیاز." data-en="With goals, audience, competitors, current content and required portal level.">با بررسی هدف، مخاطب، رقبا، محتوای موجود و سطح پنل مورد نیاز.</p></article>
+      <article><b data-fa="قیمت چطور مشخص می‌شود؟" data-en="How is pricing defined?">قیمت چطور مشخص می‌شود؟</b><p data-fa="بر اساس تعداد صفحات، امکانات، زبان‌ها، سطح پنل، محتوا و زمان‌بندی." data-en="Based on pages, features, languages, portal level, content and timeline.">بر اساس تعداد صفحات، امکانات، زبان‌ها، سطح پنل، محتوا و زمان‌بندی.</p></article>
+      <article><b data-fa="بعد از تحویل چه می‌شود؟" data-en="What happens after launch?">بعد از تحویل چه می‌شود؟</b><p data-fa="آموزش، دسترسی‌ها، چک‌لیست تحویل و مسیر پشتیبانی یا رشد مشخص می‌شود." data-en="Training, access, launch checklist and support or growth path are defined.">آموزش، دسترسی‌ها، چک‌لیست تحویل و مسیر پشتیبانی یا رشد مشخص می‌شود.</p></article>
+    </section>`
+  );
+}
+
+function enhanceOrderRecommendation() {
+  if (document.body.dataset.page !== "order" || document.querySelector(".smart-recommendation")) return;
+  const wizard = document.querySelector(".wizard-grid");
+  wizard?.insertAdjacentHTML(
+    "afterend",
+    `<aside class="smart-recommendation">
+      <div>
+        <span data-fa="پیشنهاد اولیه" data-en="Initial recommendation">پیشنهاد اولیه</span>
+        <b data-smart-package data-fa="Growth + پنل پایه" data-en="Growth + basic portal">Growth + پنل پایه</b>
+        <p data-smart-reason data-fa="با توجه به انتخاب‌ها، بهتر است پروژه با سایت چندصفحه‌ای، فرم سفارش و پنل قابل توسعه شروع شود." data-en="Based on your choices, start with a multi-page website, order form and scalable portal.">با توجه به انتخاب‌ها، بهتر است پروژه با سایت چندصفحه‌ای، فرم سفارش و پنل قابل توسعه شروع شود.</p>
+      </div>
+      <a class="btn btn-ghost" href="packages.html" data-fa="مقایسه پکیج‌ها" data-en="Compare packages">مقایسه پکیج‌ها</a>
+    </aside>`
+  );
+}
+
+function updateSmartRecommendation() {
+  const box = document.querySelector(".smart-recommendation");
+  if (!box) return;
+  const checked = [...document.querySelectorAll("[data-price-addon]:checked")].map((item) => item.dataset.priceAddon);
+  const budget = Number(document.querySelector("[data-budget-range]")?.value || 28);
+  let fa = "Launch + سایت معرفی";
+  let en = "Launch + business website";
+  let reasonFa = "برای شروع سریع، سایت چندصفحه‌ای با فرم تماس، خدمات، نمونه‌کار و سئوی پایه کافی است.";
+  let reasonEn = "For a fast start, a multi-page website with contact flow, services, portfolio and baseline SEO is enough.";
+  if (checked.includes("shop") || checked.includes("booking") || budget >= 45) {
+    fa = "Growth + مسیر فروش";
+    en = "Growth + sales flow";
+    reasonFa = "نیاز به رزرو، فروشگاه یا بودجه بالاتر یعنی بهتر است مسیر فروش، پیگیری سفارش و پنل مدیریتی جدی‌تر طراحی شود.";
+    reasonEn = "Booking, ecommerce or a higher budget means the sales flow, order tracking and admin panel should be designed more seriously.";
+  }
+  if (checked.includes("panel") && checked.length >= 3 && budget >= 60) {
+    fa = "Command + پنل کامل";
+    en = "Command + full portal";
+    reasonFa = "وقتی چند قابلیت اصلی و بودجه بالاتر انتخاب شده، پنل کامل برای مدیریت محتوا، قیمت، تیکت، مشتری و گزارش بهترین مسیر است.";
+    reasonEn = "With several core features and a higher budget, the full portal for content, pricing, tickets, clients and reports is the best path.";
+  }
+  const title = box.querySelector("[data-smart-package]");
+  const reason = box.querySelector("[data-smart-reason]");
+  if (title) {
+    title.dataset.fa = fa;
+    title.dataset.en = en;
+    title.textContent = activeLanguage === "fa" ? fa : en;
+  }
+  if (reason) {
+    reason.dataset.fa = reasonFa;
+    reason.dataset.en = reasonEn;
+    reason.textContent = activeLanguage === "fa" ? reasonFa : reasonEn;
+  }
+}
+
+function enhanceAuditPage() {
+  if (document.body.dataset.page !== "audit") return;
+  document.querySelectorAll("[data-audit-form]").forEach((form) => {
+    if (form.dataset.bound === "true") return;
+    form.dataset.bound = "true";
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const result = document.querySelector("[data-audit-result]");
+      const site = form.querySelector('[name="website"]')?.value || "";
+      if (result) {
+        result.hidden = false;
+        result.innerHTML = `
+          <b>${activeLanguage === "fa" ? "درخواست بررسی ثبت شد" : "Review request saved"}</b>
+          <p>${activeLanguage === "fa" ? `آدرس ${site || "سایت شما"} برای بررسی اولیه ثبت شد. خروجی پیشنهادی شامل ایرادهای ظاهری، CTA، سرعت، محتوا، سئو و مسیر پنل خواهد بود.` : `${site || "Your website"} was saved for an initial review. The suggested output covers visual issues, CTAs, speed, content, SEO and portal direction.`}</p>
+          <a class="btn btn-primary" href="order.html?service=audit">${activeLanguage === "fa" ? "تکمیل فرم پروژه" : "Complete project form"}</a>
+        `;
+      }
+    });
+  });
+}
+
+function enhanceStrategicLayers() {
+  enhanceBusinessOfferLayers();
+  enhanceDedicatedServicePages();
+  enhancePortfolioSalesLayer();
+  enhanceOrderConsultLayer();
+  enhanceOrderRecommendation();
+  enhanceSupportPackages();
+  enhancePanelAdvantage();
+  enhanceAuditPage();
+}
+
 function rememberOriginalText(element) {
   if (!element.dataset.faOriginal) {
     element.dataset.faOriginal = element.textContent.trim();
@@ -360,6 +789,7 @@ function translateLooseText(lang) {
 function applyLanguage(lang) {
   enhanceConversionLayer();
   enhanceSiteFooters();
+  enhanceStrategicLayers();
   polishMarketingCopy(lang);
   polishFooterCTA(lang);
   activeLanguage = lang;
@@ -388,6 +818,7 @@ function applyLanguage(lang) {
   });
   updateBudgetOutput();
   updateProjectEstimate();
+  updateSmartRecommendation();
 }
 
 if (menuToggle) {
@@ -499,6 +930,10 @@ function updateBudgetOutput() {
       : `About ${new Intl.NumberFormat("en-US").format(value)}M toman`;
 }
 if (budgetRange) budgetRange.addEventListener("input", updateBudgetOutput);
+document.querySelectorAll("[data-budget-range], [data-price-addon]").forEach((input) => {
+  input.addEventListener("input", updateSmartRecommendation);
+  input.addEventListener("change", updateSmartRecommendation);
+});
 
 const buildRequest = document.querySelector("[data-build-request]");
 if (buildRequest) {
@@ -512,6 +947,7 @@ if (buildRequest) {
           ? `درخواست ${type} با ${new Intl.NumberFormat("fa-IR").format(features)} قابلیت اصلی آماده شد.`
           : `${type} request with ${features} main features is ready.`;
     }
+    updateSmartRecommendation();
     buildRequest.textContent = activeLanguage === "fa" ? "درخواست ساخته شد" : "Request created";
   });
 }
