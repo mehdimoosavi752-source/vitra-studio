@@ -918,31 +918,3 @@
     top: auto;
   }
 }
-
-
-/* ===== VITRA AI CORE FINAL THEME ===== */
-:root{
---bg:#050816;--bg2:#0b1023;--text:#f5f7fa;--muted:#9aa4b2;
---blue:#00d4ff;--cyan:#59f3ff;--orange:#ff7a1a;
-}
-body{
-background:
-radial-gradient(circle at 20% 0%, rgba(0,212,255,.15), transparent 40%),
-radial-gradient(circle at 80% 10%, rgba(255,122,26,.12), transparent 35%),
-linear-gradient(180deg,var(--bg2),var(--bg));
-color:var(--text)!important;
-}
-.card,.service-card,.feature-card{
-backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,.08)!important;
-}
-.btn,button{
-box-shadow:0 0 24px rgba(0,212,255,.18);
-}
-.ai-core-grid{
-position:fixed;inset:0;pointer-events:none;opacity:.08;
-background-image:
-linear-gradient(rgba(0,212,255,.25) 1px,transparent 1px),
-linear-gradient(90deg,rgba(0,212,255,.25) 1px,transparent 1px);
-background-size:50px 50px;
-}
