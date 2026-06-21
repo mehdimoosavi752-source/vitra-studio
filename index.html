@@ -3,300 +3,448 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vitra Studio | سیستم دیجیتال، طراحی سایت و پنل</title>
+    <title>Studio — طراحی سایت، پنل و رشد کسب‌وکار</title>
+    <meta name="description" content="طراحی سایت حرفه‌ای، پنل مدیریت، سئو و پشتیبانی ماهانه." />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <meta name="description" content="Vitra Studio builds bilingual websites, portals, infrastructure, demos, SEO and growth systems for businesses." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body data-page="home">
     <div class="site-shell">
-      <header class="topbar">
-        <a class="brand" href="index.html" aria-label="Vitra Studio">
+
+      <!-- TOPBAR -->
+      <header class="topbar over-hero" id="topbar">
+        <a class="brand" href="index.html">
           <span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" /></span>
-          <span class="brand-text"><strong>Vitra Studio</strong><small data-fa="استودیوی ساخت سیستم دیجیتال" data-en="Digital system studio">استودیوی ساخت سیستم دیجیتال</small></span>
+          <span class="brand-text">
+            <strong>Studio</strong>
+            <small data-fa="طراحی سایت حرفه‌ای" data-en="Professional Web Design">طراحی سایت حرفه‌ای</small>
+          </span>
         </a>
-        <button class="menu-toggle" type="button" aria-label="باز کردن منو"><span></span><span></span><span></span></button>
-        <button class="lang-switch lang-switch-top" type="button" aria-label="Language">EN</button>
-        <nav class="nav"><a href="index.html" data-fa="خانه" data-en="Home">خانه</a><a href="services.html" data-fa="خدمات" data-en="Services">خدمات</a><a href="portfolio.html" data-fa="دموها" data-en="Demos">دموها</a><a href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a><a href="process.html" data-fa="فرایند" data-en="Process">فرایند</a><a href="faq.html" data-fa="سوالات" data-en="FAQ">سوالات</a><a href="about.html" data-fa="درباره" data-en="About">درباره</a><a href="login.html" data-fa="ورود / ثبت‌نام" data-en="Login / Sign up">ورود / ثبت‌نام</a><a class="nav-action" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a></nav>
+        <button class="menu-toggle" type="button" aria-label="منو"><span></span><span></span><span></span></button>
+        <button class="lang-switch-top" type="button" aria-label="Language">EN</button>
+        <nav class="nav">
+          <a href="services.html" data-fa="خدمات" data-en="Services">خدمات</a>
+          <a href="portfolio.html" data-fa="دموها" data-en="Demos">دموها</a>
+          <a href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
+          <a href="process.html" data-fa="فرایند" data-en="Process">فرایند</a>
+          <a href="faq.html" data-fa="سوالات" data-en="FAQ">سوالات</a>
+          <a href="about.html" data-fa="درباره" data-en="About">درباره</a>
+          <a href="login.html" data-fa="ورود" data-en="Login">ورود</a>
+          <a class="nav-action" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+        </nav>
       </header>
 
       <main>
-        <section class="hero hero-system">
-          <div class="hero-copy">
-            <p class="eyebrow">Vitra Studio Command Deck</p>
-            <h1 data-fa="طراحی سایت، پنل و زیرساخت برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند." data-en="Websites, portals and infrastructure for businesses that need to look professional and work better.">طراحی سایت، پنل و زیرساخت برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند.</h1>
-            <p data-fa="Vitra Studio سایت‌های اختصاصی، پنل مدیریت، پنل مشتری، فروشگاه، رزرو، سئو پایه، پشتیبانی و زیرساخت امن می‌سازد؛ با متن، مسیر کاربر و دموهایی که مشتری قبل از سفارش بتواند کیفیت اجرا را ببیند." data-en="Vitra Studio builds custom websites, admin panels, client portals, shops, booking flows, baseline SEO, support and secure infrastructure, with copy, user journeys and demos clients can inspect before ordering.">Vitra Studio سایت‌های اختصاصی، پنل مدیریت، پنل مشتری، فروشگاه، رزرو، سئو پایه، پشتیبانی و زیرساخت امن می‌سازد؛ با متن، مسیر کاربر و دموهایی که مشتری قبل از سفارش بتواند کیفیت اجرا را ببیند.</p>
-            <div class="command-modules" aria-label="Vitra system modules">
-              <span><b>CMS</b><small data-fa="مدیریت محتوا و صفحات" data-en="Content and page management">مدیریت محتوا و صفحات</small></span>
-              <span><b>CRM</b><small data-fa="مشتری، پروژه و پیگیری" data-en="Clients, projects and follow-up">مشتری، پروژه و پیگیری</small></span>
-              <span><b>Ticket</b><small data-fa="پشتیبانی قابل ردیابی" data-en="Trackable support">پشتیبانی قابل ردیابی</small></span>
+
+        <!-- SCROLL-CONTROLLED VIDEO HERO -->
+        <section class="video-hero-wrap" id="video-hero-wrap" aria-label="هیرو اصلی">
+          <div class="video-hero-sticky" id="video-hero-sticky">
+            <video id="hero-video" src="assets/hero-video.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+            <div class="video-hero-overlay"></div>
+            <div class="hero-progress"><div class="hero-progress-bar" id="hero-progress-bar"></div></div>
+            <div class="hero-step-dots" id="hero-step-dots" aria-hidden="true">
+              <div class="hero-dot is-active"></div>
+              <div class="hero-dot"></div>
+              <div class="hero-dot"></div>
+              <div class="hero-dot"></div>
             </div>
-            <div class="action-row">
-              <a class="btn btn-primary" href="order.html" data-fa="شروع ساخت پروژه" data-en="Start building">شروع ساخت پروژه</a>
-              <a class="btn btn-ghost" href="portfolio.html" data-fa="دیدن دموهای واقعی" data-en="View real demos">دیدن دموهای واقعی</a>
+            <div class="video-hero-content">
+
+              <div class="hero-cue is-active" data-cue="0">
+                <span class="eyebrow" data-fa="طراحی سایت هوشمند" data-en="Intelligent Web Design">طراحی سایت هوشمند</span>
+                <h1 data-fa="سایتی که فقط دیده نمی‌شود؛ مدیریت و رشد هم دارد." data-en="A website that is not only seen — it is managed and grown.">سایتی که فقط دیده نمی‌شود؛ مدیریت و رشد هم دارد.</h1>
+                <p data-fa="طراحی، پنل، سئو و پشتیبانی در یک مسیر منسجم." data-en="Design, portal, SEO and support in one coherent path.">طراحی، پنل، سئو و پشتیبانی در یک مسیر منسجم.</p>
+              </div>
+
+              <div class="hero-cue" data-cue="1">
+                <span class="eyebrow" data-fa="طراحی واقعی" data-en="Real Design">طراحی واقعی</span>
+                <h1 data-fa="ظاهر سایت ویترین است، اما سیستم آن است که می‌فروشد." data-en="The site's appearance is the storefront — the system is what sells.">ظاهر سایت ویترین است، اما سیستم آن است که می‌فروشد.</h1>
+                <p data-fa="هر صفحه با هدف مشخص ساخته می‌شود: اعتماد، تبدیل و مسیر خرید کوتاه‌تر." data-en="Every page is built with a clear goal: trust, conversion and a shorter buying path.">هر صفحه با هدف مشخص ساخته می‌شود: اعتماد، تبدیل و مسیر خرید کوتاه‌تر.</p>
+                <div class="hero-actions"><a class="btn btn-ghost" href="portfolio.html" data-fa="مشاهده دموها" data-en="View demos">مشاهده دموها</a></div>
+              </div>
+
+              <div class="hero-cue" data-cue="2">
+                <span class="eyebrow" data-fa="پنل مدیریت" data-en="Management Portal">پنل مدیریت</span>
+                <h1 data-fa="پنلی که بعد از تحویل، سایت را زنده نگه می‌دارد." data-en="A portal that keeps the website alive after handoff.">پنلی که بعد از تحویل، سایت را زنده نگه می‌دارد.</h1>
+                <p data-fa="محتوا، قیمت، خدمات، تیکت، فایل و مشتری — همه در یک محیط قابل کنترل." data-en="Content, pricing, services, tickets, files and clients — all in one controlled workspace.">محتوا، قیمت، خدمات، تیکت، فایل و مشتری — همه در یک محیط قابل کنترل.</p>
+              </div>
+
+              <div class="hero-cue" data-cue="3">
+                <span class="eyebrow" data-fa="شروع همکاری" data-en="Start Collaboration">شروع همکاری</span>
+                <h1 data-fa="از ایده تا تحویل در یک مسیر شفاف." data-en="From idea to launch in one transparent path.">از ایده تا تحویل در یک مسیر شفاف.</h1>
+                <p data-fa="سفارش مرحله‌ای، پنل مشتری، فایل‌های تحویلی و مسیر رشد بعد از راه‌اندازی." data-en="Phased order, client portal, delivered files and a growth path after launch.">سفارش مرحله‌ای، پنل مشتری، فایل‌های تحویلی و مسیر رشد بعد از راه‌اندازی.</p>
+                <div class="hero-actions">
+                  <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+                  <a class="btn btn-ghost" href="packages.html" data-fa="مشاهده پکیج‌ها" data-en="View packages">مشاهده پکیج‌ها</a>
+                </div>
+              </div>
+
             </div>
           </div>
-          <div class="hero-stage hero-image-stage" aria-label="نمای سیستم دیجیتال Vitra Studio">
-            <img src="assets/studio-command-hero.png" alt="نمای گرافیکی پنل و سیستم دیجیتال Vitra Studio" />
+        </section>
+
+
+        <!-- CAPABILITY RAIL -->
+        <div class="capability-rail reveal">
+          <div class="capability-rail-inner">
+            <span class="capability-item" data-fa="طراحی سایت" data-en="Web Design">طراحی سایت</span>
+            <span class="capability-item" data-fa="پنل مدیریت" data-en="Admin Portal">پنل مدیریت</span>
+            <span class="capability-item" data-fa="پنل مشتری" data-en="Client Portal">پنل مشتری</span>
+            <span class="capability-item" data-fa="سئو پایه" data-en="Baseline SEO">سئو پایه</span>
+            <span class="capability-item" data-fa="فروشگاه اینترنتی" data-en="E-commerce">فروشگاه اینترنتی</span>
+            <span class="capability-item" data-fa="سیستم رزرو" data-en="Booking System">سیستم رزرو</span>
+            <span class="capability-item" data-fa="بازطراحی" data-en="Redesign">بازطراحی</span>
+            <span class="capability-item" data-fa="پشتیبانی ماهانه" data-en="Monthly Support">پشتیبانی ماهانه</span>
+            <span class="capability-item" data-fa="سئو محتوا" data-en="Content SEO">سئو محتوا</span>
+            <span class="capability-item" data-fa="دو زبانه" data-en="Bilingual">دو زبانه</span>
+            <span class="capability-item" data-fa="طراحی سایت" data-en="Web Design">طراحی سایت</span>
+            <span class="capability-item" data-fa="پنل مدیریت" data-en="Admin Portal">پنل مدیریت</span>
+            <span class="capability-item" data-fa="پنل مشتری" data-en="Client Portal">پنل مشتری</span>
+            <span class="capability-item" data-fa="سئو پایه" data-en="Baseline SEO">سئو پایه</span>
+            <span class="capability-item" data-fa="فروشگاه اینترنتی" data-en="E-commerce">فروشگاه اینترنتی</span>
+            <span class="capability-item" data-fa="سیستم رزرو" data-en="Booking System">سیستم رزرو</span>
+            <span class="capability-item" data-fa="بازطراحی" data-en="Redesign">بازطراحی</span>
+            <span class="capability-item" data-fa="پشتیبانی ماهانه" data-en="Monthly Support">پشتیبانی ماهانه</span>
+            <span class="capability-item" data-fa="سئو محتوا" data-en="Content SEO">سئو محتوا</span>
+            <span class="capability-item" data-fa="دو زبانه" data-en="Bilingual">دو زبانه</span>
           </div>
-        </section>
+        </div>
 
-        <section class="capability-rail" aria-label="قابلیت‌های اصلی">
-          <div><b data-fa="طراحی سایت" data-en="Website design">طراحی سایت</b><span data-fa="هویت اختصاصی و مسیر فروش" data-en="Custom identity and sales flow">هویت اختصاصی و مسیر فروش</span></div>
-          <div><b data-fa="پنل مدیریتی" data-en="Admin panel">پنل مدیریتی</b><span data-fa="محتوا، قیمت، خدمات، گزارش" data-en="Content, prices, services, reports">محتوا، قیمت، خدمات، گزارش</span></div>
-          <div><b data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</b><span data-fa="تیکت، فایل، پروژه، وضعیت" data-en="Tickets, files, project, status">تیکت، فایل، پروژه، وضعیت</span></div>
-          <div><b data-fa="زیرساخت" data-en="Infrastructure">زیرساخت</b><span data-fa="سرور، SSL، بکاپ، امنیت" data-en="Server, SSL, backup, security">سرور، SSL، بکاپ، امنیت</span></div>
-          <div><b data-fa="رشد" data-en="Growth">رشد</b><span data-fa="سئو، سرعت، گزارش، کمپین" data-en="SEO, speed, reports, campaigns">سئو، سرعت، گزارش، کمپین</span></div>
-        </section>
 
-        <section class="section split-section">
-          <div><p class="section-kicker">Positioning</p><h2 data-fa="طراحی فقط ظاهر نیست؛ مسیر فروش و مدیریت هم باید ساخته شود" data-en="Design is not only appearance; sales flow and management must be built too">طراحی فقط ظاهر نیست؛ مسیر فروش و مدیریت هم باید ساخته شود</h2></div>
-          <p data-fa="در سایت‌های موفق، ظاهر زیبا کنار امکانات کاربردی قرار می‌گیرد: دسته‌بندی شفاف، فرم درخواست، صفحه خدمات، نمونه‌کار قابل بررسی، پرداخت یا رزرو، تولید محتوا، گزارش و پشتیبانی. Vitra همین اجزا را در یک ساختار قابل توسعه کنار هم می‌گذارد." data-en="Successful websites combine strong visuals with practical features: clear categories, request forms, service pages, inspectable portfolio, payment or booking, content, reports and support. Vitra brings these pieces into one scalable structure.">در سایت‌های موفق، ظاهر زیبا کنار امکانات کاربردی قرار می‌گیرد: دسته‌بندی شفاف، فرم درخواست، صفحه خدمات، نمونه‌کار قابل بررسی، پرداخت یا رزرو، تولید محتوا، گزارش و پشتیبانی. Vitra همین اجزا را در یک ساختار قابل توسعه کنار هم می‌گذارد.</p>
-        </section>
-
-        <section class="section portfolio-strip" id="demos">
-          <div class="section-head"><div><p class="section-kicker">Live Demos</p><h2 data-fa="دموهایی که شبیه پروژه واقعی کار می‌کنند" data-en="Demos that behave like real projects">دموهایی که شبیه پروژه واقعی کار می‌کنند</h2><p data-fa="هر نمونه با هویت، صفحه خانه، صفحات داخلی و امکانات مختص همان کسب‌وکار ساخته شده تا مشتری فقط تصویر نبیند؛ تجربه کند." data-en="Each demo has its own identity, homepage, inner pages and business-specific features so clients do not only see a picture; they experience it.">هر نمونه با هویت، صفحه خانه، صفحات داخلی و امکانات مختص همان کسب‌وکار ساخته شده تا مشتری فقط تصویر نبیند؛ تجربه کند.</p></div><a class="text-link" href="portfolio.html" data-fa="مشاهده همه دموها" data-en="View all demos">مشاهده همه دموها</a></div>
-          <div class="portfolio-grid home-demo-grid">
-            <a class="work-card allameh has-demo-preview" href="demo-academy.html"><figure class="work-preview"><img src="assets/demo-home-academy.png" alt="نمای صفحه اول دمو آموزشگاه زبان" loading="lazy" /></figure><small>Academy</small><h3 data-fa="آموزشگاه زبان" data-en="Language academy">آموزشگاه زبان</h3><p data-fa="دوره، تعیین سطح، استاد، شهریه و ثبت‌نام." data-en="Courses, level test, teachers, tuition and enrollment.">دوره، تعیین سطح، استاد، شهریه و ثبت‌نام.</p></a>
-            <a class="work-card shop has-demo-preview" href="demo-salon.html"><figure class="work-preview"><img src="assets/demo-home-salon.png" alt="نمای صفحه اول دمو سالن زیبایی" loading="lazy" /></figure><small>Salon</small><h3 data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</h3><p data-fa="جستجو، نقشه، خدمات، امتیاز، رزرو و گالری." data-en="Search, map, services, rating, booking and gallery.">جستجو، نقشه، خدمات، امتیاز، رزرو و گالری.</p></a>
-            <a class="work-card office has-demo-preview" href="demo-clinic.html"><figure class="work-preview"><img src="assets/demo-home-clinic.png" alt="نمای صفحه اول دمو کلینیک و نوبت‌دهی" loading="lazy" /></figure><small>Clinic</small><h3 data-fa="کلینیک و نوبت‌دهی" data-en="Clinic and appointments">کلینیک و نوبت‌دهی</h3><p data-fa="فیلتر پزشک، شهر، مشاوره و رزرو نوبت." data-en="Doctor filters, city, consultation and appointment booking.">فیلتر پزشک، شهر، مشاوره و رزرو نوبت.</p></a>
-            <a class="work-card food has-demo-preview" href="demo-shop.html"><figure class="work-preview"><img src="assets/demo-home-shop.png" alt="نمای صفحه اول دمو فروشگاه پوشاک" loading="lazy" /></figure><small>Shop</small><h3 data-fa="فروشگاه پوشاک" data-en="Fashion store">فروشگاه پوشاک</h3><p data-fa="دسته‌بندی، رنگ، سایز، سبد و پیگیری سفارش." data-en="Categories, colors, sizes, cart and order tracking.">دسته‌بندی، رنگ، سایز، سبد و پیگیری سفارش.</p></a>
-          </div>
-        </section>
-
-        <section class="section home-value-grid">
-          <div class="section-head"><div><p class="section-kicker">Vitra Method</p><h2 data-fa="در صفحه اول فقط معرفی نمی‌کنیم؛ مسیر فروش را نشان می‌دهیم" data-en="The homepage does not only introduce; it shows the sales path">در صفحه اول فقط معرفی نمی‌کنیم؛ مسیر فروش را نشان می‌دهیم</h2><p data-fa="مشتری باید سریع بفهمد چه خدماتی می‌گیرد، چطور سفارش می‌دهد، چه دموهایی می‌بیند و بعد از تحویل چطور سایتش را مدیریت می‌کند." data-en="Clients should quickly understand services, ordering, demos and how they manage the site after launch.">مشتری باید سریع بفهمد چه خدماتی می‌گیرد، چطور سفارش می‌دهد، چه دموهایی می‌بیند و بعد از تحویل چطور سایتش را مدیریت می‌کند.</p></div><a class="text-link" href="process.html" data-fa="دیدن فرایند" data-en="View process">دیدن فرایند</a></div>
-          <div class="execution-grid">
-            <article><span>01</span><h3 data-fa="خدمات چندلایه" data-en="Layered services">خدمات چندلایه</h3><p data-fa="طراحی سایت، بازطراحی، سرور، پنل، سئو، پشتیبانی ماهانه و دموهای قابل ارائه." data-en="Website design, redesign, server, portal, SEO, monthly support and presentable demos.">طراحی سایت، بازطراحی، سرور، پنل، سئو، پشتیبانی ماهانه و دموهای قابل ارائه.</p></article>
-            <article><span>02</span><h3 data-fa="سفارش قابل پیگیری" data-en="Trackable order">سفارش قابل پیگیری</h3><p data-fa="فرم شروع پروژه کد پیگیری می‌سازد و درخواست را در پنل مدیر و مشتری نشان می‌دهد." data-en="The project form creates a tracking code and shows the request in admin and client portals.">فرم شروع پروژه کد پیگیری می‌سازد و درخواست را در پنل مدیر و مشتری نشان می‌دهد.</p></article>
-            <article><span>03</span><h3 data-fa="پنل بعد از تحویل" data-en="Portal after launch">پنل بعد از تحویل</h3><p data-fa="محتوا، قیمت، خدمات، تیکت، مشتری، فوتر و گزارش‌ها در یک مرکز کنترل قرار می‌گیرند." data-en="Content, pricing, services, tickets, clients, footer and reports live in one control center.">محتوا، قیمت، خدمات، تیکت، مشتری، فوتر و گزارش‌ها در یک مرکز کنترل قرار می‌گیرند.</p></article>
-          </div>
-        </section>
-
-        <section class="section home-cta-band">
-          <div><p class="section-kicker">Next Step</p><h2 data-fa="برای پروژه بعدی، اول مسیر را مشخص کنیم" data-en="For the next project, first define the path">برای پروژه بعدی، اول مسیر را مشخص کنیم</h2><p data-fa="نوع کسب‌وکار، امکانات، بودجه، زمان و نیاز پنل را وارد کن تا پیشنهاد اولیه ساخته شود." data-en="Enter business type, features, budget, timeline and portal needs to create the initial proposal.">نوع کسب‌وکار، امکانات، بودجه، زمان و نیاز پنل را وارد کن تا پیشنهاد اولیه ساخته شود.</p></div>
-          <div class="action-row"><a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a><a class="btn btn-ghost" href="packages.html" data-fa="دیدن پکیج‌ها" data-en="View packages">دیدن پکیج‌ها</a></div>
-        </section>
-
-        <section class="section premium-case-wall" id="premium-cases">
-          <div class="section-head">
+        <!-- SERVICE PATHS -->
+        <section class="section home-service-paths">
+          <div class="section-head reveal">
             <div>
-              <p class="section-kicker">Execution Proof</p>
-              <h2 data-fa="هر نمونه‌کار با مسئله، امکانات و خروجی قابل بررسی معرفی می‌شود" data-en="Each case study explains the problem, features and inspectable output">هر نمونه‌کار با مسئله، امکانات و خروجی قابل بررسی معرفی می‌شود</h2>
-              <p data-fa="در معرفی نمونه‌کار، فقط ظاهر مهم نیست؛ باید مشخص باشد سایت چه مشکلی را حل می‌کند، چه امکاناتی دارد و چطور به فروش، رزرو یا مدیریت کمک می‌کند." data-en="A portfolio item should not only show visuals; it should explain the problem, features and how it helps sales, booking or management.">در معرفی نمونه‌کار، فقط ظاهر مهم نیست؛ باید مشخص باشد سایت چه مشکلی را حل می‌کند، چه امکاناتی دارد و چطور به فروش، رزرو یا مدیریت کمک می‌کند.</p>
+              <p class="section-kicker">Service Paths</p>
+              <h2 data-fa="مسیر درست برای کسب‌وکار شما" data-en="The right path for your business">مسیر درست برای کسب‌وکار شما</h2>
+              <p data-fa="به جای یک پیشنهاد کلی، خدمات در سه مسیر قابل انتخاب چیده شده‌اند." data-en="Instead of one generic offer, services are organized into three clear paths.">به جای یک پیشنهاد کلی، خدمات در سه مسیر قابل انتخاب چیده شده‌اند.</p>
             </div>
-            <a class="text-link" href="portfolio.html" data-fa="ورود به گالری دموها" data-en="Open demo gallery">ورود به گالری دموها</a>
+            <a class="text-link" href="services.html" data-fa="جزئیات خدمات" data-en="Service details">جزئیات خدمات</a>
           </div>
-          <div class="premium-case-grid">
-            <article>
-              <small>Academy System</small>
-              <h3 data-fa="آموزشگاه با مسیر ثبت‌نام و تعیین سطح" data-en="Academy with enrollment and level test">آموزشگاه با مسیر ثبت‌نام و تعیین سطح</h3>
-              <p data-fa="مسئله: دوره‌ها، استادها و شهریه‌ها پراکنده‌اند. راه‌حل: مسیر دوره، تعیین سطح، فرم ثبت‌نام، پنل هنرجو و مدیریت قیمت." data-en="Problem: courses, teachers and tuition are scattered. Solution: course path, level test, registration form, student portal and pricing management.">مسئله: دوره‌ها، استادها و شهریه‌ها پراکنده‌اند. راه‌حل: مسیر دوره، تعیین سطح، فرم ثبت‌نام، پنل هنرجو و مدیریت قیمت.</p>
-              <a href="demo-academy.html" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</a>
+          <div class="service-path-grid">
+            <article class="path-card reveal">
+              <span>01</span>
+              <h3 data-fa="طراحی سایت جدید" data-en="New Website Design">طراحی سایت جدید</h3>
+              <p data-fa="صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات، فرم تماس و ساختار محتوایی آماده جذب مشتری." data-en="Home, services, portfolio, about, FAQ, contact and conversion-focused structure.">صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات، فرم تماس و ساختار محتوایی آماده جذب مشتری.</p>
+              <a href="order.html?service=website" data-fa="شروع این مسیر" data-en="Start this path">شروع این مسیر</a>
             </article>
-            <article>
-              <small>Booking System</small>
-              <h3 data-fa="سالن زیبایی با رزرو و انتخاب متخصص" data-en="Beauty salon with booking and specialists">سالن زیبایی با رزرو و انتخاب متخصص</h3>
-              <p data-fa="مسئله: رزرو در پیام‌ها گم می‌شود. راه‌حل: خدمات، زمان آزاد، گالری، امتیاز، رزرو و پنل مدیریت نوبت‌ها." data-en="Problem: bookings get lost in messages. Solution: services, open slots, gallery, ratings, booking and appointment management.">مسئله: رزرو در پیام‌ها گم می‌شود. راه‌حل: خدمات، زمان آزاد، گالری، امتیاز، رزرو و پنل مدیریت نوبت‌ها.</p>
-              <a href="demo-salon.html" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</a>
+            <article class="path-card reveal">
+              <span>02</span>
+              <h3 data-fa="بازطراحی و ارتقا" data-en="Redesign and Upgrade">بازطراحی و ارتقا</h3>
+              <p data-fa="ظاهر قدیمی، سرعت پایین یا مسیر فروش نامناسب؟ ساختار، محتوا و تجربه کاربر بازسازی می‌شود." data-en="Outdated look, slow speed or broken sales flow? Structure, content and UX are rebuilt.">ظاهر قدیمی، سرعت پایین یا مسیر فروش نامناسب؟ ساختار، محتوا و تجربه کاربر بازسازی می‌شود.</p>
+              <a href="order.html?service=redesign" data-fa="شروع این مسیر" data-en="Start this path">شروع این مسیر</a>
             </article>
-            <article>
-              <small>Clinic Flow</small>
-              <h3 data-fa="کلینیک با فیلتر پزشک و نوبت‌دهی" data-en="Clinic with doctor filters and appointments">کلینیک با فیلتر پزشک و نوبت‌دهی</h3>
-              <p data-fa="مسئله: مراجعه‌کننده پزشک مناسب را سریع پیدا نمی‌کند. راه‌حل: فیلتر تخصص، شهر، امتیاز، نوع مشاوره و رزرو." data-en="Problem: patients cannot find the right doctor quickly. Solution: specialty, city, rating, consultation type and booking filters.">مسئله: مراجعه‌کننده پزشک مناسب را سریع پیدا نمی‌کند. راه‌حل: فیلتر تخصص، شهر، امتیاز، نوع مشاوره و رزرو.</p>
-              <a href="demo-clinic.html" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</a>
+            <article class="path-card reveal">
+              <span>03</span>
+              <h3 data-fa="سیستم اختصاصی" data-en="Custom System">سیستم اختصاصی</h3>
+              <p data-fa="فروشگاه، رزرو، پنل مدیریت اختصاصی، CRM یا ساختار چند لایه برای کسب‌وکارهای پیچیده‌تر." data-en="E-commerce, booking, custom admin panel, CRM or multi-layer structure for complex businesses.">فروشگاه، رزرو، پنل مدیریت اختصاصی، CRM یا ساختار چند لایه برای کسب‌وکارهای پیچیده‌تر.</p>
+              <a href="order.html?service=system" data-fa="شروع این مسیر" data-en="Start this path">شروع این مسیر</a>
             </article>
           </div>
         </section>
 
-        <section class="section package-compare" id="packages">
-          <div class="section-head"><div><p class="section-kicker">Package Comparison</p><h2 data-fa="پکیج‌ها بر اساس نیاز واقعی پروژه چیده شده‌اند" data-en="Packages are structured around real project needs">پکیج‌ها بر اساس نیاز واقعی پروژه چیده شده‌اند</h2><p data-fa="از سایت معرفی ساده تا سیستم کامل با پنل، تیکت، مدیریت محتوا، گزارش و پشتیبانی ماهانه؛ مشتری می‌تواند مرحله مناسب خودش را انتخاب کند." data-en="From a simple brand website to a complete system with portal, tickets, content management, reports and monthly support, clients can choose the right stage.">از سایت معرفی ساده تا سیستم کامل با پنل، تیکت، مدیریت محتوا، گزارش و پشتیبانی ماهانه؛ مشتری می‌تواند مرحله مناسب خودش را انتخاب کند.</p></div><a class="text-link" href="#calculator" data-fa="محاسبه قیمت" data-en="Estimate price">محاسبه قیمت</a></div>
-          <div class="compare-table">
-            <article><h3>Starter</h3><strong data-fa="شروع از ۱۲M" data-en="From 12M">شروع از ۱۲M</strong><span data-fa="سایت معرفی سبک" data-en="Light brand website">سایت معرفی سبک</span><ul><li data-fa="تا ۵ صفحه" data-en="Up to 5 pages">تا ۵ صفحه</li><li data-fa="فرم تماس" data-en="Contact form">فرم تماس</li><li data-fa="سئو پایه" data-en="Basic SEO">سئو پایه</li><li data-fa="بدون پنل اختصاصی" data-en="No custom portal">بدون پنل اختصاصی</li></ul></article>
-            <article class="featured"><h3>Business</h3><strong data-fa="شروع از ۲۸M" data-en="From 28M">شروع از ۲۸M</strong><span data-fa="سایت + پنل مشتری" data-en="Website + client portal">سایت + پنل مشتری</span><ul><li data-fa="تا ۱۰ صفحه" data-en="Up to 10 pages">تا ۱۰ صفحه</li><li data-fa="پنل مشتری و تیکت" data-en="Client portal and tickets">پنل مشتری و تیکت</li><li data-fa="فرم سفارش و قیمت" data-en="Order and price form">فرم سفارش و قیمت</li><li data-fa="آموزش مدیریت" data-en="Management training">آموزش مدیریت</li></ul></article>
-            <article><h3>Command</h3><strong data-fa="شروع از ۴۸M" data-en="From 48M">شروع از ۴۸M</strong><span data-fa="سیستم کامل دیجیتال" data-en="Complete digital system">سیستم کامل دیجیتال</span><ul><li data-fa="پنل مدیر و مشتری" data-en="Admin and client portal">پنل مدیر و مشتری</li><li data-fa="مدیریت قیمت و خدمات" data-en="Price and service management">مدیریت قیمت و خدمات</li><li data-fa="گزارش رفتار کاربران" data-en="User behavior reports">گزارش رفتار کاربران</li><li data-fa="رشد و پشتیبانی ماهانه" data-en="Monthly growth and support">رشد و پشتیبانی ماهانه</li></ul></article>
+
+        <!-- STATS ROW -->
+        <section class="section">
+          <div class="stats-row">
+            <div class="stat-card reveal"><strong>+۴۰</strong><span data-fa="پروژه تحویل‌شده" data-en="Projects delivered">پروژه تحویل‌شده</span></div>
+            <div class="stat-card reveal"><strong>۴</strong><span data-fa="صنعت پوشش‌داده‌شده" data-en="Industries covered">صنعت پوشش‌داده‌شده</span></div>
+            <div class="stat-card reveal"><strong>۱۴</strong><span data-fa="روز میانگین تحویل" data-en="Avg. days to launch">روز میانگین تحویل</span></div>
+            <div class="stat-card reveal"><strong>۹۶٪</strong><span data-fa="رضایت مشتریان" data-en="Client satisfaction">رضایت مشتریان</span></div>
           </div>
         </section>
 
-        <section class="section price-calculator" id="calculator">
-          <div><p class="section-kicker">Estimate Calculator</p><h2 data-fa="برآورد سریع هزینه و زمان اجرا" data-en="Quick estimate for cost and timeline">برآورد سریع هزینه و زمان اجرا</h2><p data-fa="این محاسبه قیمت قطعی نیست؛ برای این ساخته شده که مشتری قبل از تماس، محدوده پروژه و تاثیر تعداد صفحات، زبان و پنل را بهتر بفهمد." data-en="This is not a final quote; it helps clients understand the project range and how pages, languages and portal level affect cost.">این محاسبه قیمت قطعی نیست؛ برای این ساخته شده که مشتری قبل از تماس، محدوده پروژه و تاثیر تعداد صفحات، زبان و پنل را بهتر بفهمد.</p></div>
-          <div class="calc-board">
-            <label><span data-fa="تعداد صفحات" data-en="Pages">تعداد صفحات</span><input type="number" min="1" value="6" data-est-pages /></label>
-            <label><span data-fa="زبان‌ها" data-en="Languages">زبان‌ها</span><select data-est-lang><option value="1" data-fa="یک زبانه" data-en="One language">یک زبانه</option><option value="2" selected data-fa="دو زبانه" data-en="Bilingual">دو زبانه</option></select></label>
-            <label><span data-fa="سطح پنل" data-en="Panel level">سطح پنل</span><select data-est-panel><option value="0" data-fa="بدون پنل" data-en="No panel">بدون پنل</option><option value="9" data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</option><option value="18" selected data-fa="پنل مدیر و مشتری" data-en="Admin and client portal">پنل مدیر و مشتری</option></select></label>
-            <button type="button" data-estimate-project data-fa="محاسبه قیمت" data-en="Calculate estimate">محاسبه قیمت</button>
-            <output class="estimate-result" data-estimate-result data-fa="حدود ۴۲ میلیون تومان - ۲۵ تا ۳۵ روز کاری" data-en="About 42M toman - 25 to 35 working days">حدود ۴۲ میلیون تومان - ۲۵ تا ۳۵ روز کاری</output>
+
+        <!-- DEMO PORTFOLIO -->
+        <section class="section">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-kicker">Live Demos</p>
+              <h2 data-fa="دموهای قابل تجربه" data-en="Demos you can experience">دموهای قابل تجربه</h2>
+              <p data-fa="نمونه‌ها مثل سایت واقعی طراحی شده‌اند؛ نه فقط عکس." data-en="Demos are built like real websites — not just screenshots.">نمونه‌ها مثل سایت واقعی طراحی شده‌اند؛ نه فقط عکس.</p>
+            </div>
+            <a class="text-link" href="portfolio.html" data-fa="همه دموها" data-en="All demos">همه دموها</a>
+          </div>
+          <div class="demo-grid">
+            <a class="demo-card reveal" href="demo-salon.html">
+              <div class="demo-card-visual"><img src="assets/demo-home-salon.png" alt="دمو سالن زیبایی" loading="lazy" /><span class="demo-card-badge" data-fa="مارکت‌پلیس" data-en="Marketplace">مارکت‌پلیس</span></div>
+              <div class="demo-card-body">
+                <h3 data-fa="مارکت‌پلیس سالن زیبایی" data-en="Beauty Salon Marketplace">مارکت‌پلیس سالن زیبایی</h3>
+                <p data-fa="جستجو، رزرو، نمایش سالن‌ها روی نقشه و تجربه کامل رزرو آنلاین." data-en="Search, booking, salon map display and full online booking experience.">جستجو، رزرو، نمایش سالن‌ها روی نقشه و تجربه کامل رزرو آنلاین.</p>
+                <div class="demo-card-features"><span class="feature-chip" data-fa="رزرو آنلاین" data-en="Online booking">رزرو آنلاین</span><span class="feature-chip" data-fa="جستجوی سرویس" data-en="Service search">جستجوی سرویس</span><span class="feature-chip" data-fa="نمایش نقشه" data-en="Map view">نمایش نقشه</span></div>
+                <span class="text-link" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+              </div>
+            </a>
+            <a class="demo-card reveal" href="demo-academy.html">
+              <div class="demo-card-visual"><img src="assets/demo-home-academy.png" alt="دمو آموزشگاه" loading="lazy" /><span class="demo-card-badge" data-fa="آموزشگاه" data-en="Academy">آموزشگاه</span></div>
+              <div class="demo-card-body">
+                <h3 data-fa="سایت آموزشگاه" data-en="Academy Website">سایت آموزشگاه</h3>
+                <p data-fa="معرفی دوره‌ها، ثبت‌نام آنلاین، صفحه مدرسان و مدیریت دانش‌آموز." data-en="Course listings, online registration, instructor pages and student management.">معرفی دوره‌ها، ثبت‌نام آنلاین، صفحه مدرسان و مدیریت دانش‌آموز.</p>
+                <div class="demo-card-features"><span class="feature-chip" data-fa="ثبت‌نام دوره" data-en="Course sign-up">ثبت‌نام دوره</span><span class="feature-chip" data-fa="صفحه مدرس" data-en="Instructor page">صفحه مدرس</span><span class="feature-chip" data-fa="تقویم" data-en="Schedule">تقویم</span></div>
+                <span class="text-link" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+              </div>
+            </a>
+            <a class="demo-card reveal" href="demo-clinic.html">
+              <div class="demo-card-visual"><img src="assets/demo-home-clinic.png" alt="دمو مطب" loading="lazy" /><span class="demo-card-badge" data-fa="مطب" data-en="Clinic">مطب</span></div>
+              <div class="demo-card-body">
+                <h3 data-fa="سایت مطب و کلینیک" data-en="Clinic Website">سایت مطب و کلینیک</h3>
+                <p data-fa="جستجوی پزشک، رزرو نوبت، صفحه تخصص و مدیریت پزشکان." data-en="Doctor search, appointment booking, specialty pages and doctor management.">جستجوی پزشک، رزرو نوبت، صفحه تخصص و مدیریت پزشکان.</p>
+                <div class="demo-card-features"><span class="feature-chip" data-fa="رزرو نوبت" data-en="Appointment">رزرو نوبت</span><span class="feature-chip" data-fa="جستجوی پزشک" data-en="Doctor search">جستجوی پزشک</span><span class="feature-chip" data-fa="فیلتر تخصص" data-en="Specialty filter">فیلتر تخصص</span></div>
+                <span class="text-link" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+              </div>
+            </a>
+            <a class="demo-card reveal" href="demo-shop.html">
+              <div class="demo-card-visual"><img src="assets/demo-home-shop.png" alt="دمو فروشگاه" loading="lazy" /><span class="demo-card-badge" data-fa="فروشگاه" data-en="Shop">فروشگاه</span></div>
+              <div class="demo-card-body">
+                <h3 data-fa="فروشگاه آنلاین" data-en="Online Shop">فروشگاه آنلاین</h3>
+                <p data-fa="محصولات، دسته‌بندی، سبد خرید، صفحه محصول و تجربه خرید کامل." data-en="Products, categories, cart, product pages and a complete shopping experience.">محصولات، دسته‌بندی، سبد خرید، صفحه محصول و تجربه خرید کامل.</p>
+                <div class="demo-card-features"><span class="feature-chip" data-fa="سبد خرید" data-en="Shopping cart">سبد خرید</span><span class="feature-chip" data-fa="فیلتر محصول" data-en="Product filter">فیلتر محصول</span><span class="feature-chip" data-fa="صفحه محصول" data-en="Product page">صفحه محصول</span></div>
+                <span class="text-link" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+              </div>
+            </a>
           </div>
         </section>
 
-        <section class="section smart-order" id="order">
-          <div class="section-head"><div><p class="section-kicker">Project Intake</p><h2 data-fa="فرم سفارش مرحله‌ای" data-en="Step-by-step project request">فرم سفارش مرحله‌ای</h2><p data-fa="مشتری نوع کسب‌وکار، امکانات، بودجه و زمان را مشخص می‌کند تا پیشنهاد دقیق‌تر ساخته شود." data-en="Clients define business type, features, budget and timeline so a clearer proposal can be prepared.">مشتری نوع کسب‌وکار، امکانات، بودجه و زمان را مشخص می‌کند تا پیشنهاد دقیق‌تر ساخته شود.</p></div><a class="text-link" href="login.html" data-fa="ورود / ثبت‌نام" data-en="Login / Sign up">ورود / ثبت‌نام</a></div>
-          <div class="wizard-grid">
-            <article class="wizard-step"><span>01</span><h3 data-fa="نوع کسب‌وکار" data-en="Business type">نوع کسب‌وکار</h3><select data-wizard-type><option data-fa="آموزشگاه" data-en="Academy">آموزشگاه</option><option data-fa="فروشگاه" data-en="Shop">فروشگاه</option><option data-fa="مطب / کلینیک" data-en="Clinic">مطب / کلینیک</option><option data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</option><option data-fa="شرکتی / اداری" data-en="Corporate">شرکتی / اداری</option></select></article>
-            <article class="wizard-step"><span>02</span><h3 data-fa="امکانات لازم" data-en="Required features">امکانات لازم</h3><div class="check-list"><label><input type="checkbox" checked data-price-addon="panel" /> <b data-fa="پنل کاربری" data-en="User portal">پنل کاربری</b></label><label><input type="checkbox" data-price-addon="shop" /> <b data-fa="فروشگاه / پرداخت" data-en="Shop / payment">فروشگاه / پرداخت</b></label><label><input type="checkbox" data-price-addon="booking" /> <b data-fa="رزرو / نوبت" data-en="Booking">رزرو / نوبت</b></label><label><input type="checkbox" data-price-addon="seo" /> <b data-fa="سئو و رشد" data-en="SEO and growth">سئو و رشد</b></label></div></article>
-            <article class="wizard-step"><span>03</span><h3 data-fa="بودجه و زمان" data-en="Budget and timeline">بودجه و زمان</h3><input type="range" min="12" max="90" value="28" data-budget-range /><output data-budget-output>حدود ۲۸ میلیون تومان</output><select><option data-fa="تحویل سریع" data-en="Fast delivery">تحویل سریع</option><option data-fa="استاندارد" data-en="Standard">استاندارد</option><option data-fa="مرحله‌ای" data-en="Phased">مرحله‌ای</option></select></article>
-            <article class="wizard-step result"><span>04</span><h3 data-fa="خروجی درخواست" data-en="Request summary">خروجی درخواست</h3><p data-wizard-summary data-fa="پیشنهاد اولیه آماده ساخت است." data-en="Initial proposal is ready to prepare.">پیشنهاد اولیه آماده ساخت است.</p><button type="button" data-build-request data-fa="ساخت درخواست نمایشی" data-en="Create demo request">ساخت درخواست نمایشی</button></article>
+
+        <!-- PANEL FEATURE SPLIT -->
+        <section class="section">
+          <div class="panel-split">
+            <div class="panel-visual reveal">
+              <img src="assets/studio-command-hero.png" alt="پنل مدیریت" loading="lazy" />
+            </div>
+            <div class="panel-info reveal">
+              <p class="section-kicker">Management Portal</p>
+              <h2 data-fa="پنلی که سایت را وابسته نمی‌گذارد" data-en="A portal that keeps you independent">پنلی که سایت را وابسته نمی‌گذارد</h2>
+              <p data-fa="ظاهر سایت ویترین است، اما پنل باعث می‌شود سایت بعد از تحویل زنده بماند. مدیر می‌تواند صفحه بسازد، قیمت تغییر دهد، خدمت اضافه کند، تیکت ببیند و شبکه‌های اجتماعی فوتر را کنترل کند." data-en="The website is the storefront, but the portal keeps it alive after launch. Admins can create pages, edit pricing, add services, view tickets and control footer socials.">ظاهر سایت ویترین است، اما پنل باعث می‌شود سایت بعد از تحویل زنده بماند. مدیر می‌تواند صفحه بسازد، قیمت تغییر دهد، خدمت اضافه کند، تیکت ببیند و شبکه‌های اجتماعی فوتر را کنترل کند.</p>
+              <div class="panel-feature-list">
+                <div class="panel-feature-item"><span class="panel-feature-icon">✏️</span><div><b data-fa="ویرایش محتوا و قیمت" data-en="Content and pricing editor">ویرایش محتوا و قیمت</b><small data-fa="تغییر متن، تصویر و قیمت بدون نیاز به طراح" data-en="Change text, images and pricing without a developer">تغییر متن، تصویر و قیمت بدون نیاز به طراح</small></div></div>
+                <div class="panel-feature-item"><span class="panel-feature-icon">🎫</span><div><b data-fa="سیستم تیکت پشتیبانی" data-en="Support ticket system">سیستم تیکت پشتیبانی</b><small data-fa="ارتباط منظم بدون چت‌های پراکنده" data-en="Organized communication without scattered messages">ارتباط منظم بدون چت‌های پراکنده</small></div></div>
+                <div class="panel-feature-item"><span class="panel-feature-icon">👥</span><div><b data-fa="مدیریت مشتری و پروژه" data-en="Client and project management">مدیریت مشتری و پروژه</b><small data-fa="وضعیت، فایل‌ها، پرداخت‌ها و گزارش‌ها" data-en="Status, files, payments and reports">وضعیت، فایل‌ها، پرداخت‌ها و گزارش‌ها</small></div></div>
+              </div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <a class="btn btn-primary" href="admin.html" data-fa="مشاهده پنل مدیر" data-en="View admin panel">مشاهده پنل مدیر</a>
+                <a class="btn btn-outline" href="client.html" data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</a>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section class="section redesign-proof">
-          <div><p class="section-kicker">Before / After</p><h2 data-fa="نمایش قبل و بعد بازطراحی" data-en="Before and after redesign showcase">نمایش قبل و بعد بازطراحی</h2><p data-fa="برای فروش خدمت بازطراحی، مشتری باید تفاوت سرعت، هویت، CTA و ساختار موبایل را ببیند." data-en="For redesign projects, clients need to see improvement in speed, identity, calls to action and mobile structure.">برای فروش خدمت بازطراحی، مشتری باید تفاوت سرعت، هویت، CTA و ساختار موبایل را ببیند.</p></div>
-          <div class="before-after">
-            <article><span data-fa="قبل" data-en="Before">قبل</span><h3 data-fa="سایت فعلی مشتری" data-en="Client's current site">سایت فعلی مشتری</h3><div class="old-site-preview"></div><ul><li data-fa="صفحه شلوغ، پیام نامشخص و بدون دکمه اقدام اصلی" data-en="Cluttered page, unclear message and no primary action button">صفحه شلوغ، پیام نامشخص و بدون دکمه اقدام اصلی</li><li data-fa="چیدمان موبایل ضعیف، سرعت پایین و اعتماد کمتر" data-en="Weak mobile layout, slow speed and lower trust">چیدمان موبایل ضعیف، سرعت پایین و اعتماد کمتر</li></ul></article>
-            <article><span data-fa="بعد" data-en="After">بعد</span><h3 data-fa="نسخه بازطراحی‌شده" data-en="Redesigned version">نسخه بازطراحی‌شده</h3><div class="new-site-preview"></div><ul><li data-fa="هدر روشن، پیشنهاد واضح، CTA و مسیر سفارش مشخص" data-en="Clear hero, strong offer, CTA and visible order path">هدر روشن، پیشنهاد واضح، CTA و مسیر سفارش مشخص</li><li data-fa="طراحی واکنش‌گرا، سریع، قابل توسعه و آماده رشد" data-en="Responsive, fast, scalable and growth-ready design">طراحی واکنش‌گرا، سریع، قابل توسعه و آماده رشد</li></ul></article>
-          </div>
-        </section>
 
-        <section class="section admin-showcase" id="panel-tour">
-          <div class="section-head"><div><p class="section-kicker">Panel Tour</p><h2 data-fa="پنل مدیریت برای تغییر محتوا، قیمت و ارتباط با مشتری" data-en="Admin panel for content, pricing and client communication">پنل مدیریت برای تغییر محتوا، قیمت و ارتباط با مشتری</h2><p data-fa="هدف پنل این است که سایت بعد از تحویل وابسته و خاموش نماند؛ مدیر بتواند خدمات، قیمت‌ها، صفحات، تیکت‌ها و گزارش‌ها را پیگیری کند." data-en="The panel keeps the website useful after launch: admins can manage services, prices, pages, tickets and reports.">هدف پنل این است که سایت بعد از تحویل وابسته و خاموش نماند؛ مدیر بتواند خدمات، قیمت‌ها، صفحات، تیکت‌ها و گزارش‌ها را پیگیری کند.</p></div><a class="text-link" href="admin.html" data-fa="مشاهده پنل" data-en="View panel">مشاهده پنل</a></div>
-          <div class="admin-feature-grid">
-            <article><b data-fa="مدیریت صفحات" data-en="Page management">مدیریت صفحات</b><p data-fa="ایجاد صفحه، ویرایش متن، تصویر، CTA و وضعیت انتشار." data-en="Create pages, edit text, images, CTAs and publish state.">ایجاد صفحه، ویرایش متن، تصویر، CTA و وضعیت انتشار.</p></article>
-            <article><b data-fa="قیمت و خدمات" data-en="Services and prices">قیمت و خدمات</b><p data-fa="تعریف پکیج، قیمت پایه، خدمات اضافه و تخفیف." data-en="Define packages, base prices, add-ons and discounts.">تعریف پکیج، قیمت پایه، خدمات اضافه و تخفیف.</p></article>
-            <article><b data-fa="تیکت و مشتری" data-en="Tickets and clients">تیکت و مشتری</b><p data-fa="درخواست‌ها، پیام‌ها، وضعیت پروژه و فایل‌های تحویلی." data-en="Requests, messages, project status and delivery files.">درخواست‌ها، پیام‌ها، وضعیت پروژه و فایل‌های تحویلی.</p></article>
-            <article><b data-fa="گزارش رفتار" data-en="Behavior reports">گزارش رفتار</b><p data-fa="بازدید صفحه‌ها، کلیک CTA، فرم‌های ناقص و دموهای محبوب." data-en="Page visits, CTA clicks, abandoned forms and popular demos.">بازدید صفحه‌ها، کلیک CTA، فرم‌های ناقص و دموهای محبوب.</p></article>
+        <!-- TRUST / PRINCIPLES -->
+        <section class="section">
+          <div class="section-head reveal">
+            <div>
+              <p class="section-kicker">Principles</p>
+              <h2 data-fa="چیزی که ما را متمایز می‌کند" data-en="What sets this apart">چیزی که ما را متمایز می‌کند</h2>
+            </div>
+            <a class="text-link" href="about.html" data-fa="درباره استودیو" data-en="About the studio">درباره استودیو</a>
           </div>
-        </section>
-
-        <section class="section trust-system">
-          <div><p class="section-kicker">Trust System</p><h2 data-fa="اعتمادسازی، قرارداد و تحویل" data-en="Trust, contract and delivery">اعتمادسازی، قرارداد و تحویل</h2></div>
           <div class="trust-grid">
-            <article><span>01</span><h3 data-fa="مالکیت کامل" data-en="Full ownership">مالکیت کامل</h3><p data-fa="دامنه، هاست، سورس و دسترسی‌ها شفاف تحویل می‌شود." data-en="Domain, hosting, source and access are delivered transparently.">دامنه، هاست، سورس و دسترسی‌ها شفاف تحویل می‌شود.</p></article>
-            <article><span>02</span><h3 data-fa="آموزش مدیریت" data-en="Management training">آموزش مدیریت</h3><p data-fa="آموزش پنل، محتوا، قیمت‌ها، تیکت و گزارش‌ها." data-en="Training for panel, content, prices, tickets and reports.">آموزش پنل، محتوا، قیمت‌ها، تیکت و گزارش‌ها.</p></article>
-            <article><span>03</span><h3 data-fa="امنیت و بکاپ" data-en="Security and backup">امنیت و بکاپ</h3><p data-fa="SSL، بکاپ دوره‌ای، به‌روزرسانی و مانیتورینگ پایه." data-en="SSL, scheduled backup, updates and basic monitoring.">SSL، بکاپ دوره‌ای، به‌روزرسانی و مانیتورینگ پایه.</p></article>
-            <article><span>04</span><h3 data-fa="پشتیبانی قابل پیگیری" data-en="Trackable support">پشتیبانی قابل پیگیری</h3><p data-fa="هر درخواست از طریق تیکت و وضعیت مشخص پیگیری می‌شود." data-en="Every request is tracked through tickets and statuses.">هر درخواست از طریق تیکت و وضعیت مشخص پیگیری می‌شود.</p></article>
+            <div class="trust-card reveal"><span>01</span><b data-fa="سایت چندلایه" data-en="Layered website">سایت چندلایه</b><p data-fa="خانه، خدمات، پکیج، دمو، فرایند، FAQ و سفارش هرکدام مسیر جدا دارند." data-en="Home, services, packages, demos, process, FAQ and order each have their own path.">خانه، خدمات، پکیج، دمو، فرایند، FAQ و سفارش هرکدام مسیر جدا دارند.</p></div>
+            <div class="trust-card reveal"><span>02</span><b data-fa="پنل قابل استفاده" data-en="Usable portal">پنل قابل استفاده</b><p data-fa="پنل برای محتوا، قیمت، خدمات، مشتری، تیکت و گزارش طراحی می‌شود." data-en="The portal is designed for content, pricing, services, clients, tickets and reports.">پنل برای محتوا، قیمت، خدمات، مشتری، تیکت و گزارش طراحی می‌شود.</p></div>
+            <div class="trust-card reveal"><span>03</span><b data-fa="دموی قابل نمایش" data-en="Presentable demos">دموی قابل نمایش</b><p data-fa="نمونه‌ها مثل سایت واقعی طراحی می‌شوند تا مشتری تجربه کند، نه فقط تصویر ببیند." data-en="Demos are built like real websites so clients experience them, not just view images.">نمونه‌ها مثل سایت واقعی طراحی می‌شوند تا مشتری تجربه کند، نه فقط تصویر ببیند.</p></div>
+            <div class="trust-card reveal"><span>04</span><b data-fa="رشد بعد از تحویل" data-en="Growth after launch">رشد بعد از تحویل</b><p data-fa="سئو، محتوا، کمپین، پشتیبانی و ارتقا در مسیر ماهانه تعریف می‌شود." data-en="SEO, content, campaigns, support and upgrades are defined monthly.">سئو، محتوا، کمپین، پشتیبانی و ارتقا در مسیر ماهانه تعریف می‌شود.</p></div>
           </div>
         </section>
 
-        <section class="section growth-suite">
-          <div><p class="section-kicker">SEO & Growth</p><h2 data-fa="رشد بعد از طراحی سایت" data-en="Growth after website launch">رشد بعد از طراحی سایت</h2><p data-fa="بعد از تحویل، سایت باید قابل رشد باشد: سئو، سرعت، گزارش، لندینگ، کمپین و بهبود نرخ تبدیل." data-en="After launch, the website should keep growing through SEO, speed, reports, landing pages, campaigns and conversion improvements.">بعد از تحویل، سایت باید قابل رشد باشد: سئو، سرعت، گزارش، لندینگ، کمپین و بهبود نرخ تبدیل.</p></div>
-          <div class="growth-list">
-            <article><b data-fa="کنترل سرچ کنسول" data-en="Search Console control">کنترل سرچ کنسول</b><small data-fa="بررسی کلمات، خطاهای ایندکس، صفحات در حال رشد و فرصت‌های ورودی گوگل." data-en="Keyword tracking, index issues, growing pages and Google traffic opportunities.">بررسی کلمات، خطاهای ایندکس، صفحات در حال رشد و فرصت‌های ورودی گوگل.</small></article>
-            <article><b data-fa="اسکیما و متاتگ" data-en="Schema and meta tags">اسکیما و متاتگ</b><small data-fa="ساختار مناسب برای عنوان، توضیحات، خدمات، سوالات متداول و نمایش بهتر در نتایج." data-en="Structured titles, descriptions, services, FAQs and richer search appearance.">ساختار مناسب برای عنوان، توضیحات، خدمات، سوالات متداول و نمایش بهتر در نتایج.</small></article>
-            <article><b data-fa="بهینه‌سازی سرعت" data-en="Speed optimization">بهینه‌سازی سرعت</b><small data-fa="سبک‌سازی تصاویر، فایل‌ها، کش و تجربه سریع‌تر در موبایل و دسکتاپ." data-en="Image, asset and cache optimization for faster mobile and desktop experience.">سبک‌سازی تصاویر، فایل‌ها، کش و تجربه سریع‌تر در موبایل و دسکتاپ.</small></article>
-            <article><b data-fa="گزارش ماهانه" data-en="Monthly reporting">گزارش ماهانه</b><small data-fa="گزارش بازدید، رفتار کاربران، درخواست‌ها، فرم‌ها و پیشنهاد اقدام بعدی." data-en="Traffic, behavior, requests, forms and next action recommendations.">گزارش بازدید، رفتار کاربران، درخواست‌ها، فرم‌ها و پیشنهاد اقدام بعدی.</small></article>
-            <article><b data-fa="لندینگ کمپین" data-en="Campaign landing pages">لندینگ کمپین</b><small data-fa="صفحه اختصاصی برای تبلیغات، معرفی خدمت، دریافت لید و تبدیل بهتر مخاطب." data-en="Dedicated pages for ads, service offers, lead capture and better conversion.">صفحه اختصاصی برای تبلیغات، معرفی خدمت، دریافت لید و تبدیل بهتر مخاطب.</small></article>
-            <article><b data-fa="بهبود CTA" data-en="CTA optimization">بهبود CTA</b><small data-fa="اصلاح دکمه‌ها، مسیر سفارش، متن‌ها و نقاط تماس برای افزایش درخواست پروژه." data-en="Improving buttons, order flow, copy and touchpoints to increase project requests.">اصلاح دکمه‌ها، مسیر سفارش، متن‌ها و نقاط تماس برای افزایش درخواست پروژه.</small></article>
-          </div>
-        </section>
 
-        <section class="section case-studies" id="case-studies">
-          <div class="section-head"><div><p class="section-kicker">Case Studies</p><h2 data-fa="کیس‌استادی‌های آماده ارائه" data-en="Client-ready case studies">کیس‌استادی‌های آماده ارائه</h2><p data-fa="هر دمو یک سناریوی مشکل، راه‌حل و خروجی دارد." data-en="Each demo has a problem, solution and deliverable story.">هر دمو یک سناریوی مشکل، راه‌حل و خروجی دارد.</p></div><a class="text-link" href="portfolio.html" data-fa="دیدن دموها" data-en="View demos">دیدن دموها</a></div>
-          <div class="case-grid">
-            <article><small>Academy</small><h3 data-fa="آموزشگاه با تعیین سطح" data-en="Academy with level test">آموزشگاه با تعیین سطح</h3><p data-fa="راه‌حل: مسیر دوره، تعیین سطح، استاد و ثبت‌نام یکپارچه." data-en="Solution: course paths, level test, teachers and unified enrollment.">راه‌حل: مسیر دوره، تعیین سطح، استاد و ثبت‌نام یکپارچه.</p></article>
-            <article><small>Salon</small><h3 data-fa="سالن زیبایی با رزرو" data-en="Beauty salon with booking">سالن زیبایی با رزرو</h3><p data-fa="راه‌حل: جستجو، خدمات، زمان خالی، رزرو و متخصص‌ها." data-en="Solution: search, services, open slots, booking and specialists.">راه‌حل: جستجو، خدمات، زمان خالی، رزرو و متخصص‌ها.</p></article>
-            <article><small>Clinic</small><h3 data-fa="کلینیک با فیلتر پزشک" data-en="Clinic with doctor filters">کلینیک با فیلتر پزشک</h3><p data-fa="راه‌حل: فیلتر شهر، امتیاز، نوع مشاوره و نوبت." data-en="Solution: city, rating, consultation type and appointment filters.">راه‌حل: فیلتر شهر، امتیاز، نوع مشاوره و نوبت.</p></article>
-          </div>
-        </section>
-
-        <section class="section knowledge-hub" id="blog">
-          <div><p class="section-kicker">Knowledge Hub</p><h2 data-fa="دانشنامه برای سئو و اعتماد" data-en="Knowledge hub for SEO and trust">دانشنامه برای سئو و اعتماد</h2><p data-fa="این بخش پایه بلاگ و محتوای آموزشی است تا مشتری قبل از تماس جواب سوال‌های اصلی را بگیرد." data-en="This is the base for educational blog content so clients get answers before contacting you.">این بخش پایه بلاگ و محتوای آموزشی است تا مشتری قبل از تماس جواب سوال‌های اصلی را بگیرد.</p></div>
-          <div class="blog-grid">
-            <article><span data-fa="راهنما" data-en="Guide">راهنما</span><h3 data-fa="هزینه طراحی سایت چطور محاسبه می‌شود؟" data-en="How is website design cost calculated?">هزینه طراحی سایت چطور محاسبه می‌شود؟</h3><p data-fa="صفحات، پنل، زبان، فروشگاه، رزرو، محتوا و پشتیبانی روی قیمت اثر دارند." data-en="Pages, panel, languages, shop, booking, content and support affect the price.">صفحات، پنل، زبان، فروشگاه، رزرو، محتوا و پشتیبانی روی قیمت اثر دارند.</p></article>
-            <article><span data-fa="پنل" data-en="Panel">پنل</span><h3 data-fa="پنل مدیریتی دقیقاً چه کاری انجام می‌دهد؟" data-en="What exactly does an admin panel do?">پنل مدیریتی دقیقاً چه کاری انجام می‌دهد؟</h3><p data-fa="مدیریت محتوا، قیمت، خدمات، مشتری، تیکت، فایل و گزارش." data-en="It manages content, prices, services, clients, tickets, files and reports.">مدیریت محتوا، قیمت، خدمات، مشتری، تیکت، فایل و گزارش.</p></article>
-            <article><span data-fa="بازطراحی" data-en="Redesign">بازطراحی</span><h3 data-fa="چه زمانی سایت نیاز به بازطراحی دارد؟" data-en="When does a website need redesign?">چه زمانی سایت نیاز به بازطراحی دارد؟</h3><p data-fa="وقتی کند، قدیمی، نامفهوم یا بدون مسیر فروش باشد." data-en="When it is slow, outdated, unclear or lacks a sales flow.">وقتی کند، قدیمی، نامفهوم یا بدون مسیر فروش باشد.</p></article>
-          </div>
-        </section>
-
-        <section class="section project-score" id="score">
-          <div><p class="section-kicker">Project Score</p><h2 data-fa="تشخیص سریع سطح پروژه" data-en="Quick project level diagnosis">تشخیص سریع سطح پروژه</h2><p data-fa="چند نیاز اصلی را انتخاب کن تا مشخص شود پروژه بیشتر به یک سایت معرفی، پنل مشتری یا سیستم کامل مدیریتی نیاز دارد." data-en="Select the main needs to see whether the project fits a brand website, client portal or complete management system.">چند نیاز اصلی را انتخاب کن تا مشخص شود پروژه بیشتر به یک سایت معرفی، پنل مشتری یا سیستم کامل مدیریتی نیاز دارد.</p></div>
-          <div class="score-box">
-            <div class="score-options">
-              <label><input type="checkbox" data-score-item value="2" /> <span><b data-fa="بازطراحی و سرعت" data-en="Redesign and speed">بازطراحی و سرعت</b><small data-fa="سایت فعلی قدیمی، کند یا نامنظم است." data-en="Current website is old, slow or unclear.">سایت فعلی قدیمی، کند یا نامنظم است.</small></span></label>
-              <label><input type="checkbox" data-score-item value="3" /> <span><b data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</b><small data-fa="تیکت، فایل، وضعیت پروژه و ارتباط منظم لازم است." data-en="Tickets, files, project status and organized communication are needed.">تیکت، فایل، وضعیت پروژه و ارتباط منظم لازم است.</small></span></label>
-              <label><input type="checkbox" data-score-item value="3" /> <span><b data-fa="مدیریت محتوا و قیمت" data-en="Content and pricing control">مدیریت محتوا و قیمت</b><small data-fa="خدمات، صفحات و قیمت‌ها باید قابل ویرایش باشند." data-en="Services, pages and prices must be editable.">خدمات، صفحات و قیمت‌ها باید قابل ویرایش باشند.</small></span></label>
-              <label><input type="checkbox" data-score-item value="2" /> <span><b data-fa="فروشگاه یا رزرو" data-en="Shop or booking">فروشگاه یا رزرو</b><small data-fa="پرداخت، سبد خرید، رزرو یا نوبت‌دهی لازم است." data-en="Payment, cart, booking or appointments are needed.">پرداخت، سبد خرید، رزرو یا نوبت‌دهی لازم است.</small></span></label>
-            </div>
-            <div class="score-action">
-              <button type="button" data-calc-score data-fa="نمایش پیشنهاد" data-en="Show recommendation">نمایش پیشنهاد</button>
-              <output data-score-result data-fa="با انتخاب گزینه‌ها، پیشنهاد مناسب اینجا نمایش داده می‌شود." data-en="Select options to see the recommendation here.">با انتخاب گزینه‌ها، پیشنهاد مناسب اینجا نمایش داده می‌شود.</output>
-            </div>
-          </div>
-        </section>
-
-        <section class="section process-timeline" id="process">
-          <div class="section-head">
+        <!-- CTA BAND -->
+        <section class="section">
+          <div class="cta-band reveal">
             <div>
-              <p class="section-kicker">Project Method</p>
-              <h2 data-fa="فرایند همکاری شفاف؛ از بریف تا تحویل و پشتیبانی" data-en="A clear process from brief to launch and support">فرایند همکاری شفاف؛ از بریف تا تحویل و پشتیبانی</h2>
-              <p data-fa="پروژه مرحله‌به‌مرحله جلو می‌رود: نیازسنجی، طراحی، توسعه، تست، آموزش و پشتیبانی. هر مرحله خروجی مشخص دارد تا تصمیم‌گیری و پرداخت شفاف باشد." data-en="The project moves step by step: discovery, design, development, testing, training and support. Each phase has a clear output so decisions and payments stay transparent.">پروژه مرحله‌به‌مرحله جلو می‌رود: نیازسنجی، طراحی، توسعه، تست، آموزش و پشتیبانی. هر مرحله خروجی مشخص دارد تا تصمیم‌گیری و پرداخت شفاف باشد.</p>
+              <h2 data-fa="آماده شروع پروژه هستید؟" data-en="Ready to start your project?">آماده شروع پروژه هستید؟</h2>
+              <p data-fa="مسیر سفارش مرحله‌ای را شروع کنید، در کمتر از ۵ دقیقه نیاز خود را ثبت کنید." data-en="Start the guided order flow and register your needs in under 5 minutes.">مسیر سفارش مرحله‌ای را شروع کنید، در کمتر از ۵ دقیقه نیاز خود را ثبت کنید.</p>
             </div>
-            <a class="text-link" href="client.html" data-fa="دیدن پنل مشتری" data-en="View client panel">دیدن پنل مشتری</a>
-          </div>
-          <div class="process-grid">
-            <article><span>01</span><b data-fa="شناخت و بریف" data-en="Discovery and brief">شناخت و بریف</b><p data-fa="هدف، مخاطب، صفحات، امکانات و اولویت‌های فروش مشخص می‌شود." data-en="Goals, audience, pages, features and sales priorities are defined.">هدف، مخاطب، صفحات، امکانات و اولویت‌های فروش مشخص می‌شود.</p></article>
-            <article><span>02</span><b data-fa="معماری و طراحی" data-en="Architecture and design">معماری و طراحی</b><p data-fa="ساختار صفحه‌ها، مسیر کاربر، ظاهر برند و کال‌تو‌اکشن‌ها طراحی می‌شود." data-en="Page structure, user flow, brand look and calls to action are designed.">ساختار صفحه‌ها، مسیر کاربر، ظاهر برند و کال‌تو‌اکشن‌ها طراحی می‌شود.</p></article>
-            <article><span>03</span><b data-fa="توسعه و پنل" data-en="Development and panel">توسعه و پنل</b><p data-fa="سایت، پنل، فرم‌ها، تیکت، قیمت‌ها و محتوای قابل ویرایش ساخته می‌شود." data-en="Website, panel, forms, tickets, pricing and editable content are built.">سایت، پنل، فرم‌ها، تیکت، قیمت‌ها و محتوای قابل ویرایش ساخته می‌شود.</p></article>
-            <article><span>04</span><b data-fa="تحویل و رشد" data-en="Launch and growth">تحویل و رشد</b><p data-fa="آموزش، چک‌لیست تحویل، امنیت، بکاپ و برنامه رشد ماهانه آماده می‌شود." data-en="Training, handoff checklist, security, backups and monthly growth plan are prepared.">آموزش، چک‌لیست تحویل، امنیت، بکاپ و برنامه رشد ماهانه آماده می‌شود.</p></article>
-          </div>
-        </section>
-
-        <section class="section delivery-checklist" id="delivery">
-          <div><p class="section-kicker">Delivery Checklist</p><h2 data-fa="چک‌لیست تحویل و قرارداد" data-en="Delivery and contract checklist">چک‌لیست تحویل و قرارداد</h2></div>
-          <div class="checklist-grid">
-            <article><b data-fa="دسترسی‌ها" data-en="Access">دسترسی‌ها</b><p data-fa="دامنه، هاست، پنل، ایمیل، شبکه‌ها و فایل‌ها." data-en="Domain, hosting, panel, email, social links and files.">دامنه، هاست، پنل، ایمیل، شبکه‌ها و فایل‌ها.</p></article>
-            <article><b data-fa="آموزش" data-en="Training">آموزش</b><p data-fa="آموزش کار با پنل، محتوا، قیمت‌ها، تیکت و گزارش." data-en="Training for panel, content, prices, tickets and reports.">آموزش کار با پنل، محتوا، قیمت‌ها، تیکت و گزارش.</p></article>
-            <article><b data-fa="محدوده پشتیبانی" data-en="Support scope">محدوده پشتیبانی</b><p data-fa="شفافیت درباره موارد شامل پشتیبانی و سفارش جدید." data-en="Clarity about what is included in support and what is a new order.">شفافیت درباره موارد شامل پشتیبانی و سفارش جدید.</p></article>
-            <article><b data-fa="برنامه ارتقا" data-en="Upgrade plan">برنامه ارتقا</b><p data-fa="لیست قابلیت‌های مرحله بعدی و مسیر رشد ماهانه." data-en="Next-phase features and monthly growth path.">لیست قابلیت‌های مرحله بعدی و مسیر رشد ماهانه.</p></article>
-          </div>
-        </section>
-
-        <section class="section advisor-suite" id="advisor">
-          <div class="section-head">
-            <div>
-              <p class="section-kicker">Smart Proposal</p>
-              <h2 data-fa="پیشنهاد هوشمند برای انتخاب مسیر پروژه" data-en="Smart proposal for choosing the project path">پیشنهاد هوشمند برای انتخاب مسیر پروژه</h2>
-              <p data-fa="این بخش کمک می‌کند مشتری قبل از تماس بفهمد چه پکیجی مناسب اوست و چرا باید پنل، پشتیبانی یا بازطراحی را انتخاب کند." data-en="This section helps clients understand which package fits them before contacting you, and why they may need a portal, support or redesign.">این بخش کمک می‌کند مشتری قبل از تماس بفهمد چه پکیجی مناسب اوست و چرا باید پنل، پشتیبانی یا بازطراحی را انتخاب کند.</p>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+              <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+              <a class="btn" style="background:rgba(255,255,255,0.1);color:white;border:1px solid rgba(255,255,255,0.22);" href="audit.html" data-fa="بررسی رایگان سایت" data-en="Free site audit">بررسی رایگان سایت</a>
             </div>
-            <a class="text-link" href="admin.html#packages" data-fa="مدیریت پکیج‌ها" data-en="Manage packages">مدیریت پکیج‌ها</a>
-          </div>
-          <div class="advisor-grid">
-            <article><span>01</span><h3 data-fa="سایت معرفی سریع" data-en="Fast brand website">سایت معرفی سریع</h3><p data-fa="برای کسب‌وکارهایی که باید سریع آنلاین شوند، فرم بگیرند و نمونه‌کار نشان دهند." data-en="For businesses that need to launch fast, collect leads and show work.">برای کسب‌وکارهایی که باید سریع آنلاین شوند، فرم بگیرند و نمونه‌کار نشان دهند.</p></article>
-            <article><span>02</span><h3 data-fa="سایت با پنل مشتری" data-en="Website with client portal">سایت با پنل مشتری</h3><p data-fa="برای پروژه‌هایی که تیکت، فایل، وضعیت اجرا، فاکتور و ارتباط منظم می‌خواهند." data-en="For projects that need tickets, files, status tracking, invoices and organized communication.">برای پروژه‌هایی که تیکت، فایل، وضعیت اجرا، فاکتور و ارتباط منظم می‌خواهند.</p></article>
-            <article><span>03</span><h3 data-fa="سیستم کامل مدیریت" data-en="Complete management system">سیستم کامل مدیریت</h3><p data-fa="برای مدیریت محتوا، خدمات، قیمت، مشتری، گزارش رفتار و مسیر رشد ماهانه." data-en="For managing content, services, pricing, clients, behavior reports and monthly growth.">برای مدیریت محتوا، خدمات، قیمت، مشتری، گزارش رفتار و مسیر رشد ماهانه.</p></article>
           </div>
         </section>
 
-        <section class="section monthly-care" id="monthly-care">
-          <div>
-            <p class="section-kicker">Monthly Care</p>
-            <h2 data-fa="خدمات ماهانه بعد از تحویل" data-en="Monthly services after launch">خدمات ماهانه بعد از تحویل</h2>
-            <p data-fa="برای اینکه سایت بعد از تحویل رها نشود، مسیر درآمدی ماهانه هم در سایت معرفی می‌شود." data-en="So the site is not abandoned after launch, monthly recurring services are presented clearly.">برای اینکه سایت بعد از تحویل رها نشود، مسیر درآمدی ماهانه هم در سایت معرفی می‌شود.</p>
-          </div>
-          <div class="care-grid">
-            <article><b data-fa="نگهداری و بکاپ" data-en="Maintenance and backup">نگهداری و بکاپ</b><span data-fa="بکاپ، آپدیت، بررسی سلامت" data-en="Backups, updates, health checks">بکاپ، آپدیت، بررسی سلامت</span></article>
-            <article><b data-fa="امنیت و مانیتورینگ" data-en="Security and monitoring">امنیت و مانیتورینگ</b><span data-fa="SSL، خطاها، دسترسی‌ها" data-en="SSL, errors, access review">SSL، خطاها، دسترسی‌ها</span></article>
-            <article><b data-fa="سئو و محتوا" data-en="SEO and content">سئو و محتوا</b><span data-fa="مقاله، صفحه خدمات، گزارش" data-en="Articles, service pages, reports">مقاله، صفحه خدمات، گزارش</span></article>
-            <article><b data-fa="تغییرات کوچک" data-en="Small updates">تغییرات کوچک</b><span data-fa="متن، قیمت، عکس، فرم" data-en="Copy, pricing, images, forms">متن، قیمت، عکس، فرم</span></article>
-          </div>
-        </section>
 
-        <section class="section faq-system" id="faq">
-          <div><p class="section-kicker">FAQ</p><h2 data-fa="سوالات پرتکرار قبل از سفارش" data-en="Frequently asked questions before ordering">سوالات پرتکرار قبل از سفارش</h2></div>
-          <div class="faq-grid">
-            <details open><summary data-fa="زمان تحویل چقدر است؟" data-en="How long does delivery take?">زمان تحویل چقدر است؟</summary><p data-fa="بسته به پکیج، معمولاً از ۱۲ تا ۴۵ روز کاری. پروژه‌های پنل‌دار مرحله‌ای تحویل می‌شوند." data-en="Depending on the package, usually 12 to 45 working days. Panel projects are delivered in phases.">بسته به پکیج، معمولاً از ۱۲ تا ۴۵ روز کاری. پروژه‌های پنل‌دار مرحله‌ای تحویل می‌شوند.</p></details>
-            <details><summary data-fa="مالکیت سایت با چه کسی است؟" data-en="Who owns the website?">مالکیت سایت با چه کسی است؟</summary><p data-fa="مالکیت دامنه، هاست، محتوا و دسترسی‌ها شفاف به مشتری تحویل می‌شود." data-en="Domain, hosting, content and access ownership are delivered transparently to the client.">مالکیت دامنه، هاست، محتوا و دسترسی‌ها شفاف به مشتری تحویل می‌شود.</p></details>
-            <details><summary data-fa="پرداخت مرحله‌ای ممکن است؟" data-en="Is phased payment possible?">پرداخت مرحله‌ای ممکن است؟</summary><p data-fa="بله، برای پروژه‌های بزرگ پرداخت و تحویل می‌تواند مرحله‌ای تعریف شود." data-en="Yes, larger projects can have phased payment and phased delivery.">بله، برای پروژه‌های بزرگ پرداخت و تحویل می‌تواند مرحله‌ای تعریف شود.</p></details>
-            <details><summary data-fa="بعد از تحویل پشتیبانی دارید؟" data-en="Do you support after launch?">بعد از تحویل پشتیبانی دارید؟</summary><p data-fa="بله، پشتیبانی فنی، به‌روزرسانی، محتوا، امنیت و رشد می‌تواند ماهانه فعال شود." data-en="Yes, technical support, updates, content, security and growth can be activated monthly.">بله، پشتیبانی فنی، به‌روزرسانی، محتوا، امنیت و رشد می‌تواند ماهانه فعال شود.</p></details>
-          </div>
-        </section>
-
-        <a class="floating-consult" href="login.html" data-fa="مشاوره سریع / تیکت" data-en="Quick consult / ticket">مشاوره سریع / تیکت</a>
-
-        <section class="section contact-panel" id="contact">
-          <div><p class="section-kicker">Start Project</p><h2 data-fa="برای شروع، فقط نوع پروژه و نیاز اصلی را مشخص کن" data-en="To start, define the project type and main need">برای شروع، فقط نوع پروژه و نیاز اصلی را مشخص کن</h2><p data-fa="بعد از ثبت درخواست، مسیر بررسی، پیشنهاد اولیه، زمان‌بندی، فایل‌ها و تیکت‌ها در پنل قابل پیگیری می‌شود؛ بدون پیام‌های پراکنده و تصمیم‌های گم‌شده." data-en="After submitting a request, review, proposal, timeline, files and tickets become trackable in the portal, without scattered messages or lost decisions.">بعد از ثبت درخواست، مسیر بررسی، پیشنهاد اولیه، زمان‌بندی، فایل‌ها و تیکت‌ها در پنل قابل پیگیری می‌شود؛ بدون پیام‌های پراکنده و تصمیم‌های گم‌شده.</p></div>
-          <form class="lead-form">
-            <label><span data-fa="نام پروژه" data-en="Project name">نام پروژه</span><input type="text" data-fa-placeholder="مثلاً طراحی سایت و پنل" data-en-placeholder="e.g. Website and portal design" placeholder="مثلاً طراحی سایت و پنل" /></label>
-            <label><span data-fa="نوع خدمت" data-en="Service type">نوع خدمت</span><select><option data-fa="طراحی سایت و پنل" data-en="Website and portal">طراحی سایت و پنل</option><option data-fa="زیرساخت و سرور" data-en="Infrastructure and server">زیرساخت و سرور</option><option data-fa="بازطراحی و ارتقا" data-en="Redesign and upgrade">بازطراحی و ارتقا</option><option data-fa="پشتیبانی ماهانه" data-en="Monthly support">پشتیبانی ماهانه</option></select></label>
-            <button class="btn btn-primary" type="button" data-fa="ثبت درخواست نمایشی" data-en="Submit demo request">ثبت درخواست نمایشی</button>
-          </form>
-        </section>
-
+        <!-- FOOTER -->
         <footer class="site-footer">
-          <div><strong>Vitra Studio</strong><p data-fa="طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی." data-en="Future-facing website design, development, portals, demos and support.">طراحی، توسعه و مدیریت سایت‌های آینده‌نگر با پنل، دمو و پشتیبانی.</p></div>
-          <div class="footer-socials" aria-label="شبکه‌های اجتماعی"><a data-social-link="instagram" target="_blank" rel="noopener">IG</a><a data-social-link="telegram" target="_blank" rel="noopener">TG</a><a data-social-link="linkedin" target="_blank" rel="noopener">IN</a><a data-social-link="whatsapp" target="_blank" rel="noopener">WA</a><a data-social-link="email" target="_blank" rel="noopener">@</a></div>
+          <div class="footer-inner">
+            <div class="footer-brand">
+              <strong>Studio</strong>
+              <p data-fa="طراحی سایت، پنل، بازطراحی، سئو و پشتیبانی برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند و قابل مدیریت رشد کنند." data-en="Website design, portals, redesign, SEO and support for businesses that want to look professional and grow with control.">طراحی سایت، پنل، بازطراحی، سئو و پشتیبانی برای کسب‌وکارهایی که می‌خواهند حرفه‌ای دیده شوند و قابل مدیریت رشد کنند.</p>
+              <div class="footer-socials">
+                <a data-social-link="instagram" target="_blank" rel="noopener">IG</a>
+                <a data-social-link="telegram" target="_blank" rel="noopener">TG</a>
+                <a data-social-link="linkedin" target="_blank" rel="noopener">IN</a>
+                <a data-social-link="whatsapp" target="_blank" rel="noopener">WA</a>
+                <a data-social-link="email" target="_blank" rel="noopener">@</a>
+              </div>
+              <div class="footer-proof">
+                <span><b>CMS</b><small data-fa="ویرایش محتوا" data-en="Content editor">ویرایش محتوا</small></span>
+                <span><b>CRM</b><small data-fa="مدیریت مشتری" data-en="Client management">مدیریت مشتری</small></span>
+                <span><b>Ticket</b><small data-fa="پشتیبانی" data-en="Support">پشتیبانی</small></span>
+              </div>
+            </div>
+            <div class="footer-col">
+              <h4 data-fa="خدمات" data-en="Services">خدمات</h4>
+              <a href="services.html" data-fa="طراحی سایت" data-en="Web design">طراحی سایت</a>
+              <a href="services.html#redesign" data-fa="بازطراحی" data-en="Redesign">بازطراحی</a>
+              <a href="services.html#shop" data-fa="فروشگاه" data-en="E-commerce">فروشگاه</a>
+              <a href="services.html#seo" data-fa="سئو" data-en="SEO">سئو</a>
+              <a href="services.html#support" data-fa="پشتیبانی" data-en="Support">پشتیبانی</a>
+            </div>
+            <div class="footer-col">
+              <h4 data-fa="دموها" data-en="Demos">دموها</h4>
+              <a href="demo-salon.html" data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</a>
+              <a href="demo-academy.html" data-fa="آموزشگاه" data-en="Academy">آموزشگاه</a>
+              <a href="demo-clinic.html" data-fa="مطب" data-en="Clinic">مطب</a>
+              <a href="demo-shop.html" data-fa="فروشگاه" data-en="Shop">فروشگاه</a>
+              <a href="portfolio.html" data-fa="همه دموها" data-en="All demos">همه دموها</a>
+            </div>
+            <div class="footer-col">
+              <h4 data-fa="راهنما" data-en="Resources">راهنما</h4>
+              <a href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
+              <a href="process.html" data-fa="فرایند کار" data-en="How we work">فرایند کار</a>
+              <a href="faq.html" data-fa="سوالات متداول" data-en="FAQ">سوالات متداول</a>
+              <a href="about.html" data-fa="درباره" data-en="About">درباره</a>
+              <a href="audit.html" data-fa="بررسی رایگان" data-en="Free audit">بررسی رایگان</a>
+              <a href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span data-fa="تحویل شفاف، توسعه‌پذیر و قابل پیگیری" data-en="Transparent, scalable and trackable delivery">تحویل شفاف، توسعه‌پذیر و قابل پیگیری</span>
+            <span data-fa="طراحی شده در استودیو" data-en="Designed in studio">طراحی شده در استودیو</span>
+          </div>
         </footer>
+
       </main>
     </div>
+
+    <script>
+    // SCROLL-CONTROLLED VIDEO HERO
+    (function () {
+      var wrap        = document.getElementById('video-hero-wrap');
+      var video       = document.getElementById('hero-video');
+      var progressBar = document.getElementById('hero-progress-bar');
+      var dots        = document.querySelectorAll('.hero-dot');
+      var cues        = document.querySelectorAll('.hero-cue');
+      var topbar      = document.getElementById('topbar');
+      var CUE_COUNT   = cues.length; // 4
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+      var currentCue = -1;
+
+      function updateTopbar() {
+        var heroBottom = wrap.offsetTop + wrap.offsetHeight;
+        if (window.scrollY < heroBottom - 80) {
+          topbar.classList.add('over-hero');
+        } else {
+          topbar.classList.remove('over-hero');
+        }
+      }
+
+      function activateCue(idx) {
+        if (idx === currentCue) return;
+        currentCue = idx;
+        cues.forEach(function(c, i) { c.classList.toggle('is-active', i === idx); });
+        dots.forEach(function(d, i) { d.classList.toggle('is-active', i === idx); });
+      }
+
+      function getProgress() {
+        var wrapTop = wrap.offsetTop;
+        var wrapH   = wrap.offsetHeight;
+        return Math.max(0, Math.min(1, (window.scrollY - wrapTop) / wrapH));
+      }
+
+      function onScroll() {
+        updateTopbar();
+        var progress  = getProgress();
+        progressBar.style.width = (progress * 100) + '%';
+        var wrapH = wrap.offsetHeight;
+        var scrolled = window.scrollY - wrap.offsetTop;
+        var zoneH = wrapH / CUE_COUNT;
+        var zoneIdx = Math.max(0, Math.min(CUE_COUNT - 1, Math.floor(scrolled / zoneH)));
+        activateCue(zoneIdx);
+
+        if (!prefersReduced && !isMobile && video.duration && video.readyState >= 2) {
+          var targetTime = progress * video.duration;
+          video.currentTime = Math.min(targetTime, video.duration - 0.05);
+        }
+      }
+
+      function init() {
+        video.pause();
+        video.currentTime = 0;
+        activateCue(0);
+        updateTopbar();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
+
+      if (prefersReduced) {
+        activateCue(CUE_COUNT - 1);
+        updateTopbar();
+        window.addEventListener('scroll', updateTopbar, { passive: true });
+        return;
+      }
+
+      if (isMobile) {
+        video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
+        video.play().catch(function(){});
+        activateCue(0);
+        updateTopbar();
+        window.addEventListener('scroll', function() {
+          updateTopbar();
+          var progress = getProgress();
+          progressBar.style.width = (progress * 100) + '%';
+          var scrolled = window.scrollY - wrap.offsetTop;
+          var zoneH = wrap.offsetHeight / CUE_COUNT;
+          activateCue(Math.max(0, Math.min(CUE_COUNT - 1, Math.floor(scrolled / zoneH))));
+        }, { passive: true });
+        return;
+      }
+
+      if (video.readyState >= 1) {
+        init();
+      } else {
+        video.addEventListener('loadedmetadata', init, { once: true });
+        setTimeout(function() { if (video.readyState < 1) init(); }, 2500);
+      }
+    })();
+
+    // SCROLL REVEAL
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!els.length || !window.IntersectionObserver) {
+        els.forEach(function(el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    })();
+
+    // LANGUAGE TOGGLE
+    (function () {
+      var btn  = document.querySelector('.lang-switch-top');
+      var lang = localStorage.getItem('studio-lang') || 'fa';
+
+      function applyLang(l) {
+        lang = l;
+        localStorage.setItem('studio-lang', l);
+        document.documentElement.lang = l === 'en' ? 'en' : 'fa';
+        document.documentElement.dir  = l === 'en' ? 'ltr' : 'rtl';
+        if (btn) btn.textContent = l === 'en' ? 'FA' : 'EN';
+        document.querySelectorAll('[data-fa][data-en]').forEach(function(el) {
+          el.textContent = l === 'en' ? el.dataset.en : el.dataset.fa;
+        });
+      }
+
+      if (btn) btn.addEventListener('click', function() { applyLang(lang === 'fa' ? 'en' : 'fa'); });
+      applyLang(lang);
+    })();
+    </script>
     <script src="app.js"></script>
   </body>
 </html>
