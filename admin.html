@@ -1,265 +1,407 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>پنل مدیریت | Vitra Studio</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body class="portal-body admin-portal" data-page="admin">
-    <aside class="real-sidebar">
-      <a class="panel-brand" href="index.html">
-        <span><img src="assets/vitra-logo.svg" alt="" /></span>
-        <b>Vitra Admin</b>
-      </a>
-      <div class="user-badge">
-        <strong data-fa="مدیر Vitra Studio" data-en="Vitra Studio Admin">مدیر Vitra Studio</strong>
-        <span>admin@vitrastudio.ir</span>
-        <small>ID: VITRA-001</small>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title data-fa="پنل مدیریت" data-en="Admin Panel">پنل مدیریت — استودیو</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Studio"/>
+  <meta property="og:image" content="assets/vitra-hero.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+</head>
+<body class="portal-body" data-page="admin">
+
+<aside class="sidebar" id="sidebar">
+  <a class="sb-brand" href="index.html">
+    <img src="assets/vitra-logo.svg" alt=""/>
+    <span data-fa="پنل مدیریت" data-en="Admin Panel">پنل مدیریت</span>
+  </a>
+  <div class="sb-user">
+    <strong data-fa="مدیر استودیو" data-en="Studio Admin">مدیر استودیو</strong>
+    <span>admin@studio.ir</span>
+  </div>
+  <nav class="sb-nav">
+    <a href="#overview" class="active"><span class="sb-icon">⊟</span><span data-fa="داشبورد" data-en="Dashboard">داشبورد</span></a>
+    <a href="#requests"><span class="sb-icon">📥</span><span data-fa="درخواست‌ها" data-en="Requests">درخواست‌ها</span></a>
+    <a href="#testimonials"><span class="sb-icon">★</span><span data-fa="نظرات مشتریان" data-en="Testimonials">نظرات مشتریان</span></a>
+    <a href="#content"><span class="sb-icon">✎</span><span data-fa="محتوا و سئو" data-en="Content & SEO">محتوا و سئو</span></a>
+    <a href="#services"><span class="sb-icon">◈</span><span data-fa="خدمات و قیمت" data-en="Services & Pricing">خدمات و قیمت</span></a>
+    <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
+    <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span></a>
+    <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">شبکه‌های اجتماعی</span></a>
+    <a href="#reports"><span class="sb-icon">📊</span><span data-fa="گزارش‌ها" data-en="Reports">گزارش‌ها</span></a>
+  </nav>
+  <div class="sb-foot">
+    <button class="sb-lang lang-btn" type="button">EN</button>
+    <a class="sb-exit" href="login.html" data-fa="خروج از پنل" data-en="Sign out">خروج از پنل</a>
+  </div>
+</aside>
+
+<main class="portal-main">
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="portal-header">
+      <h1 data-fa="داشبورد مدیریت" data-en="Admin Dashboard">داشبورد مدیریت</h1>
+      <p data-fa="خلاصه وضعیت سایت، درخواست‌ها و فعالیت‌ها" data-en="Overview of site status, requests and activity">خلاصه وضعیت سایت، درخواست‌ها و فعالیت‌ها</p>
+    </div>
+    <div class="portal-stats">
+      <div class="ps-card">
+        <div class="ps-label" data-fa="کل درخواست‌ها" data-en="Total requests">کل درخواست‌ها</div>
+        <strong id="stat-orders">0</strong>
+        <small data-fa="از فرم سفارش" data-en="From order form">از فرم سفارش</small>
       </div>
-      <nav>
-        <a href="#overview" data-fa="داشبورد" data-en="Dashboard">داشبورد</a>
-        <a href="#builder" data-fa="صفحه‌ساز" data-en="Page Builder">صفحه‌ساز</a>
-        <a href="#content" data-fa="محتوا" data-en="Content">محتوا</a>
-        <a href="#services" data-fa="خدمات و قیمت" data-en="Services & Pricing">خدمات و قیمت</a>
-        <a href="#packages" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
-        <a href="#clients" data-fa="مشتری‌ها" data-en="Clients">مشتری‌ها</a>
-        <a href="#tickets" data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</a>
-        <a href="#billing" data-fa="مالی و قرارداد" data-en="Billing & Contract">مالی و قرارداد</a>
-        <a href="#reports" data-fa="گزارش‌ها" data-en="Reports">گزارش‌ها</a>
-        <a href="#socials" data-fa="شبکه‌ها و فوتر" data-en="Socials & Footer">شبکه‌ها و فوتر</a>
-      </nav>
-      <button class="lang-switch" type="button">EN</button>
-      <a class="back-site" href="login.html" data-fa="خروج از پنل" data-en="Exit Panel">خروج از پنل</a>
-    </aside>
+      <div class="ps-card">
+        <div class="ps-label" data-fa="نظرات منتشرشده" data-en="Published reviews">نظرات منتشرشده</div>
+        <strong id="stat-testi">0</strong>
+        <small data-fa="در صفحه اصلی" data-en="On homepage">در صفحه اصلی</small>
+      </div>
+      <div class="ps-card">
+        <div class="ps-label" data-fa="تیکت‌های باز" data-en="Open tickets">تیکت‌های باز</div>
+        <strong data-ticket-count>0</strong>
+        <small data-fa="نیاز به پاسخ" data-en="Need response">نیاز به پاسخ</small>
+      </div>
+      <div class="ps-card">
+        <div class="ps-label" data-fa="صفحات سایت" data-en="Site pages">صفحات سایت</div>
+        <strong>12</strong>
+        <small data-fa="فعال و منتشرشده" data-en="Active and published">فعال و منتشرشده</small>
+      </div>
+    </div>
 
-    <main class="real-main admin-workspace">
-      <section id="overview" class="real-hero">
+    <!-- Mini chart -->
+    <div class="p-card" style="margin-top:16px">
+      <h2 data-fa="روند درخواست‌ها (هفتگی)" data-en="Request trend (weekly)">روند درخواست‌ها (هفتگی)</h2>
+      <div class="mini-chart" style="margin-top:12px">
+        <span style="--h:40%"></span><span style="--h:65%"></span><span style="--h:50%"></span>
+        <span style="--h:80%"></span><span style="--h:60%"></span><span style="--h:90%"></span>
+        <span style="--h:75%"></span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:6px">
+        <span data-fa="شنبه" data-en="Sat">شنبه</span><span data-fa="یک" data-en="Sun">یک</span>
+        <span data-fa="دو" data-en="Mon">دو</span><span data-fa="سه" data-en="Tue">سه</span>
+        <span data-fa="چهار" data-en="Wed">چهار</span><span data-fa="پنج" data-en="Thu">پنج</span>
+        <span data-fa="جمعه" data-en="Fri">جمعه</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUESTS -->
+  <section id="requests" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="درخواست‌های پروژه" data-en="Project Requests">درخواست‌های پروژه</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="درخواست‌هایی که از صفحه شروع پروژه ثبت شده‌اند." data-en="Requests submitted from the start project page.">درخواست‌هایی که از صفحه شروع پروژه ثبت شده‌اند.</p>
+      <div style="overflow-x:auto">
+        <table class="ptable">
+          <thead>
+            <tr>
+              <th data-fa="کد" data-en="Code">کد</th>
+              <th data-fa="نام" data-en="Name">نام</th>
+              <th data-fa="خدمت" data-en="Service">خدمت</th>
+              <th data-fa="بودجه" data-en="Budget">بودجه</th>
+              <th data-fa="وضعیت" data-en="Status">وضعیت</th>
+            </tr>
+          </thead>
+          <tbody data-orders-list>
+            <tr><td colspan="5" style="color:var(--faint);font-size:13px;padding:16px 10px" data-fa="هنوز درخواستی ثبت نشده." data-en="No requests yet.">هنوز درخواستی ثبت نشده.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:14px">
+        <a class="btn btn-outline btn-sm" href="order.html" data-fa="ثبت درخواست آزمایشی" data-en="Create test request">ثبت درخواست آزمایشی</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="مدیریت نظرات مشتریان" data-en="Testimonial Management">مدیریت نظرات مشتریان</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="نظرات منتشرشده در صفحه اصلی سایت نمایش داده می‌شوند. می‌توانید نظر جدید اضافه، ویرایش، پنهان یا حذف کنید." data-en="Published testimonials appear on the homepage. You can add, edit, hide or delete reviews.">نظرات منتشرشده در صفحه اصلی سایت نمایش داده می‌شوند. می‌توانید نظر جدید اضافه، ویرایش، پنهان یا حذف کنید.</p>
+
+      <!-- List -->
+      <div class="testi-admin-list" id="admin-testi-list"></div>
+
+      <!-- Add / Edit Form -->
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-top:4px">
+        <p class="kicker" id="testi-form-title" data-fa="افزودن نظر جدید" data-en="Add new review">افزودن نظر جدید</p>
+        <form id="testi-form" class="testi-form" style="margin-top:14px">
+          <div>
+            <label data-fa="نام (فارسی)" data-en="Name (Persian)">نام (فارسی)</label>
+            <input name="tname" required data-fa-placeholder="مثال: علی رضایی" data-en-placeholder="e.g. Ali Rezaei" placeholder="مثال: علی رضایی"/>
+          </div>
+          <div>
+            <label data-fa="نام (انگلیسی)" data-en="Name (English)">نام (انگلیسی)</label>
+            <input name="tnameEn" placeholder="e.g. Ali Rezaei"/>
+          </div>
+          <div>
+            <label data-fa="سمت (فارسی)" data-en="Role (Persian)">سمت (فارسی)</label>
+            <input name="trole" data-fa-placeholder="مثال: مدیر کلینیک" data-en-placeholder="e.g. Clinic Director" placeholder="مثال: مدیر کلینیک"/>
+          </div>
+          <div>
+            <label data-fa="سمت (انگلیسی)" data-en="Role (English)">سمت (انگلیسی)</label>
+            <input name="troleEn" placeholder="e.g. Clinic Director"/>
+          </div>
+          <div class="tf-full">
+            <label data-fa="متن نظر (فارسی)" data-en="Review text (Persian)">متن نظر (فارسی)</label>
+            <textarea name="ttext" required data-fa-placeholder="«نظر مشتری به فارسی...»" data-en-placeholder="Customer review in Persian..." placeholder="«نظر مشتری به فارسی...»"></textarea>
+          </div>
+          <div class="tf-full">
+            <label data-fa="متن نظر (انگلیسی)" data-en="Review text (English)">متن نظر (انگلیسی)</label>
+            <textarea name="ttextEn" placeholder="Customer review in English..."></textarea>
+          </div>
+          <div>
+            <label data-fa="امتیاز (۱-۵)" data-en="Rating (1-5)">امتیاز (۱-۵)</label>
+            <select name="tstars">
+              <option value="5">★★★★★</option>
+              <option value="4">★★★★☆</option>
+              <option value="3">★★★☆☆</option>
+            </select>
+          </div>
+          <div>
+            <label data-fa="وضعیت انتشار" data-en="Publish status">وضعیت انتشار</label>
+            <select name="tpublished">
+              <option value="1" data-fa="منتشرشده — نمایش در سایت" data-en="Published — show on site">منتشرشده — نمایش در سایت</option>
+              <option value="0" data-fa="پیش‌نویس — پنهان" data-en="Draft — hidden">پیش‌نویس — پنهان</option>
+            </select>
+          </div>
+          <div class="tf-full" style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" type="submit" data-fa="ذخیره" data-en="Save">ذخیره</button>
+            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">پاک کردن</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT & SEO -->
+  <section id="content" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="ویرایش محتوا و سئو" data-en="Content and SEO Editor">ویرایش محتوا و سئو</h2>
+      <div class="p-form" style="margin-top:16px">
         <div>
-          <p class="eyebrow">Vitra Control Room</p>
-          <h1 data-fa="اتاق کنترل کامل سایت، فروش خدمات، پروژه‌ها و مشتری‌ها" data-en="Complete control room for website, services, projects and clients">اتاق کنترل کامل سایت، فروش خدمات، پروژه‌ها و مشتری‌ها</h1>
-          <p data-fa="اینجا مدیر می‌تواند صفحه بسازد، محتوا و قیمت را تغییر دهد، سرویس جدید تعریف کند، مشتری‌ها و پروژه‌ها را ببیند، تیکت پاسخ دهد، فاکتور و قرارداد را پیگیری کند و لینک‌های فوتر را مدیریت کند." data-en="The admin can create pages, edit content and prices, define new services, track clients and projects, answer tickets, manage invoices and contracts, and control footer links.">اینجا مدیر می‌تواند صفحه بسازد، محتوا و قیمت را تغییر دهد، سرویس جدید تعریف کند، مشتری‌ها و پروژه‌ها را ببیند، تیکت پاسخ دهد، فاکتور و قرارداد را پیگیری کند و لینک‌های فوتر را مدیریت کند.</p>
+          <label data-fa="بخش سایت" data-en="Site section">بخش سایت</label>
+          <select>
+            <option data-fa="هیرو صفحه اصلی" data-en="Homepage hero">هیرو صفحه اصلی</option>
+            <option data-fa="معرفی خدمات" data-en="Services intro">معرفی خدمات</option>
+            <option data-fa="فوتر" data-en="Footer">فوتر</option>
+          </select>
         </div>
-        <div class="quick-actions">
-          <a class="btn btn-primary" href="#builder" data-fa="ساخت صفحه" data-en="Create Page">ساخت صفحه</a>
-          <a class="btn btn-ghost" href="client.html" data-fa="دیدن پنل مشتری" data-en="View Client Panel">دیدن پنل مشتری</a>
+        <div>
+          <label data-fa="زبان" data-en="Language">زبان</label>
+          <select>
+            <option data-fa="فارسی" data-en="Persian">فارسی</option>
+            <option>English</option>
+          </select>
         </div>
-      </section>
-
-      <section class="portal-stats" aria-label="admin stats">
-        <article><span data-fa="صفحات فعال" data-en="Active Pages">صفحات فعال</span><strong>28</strong><small data-fa="سایت، خدمات، دمو و پنل" data-en="Website, services, demos and panels">سایت، خدمات، دمو و پنل</small></article>
-        <article><span data-fa="خدمات قابل فروش" data-en="Sellable Services">خدمات قابل فروش</span><strong>16</strong><small data-fa="طراحی، پنل، سرور، رشد" data-en="Design, portal, server, growth">طراحی، پنل، سرور، رشد</small></article>
-        <article><span data-fa="تیکت باز" data-en="Open Tickets">تیکت باز</span><strong data-ticket-count>7</strong><small data-fa="سه مورد فوری" data-en="Three urgent items">سه مورد فوری</small></article>
-        <article><span data-fa="درآمد در جریان" data-en="Pipeline Revenue">درآمد در جریان</span><strong data-fa="۸۶M" data-en="86M">۸۶M</strong><small data-fa="پروژه و پشتیبانی" data-en="Projects and support">پروژه و پشتیبانی</small></article>
-      </section>
-
-      <section id="requests" class="manager-grid request-inbox">
-        <article class="manager-card wide">
-          <div class="section-head"><div><p class="section-kicker">Request Inbox</p><h2 data-fa="درخواست‌های جدید سایت" data-en="New website requests">درخواست‌های جدید سایت</h2><p data-fa="درخواست‌هایی که از صفحه شروع پروژه ثبت می‌شوند اینجا با کد پیگیری، خدمت، بودجه و امکانات دیده می‌شوند." data-en="Requests from the start project page appear here with tracking code, service, budget and features.">درخواست‌هایی که از صفحه شروع پروژه ثبت می‌شوند اینجا با کد پیگیری، خدمت، بودجه و امکانات دیده می‌شوند.</p></div><a class="text-link" href="order.html" data-fa="ثبت درخواست تستی" data-en="Create test request">ثبت درخواست تستی</a></div>
-          <div class="request-list" data-admin-requests></div>
-        </article>
-      </section>
-
-      <section class="manager-grid ops-overview">
-        <article class="manager-card">
-          <h2 data-fa="سلامت کسب‌وکار" data-en="Business Health">سلامت کسب‌وکار</h2>
-          <div class="mini-chart">
-            <span style="--h:72%"></span><span style="--h:48%"></span><span style="--h:84%"></span><span style="--h:62%"></span><span style="--h:91%"></span><span style="--h:68%"></span>
-          </div>
-          <p data-fa="روند درخواست‌ها، تیکت‌ها و تبدیل مشتری در یک نگاه." data-en="Requests, tickets and client conversion at a glance.">روند درخواست‌ها، تیکت‌ها و تبدیل مشتری در یک نگاه.</p>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="اولویت امروز" data-en="Today Priority">اولویت امروز</h2>
-          <div class="priority-stack">
-            <div><b data-fa="قیمت خدمات" data-en="Service pricing">قیمت خدمات</b><span data-fa="نیاز به تایید" data-en="Needs approval">نیاز به تایید</span></div>
-            <div><b data-fa="تحویل علامه" data-en="Allameh handoff">تحویل علامه</b><span data-fa="آموزش پنل" data-en="Panel training">آموزش پنل</span></div>
-            <div><b data-fa="دموی فروشگاه" data-en="Shop demo">دموی فروشگاه</b><span data-fa="تست سبد" data-en="Cart test">تست سبد</span></div>
-          </div>
-        </article>
-        <article class="manager-card wide">
-          <h2 data-fa="جدول پروژه‌ها" data-en="Project Table">جدول پروژه‌ها</h2>
-          <div class="project-table">
-            <div><b data-fa="پروژه" data-en="Project">پروژه</b><b data-fa="وضعیت" data-en="Status">وضعیت</b><b data-fa="مرحله بعد" data-en="Next Step">مرحله بعد</b><b data-fa="ارزش" data-en="Value">ارزش</b></div>
-            <div><span data-fa="موسسه علامه سخن" data-en="Allameh Sokhan">موسسه علامه سخن</span><span data-fa="در حال تحویل" data-en="Handoff">در حال تحویل</span><span data-fa="آموزش پنل" data-en="Panel training">آموزش پنل</span><span>28M</span></div>
-            <div><span>Luna Beauty</span><span data-fa="دمو آماده" data-en="Demo ready">دمو آماده</span><span data-fa="ارائه به مشتری" data-en="Client presentation">ارائه به مشتری</span><span>18M</span></div>
-            <div><span>Volt Shop</span><span data-fa="در توسعه" data-en="In development">در توسعه</span><span data-fa="تست پرداخت" data-en="Payment test">تست پرداخت</span><span>34M</span></div>
-          </div>
-        </article>
-      </section>
-
-      <section id="builder" class="manager-grid">
-        <article class="manager-card wide cms-builder">
-          <h2 data-fa="صفحه‌ساز و توسعه سایت" data-en="Page Builder and Site Expansion">صفحه‌ساز و توسعه سایت</h2>
-          <p data-fa="برای ساخت صفحه خدمات، لندینگ کمپین، مقاله، نمونه‌کار یا صفحه اختصاصی مشتری." data-en="Create service pages, campaign landing pages, articles, portfolio pages or custom client pages.">برای ساخت صفحه خدمات، لندینگ کمپین، مقاله، نمونه‌کار یا صفحه اختصاصی مشتری.</p>
-          <div class="form-grid">
-            <label><span data-fa="عنوان صفحه" data-en="Page Title">عنوان صفحه</span><input value="طراحی لوگو و هویت بصری" data-fa-value="طراحی لوگو و هویت بصری" data-en-value="Logo and Visual Identity Design" /></label>
-            <label><span data-fa="آدرس صفحه" data-en="Page URL">آدرس صفحه</span><input value="/services/logo-design" /></label>
-            <label><span data-fa="نوع صفحه" data-en="Page Type">نوع صفحه</span><select><option data-fa="خدمت" data-en="Service">خدمت</option><option data-fa="نمونه‌کار" data-en="Portfolio">نمونه‌کار</option><option data-fa="لندینگ" data-en="Landing">لندینگ</option><option data-fa="مقاله" data-en="Article">مقاله</option></select></label>
-            <label><span data-fa="وضعیت" data-en="Status">وضعیت</span><select><option data-fa="منتشر شده" data-en="Published">منتشر شده</option><option data-fa="پیش‌نویس" data-en="Draft">پیش‌نویس</option><option data-fa="در انتظار بررسی" data-en="In Review">در انتظار بررسی</option></select></label>
-            <label class="full"><span data-fa="توضیح کوتاه" data-en="Short Description">توضیح کوتاه</span><textarea data-fa-value="طراحی لوگو، رنگ، تایپوگرافی و سیستم هویت بصری برای برندهای دیجیتال." data-en-value="Logo, color, typography and visual identity systems for digital brands.">طراحی لوگو، رنگ، تایپوگرافی و سیستم هویت بصری برای برندهای دیجیتال.</textarea></label>
-          </div>
-          <button class="btn btn-primary" type="button" data-add-page data-fa="ایجاد صفحه جدید" data-en="Create New Page">ایجاد صفحه جدید</button>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="صفحات قابل ویرایش" data-en="Editable Pages">صفحات قابل ویرایش</h2>
-          <div class="mini-list" data-page-list>
-            <div><b data-fa="خانه" data-en="Home">خانه</b><span data-fa="پوستر، خدمات، قیمت، CTA" data-en="Hero, services, pricing, CTA">پوستر، خدمات، قیمت، CTA</span></div>
-            <div><b data-fa="خدمات" data-en="Services">خدمات</b><span data-fa="۱۶ خدمت قابل تغییر" data-en="16 editable services">۱۶ خدمت قابل تغییر</span></div>
-            <div><b data-fa="نمونه‌کارها" data-en="Portfolio">نمونه‌کارها</b><span data-fa="دموها و عکس صفحه اول" data-en="Demos and homepage shots">دموها و عکس صفحه اول</span></div>
-            <div><b data-fa="ورود و پنل" data-en="Login and Panel">ورود و پنل</b><span data-fa="مدیر، مشتری، تیکت" data-en="Admin, client, tickets">مدیر، مشتری، تیکت</span></div>
-          </div>
-        </article>
-      </section>
-
-      <section id="content" class="manager-grid">
-        <article class="manager-card wide">
-          <h2 data-fa="ویرایش محتوا و سئو" data-en="Content and SEO Editor">ویرایش محتوا و سئو</h2>
-          <div class="form-grid">
-            <label><span data-fa="بخش" data-en="Section">بخش</span><select><option data-fa="پوستر صفحه اول" data-en="Homepage Hero">پوستر صفحه اول</option><option data-fa="معرفی خدمات" data-en="Services Intro">معرفی خدمات</option><option data-fa="نمونه‌کارها" data-en="Portfolio">نمونه‌کارها</option><option data-fa="فوتر" data-en="Footer">فوتر</option></select></label>
-            <label><span data-fa="زبان" data-en="Language">زبان</span><select><option data-fa="فارسی" data-en="Persian">فارسی</option><option>English</option></select></label>
-            <label><span data-fa="عنوان سئو" data-en="SEO Title">عنوان سئو</span><input value="طراحی سایت و پنل کاربری | Vitra Studio" data-fa-value="طراحی سایت و پنل کاربری | Vitra Studio" data-en-value="Website and Portal Design | Vitra Studio" /></label>
-            <label><span data-fa="کلمه کلیدی" data-en="Keyword">کلمه کلیدی</span><input value="طراحی سایت، پنل کاربری، بازطراحی" data-fa-value="طراحی سایت، پنل کاربری، بازطراحی" data-en-value="website design, client portal, redesign" /></label>
-            <label class="full"><span data-fa="متن صفحه" data-en="Page Copy">متن صفحه</span><textarea data-fa-value="سایت، دمو و پنل واقعی برای فروش خدمات دیجیتال، مدیریت پروژه و ارتباط حرفه‌ای با مشتری." data-en-value="Real websites, demos and panels for selling digital services, managing projects and communicating professionally with clients.">سایت، دمو و پنل واقعی برای فروش خدمات دیجیتال، مدیریت پروژه و ارتباط حرفه‌ای با مشتری.</textarea></label>
-          </div>
-          <button class="btn btn-ghost" type="button" data-fa="ذخیره متن" data-en="Save Copy">ذخیره متن</button>
-        </article>
-      </section>
-
-      <section id="services" class="manager-grid">
-        <article class="manager-card wide">
-          <h2 data-fa="مدیریت خدمات و قیمت‌ها" data-en="Services and Pricing Management">مدیریت خدمات و قیمت‌ها</h2>
-          <div class="price-editor">
-            <label><span data-fa="نام خدمت" data-en="Service Name">نام خدمت</span><input value="طراحی و بازطراحی سایت" data-fa-value="طراحی و بازطراحی سایت" data-en-value="Website Design and Redesign" /></label>
-            <label><span data-fa="قیمت پایه" data-en="Base Price">قیمت پایه</span><input value="۹,۸۰۰,۰۰۰ تومان" data-fa-value="۹,۸۰۰,۰۰۰ تومان" data-en-value="9,800,000 toman" /></label>
-            <label><span data-fa="زمان اجرا" data-en="Timeline">زمان اجرا</span><input value="۱۴ تا ۲۸ روز" data-fa-value="۱۴ تا ۲۸ روز" data-en-value="14 to 28 days" /></label>
-            <label><span data-fa="وضعیت" data-en="Status">وضعیت</span><select><option data-fa="فعال" data-en="Active">فعال</option><option data-fa="غیرفعال" data-en="Inactive">غیرفعال</option><option data-fa="ویژه" data-en="Featured">ویژه</option></select></label>
-          </div>
-          <button class="btn btn-primary" type="button" data-fa="ذخیره خدمت" data-en="Save Service">ذخیره خدمت</button>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="سرویس‌های ماهانه" data-en="Monthly Services">سرویس‌های ماهانه</h2>
-          <div class="mini-list">
-            <div><b data-fa="نگهداری و بکاپ" data-en="Maintenance and Backup">نگهداری و بکاپ</b><span data-fa="ماهانه" data-en="Monthly">ماهانه</span></div>
-            <div><b data-fa="امنیت و مانیتورینگ" data-en="Security and Monitoring">امنیت و مانیتورینگ</b><span data-fa="ماهانه" data-en="Monthly">ماهانه</span></div>
-            <div><b data-fa="سئو و محتوا" data-en="SEO and Content">سئو و محتوا</b><span data-fa="رشد" data-en="Growth">رشد</span></div>
-            <div><b data-fa="تغییرات کوچک" data-en="Small Updates">تغییرات کوچک</b><span data-fa="پشتیبانی" data-en="Support">پشتیبانی</span></div>
-          </div>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="محاسبه سریع قیمت" data-en="Quick Price Calculator">محاسبه سریع قیمت</h2>
-          <div class="form-grid single">
-            <label><span data-fa="تعداد صفحات" data-en="Pages">تعداد صفحات</span><input type="number" value="6" data-pages-count /></label>
-            <label><span data-fa="سطح پنل" data-en="Panel Level">سطح پنل</span><select data-panel-level><option value="0" data-fa="بدون پنل" data-en="No panel">بدون پنل</option><option value="12000000" data-fa="پنل مشتری" data-en="Client panel">پنل مشتری</option><option value="22000000" data-fa="پنل کامل مدیر" data-en="Full admin panel">پنل کامل مدیر</option></select></label>
-          </div>
-          <button class="btn btn-ghost" type="button" data-calc-price data-fa="محاسبه" data-en="Calculate">محاسبه</button>
-          <p data-price-result data-fa="آماده محاسبه" data-en="Ready to calculate">آماده محاسبه</p>
-        </article>
-      </section>
-
-      <section id="packages" class="manager-grid">
-        <article class="manager-card wide">
-          <h2 data-fa="سازنده پکیج پیشنهادی" data-en="Proposal Package Builder">سازنده پکیج پیشنهادی</h2>
-          <div class="timeline-steps">
-            <div><b>Starter</b><span data-fa="سایت سبک" data-en="Light Website">سایت سبک</span><p data-fa="برای شروع سریع، معرفی خدمات و گرفتن لید." data-en="For fast launch, service introduction and lead capture.">برای شروع سریع، معرفی خدمات و گرفتن لید.</p></div>
-            <div><b>Business</b><span data-fa="سایت + پنل" data-en="Website + Portal">سایت + پنل</span><p data-fa="برای کسب‌وکارهایی که تیکت، فایل و پروژه می‌خواهند." data-en="For businesses that need tickets, files and projects.">برای کسب‌وکارهایی که تیکت، فایل و پروژه می‌خواهند.</p></div>
-            <div><b>Command</b><span data-fa="سیستم کامل" data-en="Full System">سیستم کامل</span><p data-fa="مدیریت محتوا، قیمت، مشتری، گزارش و رشد." data-en="Content, pricing, clients, reports and growth.">مدیریت محتوا، قیمت، مشتری، گزارش و رشد.</p></div>
-            <div><b>Growth</b><span data-fa="پشتیبانی ماهانه" data-en="Monthly Growth">پشتیبانی ماهانه</span><p data-fa="سئو، سرعت، امنیت، محتوا و گزارش ماهانه." data-en="SEO, speed, security, content and monthly reporting.">سئو، سرعت، امنیت، محتوا و گزارش ماهانه.</p></div>
-          </div>
-        </article>
-      </section>
-
-      <section id="clients" class="manager-grid">
-        <article class="manager-card">
-          <h2 data-fa="مشتری‌ها و پروژه‌ها" data-en="Clients and Projects">مشتری‌ها و پروژه‌ها</h2>
-          <div class="mini-list">
-            <div><b data-fa="موسسه علامه سخن" data-en="Allameh Sokhan Institute">موسسه علامه سخن</b><span data-fa="آموزشی فعال" data-en="Active education project">آموزشی فعال</span></div>
-            <div><b>Luna Beauty</b><span data-fa="دموی رزرو سالن" data-en="Salon booking demo">دموی رزرو سالن</span></div>
-            <div><b data-fa="کلینیک سپید" data-en="Sepid Clinic">کلینیک سپید</b><span data-fa="نوبت‌دهی پزشکی" data-en="Medical appointments">نوبت‌دهی پزشکی</span></div>
-            <div><b>Volt Shop</b><span data-fa="فروشگاه آزمایشی" data-en="Store demo">فروشگاه آزمایشی</span></div>
-          </div>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="قیف فروش" data-en="Sales Pipeline">قیف فروش</h2>
-          <div class="activity-feed">
-            <div><b data-fa="درخواست جدید سایت فروشگاهی" data-en="New shop website request">درخواست جدید سایت فروشگاهی</b><span data-fa="بررسی" data-en="Review">بررسی</span></div>
-            <div><b data-fa="پیشنهاد بازطراحی سایت پزشکی" data-en="Medical redesign proposal">پیشنهاد بازطراحی سایت پزشکی</b><span data-fa="ارسال شد" data-en="Sent">ارسال شد</span></div>
-            <div><b data-fa="تمدید پشتیبانی علامه" data-en="Allameh support renewal">تمدید پشتیبانی علامه</b><span data-fa="در انتظار پرداخت" data-en="Payment pending">در انتظار پرداخت</span></div>
-          </div>
-        </article>
-      </section>
-
-      <section id="tickets" class="manager-grid">
-        <article class="manager-card">
-          <h2 data-fa="تیکت داخلی" data-en="Internal Ticket">تیکت داخلی</h2>
-          <label><span data-fa="عنوان" data-en="Title">عنوان</span><input data-ticket-title value="بررسی قیمت صفحه خدمات" data-fa-value="بررسی قیمت صفحه خدمات" data-en-value="Review service page pricing" /></label>
-          <label><span data-fa="توضیح" data-en="Description">توضیح</span><textarea data-fa-value="قیمت پکیج Business با امکانات پنل مشتری هماهنگ شود." data-en-value="Align the Business package price with client portal features.">قیمت پکیج Business با امکانات پنل مشتری هماهنگ شود.</textarea></label>
-          <button class="btn btn-primary" type="button" data-submit-ticket data-fa="ثبت تیکت داخلی" data-en="Create Internal Ticket">ثبت تیکت داخلی</button>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="تیکت‌های اخیر" data-en="Recent Tickets">تیکت‌های اخیر</h2>
-          <div class="mini-list" data-ticket-list>
-            <div><b data-fa="ویرایش قیمت دوره علامه" data-en="Edit Allameh course price">ویرایش قیمت دوره علامه</b><span data-fa="فوری" data-en="Urgent">فوری</span><small data-fa="امروز" data-en="Today">امروز</small></div>
-            <div><b data-fa="افزودن صفحه خدمات لوگو" data-en="Add logo service page">افزودن صفحه خدمات لوگو</b><span data-fa="باز" data-en="Open">باز</span><small data-fa="دیروز" data-en="Yesterday">دیروز</small></div>
-            <div><b data-fa="اتصال فرم تماس" data-en="Connect contact form">اتصال فرم تماس</b><span data-fa="در صف" data-en="Queued">در صف</span><small data-fa="این هفته" data-en="This week">این هفته</small></div>
-          </div>
-        </article>
-      </section>
-
-      <section id="billing" class="manager-grid">
-        <article class="manager-card">
-          <h2 data-fa="فاکتور و پرداخت" data-en="Invoices and Payments">فاکتور و پرداخت</h2>
-          <div class="invoice-list">
-            <div><b data-fa="پروژه علامه سخن" data-en="Allameh Sokhan Project">پروژه علامه سخن</b><span data-fa="پرداخت مرحله اول" data-en="First milestone paid">پرداخت مرحله اول</span><strong data-fa="۸M" data-en="8M">۸M</strong></div>
-            <div><b data-fa="پشتیبانی ماهانه" data-en="Monthly Support">پشتیبانی ماهانه</b><span data-fa="در انتظار" data-en="Pending">در انتظار</span><strong data-fa="۳M" data-en="3M">۳M</strong></div>
-          </div>
-        </article>
-        <article class="manager-card">
-          <h2 data-fa="قرارداد و تحویل" data-en="Contract and Handoff">قرارداد و تحویل</h2>
-          <div class="checklist-panel">
-            <label><input type="checkbox" checked /> <span data-fa="دامنه و هاست مشخص شده" data-en="Domain and hosting defined">دامنه و هاست مشخص شده</span></label>
-            <label><input type="checkbox" checked /> <span data-fa="محدوده پشتیبانی ثبت شده" data-en="Support scope recorded">محدوده پشتیبانی ثبت شده</span></label>
-            <label><input type="checkbox" /> <span data-fa="آموزش مدیریت محتوا تحویل شود" data-en="CMS training to be delivered">آموزش مدیریت محتوا تحویل شود</span></label>
-          </div>
-        </article>
-      </section>
-
-      <section id="reports" class="manager-grid">
-        <article class="manager-card wide">
-          <h2 data-fa="گزارش رفتار کاربران و کیفیت سایت" data-en="User Behavior and Website Quality Reports">گزارش رفتار کاربران و کیفیت سایت</h2>
-          <div class="deliverable-grid">
-            <a href="#"><b data-fa="صفحه نمونه‌کار" data-en="Portfolio Page">صفحه نمونه‌کار</b><span data-fa="بیشترین کلیک" data-en="Top clicks">بیشترین کلیک</span></a>
-            <a href="#"><b data-fa="ورود پنل" data-en="Panel Login">ورود پنل</b><span data-fa="۱۲ بازدید امروز" data-en="12 visits today">۱۲ بازدید امروز</span></a>
-            <a href="#"><b data-fa="دموی فروشگاه" data-en="Shop Demo">دموی فروشگاه</b><span data-fa="۴ کلیک محصول" data-en="4 product clicks">۴ کلیک محصول</span></a>
-            <a href="#"><b data-fa="سرعت سایت" data-en="Website Speed">سرعت سایت</b><span data-fa="نیاز به بررسی عکس‌ها" data-en="Images need review">نیاز به بررسی عکس‌ها</span></a>
-          </div>
-        </article>
-      </section>
-
-      <section id="demos" class="manager-card wide">
-        <h2 data-fa="مدیریت دموها" data-en="Demo Management">مدیریت دموها</h2>
-        <div class="demo-manager">
-          <a href="demo-academy.html" data-fa="آکادمی نوا" data-en="Nova Academy">آکادمی نوا</a>
-          <a href="demo-salon.html">Luna Beauty</a>
-          <a href="demo-clinic.html" data-fa="کلینیک سپید" data-en="Sepid Clinic">کلینیک سپید</a>
-          <a href="demo-shop.html">Volt Shop</a>
+        <div>
+          <label data-fa="عنوان سئو" data-en="SEO title">عنوان سئو</label>
+          <input value="استودیو — طراحی سایت، پنل مدیریت و رشد"/>
         </div>
-      </section>
-
-      <section id="socials" class="manager-card wide">
-        <h2 data-fa="شبکه‌های اجتماعی و لینک‌های فوتر" data-en="Social Networks and Footer Links">شبکه‌های اجتماعی و لینک‌های فوتر</h2>
-        <p data-fa="هر لینکی اینجا وارد شود، در فوتر سایت با باز شدن در تب جدید نمایش داده می‌شود." data-en="Every link entered here appears in the website footer and opens in a new tab.">هر لینکی اینجا وارد شود، در فوتر سایت با باز شدن در تب جدید نمایش داده می‌شود.</p>
-        <div class="form-grid">
-          <label>Instagram<input data-social-input="instagram" value="https://instagram.com/vitrastudio" /></label>
-          <label>Telegram<input data-social-input="telegram" value="https://t.me/vitrastudio" /></label>
-          <label>LinkedIn<input data-social-input="linkedin" value="https://linkedin.com/company/vitrastudio" /></label>
-          <label>WhatsApp<input data-social-input="whatsapp" value="https://wa.me/989000000000" /></label>
-          <label class="full"><span data-fa="ایمیل کاری" data-en="Work Email">ایمیل کاری</span><input data-social-input="email" value="mailto:hello@vitrastudio.ir" /></label>
+        <div>
+          <label data-fa="کلمات کلیدی" data-en="Keywords">کلمات کلیدی</label>
+          <input value="طراحی سایت، پنل مدیریت، سئو"/>
         </div>
-        <button class="btn btn-primary" type="button" data-save-socials data-fa="ذخیره و نمایش در فوتر" data-en="Save and Show in Footer">ذخیره و نمایش در فوتر</button>
-      </section>
-    </main>
+        <div class="pf-full">
+          <label data-fa="توضیحات متا" data-en="Meta description">توضیحات متا</label>
+          <textarea style="min-height:72px">طراحی سایت حرفه‌ای با پنل مدیریت — تحویل در ۱۴ روز</textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" type="button" style="margin-top:12px" data-fa="ذخیره تغییرات" data-en="Save changes">ذخیره تغییرات</button>
+    </div>
+  </section>
 
-    <script src="app.js"></script>
-  </body>
+  <!-- SERVICES & PRICING -->
+  <section id="services" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="ویرایش خدمات و قیمت" data-en="Edit Services & Pricing">ویرایش خدمات و قیمت</h2>
+        <div class="p-form" style="margin-top:14px">
+          <div>
+            <label data-fa="نام خدمت (فارسی)" data-en="Service name (FA)">نام خدمت (فارسی)</label>
+            <input value="طراحی سایت جدید"/>
+          </div>
+          <div>
+            <label data-fa="نام (انگلیسی)" data-en="Service name (EN)">نام (انگلیسی)</label>
+            <input value="New Website Design"/>
+          </div>
+          <div>
+            <label data-fa="قیمت پایه" data-en="Base price">قیمت پایه</label>
+            <input value="از ۱۸ میلیون تومان"/>
+          </div>
+          <div>
+            <label data-fa="زمان اجرا" data-en="Timeline">زمان اجرا</label>
+            <input value="۱۰–۱۲ روز کاری"/>
+          </div>
+          <div>
+            <label data-fa="وضعیت" data-en="Status">وضعیت</label>
+            <select>
+              <option data-fa="فعال" data-en="Active">فعال</option>
+              <option data-fa="غیرفعال" data-en="Inactive">غیرفعال</option>
+            </select>
+          </div>
+          <div style="display:flex;align-items:flex-end">
+            <button class="btn btn-primary btn-sm" type="button" style="width:100%;justify-content:center" data-fa="ذخیره خدمت" data-en="Save service">ذخیره خدمت</button>
+          </div>
+        </div>
+      </div>
+      <div class="p-card">
+        <h2 data-fa="محاسبه سریع قیمت" data-en="Quick Price Calculator">محاسبه سریع قیمت</h2>
+        <div class="p-form" style="margin-top:14px;grid-template-columns:1fr">
+          <div>
+            <label data-fa="تعداد صفحات" data-en="Number of pages">تعداد صفحات</label>
+            <input type="number" value="6" data-pages-count min="1" max="30"/>
+          </div>
+          <div>
+            <label data-fa="سطح پنل" data-en="Portal level">سطح پنل</label>
+            <select data-panel-level>
+              <option value="0" data-fa="بدون پنل" data-en="No portal">بدون پنل</option>
+              <option value="12000000" data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</option>
+              <option value="22000000" data-fa="پنل مدیریت کامل" data-en="Full admin">پنل مدیریت کامل</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-outline btn-sm" type="button" data-calc-price style="margin-top:12px" data-fa="محاسبه" data-en="Calculate">محاسبه</button>
+        <p data-price-result style="margin-top:10px;font-size:14px;font-weight:700;color:var(--accent)" data-fa="آماده محاسبه" data-en="Ready to calculate">آماده محاسبه</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section id="clients" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="مشتریان و پروژه‌ها" data-en="Clients and Projects">مشتریان و پروژه‌ها</h2>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="ptable">
+          <thead>
+            <tr>
+              <th data-fa="مشتری" data-en="Client">مشتری</th>
+              <th data-fa="پروژه" data-en="Project">پروژه</th>
+              <th data-fa="وضعیت" data-en="Status">وضعیت</th>
+              <th data-fa="ارزش" data-en="Value">ارزش</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td data-fa="موسسه علامه سخن" data-en="Allameh Sokhan">موسسه علامه سخن</td><td data-fa="سایت آموزشگاه" data-en="Academy site">سایت آموزشگاه</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">تحویل‌شده</span></td><td>28M</td></tr>
+            <tr><td>Luna Beauty</td><td data-fa="مارکت‌پلیس سالن" data-en="Salon marketplace">مارکت‌پلیس سالن</td><td><span class="badge badge-orange" data-fa="در حال توسعه" data-en="In development">در حال توسعه</span></td><td>18M</td></tr>
+            <tr><td data-fa="کلینیک سپید" data-en="Sepid Clinic">کلینیک سپید</td><td data-fa="نوبت‌دهی آنلاین" data-en="Online booking">نوبت‌دهی آنلاین</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">تحویل‌شده</span></td><td>22M</td></tr>
+            <tr><td>Volt Shop</td><td data-fa="فروشگاه آنلاین" data-en="Online shop">فروشگاه آنلاین</td><td><span class="badge badge-gray" data-fa="پیش‌نویس" data-en="Draft">پیش‌نویس</span></td><td>34M</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKETS -->
+  <section id="tickets" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="تیکت جدید" data-en="New Ticket">تیکت جدید</h2>
+        <div class="p-form" style="margin-top:14px;grid-template-columns:1fr">
+          <div>
+            <label data-fa="موضوع" data-en="Subject">موضوع</label>
+            <input data-ticket-title data-fa-placeholder="موضوع تیکت..." data-en-placeholder="Ticket subject..." placeholder="موضوع تیکت..."/>
+          </div>
+          <div>
+            <label data-fa="توضیح" data-en="Description">توضیح</label>
+            <textarea data-fa-placeholder="جزئیات..." data-en-placeholder="Details..." placeholder="جزئیات..."></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-submit-ticket style="margin-top:12px" data-fa="ثبت تیکت" data-en="Submit ticket">ثبت تیکت</button>
+      </div>
+      <div class="p-card">
+        <h2 data-fa="تیکت‌های اخیر" data-en="Recent Tickets">تیکت‌های اخیر (<span data-ticket-count>0</span>)</h2>
+        <div class="ticket-list" data-ticket-list style="margin-top:14px">
+          <p style="font-size:13px;color:var(--faint)" data-fa="تیکتی ثبت نشده." data-en="No tickets yet.">تیکتی ثبت نشده.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" type="button" data-new-ticket style="margin-top:12px" data-fa="+ تیکت جدید" data-en="+ New ticket">+ تیکت جدید</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL LINKS -->
+  <section id="socials" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="لینک‌های شبکه‌های اجتماعی" data-en="Social Media Links">لینک‌های شبکه‌های اجتماعی</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="لینک‌های ذخیره‌شده در فوتر سایت نمایش داده می‌شوند." data-en="Saved links appear in the site footer.">لینک‌های ذخیره‌شده در فوتر سایت نمایش داده می‌شوند.</p>
+      <div class="p-form">
+        <div>
+          <label>Instagram</label>
+          <input data-social-input="instagram" placeholder="https://instagram.com/..."/>
+        </div>
+        <div>
+          <label>Telegram</label>
+          <input data-social-input="telegram" placeholder="https://t.me/..."/>
+        </div>
+        <div>
+          <label>WhatsApp</label>
+          <input data-social-input="whatsapp" placeholder="https://wa.me/..."/>
+        </div>
+        <div>
+          <label>LinkedIn</label>
+          <input data-social-input="linkedin" placeholder="https://linkedin.com/..."/>
+        </div>
+        <div class="pf-full">
+          <label data-fa="ایمیل" data-en="Email">ایمیل</label>
+          <input data-social-input="email" placeholder="mailto:hello@studio.ir"/>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" type="button" data-save-socials style="margin-top:14px" data-fa="ذخیره لینک‌ها" data-en="Save links">ذخیره لینک‌ها</button>
+    </div>
+  </section>
+
+  <!-- REPORTS -->
+  <section id="reports" style="margin-top:32px;margin-bottom:48px">
+    <div class="p-card">
+      <h2 data-fa="گزارش‌های سایت" data-en="Site Reports">گزارش‌های سایت</h2>
+      <div class="portal-stats" style="margin-top:16px">
+        <div class="ps-card">
+          <div class="ps-label" data-fa="پربازدیدترین صفحه" data-en="Most visited">پربازدیدترین صفحه</div>
+          <strong style="font-size:16px" data-fa="نمونه‌کارها" data-en="Portfolio">نمونه‌کارها</strong>
+          <small data-fa="۱۴۲ بازدید این هفته" data-en="142 visits this week">۱۴۲ بازدید این هفته</small>
+        </div>
+        <div class="ps-card">
+          <div class="ps-label" data-fa="بیشترین کلیک CTA" data-en="Top CTA click">بیشترین کلیک CTA</div>
+          <strong style="font-size:16px" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</strong>
+          <small data-fa="۳۸ کلیک" data-en="38 clicks">۳۸ کلیک</small>
+        </div>
+        <div class="ps-card">
+          <div class="ps-label" data-fa="زبان غالب" data-en="Primary language">زبان غالب</div>
+          <strong style="font-size:16px">FA</strong>
+          <small data-fa="۷۸٪ کاربران" data-en="78% of users">۷۸٪ کاربران</small>
+        </div>
+        <div class="ps-card">
+          <div class="ps-label" data-fa="موبایل/دسکتاپ" data-en="Mobile/Desktop">موبایل/دسکتاپ</div>
+          <strong style="font-size:16px">62/38</strong>
+          <small data-fa="درصد بازدید" data-en="Visit percentage">درصد بازدید</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+<script>
+// Update dashboard stats
+(function(){
+  var orders = JSON.parse(localStorage.getItem('s-orders')||'[]');
+  var el = document.getElementById('stat-orders');
+  if(el) el.textContent = orders.length;
+
+  function updateTestiStat(){
+    try {
+      var t = JSON.parse(localStorage.getItem('s-testimonials')||'[]');
+      var pub = t.filter(function(x){return x.published;}).length;
+      var el2 = document.getElementById('stat-testi');
+      if(el2) el2.textContent = pub;
+    } catch(e){}
+  }
+  updateTestiStat();
+  // re-run after app.js loads testimonials
+  setTimeout(updateTestiStat, 500);
+})();
+</script>
+</body>
 </html>

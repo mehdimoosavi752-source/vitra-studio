@@ -292,4 +292,166 @@
   /* ── 12. APPLY LANGUAGE ON LOAD ──────────────────── */
   applyLang(lang);
 
+
+
+  /* ── 13. TESTIMONIALS SYSTEM ─────────────────────── */
+  var TESTI_KEY = 's-testimonials';
+
+  function getTestimonials() {
+    var defaults = [
+      { id: 1, name: 'محمد رضایی', role: 'مدیر کلینیک دکتر رضایی', nameEn: 'Mohammad Rezaei', roleEn: 'Director, Dr. Rezaei Clinic', text: '«سایت ما در ۱۲ روز تحویل شد. پنل مدیریت دقیقاً همان چیزی بود که می‌خواستیم — بدون نیاز به طراح.»', textEn: '"Our site was delivered in 12 days. The admin portal was exactly what we needed — no developer required."', stars: 5, published: true, avatar: 'م' },
+      { id: 2, name: 'سارا احمدی', role: 'مدیر آموزشگاه نوا', nameEn: 'Sara Ahmadi', roleEn: 'Director, Nova Academy', text: '«ثبت‌نام آنلاین دانش‌آموزان از صفر به روزانه ۱۵ نفر رسید. پنل ساده و کاربردیه.»', textEn: '"Online student enrollment went from zero to 15 per day. The portal is simple and practical."', stars: 5, published: true, avatar: 'س' },
+      { id: 3, name: 'رضا نوری', role: 'صاحب فروشگاه Volt Shop', nameEn: 'Reza Nouri', roleEn: 'Owner, Volt Shop', text: '«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه.»', textEn: '"Our online store launched in 18 days. The mobile design is flawless."', stars: 5, published: false, avatar: 'ر' }
+    ];
+    try { return JSON.parse(localStorage.getItem(TESTI_KEY)) || defaults; } catch(e) { return defaults; }
+  }
+
+  function saveTestimonials(list) {
+    localStorage.setItem(TESTI_KEY, JSON.stringify(list));
+  }
+
+  /* Render testimonials on public pages */
+  function renderPublicTestimonials() {
+    var containers = document.querySelectorAll('[data-testi-public]');
+    if (!containers.length) return;
+    var list = getTestimonials().filter(function(t){ return t.published; });
+    containers.forEach(function(c) {
+      c.innerHTML = list.map(function(t) {
+        var name = lang === 'en' ? (t.nameEn || t.name) : t.name;
+        var role = lang === 'en' ? (t.roleEn || t.role) : t.role;
+        var text = lang === 'en' ? (t.textEn || t.text) : t.text;
+        return '<div class="t-card reveal in">' +
+          '<div class="t-stars">' + '★'.repeat(t.stars || 5) + '</div>' +
+          '<p>' + text + '</p>' +
+          '<div class="t-author">' +
+            '<div class="t-avatar">' + (t.avatar || name[0]) + '</div>' +
+            '<div><b>' + name + '</b><small>' + role + '</small></div>' +
+          '</div></div>';
+      }).join('');
+    });
+  }
+
+  /* Render testimonials in admin panel */
+  function renderAdminTestimonials() {
+    var list_el = document.getElementById('admin-testi-list');
+    if (!list_el) return;
+    var list = getTestimonials();
+    list_el.innerHTML = list.map(function(t, i) {
+      return '<div class="testi-admin-item" data-testi-id="' + t.id + '">' +
+        '<div class="ta-head">' +
+          '<div><span class="ta-name">' + t.name + '</span> &nbsp;<span class="ta-meta">' + t.role + '</span></div>' +
+          '<div style="display:flex;gap:6px;align-items:center">' +
+            '<span class="' + (t.published ? 'tag-published' : 'tag-draft') + '">' +
+              (t.published ? (lang==='en'?'Published':'منتشرشده') : (lang==='en'?'Draft':'پیش‌نویس')) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="ta-text">' + t.text + '</div>' +
+        '<div class="ta-actions">' +
+          '<button class="btn btn-outline btn-sm" onclick="editTesti(' + i + ')" data-fa="ویرایش" data-en="Edit">' + (lang==='en'?'Edit':'ویرایش') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="toggleTesti(' + i + ')" data-fa="' + (t.published?'پنهان':'انتشار') + '" data-en="' + (t.published?'Unpublish':'Publish') + '">' +
+            (t.published ? (lang==='en'?'Unpublish':'پنهان‌کردن') : (lang==='en'?'Publish':'انتشار')) + '</button>' +
+          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deleteTesti(' + i + ')" data-fa="حذف" data-en="Delete">' + (lang==='en'?'Delete':'حذف') + '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('') || '<p style="color:var(--faint);font-size:13px">هنوز نظری ثبت نشده.</p>';
+  }
+
+  window.editTesti = function(i) {
+    var list = getTestimonials();
+    var t = list[i];
+    if (!t) return;
+    var f = document.getElementById('testi-form');
+    if (!f) return;
+    f.querySelector('[name=tname]').value = t.name || '';
+    f.querySelector('[name=tnameEn]').value = t.nameEn || '';
+    f.querySelector('[name=trole]').value = t.role || '';
+    f.querySelector('[name=troleEn]').value = t.roleEn || '';
+    f.querySelector('[name=ttext]').value = t.text || '';
+    f.querySelector('[name=ttextEn]').value = t.textEn || '';
+    f.querySelector('[name=tstars]').value = t.stars || 5;
+    f.querySelector('[name=tpublished]').value = t.published ? '1' : '0';
+    f.dataset.editId = t.id;
+    f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+
+  window.toggleTesti = function(i) {
+    var list = getTestimonials();
+    if (!list[i]) return;
+    list[i].published = !list[i].published;
+    saveTestimonials(list);
+    renderAdminTestimonials();
+    renderPublicTestimonials();
+  };
+
+  window.deleteTesti = function(i) {
+    var list = getTestimonials();
+    if (confirm(lang === 'en' ? 'Delete this testimonial?' : 'این نظر حذف شود؟')) {
+      list.splice(i, 1);
+      saveTestimonials(list);
+      renderAdminTestimonials();
+    }
+  };
+
+  /* Save new/edit testimonial form */
+  var testiForm = document.getElementById('testi-form');
+  if (testiForm) {
+    testiForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var list = getTestimonials();
+      var editId = testiForm.dataset.editId ? parseInt(testiForm.dataset.editId) : null;
+      var newT = {
+        id: editId || Date.now(),
+        name:      testiForm.querySelector('[name=tname]').value,
+        nameEn:    testiForm.querySelector('[name=tnameEn]').value,
+        role:      testiForm.querySelector('[name=trole]').value,
+        roleEn:    testiForm.querySelector('[name=troleEn]').value,
+        text:      testiForm.querySelector('[name=ttext]').value,
+        textEn:    testiForm.querySelector('[name=ttextEn]').value,
+        stars:     parseInt(testiForm.querySelector('[name=tstars]').value) || 5,
+        published: testiForm.querySelector('[name=tpublished]').value === '1',
+        avatar:    testiForm.querySelector('[name=tname]').value[0] || 'م'
+      };
+      if (editId) {
+        var idx = list.findIndex(function(t){ return t.id === editId; });
+        if (idx >= 0) list[idx] = newT; else list.unshift(newT);
+      } else {
+        list.unshift(newT);
+      }
+      saveTestimonials(list);
+      renderAdminTestimonials();
+      renderPublicTestimonials();
+      testiForm.reset();
+      delete testiForm.dataset.editId;
+      var sub = testiForm.querySelector('[type=submit]');
+      if (sub) { sub.textContent = lang==='en'?'Saved ✓':'ذخیره شد ✓'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'ذخیره'; },2000); }
+    });
+  }
+
+  renderAdminTestimonials();
+  renderPublicTestimonials();
+
+  /* ── 14. BACK TO TOP ─────────────────────────────── */
+  var bt = document.getElementById('back-top');
+  if (bt) {
+    window.addEventListener('scroll', function() {
+      bt.style.display = window.scrollY > 500 ? 'flex' : 'none';
+    }, { passive: true });
+    bt.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
+
+  /* ── 15. PRICE CALCULATOR IN ADMIN ──────────────── */
+  var calcBtn = document.querySelector('[data-calc-price]');
+  if (calcBtn) {
+    calcBtn.addEventListener('click', function() {
+      var pages = parseInt((document.querySelector('[data-pages-count]') || {}).value || 6);
+      var panel = parseInt((document.querySelector('[data-panel-level]') || {}).value || 0);
+      var base  = pages * 2500000 + panel;
+      var res   = document.querySelector('[data-price-result]');
+      if (res) res.textContent = lang === 'en'
+        ? 'Estimated: ' + Math.round(base/1000000) + 'M toman'
+        : 'تخمین: ' + new Intl.NumberFormat('fa-IR').format(Math.round(base/1000000)) + ' میلیون تومان';
+    });
+  }
+
+
 })();
