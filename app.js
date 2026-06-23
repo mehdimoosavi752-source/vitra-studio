@@ -25,6 +25,14 @@
     document.querySelectorAll('[data-fa-placeholder][data-en-placeholder]').forEach(function (el) {
       el.placeholder = l === 'en' ? el.dataset.enPlaceholder : el.dataset.faPlaceholder;
     });
+    /* meta content (description, etc.) */
+    document.querySelectorAll('[data-fa-content][data-en-content]').forEach(function (el) {
+      el.content = l === 'en' ? el.dataset.enContent : el.dataset.faContent;
+    });
+    /* image alt text */
+    document.querySelectorAll('img[data-fa-alt][data-en-alt]').forEach(function (el) {
+      el.alt = l === 'en' ? el.dataset.enAlt : el.dataset.faAlt;
+    });
     /* options inside selects */
     document.querySelectorAll('option[data-fa][data-en]').forEach(function (el) {
       el.textContent = l === 'en' ? el.dataset.en : el.dataset.fa;
@@ -99,7 +107,11 @@
     }
     function setCue(i) {
       if (i === cur) return; cur = i;
-      cues.forEach(function (c, j) { c.classList.toggle('active', j === i); });
+      cues.forEach(function (c, j) {
+        c.classList.toggle('active', j === i);
+        c.setAttribute('aria-hidden', j === i ? 'false' : 'true');
+        c.querySelectorAll('a').forEach(function (a) { a.tabIndex = j === i ? 0 : -1; });
+      });
       dots.forEach(function (d, j) { d.classList.toggle('active', j === i); });
     }
     function tick() {

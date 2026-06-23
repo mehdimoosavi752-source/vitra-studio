@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin.html
 Disallow: /client.html
 Disallow: /login.html
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://vitrastudio.ir/sitemap.xml
