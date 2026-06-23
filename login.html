@@ -1,37 +1,126 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ورود به پنل | Vitra Studio</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body data-page="login">
-    <main class="login-page">
-      <section class="login-card">
-        <a class="brand" href="index.html">
-          <span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" /></span>
-          <span class="brand-text"><strong>Vitra Studio</strong><small data-fa="ورود / ثبت‌نام" data-en="Login / Sign up">ورود / ثبت‌نام</small></span>
-        </a>
-        <div>
-          <p class="eyebrow">Vitra Portal</p>
-          <h1 data-fa="ورود به فضای کاری Vitra Studio" data-en="Login to the Vitra Studio workspace">ورود به فضای کاری Vitra Studio</h1>
-          <p data-fa="نام کاربری را وارد کن؛ سیستم به صورت نمایشی سطح دسترسی را تشخیص می‌دهد و پنل مناسب را باز می‌کند." data-en="Enter a username; this demo detects the access level and opens the right portal.">نام کاربری را وارد کن؛ سیستم به صورت نمایشی سطح دسترسی را تشخیص می‌دهد و پنل مناسب را باز می‌کند.</p>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title data-fa="ورود به پنل" data-en="Sign In to Portal">ورود به پنل</title>
+  <meta name="description" content=""/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="styles.css"/>
+  
+</head>
+<body data-page="login">
+  <header class="topbar" id="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="assets/vitra-logo.svg" alt=""/></span>
+      <span class="brand-name" data-fa="استودیو" data-en="Studio">استودیو</span>
+    </a>
+    <nav class="t-nav">
+      <a href="services.html"  data-fa="خدمات"    data-en="Services" >خدمات</a>
+      <a href="portfolio.html" data-fa="دموها"     data-en="Demos" >دموها</a>
+      <a href="packages.html"  data-fa="پکیج‌ها"   data-en="Packages" >پکیج‌ها</a>
+      <a href="process.html"   data-fa="فرایند"    data-en="Process" >فرایند</a>
+      <a href="faq.html"       data-fa="سوالات"    data-en="FAQ" >سوالات</a>
+      <a href="about.html"     data-fa="درباره"    data-en="About" >درباره</a>
+      <a class="cta" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+    </nav>
+    <button class="lang-btn" type="button">EN</button>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="dh">
+      <span class="dh-brand">استودیو</span>
+      <button class="dh-close" id="drawer-close">×</button>
+    </div>
+    <div class="dl">
+      <a href="services.html"  data-fa="خدمات"    data-en="Services">خدمات</a>
+      <a href="portfolio.html" data-fa="دموها"     data-en="Demos">دموها</a>
+      <a href="packages.html"  data-fa="پکیج‌ها"   data-en="Packages">پکیج‌ها</a>
+      <a href="process.html"   data-fa="فرایند"    data-en="Process">فرایند</a>
+      <a href="faq.html"       data-fa="سوالات"    data-en="FAQ">سوالات</a>
+      <a href="about.html"     data-fa="درباره"    data-en="About">درباره</a>
+      <a href="login.html"     data-fa="ورود"      data-en="Login">ورود</a>
+      <a class="d-cta" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+    </div>
+    <div class="df">
+      <button class="df-lang" id="drawer-lang" type="button">Switch to EN</button>
+    </div>
+  </nav>
+<main>
+  <div class="wrap" style="max-width:420px;padding-top:40px">
+    <div style="text-align:center;margin-bottom:32px">
+      <h1 data-fa="ورود به پنل" data-en="Sign in to portal">ورود به پنل</h1>
+      <p data-fa="با ایمیل یا نام کاربری وارد شوید." data-en="Sign in with your email or username.">با ایمیل یا نام کاربری وارد شوید.</p>
+    </div>
+    <div class="form-wrap">
+      <form data-login-form style="display:flex;flex-direction:column;gap:14px">
+        <div class="field">
+          <label for="l-user" data-fa="ایمیل یا نام کاربری" data-en="Email or username">ایمیل یا نام کاربری</label>
+          <input id="l-user" name="username" required autocomplete="username"
+            data-fa-placeholder="admin@studio.ir" data-en-placeholder="admin@studio.ir"
+            placeholder="admin@studio.ir"/>
         </div>
-        <form data-login-form>
-          <label><span data-fa="نام کاربری یا ایمیل" data-en="Username or email">نام کاربری یا ایمیل</span><input type="text" value="admin@vitrastudio.ir" data-login-user /></label>
-          <label><span data-fa="رمز عبور" data-en="Password">رمز عبور</span><input type="password" value="12345678" /></label>
-          <button class="btn btn-primary" type="submit" data-fa="ورود" data-en="Login">ورود</button>
-          <a class="signup-link" href="#" data-fa="ثبت‌نام مشتری جدید" data-en="Create a new client account">ثبت‌نام مشتری جدید</a>
-          <p class="login-hint" data-fa="نمونه‌ها: admin@vitrastudio.ir برای مدیر، client@allamehsokhan.ir برای مشتری علامه" data-en="Examples: admin@vitrastudio.ir for admin, client@allamehsokhan.ir for Allameh client">نمونه‌ها: admin@vitrastudio.ir برای مدیر، client@allamehsokhan.ir برای مشتری علامه</p>
-        </form>
-        <button class="lang-switch" type="button">EN</button>
-      </section>
-      <section class="login-visual">
-        <img src="assets/studio-command-hero.png" alt="" />
-      </section>
-    </main>
-    <script src="app.js"></script>
-  </body>
+        <div class="field">
+          <label for="l-pass" data-fa="رمز عبور" data-en="Password">رمز عبور</label>
+          <input id="l-pass" name="password" type="password" required autocomplete="current-password"
+            data-fa-placeholder="رمز عبور" data-en-placeholder="Password"
+            placeholder="رمز عبور"/>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center"
+          data-fa="ورود" data-en="Sign in">ورود</button>
+        <p class="form-note" style="text-align:center" data-fa="برای تست: admin@studio.ir" data-en="For demo: admin@studio.ir">برای تست: admin@studio.ir</p>
+      </form>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--faint)">
+      <a href="order.html" data-fa="← بازگشت به سایت" data-en="← Back to site">← بازگشت به سایت</a>
+    </p>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong data-fa="استودیو" data-en="Studio">استودیو</strong>
+        <p data-fa="طراحی سایت، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهای در حال رشد." data-en="Website design, management portal, SEO and support for growing businesses.">طراحی سایت، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهای در حال رشد.</p>
+        <div class="footer-socials">
+          <a data-social-link="instagram" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+          <a data-social-link="telegram"  target="_blank" rel="noopener" aria-label="Telegram">TG</a>
+          <a data-social-link="whatsapp"  target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-col">
+          <h4 data-fa="خدمات" data-en="Services">خدمات</h4>
+          <a href="services.html"  data-fa="طراحی سایت"  data-en="Web design">طراحی سایت</a>
+          <a href="services.html"  data-fa="بازطراحی"    data-en="Redesign">بازطراحی</a>
+          <a href="services.html"  data-fa="فروشگاه"     data-en="E-commerce">فروشگاه</a>
+          <a href="services.html"  data-fa="سئو"         data-en="SEO">سئو</a>
+          <a href="services.html"  data-fa="پشتیبانی"    data-en="Support">پشتیبانی</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-fa="دموها" data-en="Demos">دموها</h4>
+          <a href="demo-salon.html"   data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</a>
+          <a href="demo-academy.html" data-fa="آموزشگاه"    data-en="Academy">آموزشگاه</a>
+          <a href="demo-clinic.html"  data-fa="مطب"         data-en="Clinic">مطب</a>
+          <a href="demo-shop.html"    data-fa="فروشگاه"     data-en="Shop">فروشگاه</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-fa="راهنما" data-en="Info">راهنما</h4>
+          <a href="packages.html" data-fa="پکیج‌ها"    data-en="Packages">پکیج‌ها</a>
+          <a href="process.html"  data-fa="فرایند"     data-en="Process">فرایند</a>
+          <a href="faq.html"      data-fa="سوالات"     data-en="FAQ">سوالات</a>
+          <a href="about.html"    data-fa="درباره"     data-en="About">درباره</a>
+          <a href="order.html"    data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span data-fa="تحویل شفاف، توسعه‌پذیر و قابل پیگیری" data-en="Transparent, scalable and trackable delivery">تحویل شفاف، توسعه‌پذیر و قابل پیگیری</span>
+      <span data-fa="طراحی‌شده در استودیو" data-en="Designed in studio">طراحی‌شده در استودیو</span>
+    </div>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
 </html>

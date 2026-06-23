@@ -3,413 +3,342 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>استودیو — طراحی سایت حرفه‌ای با پنل مدیریت</title>
-  <meta name="description" content="طراحی سایت، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهایی که می‌خواهند دیده شوند و رشد کنند."/>
+  <title data-fa="استودیو — طراحی سایت، پنل مدیریت و رشد" data-en="Studio — Web Design, Portal & Growth">استودیو — طراحی سایت، پنل مدیریت و رشد</title>
+  <meta name="description" content="طراحی سایت حرفه‌ای، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهای ایرانی."/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
   <link rel="stylesheet" href="styles.css"/>
 </head>
-<body>
+<body data-page="home">
 
-<!-- ══ TOPBAR ════════════════════════════════════ -->
-<header class="topbar over-hero" id="topbar">
-  <a class="brand" href="index.html">
-    <span class="brand-mark"><img src="assets/vitra-logo.svg" alt=""/></span>
-    <span class="brand-name" data-fa="استودیو" data-en="Studio">استودیو</span>
-  </a>
-  <nav class="topbar-nav">
-    <a href="services.html"  data-fa="خدمات"    data-en="Services">خدمات</a>
-    <a href="portfolio.html" data-fa="دموها"     data-en="Demos">دموها</a>
-    <a href="packages.html"  data-fa="پکیج‌ها"   data-en="Packages">پکیج‌ها</a>
-    <a href="process.html"   data-fa="فرایند"    data-en="Process">فرایند</a>
-    <a href="about.html"     data-fa="درباره"    data-en="About">درباره</a>
-    <a class="nav-cta" href="order.html" data-fa="شروع پروژه" data-en="Start">شروع پروژه</a>
-  </nav>
-  <button class="lang-btn" id="lang-btn" type="button">EN</button>
-  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-label="منو">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-
-<!-- ══ DRAWER ════════════════════════════════════ -->
-<div class="nav-overlay" id="nav-overlay"></div>
-<nav class="nav-drawer" id="nav-drawer" aria-hidden="true">
-  <div class="drawer-head">
-    <span class="drawer-brand">استودیو</span>
-    <button class="drawer-close" id="drawer-close" aria-label="بستن">×</button>
-  </div>
-  <div class="drawer-links">
-    <a href="services.html"  data-fa="خدمات"    data-en="Services">خدمات</a>
-    <a href="portfolio.html" data-fa="دموها"     data-en="Demos">دموها</a>
-    <a href="packages.html"  data-fa="پکیج‌ها"   data-en="Packages">پکیج‌ها</a>
-    <a href="process.html"   data-fa="فرایند"    data-en="Process">فرایند</a>
-    <a href="about.html"     data-fa="درباره"    data-en="About">درباره</a>
-    <a href="login.html"     data-fa="ورود"      data-en="Login">ورود</a>
-    <a class="drawer-cta" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
-  </div>
-  <div class="drawer-foot">
-    <button class="drawer-lang" id="drawer-lang" type="button">تغییر زبان / EN</button>
-  </div>
-</nav>
-
-<main>
-
-<!-- ══ VIDEO HERO ═════════════════════════════════ -->
-<section class="hero-wrap" id="hero-wrap">
-  <div class="hero-sticky" id="hero-sticky">
-    <video id="hero-vid" src="assets/hero-video.mp4"
-      muted playsinline preload="metadata" aria-hidden="true"></video>
-    <div class="hero-overlay"></div>
-    <div class="hero-bar"><div class="hero-fill" id="hero-fill"></div></div>
-
-    <div class="hero-dots" id="hero-dots" aria-hidden="true">
-      <div class="hero-dot active"></div>
-      <div class="hero-dot"></div>
-      <div class="hero-dot"></div>
-    </div>
-
-    <div class="hero-content">
-
-      <!-- cue 0 -->
-      <div class="hero-cue active" data-cue="0">
-        <span class="tag" data-fa="طراحی سایت هوشمند" data-en="Intelligent Web Design">طراحی سایت هوشمند</span>
-        <h1 data-fa="سایتی که دیده می‌شود، مدیریت می‌شود و رشد می‌کند." data-en="A website that gets seen, gets managed, and grows.">سایتی که دیده می‌شود، مدیریت می‌شود و رشد می‌کند.</h1>
-        <p class="sub" data-fa="طراحی، پنل مدیریت، سئو و پشتیبانی در یک مسیر." data-en="Design, portal, SEO and support in one path.">طراحی، پنل مدیریت، سئو و پشتیبانی در یک مسیر.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
-          <a class="btn btn-ghost" href="portfolio.html" data-fa="مشاهده دموها" data-en="View demos">مشاهده دموها</a>
-        </div>
-      </div>
-
-      <!-- cue 1 -->
-      <div class="hero-cue" data-cue="1">
-        <span class="tag" data-fa="سیستم مدیریت" data-en="Management System">سیستم مدیریت</span>
-        <h1 data-fa="پنلی که سایت را بعد از تحویل زنده نگه می‌دارد." data-en="A portal that keeps your site alive after handoff.">پنلی که سایت را بعد از تحویل زنده نگه می‌دارد.</h1>
-        <p class="sub" data-fa="محتوا، قیمت، خدمات، تیکت و مشتری — همه در یک محیط." data-en="Content, pricing, services, tickets and clients — all in one place.">محتوا، قیمت، خدمات، تیکت و مشتری — همه در یک محیط.</p>
-        <div class="hero-actions">
-          <a class="btn btn-ghost" href="admin.html" data-fa="مشاهده پنل" data-en="View portal">مشاهده پنل</a>
-        </div>
-      </div>
-
-      <!-- cue 2 -->
-      <div class="hero-cue" data-cue="2">
-        <span class="tag" data-fa="از ایده تا تحویل" data-en="From idea to launch">از ایده تا تحویل</span>
-        <h1 data-fa="مسیر شفاف، تحویل سریع، رشد ماندگار." data-en="Clear path. Fast delivery. Lasting growth.">مسیر شفاف، تحویل سریع، رشد ماندگار.</h1>
-        <p class="sub" data-fa="میانگین تحویل ۱۴ روز — با پنل مشتری و پشتیبانی ماهانه." data-en="14-day average delivery — with client portal and monthly support.">میانگین تحویل ۱۴ روز — با پنل مشتری و پشتیبانی ماهانه.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="order.html" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
-          <a class="btn btn-ghost" href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-<!-- ══ TICKER ════════════════════════════════════ -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item" data-fa="طراحی سایت" data-en="Web Design">طراحی سایت</span>
-    <span class="ticker-item" data-fa="پنل مدیریت" data-en="Admin Portal">پنل مدیریت</span>
-    <span class="ticker-item" data-fa="پنل مشتری"  data-en="Client Portal">پنل مشتری</span>
-    <span class="ticker-item" data-fa="سئو"         data-en="SEO">سئو</span>
-    <span class="ticker-item" data-fa="فروشگاه"     data-en="E-commerce">فروشگاه</span>
-    <span class="ticker-item" data-fa="رزرو آنلاین" data-en="Booking">رزرو آنلاین</span>
-    <span class="ticker-item" data-fa="بازطراحی"    data-en="Redesign">بازطراحی</span>
-    <span class="ticker-item" data-fa="پشتیبانی"    data-en="Support">پشتیبانی</span>
-    <span class="ticker-item" data-fa="طراحی سایت" data-en="Web Design">طراحی سایت</span>
-    <span class="ticker-item" data-fa="پنل مدیریت" data-en="Admin Portal">پنل مدیریت</span>
-    <span class="ticker-item" data-fa="پنل مشتری"  data-en="Client Portal">پنل مشتری</span>
-    <span class="ticker-item" data-fa="سئو"         data-en="SEO">سئو</span>
-    <span class="ticker-item" data-fa="فروشگاه"     data-en="E-commerce">فروشگاه</span>
-    <span class="ticker-item" data-fa="رزرو آنلاین" data-en="Booking">رزرو آنلاین</span>
-    <span class="ticker-item" data-fa="بازطراحی"    data-en="Redesign">بازطراحی</span>
-    <span class="ticker-item" data-fa="پشتیبانی"    data-en="Support">پشتیبانی</span>
-  </div>
-</div>
-
-
-<!-- ══ STATS ══════════════════════════════════════ -->
-<div class="wrap sec">
-  <div class="stats-grid">
-    <div class="stat-item reveal"><strong>+۴۰</strong><span data-fa="پروژه تحویل‌شده" data-en="Projects delivered">پروژه تحویل‌شده</span></div>
-    <div class="stat-item reveal"><strong>۱۴</strong><span data-fa="روز میانگین تحویل" data-en="Avg. days to launch">روز میانگین تحویل</span></div>
-    <div class="stat-item reveal"><strong>۴</strong><span data-fa="صنعت پوشش‌داده‌شده" data-en="Industries">صنعت پوشش‌داده‌شده</span></div>
-    <div class="stat-item reveal"><strong>۹۶٪</strong><span data-fa="رضایت مشتریان" data-en="Satisfaction">رضایت مشتریان</span></div>
-  </div>
-</div>
-
-
-<!-- ══ SERVICE PATHS ══════════════════════════════ -->
-<div class="wrap sec">
-  <div class="sec-head reveal">
-    <div>
-      <p class="sec-label" data-fa="مسیرهای خدمات" data-en="Service Paths">مسیرهای خدمات</p>
-      <h2 data-fa="مسیر درست برای کسب‌وکار شما" data-en="The right path for your business">مسیر درست برای کسب‌وکار شما</h2>
-      <p data-fa="خدمات در سه مسیر مشخص چیده شده‌اند — نه یک پیشنهاد کلی." data-en="Services in three clear paths — not one generic offer.">خدمات در سه مسیر مشخص چیده شده‌اند — نه یک پیشنهاد کلی.</p>
-    </div>
-    <a class="more-link" href="services.html" data-fa="همه خدمات" data-en="All services">همه خدمات</a>
-  </div>
-  <div class="path-grid">
-    <article class="path-card reveal">
-      <span class="path-num">۰۱</span>
-      <h3 data-fa="طراحی سایت جدید" data-en="New Website">طراحی سایت جدید</h3>
-      <p data-fa="صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات و فرم تماس — ساختار کامل برای جذب مشتری." data-en="Home, services, portfolio, about, FAQ and contact — complete structure for lead generation.">صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات و فرم تماس — ساختار کامل برای جذب مشتری.</p>
-      <a class="path-link" href="order.html?s=website" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
-    </article>
-    <article class="path-card reveal">
-      <span class="path-num">۰۲</span>
-      <h3 data-fa="بازطراحی و ارتقا" data-en="Redesign">بازطراحی و ارتقا</h3>
-      <p data-fa="ظاهر قدیمی، سرعت پایین یا مسیر فروش ضعیف؟ ساختار، محتوا و UX بازسازی می‌شود." data-en="Outdated look, slow speed or weak sales flow? Structure, content and UX rebuilt.">ظاهر قدیمی، سرعت پایین یا مسیر فروش ضعیف؟ ساختار، محتوا و UX بازسازی می‌شود.</p>
-      <a class="path-link" href="order.html?s=redesign" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
-    </article>
-    <article class="path-card reveal">
-      <span class="path-num">۰۳</span>
-      <h3 data-fa="سیستم اختصاصی" data-en="Custom System">سیستم اختصاصی</h3>
-      <p data-fa="فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر." data-en="E-commerce, booking, CRM or custom portal for complex businesses.">فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر.</p>
-      <a class="path-link" href="order.html?s=system" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
-    </article>
-  </div>
-</div>
-
-
-<!-- ══ DEMOS ══════════════════════════════════════ -->
-<div class="wrap sec">
-  <div class="sec-head reveal">
-    <div>
-      <p class="sec-label" data-fa="نمونه‌های زنده" data-en="Live Demos">نمونه‌های زنده</p>
-      <h2 data-fa="دموهایی که می‌شود تجربه کرد" data-en="Demos you can experience">دموهایی که می‌شود تجربه کرد</h2>
-      <p data-fa="مثل سایت واقعی — نه فقط تصویر." data-en="Like a real website — not just screenshots.">مثل سایت واقعی — نه فقط تصویر.</p>
-    </div>
-    <a class="more-link" href="portfolio.html" data-fa="همه دموها" data-en="All demos">همه دموها</a>
-  </div>
-  <div class="demo-grid">
-
-    <a class="demo-card reveal" href="demo-salon.html">
-      <div class="demo-thumb">
-        <img src="assets/demo-home-salon.png" alt="دمو سالن زیبایی" loading="lazy"/>
-        <span class="demo-badge" data-fa="مارکت‌پلیس" data-en="Marketplace">مارکت‌پلیس</span>
-      </div>
-      <div class="demo-body">
-        <h3 data-fa="مارکت‌پلیس سالن زیبایی" data-en="Beauty Salon Marketplace">مارکت‌پلیس سالن زیبایی</h3>
-        <p data-fa="جستجو، رزرو و نمایش روی نقشه." data-en="Search, booking and map display.">جستجو، رزرو و نمایش روی نقشه.</p>
-        <div class="demo-chips">
-          <span class="chip" data-fa="رزرو آنلاین" data-en="Booking">رزرو آنلاین</span>
-          <span class="chip" data-fa="جستجو" data-en="Search">جستجو</span>
-          <span class="chip" data-fa="نقشه" data-en="Map">نقشه</span>
-        </div>
-        <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
-      </div>
+  <header class="topbar over-hero" id="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="assets/vitra-logo.svg" alt=""/></span>
+      <span class="brand-name" data-fa="استودیو" data-en="Studio">استودیو</span>
     </a>
-
-    <a class="demo-card reveal" href="demo-academy.html">
-      <div class="demo-thumb">
-        <img src="assets/demo-home-academy.png" alt="دمو آموزشگاه" loading="lazy"/>
-        <span class="demo-badge" data-fa="آموزشگاه" data-en="Academy">آموزشگاه</span>
-      </div>
-      <div class="demo-body">
-        <h3 data-fa="سایت آموزشگاه" data-en="Academy Website">سایت آموزشگاه</h3>
-        <p data-fa="دوره‌ها، ثبت‌نام و صفحه مدرسان." data-en="Courses, registration and instructor pages.">دوره‌ها، ثبت‌نام و صفحه مدرسان.</p>
-        <div class="demo-chips">
-          <span class="chip" data-fa="ثبت‌نام" data-en="Sign-up">ثبت‌نام</span>
-          <span class="chip" data-fa="دوره‌ها" data-en="Courses">دوره‌ها</span>
-          <span class="chip" data-fa="تقویم" data-en="Schedule">تقویم</span>
-        </div>
-        <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
-      </div>
-    </a>
-
-    <a class="demo-card reveal" href="demo-clinic.html">
-      <div class="demo-thumb">
-        <img src="assets/demo-home-clinic.png" alt="دمو مطب" loading="lazy"/>
-        <span class="demo-badge" data-fa="مطب" data-en="Clinic">مطب</span>
-      </div>
-      <div class="demo-body">
-        <h3 data-fa="سایت مطب و کلینیک" data-en="Clinic Website">سایت مطب و کلینیک</h3>
-        <p data-fa="جستجوی پزشک، رزرو نوبت و مدیریت." data-en="Doctor search, appointments and management.">جستجوی پزشک، رزرو نوبت و مدیریت.</p>
-        <div class="demo-chips">
-          <span class="chip" data-fa="رزرو نوبت" data-en="Booking">رزرو نوبت</span>
-          <span class="chip" data-fa="جستجوی پزشک" data-en="Doctor search">جستجوی پزشک</span>
-        </div>
-        <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
-      </div>
-    </a>
-
-    <a class="demo-card reveal" href="demo-shop.html">
-      <div class="demo-thumb">
-        <img src="assets/demo-home-shop.png" alt="دمو فروشگاه" loading="lazy"/>
-        <span class="demo-badge" data-fa="فروشگاه" data-en="Shop">فروشگاه</span>
-      </div>
-      <div class="demo-body">
-        <h3 data-fa="فروشگاه آنلاین" data-en="Online Shop">فروشگاه آنلاین</h3>
-        <p data-fa="محصولات، سبد خرید و تجربه خرید کامل." data-en="Products, cart and complete shopping experience.">محصولات، سبد خرید و تجربه خرید کامل.</p>
-        <div class="demo-chips">
-          <span class="chip" data-fa="سبد خرید" data-en="Cart">سبد خرید</span>
-          <span class="chip" data-fa="فیلتر" data-en="Filter">فیلتر</span>
-        </div>
-        <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-
-<!-- ══ CTA BAND ═══════════════════════════════════ -->
-<div class="wrap sec">
-  <div class="cta-band reveal">
-    <div>
-      <h2 data-fa="آماده شروع پروژه هستید؟" data-en="Ready to start your project?">آماده شروع پروژه هستید؟</h2>
-      <p data-fa="در کمتر از ۵ دقیقه نیاز خود را ثبت کنید." data-en="Register your needs in under 5 minutes.">در کمتر از ۵ دقیقه نیاز خود را ثبت کنید.</p>
-    </div>
-    <div class="cta-actions">
-      <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
-      <a class="btn btn-outline" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.8);" href="audit.html" data-fa="بررسی رایگان" data-en="Free audit">بررسی رایگان</a>
-    </div>
-  </div>
-</div>
-
-
-<!-- ══ FOOTER — COMPACT ═══════════════════════════ -->
-<footer class="site-footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <strong data-fa="استودیو" data-en="Studio">استودیو</strong>
-      <p data-fa="طراحی سایت، پنل، سئو و پشتیبانی برای کسب‌وکارهای ایرانی." data-en="Web design, portal, SEO and support for growing businesses.">طراحی سایت، پنل، سئو و پشتیبانی برای کسب‌وکارهای ایرانی.</p>
-      <div class="footer-socials">
-        <a data-social-link="instagram" target="_blank" rel="noopener" aria-label="اینستاگرام">IG</a>
-        <a data-social-link="telegram"  target="_blank" rel="noopener" aria-label="تلگرام">TG</a>
-        <a data-social-link="whatsapp"  target="_blank" rel="noopener" aria-label="واتساپ">WA</a>
-      </div>
-    </div>
-    <nav class="footer-nav">
-      <div class="footer-col">
-        <h4 data-fa="خدمات" data-en="Services">خدمات</h4>
-        <a href="services.html"          data-fa="طراحی سایت"  data-en="Web design">طراحی سایت</a>
-        <a href="services.html#redesign" data-fa="بازطراحی"    data-en="Redesign">بازطراحی</a>
-        <a href="services.html#shop"     data-fa="فروشگاه"     data-en="E-commerce">فروشگاه</a>
-        <a href="services.html#seo"      data-fa="سئو"         data-en="SEO">سئو</a>
-      </div>
-      <div class="footer-col">
-        <h4 data-fa="دموها" data-en="Demos">دموها</h4>
-        <a href="demo-salon.html"   data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</a>
-        <a href="demo-academy.html" data-fa="آموزشگاه"    data-en="Academy">آموزشگاه</a>
-        <a href="demo-clinic.html"  data-fa="مطب"         data-en="Clinic">مطب</a>
-        <a href="demo-shop.html"    data-fa="فروشگاه"     data-en="Shop">فروشگاه</a>
-      </div>
-      <div class="footer-col">
-        <h4 data-fa="راهنما" data-en="Info">راهنما</h4>
-        <a href="packages.html" data-fa="پکیج‌ها"      data-en="Packages">پکیج‌ها</a>
-        <a href="process.html"  data-fa="فرایند کار"   data-en="Process">فرایند کار</a>
-        <a href="faq.html"      data-fa="سوالات"        data-en="FAQ">سوالات</a>
-        <a href="about.html"    data-fa="درباره ما"     data-en="About">درباره ما</a>
-        <a href="order.html"    data-fa="شروع پروژه"   data-en="Start">شروع پروژه</a>
-      </div>
+    <nav class="t-nav">
+      <a href="services.html"  data-fa="خدمات"   data-en="Services">خدمات</a>
+      <a href="portfolio.html" data-fa="دموها"    data-en="Demos">دموها</a>
+      <a href="packages.html"  data-fa="پکیج‌ها"  data-en="Packages">پکیج‌ها</a>
+      <a href="process.html"   data-fa="فرایند"   data-en="Process">فرایند</a>
+      <a href="faq.html"       data-fa="سوالات"   data-en="FAQ">سوالات</a>
+      <a href="about.html"     data-fa="درباره"   data-en="About">درباره</a>
+      <a class="cta" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
     </nav>
+    <button class="lang-btn" type="button">EN</button>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <nav class="nav-drawer" id="nav-drawer" aria-hidden="true">
+    <div class="dh">
+      <span class="dh-brand">استودیو</span>
+      <button class="dh-close" id="drawer-close">×</button>
+    </div>
+    <div class="dl">
+      <a href="services.html"  data-fa="خدمات"   data-en="Services">خدمات</a>
+      <a href="portfolio.html" data-fa="دموها"    data-en="Demos">دموها</a>
+      <a href="packages.html"  data-fa="پکیج‌ها"  data-en="Packages">پکیج‌ها</a>
+      <a href="process.html"   data-fa="فرایند"   data-en="Process">فرایند</a>
+      <a href="faq.html"       data-fa="سوالات"   data-en="FAQ">سوالات</a>
+      <a href="about.html"     data-fa="درباره"   data-en="About">درباره</a>
+      <a href="login.html"     data-fa="ورود"     data-en="Login">ورود</a>
+      <a class="d-cta" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+    </div>
+    <div class="df">
+      <button class="df-lang" id="drawer-lang" type="button">Switch to EN</button>
+    </div>
+  </nav>
+
+<main style="padding-top:0">
+
+  <!-- HERO -->
+  <section class="hero-wrap" id="hero-wrap">
+    <div class="hero-sticky" id="hero-sticky">
+      <video id="hero-vid" src="assets/hero-video.mp4"
+        poster="assets/vitra-hero.png"
+        muted playsinline preload="metadata" aria-hidden="true"></video>
+      <div class="hero-overlay"></div>
+      <div class="hero-bar"><div class="hero-fill" id="hero-fill"></div></div>
+      <div class="hero-dots" id="hero-dots" aria-hidden="true">
+        <div class="hero-dot active"></div>
+        <div class="hero-dot"></div>
+        <div class="hero-dot"></div>
+      </div>
+      <div class="hero-content">
+
+        <div class="hero-cue active" data-cue="0">
+          <span class="hero-tag" data-fa="طراحی سایت هوشمند" data-en="Intelligent Web Design">طراحی سایت هوشمند</span>
+          <h1 data-fa="سایتی که دیده می‌شود، مدیریت می‌شود و رشد می‌کند." data-en="A website that gets seen, gets managed, and keeps growing.">سایتی که دیده می‌شود، مدیریت می‌شود و رشد می‌کند.</h1>
+          <p class="sub" data-fa="طراحی، پنل مدیریت، سئو و پشتیبانی در یک مسیر منسجم." data-en="Design, management portal, SEO and support — all in one coherent path.">طراحی، پنل مدیریت، سئو و پشتیبانی در یک مسیر منسجم.</p>
+          <div class="hero-acts">
+            <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+            <a class="btn btn-ghost" href="portfolio.html" data-fa="مشاهده دموها" data-en="View demos">مشاهده دموها</a>
+          </div>
+        </div>
+
+        <div class="hero-cue" data-cue="1">
+          <span class="hero-tag" data-fa="پنل مدیریت" data-en="Management Portal">پنل مدیریت</span>
+          <h1 data-fa="پنلی که سایت را بعد از تحویل زنده نگه می‌دارد." data-en="A portal that keeps your site alive after launch.">پنلی که سایت را بعد از تحویل زنده نگه می‌دارد.</h1>
+          <p class="sub" data-fa="محتوا، قیمت، خدمات، تیکت و مشتری — همه در یک محیط." data-en="Content, pricing, services, tickets and clients — all in one place.">محتوا، قیمت، خدمات، تیکت و مشتری — همه در یک محیط.</p>
+          <div class="hero-acts">
+            <a class="btn btn-ghost" href="admin.html" data-fa="مشاهده پنل" data-en="View portal">مشاهده پنل</a>
+          </div>
+        </div>
+
+        <div class="hero-cue" data-cue="2">
+          <span class="hero-tag" data-fa="از ایده تا تحویل" data-en="From idea to launch">از ایده تا تحویل</span>
+          <h1 data-fa="مسیر شفاف. تحویل سریع. رشد ماندگار." data-en="Clear path. Fast delivery. Lasting growth.">مسیر شفاف. تحویل سریع. رشد ماندگار.</h1>
+          <p class="sub" data-fa="میانگین تحویل ۱۴ روز — با پنل مشتری و پشتیبانی ماهانه." data-en="14-day average delivery — with client portal and monthly support.">میانگین تحویل ۱۴ روز — با پنل مشتری و پشتیبانی ماهانه.</p>
+          <div class="hero-acts">
+            <a class="btn btn-primary" href="order.html" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
+            <a class="btn btn-ghost" href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <span class="ti" data-fa="طراحی سایت"    data-en="Web Design">طراحی سایت</span>
+      <span class="ti" data-fa="پنل مدیریت"   data-en="Admin Portal">پنل مدیریت</span>
+      <span class="ti" data-fa="پنل مشتری"    data-en="Client Portal">پنل مشتری</span>
+      <span class="ti" data-fa="سئو"           data-en="SEO">سئو</span>
+      <span class="ti" data-fa="فروشگاه"       data-en="E-commerce">فروشگاه</span>
+      <span class="ti" data-fa="رزرو آنلاین"  data-en="Online Booking">رزرو آنلاین</span>
+      <span class="ti" data-fa="بازطراحی"      data-en="Redesign">بازطراحی</span>
+      <span class="ti" data-fa="پشتیبانی"      data-en="Support">پشتیبانی</span>
+      <span class="ti" data-fa="طراحی سایت"    data-en="Web Design">طراحی سایت</span>
+      <span class="ti" data-fa="پنل مدیریت"   data-en="Admin Portal">پنل مدیریت</span>
+      <span class="ti" data-fa="پنل مشتری"    data-en="Client Portal">پنل مشتری</span>
+      <span class="ti" data-fa="سئو"           data-en="SEO">سئو</span>
+      <span class="ti" data-fa="فروشگاه"       data-en="E-commerce">فروشگاه</span>
+      <span class="ti" data-fa="رزرو آنلاین"  data-en="Online Booking">رزرو آنلاین</span>
+      <span class="ti" data-fa="بازطراحی"      data-en="Redesign">بازطراحی</span>
+      <span class="ti" data-fa="پشتیبانی"      data-en="Support">پشتیبانی</span>
+    </div>
   </div>
-  <div class="footer-bottom">
-    <span data-fa="تحویل شفاف و قابل پیگیری" data-en="Transparent and trackable delivery">تحویل شفاف و قابل پیگیری</span>
-    <span data-fa="طراحی‌شده در استودیو" data-en="Designed in studio">طراحی‌شده در استودیو</span>
+
+  <!-- STATS -->
+  <div class="wrap sec">
+    <div class="stats-row">
+      <div class="stat reveal"><strong>+۴۰</strong><span data-fa="پروژه تحویل‌شده" data-en="Projects delivered">پروژه تحویل‌شده</span></div>
+      <div class="stat reveal"><strong>۱۴</strong><span data-fa="روز میانگین تحویل" data-en="Avg. days to launch">روز میانگین تحویل</span></div>
+      <div class="stat reveal"><strong>۴</strong><span data-fa="صنعت پوشش‌داده‌شده" data-en="Industries">صنعت پوشش‌داده‌شده</span></div>
+      <div class="stat reveal"><strong>۹۶٪</strong><span data-fa="رضایت مشتریان" data-en="Client satisfaction">رضایت مشتریان</span></div>
+    </div>
   </div>
-</footer>
+
+  <!-- PANEL SHOWCASE -->
+  <div class="wrap sec">
+    <div class="panel-split">
+      <div class="panel-vis reveal">
+        <img src="assets/studio-command-hero.png" alt="Management portal" loading="lazy"/>
+      </div>
+      <div class="panel-info reveal">
+        <p class="kicker" data-fa="پنل مدیریت" data-en="Management Portal">پنل مدیریت</p>
+        <h2 data-fa="پنلی که سایت را وابسته نمی‌گذارد" data-en="A portal that keeps you independent">پنلی که سایت را وابسته نمی‌گذارد</h2>
+        <p data-fa="بعد از تحویل، نیازی به طراح برای تغییرات روزمره ندارید. محتوا، قیمت، خدمات، مشتری و تیکت‌ها — همه در دست شماست." data-en="After launch, you don't need a developer for daily changes. Content, pricing, services, clients and tickets — all in your hands.">بعد از تحویل، نیازی به طراح برای تغییرات روزمره ندارید. محتوا، قیمت، خدمات، مشتری و تیکت‌ها — همه در دست شماست.</p>
+        <div class="pf-list">
+          <div class="pf-item">
+            <span class="pf-icon" aria-hidden="true">✎</span>
+            <div>
+              <b data-fa="ویرایش محتوا و قیمت" data-en="Edit content and pricing">ویرایش محتوا و قیمت</b>
+              <small data-fa="بدون نیاز به طراح" data-en="No developer needed">بدون نیاز به طراح</small>
+            </div>
+          </div>
+          <div class="pf-item">
+            <span class="pf-icon" aria-hidden="true">◎</span>
+            <div>
+              <b data-fa="سیستم تیکت پشتیبانی" data-en="Support ticket system">سیستم تیکت پشتیبانی</b>
+              <small data-fa="ارتباط منظم و قابل پیگیری" data-en="Organized and trackable">ارتباط منظم و قابل پیگیری</small>
+            </div>
+          </div>
+          <div class="pf-item">
+            <span class="pf-icon" aria-hidden="true">⊞</span>
+            <div>
+              <b data-fa="مدیریت مشتری و پروژه" data-en="Client and project management">مدیریت مشتری و پروژه</b>
+              <small data-fa="وضعیت، فایل‌ها و گزارش" data-en="Status, files and reports">وضعیت، فایل‌ها و گزارش</small>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a class="btn btn-primary" href="admin.html" data-fa="مشاهده پنل مدیر" data-en="View admin panel">مشاهده پنل مدیر</a>
+          <a class="btn btn-outline" href="client.html" data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICE PATHS -->
+  <div class="wrap sec">
+    <div class="sec-head reveal">
+      <div class="left">
+        <p class="kicker" data-fa="مسیرهای خدمات" data-en="Service Paths">مسیرهای خدمات</p>
+        <h2 data-fa="مسیر درست برای کسب‌وکار شما" data-en="The right path for your business">مسیر درست برای کسب‌وکار شما</h2>
+        <p data-fa="خدمات در سه مسیر مشخص — نه یک پیشنهاد کلی." data-en="Services in three clear paths — not one generic offer.">خدمات در سه مسیر مشخص — نه یک پیشنهاد کلی.</p>
+      </div>
+      <a class="more" href="services.html" data-fa="همه خدمات" data-en="All services">همه خدمات</a>
+    </div>
+    <div class="path-grid">
+      <article class="path-card reveal">
+        <span class="path-num">۰۱</span>
+        <h3 data-fa="طراحی سایت جدید" data-en="New Website Design">طراحی سایت جدید</h3>
+        <p data-fa="صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات و فرم تماس — ساختار کامل برای جذب مشتری." data-en="Home, services, portfolio, about, FAQ and contact — complete structure to attract and convert clients.">صفحه خانه، خدمات، نمونه‌کار، درباره، سوالات و فرم تماس — ساختار کامل برای جذب مشتری.</p>
+        <a class="path-link" href="order.html?service=website" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
+      </article>
+      <article class="path-card reveal">
+        <span class="path-num">۰۲</span>
+        <h3 data-fa="بازطراحی و ارتقا" data-en="Redesign and Upgrade">بازطراحی و ارتقا</h3>
+        <p data-fa="ظاهر قدیمی، سرعت پایین یا نرخ تبدیل ضعیف؟ ساختار، محتوا و UX بازسازی می‌شوند." data-en="Outdated look, slow speed or low conversion? Structure, copy and UX are fully rebuilt.">ظاهر قدیمی، سرعت پایین یا نرخ تبدیل ضعیف؟ ساختار، محتوا و UX بازسازی می‌شوند.</p>
+        <a class="path-link" href="order.html?service=redesign" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
+      </article>
+      <article class="path-card reveal">
+        <span class="path-num">۰۳</span>
+        <h3 data-fa="سیستم اختصاصی" data-en="Custom System">سیستم اختصاصی</h3>
+        <p data-fa="فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر." data-en="E-commerce, booking, CRM or custom portal for more complex business needs.">فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر.</p>
+        <a class="path-link" href="order.html?service=system" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
+      </article>
+    </div>
+  </div>
+
+  <!-- DEMOS -->
+  <div class="wrap sec">
+    <div class="sec-head reveal">
+      <div class="left">
+        <p class="kicker" data-fa="نمونه‌های زنده" data-en="Live Demos">نمونه‌های زنده</p>
+        <h2 data-fa="دموهایی که می‌شود تجربه کرد" data-en="Demos you can experience">دموهایی که می‌شود تجربه کرد</h2>
+        <p data-fa="مثل سایت واقعی — قابل کلیک، نه فقط تصویر." data-en="Like real websites — clickable, not just screenshots.">مثل سایت واقعی — قابل کلیک، نه فقط تصویر.</p>
+      </div>
+      <a class="more" href="portfolio.html" data-fa="همه دموها" data-en="All demos">همه دموها</a>
+    </div>
+    <div class="demo-grid">
+      <a class="demo-card reveal" href="demo-salon.html">
+        <div class="demo-thumb">
+          <img src="assets/demo-home-salon.png" alt="Beauty salon marketplace" loading="lazy"/>
+          <span class="demo-badge" data-fa="مارکت‌پلیس" data-en="Marketplace">مارکت‌پلیس</span>
+        </div>
+        <div class="demo-body">
+          <h3 data-fa="مارکت‌پلیس سالن زیبایی" data-en="Beauty Salon Marketplace">مارکت‌پلیس سالن زیبایی</h3>
+          <p data-fa="جستجو، رزرو آنلاین و نمایش روی نقشه." data-en="Search, online booking and map display.">جستجو، رزرو آنلاین و نمایش روی نقشه.</p>
+          <div class="chips">
+            <span class="chip" data-fa="رزرو" data-en="Booking">رزرو</span>
+            <span class="chip" data-fa="جستجو" data-en="Search">جستجو</span>
+            <span class="chip" data-fa="نقشه" data-en="Map">نقشه</span>
+          </div>
+          <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+        </div>
+      </a>
+      <a class="demo-card reveal" href="demo-academy.html">
+        <div class="demo-thumb">
+          <img src="assets/demo-home-academy.png" alt="Academy website" loading="lazy"/>
+          <span class="demo-badge" data-fa="آموزشگاه" data-en="Academy">آموزشگاه</span>
+        </div>
+        <div class="demo-body">
+          <h3 data-fa="سایت آموزشگاه" data-en="Academy Website">سایت آموزشگاه</h3>
+          <p data-fa="دوره‌ها، ثبت‌نام آنلاین و صفحه مدرسان." data-en="Courses, online registration and instructor pages.">دوره‌ها، ثبت‌نام آنلاین و صفحه مدرسان.</p>
+          <div class="chips">
+            <span class="chip" data-fa="ثبت‌نام" data-en="Sign-up">ثبت‌نام</span>
+            <span class="chip" data-fa="دوره‌ها" data-en="Courses">دوره‌ها</span>
+          </div>
+          <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+        </div>
+      </a>
+      <a class="demo-card reveal" href="demo-clinic.html">
+        <div class="demo-thumb">
+          <img src="assets/demo-home-clinic.png" alt="Clinic website" loading="lazy"/>
+          <span class="demo-badge" data-fa="مطب" data-en="Clinic">مطب</span>
+        </div>
+        <div class="demo-body">
+          <h3 data-fa="سایت مطب و کلینیک" data-en="Clinic Website">سایت مطب و کلینیک</h3>
+          <p data-fa="جستجوی پزشک، رزرو نوبت و مدیریت کلینیک." data-en="Doctor search, appointment booking and clinic management.">جستجوی پزشک، رزرو نوبت و مدیریت کلینیک.</p>
+          <div class="chips">
+            <span class="chip" data-fa="نوبت‌دهی" data-en="Appointments">نوبت‌دهی</span>
+            <span class="chip" data-fa="پزشک" data-en="Doctor">پزشک</span>
+          </div>
+          <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+        </div>
+      </a>
+      <a class="demo-card reveal" href="demo-shop.html">
+        <div class="demo-thumb">
+          <img src="assets/demo-home-shop.png" alt="Online shop" loading="lazy"/>
+          <span class="demo-badge" data-fa="فروشگاه" data-en="Shop">فروشگاه</span>
+        </div>
+        <div class="demo-body">
+          <h3 data-fa="فروشگاه آنلاین" data-en="Online Shop">فروشگاه آنلاین</h3>
+          <p data-fa="محصولات، سبد خرید و تجربه خرید کامل." data-en="Products, cart and a complete shopping experience.">محصولات، سبد خرید و تجربه خرید کامل.</p>
+          <div class="chips">
+            <span class="chip" data-fa="سبد خرید" data-en="Cart">سبد خرید</span>
+            <span class="chip" data-fa="فیلتر" data-en="Filter">فیلتر</span>
+          </div>
+          <span class="demo-more" data-fa="مشاهده دمو" data-en="View demo">مشاهده دمو</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- CTA BAND -->
+  <div class="wrap sec">
+    <div class="cta-band reveal">
+      <div>
+        <h2 data-fa="آماده شروع پروژه هستید؟" data-en="Ready to start your project?">آماده شروع پروژه هستید؟</h2>
+        <p data-fa="در کمتر از ۵ دقیقه نیاز خود را ثبت کنید — در ۲۴ ساعت با شما تماس می‌گیریم." data-en="Register your needs in under 5 minutes — we'll contact you within 24 hours.">در کمتر از ۵ دقیقه نیاز خود را ثبت کنید — در ۲۴ ساعت با شما تماس می‌گیریم.</p>
+      </div>
+      <div class="cta-acts">
+        <a class="btn btn-primary" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+        <a class="btn btn-light" href="audit.html" data-fa="بررسی رایگان" data-en="Free review">بررسی رایگان</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <strong data-fa="استودیو" data-en="Studio">استودیو</strong>
+        <p data-fa="طراحی سایت، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهای در حال رشد." data-en="Web design, management portal, SEO and support for growing businesses.">طراحی سایت، پنل مدیریت، سئو و پشتیبانی برای کسب‌وکارهای در حال رشد.</p>
+        <div class="footer-socials">
+          <a data-social-link="instagram" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+          <a data-social-link="telegram"  target="_blank" rel="noopener" aria-label="Telegram">TG</a>
+          <a data-social-link="whatsapp"  target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-col">
+          <h4 data-fa="خدمات" data-en="Services">خدمات</h4>
+          <a href="services.html" data-fa="طراحی سایت" data-en="Web design">طراحی سایت</a>
+          <a href="services.html" data-fa="بازطراحی"   data-en="Redesign">بازطراحی</a>
+          <a href="services.html" data-fa="فروشگاه"    data-en="E-commerce">فروشگاه</a>
+          <a href="services.html" data-fa="سئو"        data-en="SEO">سئو</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-fa="دموها" data-en="Demos">دموها</h4>
+          <a href="demo-salon.html"   data-fa="سالن زیبایی" data-en="Beauty salon">سالن زیبایی</a>
+          <a href="demo-academy.html" data-fa="آموزشگاه"    data-en="Academy">آموزشگاه</a>
+          <a href="demo-clinic.html"  data-fa="مطب"         data-en="Clinic">مطب</a>
+          <a href="demo-shop.html"    data-fa="فروشگاه"     data-en="Shop">فروشگاه</a>
+        </div>
+        <div class="footer-col">
+          <h4 data-fa="راهنما" data-en="Info">راهنما</h4>
+          <a href="packages.html" data-fa="پکیج‌ها"    data-en="Packages">پکیج‌ها</a>
+          <a href="process.html"  data-fa="فرایند"     data-en="Process">فرایند</a>
+          <a href="faq.html"      data-fa="سوالات"     data-en="FAQ">سوالات</a>
+          <a href="about.html"    data-fa="درباره"     data-en="About">درباره</a>
+          <a href="order.html"    data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span data-fa="تحویل شفاف، توسعه‌پذیر و قابل پیگیری" data-en="Transparent, scalable and trackable delivery">تحویل شفاف، توسعه‌پذیر و قابل پیگیری</span>
+      <span data-fa="طراحی‌شده در استودیو" data-en="Designed in studio">طراحی‌شده در استودیو</span>
+    </div>
+  </footer>
 
 </main>
-
-<script>
-// ── VIDEO HERO SCROLL ──────────────────────────────
-(function(){
-  var wrap   = document.getElementById('hero-wrap');
-  var vid    = document.getElementById('hero-vid');
-  var fill   = document.getElementById('hero-fill');
-  var dots   = document.querySelectorAll('.hero-dot');
-  var cues   = document.querySelectorAll('.hero-cue');
-  var topbar = document.getElementById('topbar');
-  var N = cues.length;
-  var cur = -1, raf = false, ready = false;
-  var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-
-  vid.autoplay = false; vid.loop = false; vid.pause();
-
-  function setTopbar(){
-    topbar.classList.toggle('over-hero', window.scrollY < wrap.offsetTop + wrap.offsetHeight - 60);
-  }
-  function progress(){
-    return Math.max(0, Math.min(1, (window.scrollY - wrap.offsetTop) / wrap.offsetHeight));
-  }
-  function setCue(i){
-    if(i===cur) return; cur=i;
-    cues.forEach(function(c,j){ c.classList.toggle('active', j===i); });
-    dots.forEach(function(d,j){ d.classList.toggle('active', j===i); });
-  }
-  function tick(){
-    raf=false; setTopbar();
-    var p = progress();
-    fill.style.width = (p*100)+'%';
-    var z = Math.max(0, Math.min(N-1, Math.floor((window.scrollY - wrap.offsetTop) / (wrap.offsetHeight/N))));
-    setCue(z);
-    if(!reduced && ready && vid.duration){
-      var t = Math.min(p * vid.duration, vid.duration - .08);
-      if(Math.abs(vid.currentTime - t) > .015) vid.currentTime = t;
-    }
-  }
-  function onScroll(){ if(!raf){ raf=true; requestAnimationFrame(tick); } }
-
-  function init(){
-    vid.pause(); vid.currentTime=0; ready=true;
-    setCue(0); setTopbar();
-    window.addEventListener('scroll', onScroll, {passive:true});
-    tick();
-  }
-
-  if(reduced){ setCue(0); setTopbar(); window.addEventListener('scroll',function(){ setTopbar(); var z=Math.max(0,Math.min(N-1,Math.floor((window.scrollY-wrap.offsetTop)/(wrap.offsetHeight/N)))); setCue(z); },{passive:true}); return; }
-  if(vid.readyState>=1) init();
-  else{ vid.addEventListener('loadedmetadata',init,{once:true}); setCue(0); setTopbar(); setTimeout(function(){ if(!ready) init(); },3000); }
-})();
-
-// ── SCROLL REVEAL ──────────────────────────────────
-(function(){
-  var els = document.querySelectorAll('.reveal');
-  if(!window.IntersectionObserver){ els.forEach(function(e){ e.classList.add('in'); }); return; }
-  var o = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); o.unobserve(e.target); } });
-  },{threshold:.1,rootMargin:'0px 0px -32px 0px'});
-  els.forEach(function(e){ o.observe(e); });
-})();
-
-// ── MOBILE DRAWER ──────────────────────────────────
-(function(){
-  var btn=document.getElementById('menu-btn');
-  var drawer=document.getElementById('nav-drawer');
-  var overlay=document.getElementById('nav-overlay');
-  var close=document.getElementById('drawer-close');
-  var open=false;
-  function show(){ open=true; drawer.classList.add('open'); overlay.classList.add('open'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); drawer.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-  function hide(){ open=false; drawer.classList.remove('open'); overlay.classList.remove('open'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); drawer.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-  if(btn) btn.addEventListener('click',function(){ open?hide():show(); });
-  if(close) close.addEventListener('click',hide);
-  if(overlay) overlay.addEventListener('click',hide);
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&open) hide(); });
-  if(drawer) drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click',hide); });
-})();
-
-// ── LANGUAGE ───────────────────────────────────────
-(function(){
-  var lang=localStorage.getItem('s-lang')||'fa';
-  function apply(l){
-    lang=l; localStorage.setItem('s-lang',l);
-    document.documentElement.lang=l==='en'?'en':'fa';
-    document.documentElement.dir=l==='en'?'ltr':'rtl';
-    document.querySelectorAll('[data-fa][data-en]').forEach(function(el){ el.textContent=l==='en'?el.dataset.en:el.dataset.fa; });
-    document.getElementById('lang-btn').textContent=l==='en'?'FA':'EN';
-    var dl=document.getElementById('drawer-lang');
-    if(dl) dl.textContent=l==='en'?'تغییر زبان / FA':'تغییر زبان / EN';
-  }
-  document.getElementById('lang-btn').addEventListener('click',function(){ apply(lang==='fa'?'en':'fa'); });
-  var dl=document.getElementById('drawer-lang');
-  if(dl) dl.addEventListener('click',function(){ apply(lang==='fa'?'en':'fa'); });
-  apply(lang);
-})();
-</script>
 <script src="app.js"></script>
 </body>
 </html>
