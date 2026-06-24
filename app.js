@@ -466,4 +466,212 @@
   }
 
 
+
+
+  /* ══════════════════════════════════════════════════
+     UPGRADE PACK — PREMIUM INTERACTIONS
+     ══════════════════════════════════════════════════ */
+
+  /* ── STAGGER REVEAL ──────────────────────────────── */
+  var revEls = document.querySelectorAll('.reveal');
+  if (revEls.length && window.IntersectionObserver) {
+    var staggerObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        var siblings = e.target.parentElement.querySelectorAll('.reveal');
+        var idx = Array.prototype.indexOf.call(siblings, e.target);
+        e.target.style.transitionDelay = (idx * 75) + 'ms';
+        e.target.classList.add('in');
+        staggerObs.unobserve(e.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
+    revEls.forEach(function(el) { staggerObs.observe(el); });
+  }
+
+  /* ── COUNTER ANIMATION ───────────────────────────── */
+  function animateCount(el, target, suffix, duration) {
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      var val = Math.round(eased * target);
+      el.textContent = (suffix === '%' ? '' : '+') + val.toLocaleString('fa-IR') + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var statObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      var strong = e.target.querySelector('strong');
+      if (!strong || strong.dataset.counted) return;
+      strong.dataset.counted = '1';
+      var raw = strong.textContent.trim();
+      var num = parseInt(raw.replace(/[^0-9]/g, ''), 10);
+      var suffix = raw.includes('%') ? '%' : '';
+      if (num) animateCount(strong, num, suffix, 1400);
+      statObs.unobserve(e.target);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat, .pp-item').forEach(function(el) { statObs.observe(el); });
+
+  /* ── PHILOSOPHY REVEAL ───────────────────────────── */
+  var philObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.philosophy-line').forEach(function(line) {
+        line.classList.add('in');
+      });
+      philObs.unobserve(e.target);
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.philosophy-wrap').forEach(function(el) { philObs.observe(el); });
+
+  /* ── MAGNETIC BUTTONS ────────────────────────────── */
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.btn-primary, .btn-magnetic').forEach(function(btn) {
+      btn.addEventListener('mousemove', function(e) {
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width / 2;
+        var y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = 'translate(' + (x * 0.14) + 'px,' + (y * 0.14) + 'px)';
+        btn.style.transition = 'transform 0.15s ease';
+      });
+      btn.addEventListener('mouseleave', function() {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+      });
+    });
+  }
+
+  /* ── BEFORE / AFTER SLIDER ───────────────────────── */
+  document.querySelectorAll('.ba-wrap').forEach(function(wrap) {
+    var active = false;
+    var isRtl  = document.documentElement.dir === 'rtl';
+
+    function setPos(clientX) {
+      var r   = wrap.getBoundingClientRect();
+      var raw = (clientX - r.left) / r.width;
+      if (isRtl) raw = 1 - raw;
+      var pct = Math.max(5, Math.min(95, raw * 100));
+      wrap.style.setProperty('--split', pct + '%');
+      var after   = wrap.querySelector('.ba-after');
+      var divider = wrap.querySelector('.ba-divider');
+      var handle  = wrap.querySelector('.ba-handle');
+      if (after) {
+        after.style.clipPath = isRtl
+          ? 'inset(0 0 0 ' + (100 - pct) + '%)'
+          : 'inset(0 ' + (100 - pct) + '% 0 0)';
+      }
+      if (divider) divider.style[isRtl ? 'right' : 'left'] = pct + '%';
+      if (handle)  handle.style[isRtl ? 'right' : 'left']  = pct + '%';
+    }
+
+    wrap.addEventListener('mousedown', function(e) { active = true; setPos(e.clientX); });
+    wrap.addEventListener('touchstart', function(e) { active = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mousemove', function(e) { if (active) setPos(e.clientX); });
+    window.addEventListener('touchmove', function(e) { if (active) setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mouseup',   function() { active = false; });
+    window.addEventListener('touchend',  function() { active = false; });
+  });
+
+  /* ── EXIT INTENT POPUP ───────────────────────────── */
+  var exitOverlay = document.getElementById('exit-popup');
+  var exitShown   = sessionStorage.getItem('exit-shown');
+
+  if (exitOverlay && !exitShown) {
+    var exitTimer = null;
+
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY < 40 && !exitShown) {
+        exitTimer = setTimeout(function() {
+          exitShown = true;
+          sessionStorage.setItem('exit-shown', '1');
+          exitOverlay.classList.add('active');
+        }, 200);
+      }
+    });
+
+    // Also show after 45s of reading
+    setTimeout(function() {
+      if (!exitShown && !exitOverlay.classList.contains('active')) {
+        exitShown = true;
+        sessionStorage.setItem('exit-shown', '1');
+        exitOverlay.classList.add('active');
+      }
+    }, 45000);
+
+    document.querySelectorAll('[data-close-exit]').forEach(function(el) {
+      el.addEventListener('click', function() {
+        exitOverlay.classList.remove('active');
+        clearTimeout(exitTimer);
+      });
+    });
+    exitOverlay.addEventListener('click', function(e) {
+      if (e.target === exitOverlay) exitOverlay.classList.remove('active');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') exitOverlay.classList.remove('active');
+    });
+  }
+
+  /* ── CURSOR GLOW (desktop only) ─────────────────── */
+  if (window.matchMedia('(hover: hover) and (min-width: 960px)').matches) {
+    var glow = document.createElement('div');
+    glow.style.cssText = [
+      'position:fixed', 'pointer-events:none', 'z-index:9997',
+      'width:320px', 'height:320px', 'border-radius:50%',
+      'background:radial-gradient(circle,rgba(82,183,136,.07) 0%,transparent 70%)',
+      'transform:translate(-50%,-50%)', 'transition:opacity .4s',
+      'top:0', 'left:0', 'opacity:0'
+    ].join(';');
+    document.body.appendChild(glow);
+    var glowX = 0, glowY = 0, glowActive = false;
+    document.addEventListener('mousemove', function(e) {
+      glowX = e.clientX; glowY = e.clientY;
+      if (!glowActive) { glowActive = true; requestAnimationFrame(moveGlow); }
+    });
+    function moveGlow() {
+      glow.style.left = glowX + 'px';
+      glow.style.top  = glowY + 'px';
+      glow.style.opacity = '1';
+      glowActive = false;
+    }
+    document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
+  }
+
+  /* ── SMOOTH SCROLL FOR ANCHOR LINKS ─────────────── */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  /* ── TOPBAR SCROLL SHRINK ────────────────────────── */
+  var topbarEl = document.getElementById('topbar');
+  if (topbarEl) {
+    window.addEventListener('scroll', function() {
+      topbarEl.style.paddingTop    = window.scrollY > 60 ? '8px' : '';
+      topbarEl.style.paddingBottom = window.scrollY > 60 ? '8px' : '';
+    }, { passive: true });
+  }
+
+  /* ── BACK TO TOP ─────────────────────────────────── */
+  var bt = document.getElementById('back-top');
+  if (bt) {
+    window.addEventListener('scroll', function() {
+      bt.style.display = window.scrollY > 500 ? 'flex' : 'none';
+    }, { passive: true });
+    bt.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+
 })();
