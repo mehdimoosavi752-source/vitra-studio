@@ -10,8 +10,86 @@
   <meta property="og:image"       content="assets/vitra-hero.png"/>
   <meta property="og:type"        content="website"/>
   <meta name="twitter:card"       content="summary_large_image"/>
+  <!-- Security Meta Tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
   <link rel="stylesheet" href="styles.css"/>
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "WebDesignAgency",
+  "name": "استودیو",
+  "alternateName": "Studio",
+  "description": "طراحی سایت حرفه‌ای با پنل مدیریت اختصاصی — تحویل در ۱۴ روز",
+  "url": "https://yourdomain.com",
+  "logo": "https://yourdomain.com/assets/vitra-logo.svg",
+  "image": "https://yourdomain.com/assets/vitra-hero.webp",
+  "foundingDate": "2022",
+  "numberOfEmployees": "3",
+  "sameAs": [],
+  "areaServed": {
+    "@type": "Country",
+    "name": "Iran"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "خدمات طراحی سایت",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "طراحی سایت جدید"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "بازطراحی سایت"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "فروشگاه آنلاین"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "پنل مدیریت اختصاصی"
+        }
+      }
+    ]
+  },
+  "review": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "40",
+    "bestRating": "5"
+  }
+}
+  </script>
+  <!-- Performance: Font Preloads -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v13/Ybj--hiO9bHBbkU2uB-TB7Xm5ps.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/fraunces/v24/6NUh8FyLNQOQZAnv9ZwNjuc.woff2" as="font" type="font/woff2" crossorigin/>
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com"/>
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="canonical" href="https://yourdomain.com/"/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="alternate" hreflang="fa" href="https://yourdomain.com/"/>
+  <link rel="alternate" hreflang="en" href="https://yourdomain.com/?lang=en"/>
 </head>
 <body data-page="home">
 
@@ -28,6 +106,7 @@
     <a href="process.html"   data-fa="فرایند"   data-en="Process">فرایند</a>
     <a href="faq.html"       data-fa="سوالات"   data-en="FAQ">سوالات</a>
     <a href="about.html"     data-fa="درباره"   data-en="About">درباره</a>
+    <a href="login.html" data-fa="ورود به پنل" data-en="Sign in" style="opacity:.8">ورود به پنل</a>
     <a class="cta btn-magnetic" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
   </nav>
   <button class="lang-btn" type="button">EN</button>
@@ -77,19 +156,25 @@
 
       <div class="hero-cue active" data-cue="0">
         <span class="hero-tag" data-fa="طراحی که کار می‌کند" data-en="Design That Works">طراحی که کار می‌کند</span>
-        <h1 data-fa="ما سایت نمی‌سازیم. سیستم رشد می‌سازیم." data-en="We don't build websites. We build growth systems.">ما سایت نمی‌سازیم.<br>سیستم رشد می‌سازیم.</h1>
-        <p class="sub" data-fa="طراحی + پنل مدیریت + سئو + پشتیبانی — در یک مسیر شفاف." data-en="Design + management portal + SEO + support — in one clear path.">طراحی + پنل مدیریت + سئو + پشتیبانی — در یک مسیر شفاف.</p>
+        <h1 data-fa="آخرین باری که سایتت برات مشتری آورد، کِی بود؟" data-en="When was the last time your website brought you a client?">آخرین باری که سایتت<br>برات مشتری آورد، کِی بود؟</h1>
+        <p class="sub" data-fa="سایت شما باید مشتری جذب کند، قابل مدیریت باشد و با کسب‌وکارتان رشد کند." data-en="Your site should attract clients, be manageable, and grow with your business.">سایت شما باید مشتری جذب کند، قابل مدیریت باشد و با کسب‌وکارتان رشد کند.</p>
         <div class="hero-acts">
           <a class="btn btn-primary btn-magnetic" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
           <a class="btn btn-ghost" href="portfolio.html" data-fa="مشاهده دموها" data-en="View demos">مشاهده دموها</a>
           <span class="price-anchor" data-fa="شروع از ۱۸ میلیون تومان" data-en="From 18M toman">شروع از ۱۸ میلیون تومان</span>
         </div>
+        <div class="hero-social-proof">
+          <div class="avatars">
+            <div class="av">م</div><div class="av">س</div><div class="av">ر</div><div class="av">ن</div>
+          </div>
+          <span data-fa="+۴۰ کسب‌وکار این مسیر را رفتند" data-en="+40 businesses took this path">+۴۰ کسب‌وکار این مسیر را رفتند</span>
+        </div>
       </div>
 
       <div class="hero-cue" data-cue="1">
         <span class="hero-tag" data-fa="پنل مدیریت اختصاصی" data-en="Custom Management Portal">پنل مدیریت اختصاصی</span>
-        <h1 data-fa="بعد از تحویل، سایتت دست خودته." data-en="After launch, your site is in your hands.">بعد از تحویل،<br>سایتت دست خودته.</h1>
-        <p class="sub" data-fa="محتوا، قیمت، مشتری، تیکت — بدون نیاز به طراح." data-en="Content, pricing, clients, tickets — no developer needed.">محتوا، قیمت، مشتری، تیکت — بدون نیاز به طراح.</p>
+        <h1 data-fa="بعد از راه‌اندازی، به ما وابسته نیستید." data-en="After launch, you're not dependent on us.">بعد از راه‌اندازی،<br>به ما وابسته نیستید.</h1>
+        <p class="sub" data-fa="قیمت‌ها، متن‌ها، مشتریان و پیام‌ها را خودتان تغییر دهید. پنل ساده، بدون دانش فنی." data-en="Change prices, texts, clients and messages yourself. Simple portal, no technical knowledge needed.">قیمت‌ها، متن‌ها، مشتریان و پیام‌ها را خودتان تغییر دهید. پنل ساده، بدون دانش فنی.</p>
         <div class="hero-acts">
           <a class="btn btn-ghost" href="admin.html" data-fa="مشاهده پنل زنده" data-en="View live portal">مشاهده پنل زنده</a>
         </div>
@@ -98,7 +183,7 @@
       <div class="hero-cue" data-cue="2">
         <span class="hero-tag" data-fa="تضمین تحویل" data-en="Delivery Guarantee">تضمین تحویل</span>
         <h1 data-fa="۱۴ روز. یا ۳۰٪ برمی‌گردد." data-en="14 days. Or 30% back.">۱۴ روز.<br>یا ۳۰٪ برمی‌گردد.</h1>
-        <p class="sub" data-fa="اولین آژانس ایرانی با گارانتی زمانی مکتوب." data-en="The first Iranian agency with a written delivery guarantee.">اولین آژانس ایرانی با گارانتی زمانی مکتوب.</p>
+        <p class="sub" data-fa="قبل از شروع می‌دانید سایت کِی آماده است. دیر شد؟ سی درصد پول برمی‌گردد." data-en="Before we start, you know exactly when your site is ready. Late? 30% returns.">قبل از شروع می‌دانید سایت کِی آماده است. دیر شد؟ سی درصد پول برمی‌گردد.</p>
         <div class="hero-acts">
           <a class="btn btn-primary btn-magnetic" href="order.html" data-fa="همین الان شروع کن" data-en="Start right now">همین الان شروع کن</a>
           <a class="btn btn-ghost" href="packages.html" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</a>
@@ -135,25 +220,25 @@
 <div class="wrap sec">
   <div class="philosophy-wrap mesh-bg-dark reveal">
     <div class="philosophy-lines">
-      <div class="philosophy-line" data-fa="سایت شما باید برایتان" data-en="Your website should">سایت شما باید برایتان</div>
-      <div class="philosophy-line" data-fa="کار کند." data-en="work for you.">کار کند.</div>
-      <div class="philosophy-line" data-fa="نه فقط زیبا باشد — بلکه مشتری جذب کند، قابل مدیریت باشد و رشد کند." data-en="Not just look beautiful — but attract clients, be manageable, and grow.">نه فقط زیبا باشد — بلکه مشتری جذب کند، قابل مدیریت باشد و رشد کند.</div>
+      <div class="philosophy-line" data-fa="سایت خوب" data-en="A good website">سایت خوب</div>
+      <div class="philosophy-line" data-fa="مشتری می‌آورد." data-en="brings clients.">مشتری می‌آورد.</div>
+      <div class="philosophy-line" data-fa="وقتی کسی سایتتان را می‌بیند باید بفهمد چه می‌فروشید، چرا باید انتخاب شوید و چطور با شما کار کند. طراحی ما از همین نقطه شروع می‌شود." data-en="When someone sees your site, they should understand what you sell, why to choose you, and how to work with you. Our design starts from that point.">وقتی کسی سایتتان را می‌بیند باید بفهمد چه می‌فروشید، چرا باید انتخاب شوید و چطور با شما کار کند. طراحی ما از همین نقطه شروع می‌شود.</div>
     </div>
     <div class="philosophy-proof">
       <div class="pp-item reveal">
-        <strong>+۴۰</strong>
+        <strong data-fa="+۴۰" data-en="+40">+۴۰</strong>
         <span data-fa="پروژه در ۳ سال" data-en="projects in 3 years">پروژه در ۳ سال</span>
       </div>
       <div class="pp-item reveal">
-        <strong>۱۴</strong>
+        <strong data-fa="۱۴" data-en="14">۱۴</strong>
         <span data-fa="روز میانگین تحویل" data-en="avg. days to launch">روز میانگین تحویل</span>
       </div>
       <div class="pp-item reveal">
-        <strong>۹۶</strong>
+        <strong data-fa="۹۶" data-en="96">۹۶</strong>
         <span data-fa="درصد رضایت مشتری" data-en="% client satisfaction">درصد رضایت مشتری</span>
       </div>
       <div class="pp-item reveal">
-        <strong>۵</strong>
+        <strong data-fa="۵" data-en="5">۵</strong>
         <span data-fa="دمو زنده قابل تجربه" data-en="live clickable demos">دمو زنده قابل تجربه</span>
       </div>
     </div>
@@ -168,8 +253,8 @@
     </div>
     <div class="panel-info reveal">
       <p class="kicker" data-fa="پنل مدیریت اختصاصی" data-en="Custom Admin Portal">پنل مدیریت اختصاصی</p>
-      <h2 data-fa="پنلی که سایت را وابسته نمی‌گذارد" data-en="A portal that keeps you independent">پنلی که سایت را وابسته نمی‌گذارد</h2>
-      <p data-fa="بعد از تحویل، نیازی به طراح برای تغییرات روزمره ندارید. محتوا، قیمت، خدمات، مشتری و تیکت‌ها — همه در دست شماست." data-en="After launch, no developer needed for daily changes. Content, pricing, services, clients and tickets — all in your hands.">بعد از تحویل، نیازی به طراح برای تغییرات روزمره ندارید. محتوا، قیمت، خدمات، مشتری و تیکت‌ها — همه در دست شماست.</p>
+      <h2 data-fa="سایت شما، دست خودتان" data-en="Your site, in your hands">سایت شما، دست خودتان</h2>
+      <p data-fa="بیشتر صاحبان سایت برای یک تغییر ساده باید به طراح زنگ بزنند و منتظر بمانند. با پنل ما خودتان و همین الان تغییر می‌دهید." data-en="Most site owners have to call their designer for a simple change and wait. With our portal, you change it yourself, right now.">بیشتر صاحبان سایت برای یک تغییر ساده باید به طراح زنگ بزنند و منتظر بمانند. با پنل ما خودتان و همین الان تغییر می‌دهید.</p>
       <div class="pf-list">
         <div class="pf-item"><span class="pf-icon" aria-hidden="true">✎</span><div><b data-fa="ویرایش محتوا و قیمت" data-en="Edit content and pricing">ویرایش محتوا و قیمت</b><small data-fa="بدون نیاز به طراح" data-en="No developer needed">بدون نیاز به طراح</small></div></div>
         <div class="pf-item"><span class="pf-icon" aria-hidden="true">◎</span><div><b data-fa="سیستم تیکت پشتیبانی" data-en="Support ticket system">سیستم تیکت پشتیبانی</b><small data-fa="ارتباط منظم و قابل پیگیری" data-en="Organized and trackable">ارتباط منظم و قابل پیگیری</small></div></div>
@@ -192,13 +277,108 @@
       <p data-fa="تفاوت را با کشیدن نوار بین دو تصویر ببینید." data-en="See the difference by dragging the slider between the two images.">تفاوت را با کشیدن نوار بین دو تصویر ببینید.</p>
     </div>
   </div>
-  <div class="ba-wrap reveal" role="img" aria-label="Before and after comparison">
+    <div class="ba-wrap reveal" role="img" aria-label="Before and after comparison">
     <div class="ba-before">
-      <img src="assets/vitra-hero.png" alt="Before redesign"/>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="width:100%;height:100%;display:block">
+        <rect width="800" height="500" fill="#ddd"/>
+        <rect y="0" width="800" height="48" fill="#bbb"/>
+        <rect x="16" y="14" width="90" height="20" rx="2" fill="#999"/>
+        <rect x="560" y="16" width="50" height="16" rx="2" fill="#aaa"/>
+        <rect x="620" y="16" width="50" height="16" rx="2" fill="#aaa"/>
+        <rect x="680" y="16" width="90" height="16" rx="2" fill="#999"/>
+        <rect y="48" width="800" height="150" fill="#ccc"/>
+        <rect x="200" y="82" width="400" height="20" rx="2" fill="#aaa"/>
+        <rect x="250" y="110" width="300" height="14" rx="2" fill="#bbb"/>
+        <rect x="300" y="130" width="200" height="14" rx="2" fill="#bbb"/>
+        <rect x="330" y="158" width="140" height="28" rx="2" fill="#999"/>
+        <rect y="198" width="800" height="1" fill="#bbb"/>
+        <rect x="40" y="218" width="160" height="14" rx="2" fill="#bbb"/>
+        <rect x="40" y="240" width="180" height="10" rx="2" fill="#ccc"/>
+        <rect x="40" y="258" width="160" height="10" rx="2" fill="#ccc"/>
+        <rect x="40" y="276" width="140" height="10" rx="2" fill="#ccc"/>
+        <rect x="240" y="218" width="160" height="14" rx="2" fill="#bbb"/>
+        <rect x="240" y="240" width="180" height="10" rx="2" fill="#ccc"/>
+        <rect x="240" y="258" width="140" height="10" rx="2" fill="#ccc"/>
+        <rect x="440" y="218" width="160" height="14" rx="2" fill="#bbb"/>
+        <rect x="440" y="240" width="180" height="10" rx="2" fill="#ccc"/>
+        <rect x="440" y="258" width="140" height="10" rx="2" fill="#ccc"/>
+        <rect x="640" y="218" width="120" height="14" rx="2" fill="#bbb"/>
+        <rect x="640" y="240" width="130" height="10" rx="2" fill="#ccc"/>
+        <rect x="640" y="258" width="110" height="10" rx="2" fill="#ccc"/>
+        <rect y="320" width="800" height="1" fill="#bbb"/>
+        <rect x="40" y="340" width="720" height="12" rx="2" fill="#ccc"/>
+        <rect x="40" y="360" width="600" height="12" rx="2" fill="#ccc"/>
+        <rect x="40" y="380" width="650" height="12" rx="2" fill="#ccc"/>
+        <rect y="430" width="800" height="70" fill="#bbb"/>
+        <rect x="40" y="450" width="200" height="10" rx="2" fill="#aaa"/>
+        <rect x="40" y="468" width="150" height="8" rx="2" fill="#999"/>
+        <rect x="600" y="450" width="80" height="8" rx="2" fill="#aaa"/>
+        <rect x="690" y="450" width="70" height="8" rx="2" fill="#aaa"/>
+        <text x="400" y="408" text-anchor="middle" font-size="13" fill="#999" font-family="sans-serif">سایت قدیمی — استاتیک و بی‌روح</text>
+      </svg>
       <span class="ba-label" data-fa="قبل" data-en="Before">قبل</span>
     </div>
     <div class="ba-after">
-      <img src="assets/studio-command-hero.png" alt="After redesign"/>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" style="width:100%;height:100%;display:block">
+        <defs>
+          <radialGradient id="ag1" cx="15%" cy="25%" r="55%"><stop offset="0%" stop-color="#2d6a4f" stop-opacity=".09"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+          <radialGradient id="ag2" cx="85%" cy="75%" r="45%"><stop offset="0%" stop-color="#e76f51" stop-opacity=".07"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+        </defs>
+        <rect width="800" height="500" fill="#f5f3ef"/>
+        <rect width="800" height="500" fill="url(#ag1)"/>
+        <rect width="800" height="500" fill="url(#ag2)"/>
+        <rect y="0" width="800" height="52" fill="#2d6a4f"/>
+        <rect x="16" y="11" width="30" height="30" rx="8" fill="#52b788"/>
+        <rect x="54" y="20" width="56" height="12" rx="6" fill="rgba(255,255,255,.55)"/>
+        <rect x="450" y="17" width="48" height="18" rx="9" fill="rgba(255,255,255,.12)"/>
+        <rect x="506" y="17" width="48" height="18" rx="9" fill="rgba(255,255,255,.12)"/>
+        <rect x="562" y="17" width="48" height="18" rx="9" fill="rgba(255,255,255,.12)"/>
+        <rect x="618" y="17" width="48" height="18" rx="9" fill="rgba(255,255,255,.12)"/>
+        <rect x="678" y="14" width="108" height="24" rx="12" fill="#fff"/>
+        <rect x="694" y="20" width="76" height="12" rx="6" fill="#2d6a4f"/>
+        <rect x="40" y="82" width="200" height="8" rx="4" fill="rgba(45,106,79,.5)"/>
+        <rect x="40" y="100" width="380" height="28" rx="5" fill="#1c1a17"/>
+        <rect x="40" y="136" width="340" height="28" rx="5" fill="#1c1a17"/>
+        <rect x="40" y="176" width="280" height="13" rx="4" fill="#6b6355"/>
+        <rect x="40" y="197" width="240" height="13" rx="4" fill="#6b6355"/>
+        <rect x="40" y="228" width="138" height="38" rx="19" fill="#2d6a4f"/>
+        <rect x="186" y="228" width="118" height="38" rx="19" fill="none" stroke="#c8c3bb" stroke-width="1.5"/>
+        <rect x="312" y="235" width="156" height="24" rx="12" fill="rgba(45,106,79,.1)" stroke="rgba(45,106,79,.3)" stroke-width="1"/>
+        <rect x="490" y="72" width="280" height="210" rx="18" fill="#fff" opacity=".92"/>
+        <rect x="506" y="88" width="248" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="506" y="106" width="196" height="72" rx="10" fill="#2d6a4f" opacity=".12"/>
+        <rect x="506" y="186" width="172" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="506" y="203" width="136" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="506" y="222" width="96" height="30" rx="15" fill="#2d6a4f"/>
+        <rect y="292" width="800" height="34" fill="#fdfcfa" stroke="#ece9e3" stroke-width="1"/>
+        <circle cx="36" cy="309" r="4" fill="#2d6a4f"/>
+        <rect x="48" y="303" width="68" height="12" rx="4" fill="#ece9e3"/>
+        <circle cx="136" cy="309" r="4" fill="#2d6a4f"/>
+        <rect x="148" y="303" width="80" height="12" rx="4" fill="#ece9e3"/>
+        <circle cx="250" cy="309" r="4" fill="#2d6a4f"/>
+        <rect x="262" y="303" width="72" height="12" rx="4" fill="#ece9e3"/>
+        <circle cx="356" cy="309" r="4" fill="#2d6a4f"/>
+        <rect x="368" y="303" width="60" height="12" rx="4" fill="#ece9e3"/>
+        <rect x="30" y="342" width="164" height="72" rx="14" fill="#fff" stroke="#ece9e3" stroke-width="1"/>
+        <rect x="46" y="358" width="56" height="22" rx="4" fill="#2d6a4f" opacity=".75"/>
+        <rect x="46" y="388" width="84" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="210" y="342" width="164" height="72" rx="14" fill="#fff" stroke="#ece9e3" stroke-width="1"/>
+        <rect x="226" y="358" width="46" height="22" rx="4" fill="#2d6a4f" opacity=".75"/>
+        <rect x="226" y="388" width="94" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="390" y="342" width="164" height="72" rx="14" fill="#fff" stroke="#ece9e3" stroke-width="1"/>
+        <rect x="406" y="358" width="52" height="22" rx="4" fill="#2d6a4f" opacity=".75"/>
+        <rect x="406" y="388" width="88" height="10" rx="4" fill="#ece9e3"/>
+        <rect x="570" y="342" width="164" height="72" rx="14" fill="#fff" stroke="#ece9e3" stroke-width="1"/>
+        <rect x="586" y="358" width="64" height="22" rx="4" fill="#2d6a4f" opacity=".75"/>
+        <rect x="586" y="388" width="78" height="10" rx="4" fill="#ece9e3"/>
+        <rect y="432" width="800" height="68" fill="#1c1a17"/>
+        <rect x="36" y="450" width="96" height="10" rx="4" fill="rgba(255,255,255,.28)"/>
+        <rect x="36" y="466" width="156" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+        <rect x="490" y="450" width="78" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+        <rect x="580" y="450" width="78" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+        <rect x="670" y="450" width="78" height="8" rx="4" fill="rgba(255,255,255,.14)"/>
+        <text x="400" y="424" text-anchor="middle" font-size="13" fill="#6b6355" font-family="sans-serif">سایت جدید — مدرن، هویت‌دار، با پنل مدیریت</text>
+      </svg>
       <span class="ba-label" data-fa="بعد" data-en="After">بعد</span>
     </div>
     <div class="ba-divider"></div>
@@ -211,27 +391,27 @@
   <div class="sec-head reveal">
     <div class="left">
       <p class="kicker" data-fa="مسیرهای خدمات" data-en="Service Paths">مسیرهای خدمات</p>
-      <h2 data-fa="مسیر درست برای کسب‌وکار شما" data-en="The right path for your business">مسیر درست برای کسب‌وکار شما</h2>
-      <p data-fa="سه مسیر مشخص — نه یک پیشنهاد کلی." data-en="Three clear paths — not one generic offer.">سه مسیر مشخص — نه یک پیشنهاد کلی.</p>
+      <h2 data-fa="از کجا شروع کنیم؟" data-en="Where do we begin?">از کجا شروع کنیم؟</h2>
+      <p data-fa="بسته به وضعیتتان، یکی از این سه مسیر مناسب شماست." data-en="Depending on where you are, one of these three paths is right for you.">بسته به وضعیتتان، یکی از این سه مسیر مناسب شماست.</p>
     </div>
     <a class="more" href="services.html" data-fa="همه خدمات" data-en="All services">همه خدمات</a>
   </div>
   <div class="path-grid stagger-group">
     <article class="path-card reveal">
       <span class="path-num">۰۱</span>
-      <h3 data-fa="طراحی سایت جدید" data-en="New Website Design">طراحی سایت جدید</h3>
+      <h3 data-fa="هنوز سایت ندارید؟" data-en="No website yet?">هنوز سایت ندارید؟</h3>
       <p data-fa="ساختار کامل برای جذب مشتری — خانه، خدمات، نمونه‌کار، سوالات، فرم تماس." data-en="Complete structure for client acquisition — home, services, portfolio, FAQ, contact.">ساختار کامل برای جذب مشتری — خانه، خدمات، نمونه‌کار، سوالات، فرم تماس.</p>
       <a class="path-link" href="order.html?service=website" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
     </article>
     <article class="path-card reveal">
       <span class="path-num">۰۲</span>
-      <h3 data-fa="بازطراحی و ارتقا" data-en="Redesign and Upgrade">بازطراحی و ارتقا</h3>
+      <h3 data-fa="سایت دارید ولی کار نمی‌کند؟" data-en="Have a site that isn't working?">سایت دارید ولی کار نمی‌کند؟</h3>
       <p data-fa="ظاهر قدیمی، سرعت پایین یا نرخ تبدیل ضعیف؟ ساختار، محتوا و UX بازسازی می‌شوند." data-en="Outdated look, slow speed or low conversion? Structure, copy and UX rebuilt.">ظاهر قدیمی، سرعت پایین یا نرخ تبدیل ضعیف؟ ساختار، محتوا و UX بازسازی می‌شوند.</p>
       <a class="path-link" href="order.html?service=redesign" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
     </article>
     <article class="path-card reveal">
       <span class="path-num">۰۳</span>
-      <h3 data-fa="سیستم اختصاصی" data-en="Custom System">سیستم اختصاصی</h3>
+      <h3 data-fa="نیاز به سیستم خاص دارید؟" data-en="Need a custom system?">نیاز به سیستم خاص دارید؟</h3>
       <p data-fa="فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر." data-en="E-commerce, booking, CRM or custom portal for complex businesses.">فروشگاه، رزرو، CRM یا پنل اختصاصی برای کسب‌وکارهای پیچیده‌تر.</p>
       <a class="path-link" href="order.html?service=system" data-fa="شروع کنید" data-en="Get started">شروع کنید</a>
     </article>
@@ -243,8 +423,8 @@
   <div class="sec-head reveal">
     <div class="left">
       <p class="kicker" data-fa="نمونه‌های زنده" data-en="Live Demos">نمونه‌های زنده</p>
-      <h2 data-fa="دموهایی که می‌شود تجربه کرد" data-en="Demos you can actually experience">دموهایی که می‌شود تجربه کرد</h2>
-      <p data-fa="قابل کلیک — مثل سایت واقعی. هیچ رقیبی این را ندارد." data-en="Clickable — like a real website. No competitor has this.">قابل کلیک — مثل سایت واقعی. هیچ رقیبی این را ندارد.</p>
+      <h2 data-fa="ببینید سایتتان چه شکلی می‌شود" data-en="See what your site could look like">ببینید سایتتان چه شکلی می‌شود</h2>
+      <p data-fa="هر دمو یک سایت واقعی است. کلیک کنید، جستجو کنید، رزرو کنید — نه فقط عکس ببینید." data-en="Each demo is a real website. Click, search, book — not just look at screenshots.">هر دمو یک سایت واقعی است. کلیک کنید، جستجو کنید، رزرو کنید — نه فقط عکس ببینید.</p>
     </div>
     <a class="more" href="portfolio.html" data-fa="همه دموها" data-en="All demos">همه دموها</a>
   </div>
@@ -293,8 +473,8 @@
   <div class="sec-head reveal">
     <div class="left">
       <p class="kicker" data-fa="چرا استودیو؟" data-en="Why Studio?">چرا استودیو؟</p>
-      <h2 data-fa="مقایسه شفاف — تصمیم آسان‌تر" data-en="Transparent comparison — easier decision">مقایسه شفاف — تصمیم آسان‌تر</h2>
-      <p data-fa="مشتری همیشه این مقایسه را در ذهن دارد. ما آن را شفاف می‌کنیم." data-en="Clients always make this comparison in their heads. We make it transparent.">مشتری همیشه این مقایسه را در ذهن دارد. ما آن را شفاف می‌کنیم.</p>
+      <h2 data-fa="این سوال رو الان توی ذهنت داری، نه؟" data-en="You're probably asking this right now, aren't you?">این سوال رو الان توی ذهنت داری، نه؟</h2>
+      <p data-fa="قبل از اینکه با ما تماس بگیرید، احتمالاً این سوال را دارید. جواب صادقانه اینجاست." data-en="Before contacting us, you probably have this question. Here is the honest answer.">قبل از اینکه با ما تماس بگیرید، احتمالاً این سوال را دارید. جواب صادقانه اینجاست.</p>
     </div>
   </div>
   <div class="compare-wrap reveal">
@@ -361,7 +541,32 @@
       <span data-fa="۳ پروژه فعال" data-en="3 active projects">۳ پروژه فعال</span>
     </div>
   </div>
-  <div class="testi-grid stagger-group" data-testi-public></div>
+    <div class="testi-grid stagger-group" data-testi-public>
+      <div class="t-card reveal in">
+        <div class="t-stars">★★★★★</div>
+        <p data-fa="«سایت ما در ۱۲ روز تحویل شد. پنل مدیریت دقیقاً همان چیزی بود که می‌خواستیم — بدون نیاز به طراح.»" data-en="&quot;Our site was delivered in 12 days. The admin portal was exactly what we needed — no developer required.&quot;">«سایت ما در ۱۲ روز تحویل شد. پنل مدیریت دقیقاً همان چیزی بود که می‌خواستیم — بدون نیاز به طراح.»</p>
+        <div class="t-author">
+          <div class="t-avatar">م</div>
+          <div><b data-fa="محمد رضایی" data-en="Mohammad Rezaei">محمد رضایی</b><small data-fa="مدیر کلینیک دکتر رضایی" data-en="Director, Dr. Rezaei Clinic">مدیر کلینیک دکتر رضایی</small></div>
+        </div>
+      </div>
+      <div class="t-card reveal in">
+        <div class="t-stars">★★★★★</div>
+        <p data-fa="«ثبت‌نام آنلاین دانش‌آموزان از صفر به روزانه ۱۵ نفر رسید. پنل ساده، کاربردی و دقیقاً چیزیه که یه آموزشگاه بهش نیاز داره.»" data-en="&quot;Online student enrollment went from zero to 15 per day. Simple, practical — exactly what an academy needs.&quot;">«ثبت‌نام آنلاین دانش‌آموزان از صفر به روزانه ۱۵ نفر رسید. پنل ساده، کاربردی و دقیقاً چیزیه که یه آموزشگاه بهش نیاز داره.»</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#e76f51,#f4a261)">س</div>
+          <div><b data-fa="سارا احمدی" data-en="Sara Ahmadi">سارا احمدی</b><small data-fa="مدیر آموزشگاه نوا" data-en="Director, Nova Academy">مدیر آموزشگاه نوا</small></div>
+        </div>
+      </div>
+      <div class="t-card reveal in">
+        <div class="t-stars">★★★★★</div>
+        <p data-fa="«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه و مشتری‌ها راحت خرید می‌کنن.»" data-en="&quot;Our online store launched in 18 days. The mobile design is flawless and customers buy easily.&quot;">«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه و مشتری‌ها راحت خرید می‌کنن.»</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background:linear-gradient(135deg,#0891b2,#06b6d4)">ر</div>
+          <div><b data-fa="رضا نوری" data-en="Reza Nouri">رضا نوری</b><small data-fa="صاحب Volt Shop" data-en="Owner, Volt Shop">صاحب Volt Shop</small></div>
+        </div>
+      </div>
+    </div>
 </div>
 
 <!-- ── CASE STUDY ─────────────────────────────────── -->
@@ -369,7 +574,7 @@
   <div class="sec-head reveal">
     <div class="left">
       <p class="kicker" data-fa="نمونه کار واقعی" data-en="Real Case Study">نمونه کار واقعی</p>
-      <h2 data-fa="از صفر تا نتیجه" data-en="From zero to results">از صفر تا نتیجه</h2>
+      <h2 data-fa="یک مثال واقعی" data-en="A real example">یک مثال واقعی</h2>
     </div>
   </div>
   <div class="case-teaser reveal">
@@ -382,9 +587,9 @@
       <h3 data-fa="چطور یک ایده به ۳۰۰ رزرو ماهانه تبدیل شد" data-en="How an idea became 300 monthly bookings">چطور یک ایده به ۳۰۰ رزرو ماهانه تبدیل شد</h3>
       <p data-fa="کلاینت سیستم رزرو آنلاین نداشت. مشتریان از طریق تلفن نوبت می‌گرفتند و مدیریت سخت بود. طراحی یک مارکت‌پلیس با جستجو، رزرو، پنل مدیر و پنل سالن — در ۱۸ روز." data-en="The client had no online booking. Clients called for appointments and management was difficult. We designed a marketplace with search, booking, admin and salon portals — in 18 days.">کلاینت سیستم رزرو آنلاین نداشت. مشتریان از طریق تلفن نوبت می‌گرفتند و مدیریت سخت بود. طراحی یک مارکت‌پلیس با جستجو، رزرو، پنل مدیر و پنل سالن — در ۱۸ روز.</p>
       <div class="case-results">
-        <div class="case-result"><strong>۳۰۰</strong><span data-fa="رزرو ماهانه" data-en="monthly bookings">رزرو ماهانه</span></div>
-        <div class="case-result"><strong>۱۸</strong><span data-fa="روز تحویل" data-en="days to launch">روز تحویل</span></div>
-        <div class="case-result"><strong>۰</strong><span data-fa="تماس تلفنی (از صفر)" data-en="phone calls needed">تماس تلفنی</span></div>
+        <div class="case-result"><strong data-fa="۳۰۰" data-en="300">۳۰۰</strong><span data-fa="رزرو ماهانه" data-en="monthly bookings">رزرو ماهانه</span></div>
+        <div class="case-result"><strong data-fa="۱۸" data-en="18">۱۸</strong><span data-fa="روز تحویل" data-en="days to launch">روز تحویل</span></div>
+        <div class="case-result"><strong data-fa="۰" data-en="0">۰</strong><span data-fa="تماس تلفنی (از صفر)" data-en="phone calls needed">تماس تلفنی</span></div>
       </div>
       <a class="btn btn-primary btn-magnetic" href="demo-salon.html" data-fa="مشاهده دمو زنده" data-en="View live demo">مشاهده دمو زنده</a>
     </div>
@@ -395,8 +600,8 @@
 <div class="wrap sec">
   <div class="cta-band mesh-bg-dark reveal">
     <div>
-      <h2 data-fa="آماده‌اید سایتی بسازید که واقعاً کار کند؟" data-en="Ready to build a website that actually works?">آماده‌اید سایتی بسازید که واقعاً کار کند؟</h2>
-      <p data-fa="در کمتر از ۵ دقیقه نیاز خود را ثبت کنید — در ۲۴ ساعت با شما تماس می‌گیریم." data-en="Register your needs in under 5 minutes — we'll contact you within 24 hours.">در کمتر از ۵ دقیقه نیاز خود را ثبت کنید — در ۲۴ ساعت با شما تماس می‌گیریم.</p>
+      <h2 data-fa="بگویید چه می‌خواهید" data-en="Tell us what you need">بگویید چه می‌خواهید</h2>
+      <p data-fa="پروژه‌تان را توضیح دهید — ظرف ۲۴ ساعت با یک پیشنهاد واقعی با شما تماس می‌گیریم." data-en="Register your needs in under 5 minutes — we'll contact you within 24 hours.">پروژه‌تان را توضیح دهید — ظرف ۲۴ ساعت با یک پیشنهاد واقعی با شما تماس می‌گیریم.</p>
     </div>
     <div class="cta-acts">
       <a class="btn btn-primary btn-lg btn-magnetic" href="order.html" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</a>
@@ -410,7 +615,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <strong data-fa="استودیو" data-en="Studio">استودیو</strong>
-      <p data-fa="طراحی که کار می‌کند — سایت، پنل مدیریت، سئو و پشتیبانی." data-en="Design that works — website, portal, SEO and support.">طراحی که کار می‌کند — سایت، پنل مدیریت، سئو و پشتیبانی.</p>
+      <p data-fa="اگه سایتتان مشتری نمی‌آورد، ما کمک می‌کنیم." data-en="If your website isn't bringing clients, we can help.">اگه سایتتان مشتری نمی‌آورد، ما کمک می‌کنیم.</p>
       <div class="footer-socials">
         <a data-social-link="instagram" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
         <a data-social-link="telegram"  target="_blank" rel="noopener" aria-label="Telegram">TG</a>
@@ -444,7 +649,7 @@
   </div>
   <div class="footer-bottom">
     <span data-fa="طراحی که کار می‌کند — نه فقط زیبا به نظر می‌رسد." data-en="Design that works — not just looks beautiful.">طراحی که کار می‌کند — نه فقط زیبا به نظر می‌رسد.</span>
-    <span data-fa="ساخته‌شده در استودیو" data-en="Built in studio">ساخته‌شده در استودیو</span>
+    <span data-fa="سایت خوب مشتری می‌آورد، مدیریت دارد و با شما رشد می‌کند." data-en="A good website brings clients, is manageable, and grows with you.">سایت خوب مشتری می‌آورد، مدیریت دارد و با شما رشد می‌کند.</span>
   </div>
 </footer>
 
@@ -478,6 +683,32 @@
   </div>
 </div>
 
+<!-- ── SITE POPUP (controlled from admin) ────────── -->
+<div class="site-popup-overlay" id="site-popup-overlay">
+  <div class="site-popup" id="site-popup-box" role="dialog" aria-modal="true">
+    <button class="site-popup-close" id="site-popup-close" aria-label="Close">×</button>
+    <span class="site-popup-badge" id="site-popup-badge" style="background:rgba(45,106,79,.1);border:1px solid rgba(45,106,79,.2);color:var(--accent)"></span>
+    <h2 id="site-popup-title"></h2>
+    <p id="site-popup-body"></p>
+    <div class="site-popup-actions" id="site-popup-actions"></div>
+    <p class="site-popup-skip" id="site-popup-skip"></p>
+  </div>
+</div>
+
+
 <script src="app.js"></script>
+<script>
+(function(){
+  var mcta = document.querySelector('.mobile-cta');
+  var footer = document.querySelector('.site-footer');
+  if(!mcta || !footer) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      mcta.classList.toggle('hidden', e.isIntersecting);
+    });
+  },{threshold:0.1});
+  obs.observe(footer);
+})();
+</script>
 </body>
 </html>

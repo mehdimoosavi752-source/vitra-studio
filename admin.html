@@ -4,12 +4,28 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title data-fa="پنل مدیریت — ویترا استودیو" data-en="Admin Panel — Vitra Studio">پنل مدیریت — ویترا استودیو</title>
+  <!-- Security Meta Tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
   <link rel="stylesheet" href="styles.css"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Vitra Studio"/>
   <meta property="og:image" content="assets/vitra-hero.webp"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <!-- Performance: Font Preloads -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v13/Ybj--hiO9bHBbkU2uB-TB7Xm5ps.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/fraunces/v24/6NUh8FyLNQOQZAnv9ZwNjuc.woff2" as="font" type="font/woff2" crossorigin/>
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com"/>
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="canonical" href="https://yourdomain.com/admin.html"/>
   <meta name="robots" content="noindex,nofollow"/>
 </head>
 <body class="portal-body" data-page="admin">
@@ -32,6 +48,7 @@
     <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
     <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span></a>
     <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">شبکه‌های اجتماعی</span></a>
+    <a href="#popups"><span class="sb-icon">💬</span><span data-fa="پاپ‌آپ‌ها" data-en="Popups">پاپ‌آپ‌ها</span></a>
     <a href="#reports"><span class="sb-icon">📊</span><span data-fa="گزارش‌ها" data-en="Reports">گزارش‌ها</span></a>
   </nav>
   <div class="sb-foot">
@@ -68,6 +85,11 @@
         <div class="ps-label" data-fa="صفحات سایت" data-en="Site pages">صفحات سایت</div>
         <strong>12</strong>
         <small data-fa="فعال و منتشرشده" data-en="Active and published">فعال و منتشرشده</small>
+      </div>
+      <div class="ps-card">
+        <div class="ps-label" data-fa="پاپ‌آپ‌های فعال" data-en="Active popups">پاپ‌آپ‌های فعال</div>
+        <strong id="stat-popups">0</strong>
+        <small data-fa="در حال نمایش" data-en="Currently showing">در حال نمایش</small>
       </div>
     </div>
 
@@ -351,6 +373,118 @@
       <button class="btn btn-primary btn-sm" type="button" data-save-socials style="margin-top:14px" data-fa="ذخیره لینک‌ها" data-en="Save links">ذخیره لینک‌ها</button>
     </div>
   </section>
+
+  <!-- POPUP MANAGER -->
+  <section id="popups" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="مدیریت پاپ‌آپ‌ها" data-en="Popup Manager">مدیریت پاپ‌آپ‌ها</h2>
+      <p style="font-size:13px;margin-bottom:16px;color:var(--muted)"
+         data-fa="پاپ‌آپ‌های فعال در صفحات مشخص نمایش داده می‌شوند. می‌توانید متن، دکمه‌ها، زمان نمایش و صفحه مقصد را تعیین کنید."
+         data-en="Active popups are shown on specified pages. You can set text, buttons, trigger timing and target pages.">
+        پاپ‌آپ‌های فعال در صفحات مشخص نمایش داده می‌شوند. می‌توانید متن، دکمه‌ها، زمان نمایش و صفحه مقصد را تعیین کنید.
+      </p>
+
+      <!-- List -->
+      <div class="popup-admin-list" id="admin-popup-list"></div>
+
+      <!-- Add / Edit Form -->
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-top:8px">
+        <p class="kicker" id="popup-form-title" data-fa="افزودن پاپ‌آپ جدید" data-en="Add new popup">افزودن پاپ‌آپ جدید</p>
+        <form id="popup-form" class="popup-form" style="margin-top:14px">
+
+          <div>
+            <label data-fa="عنوان (فارسی)" data-en="Title (Persian)">عنوان (فارسی)</label>
+            <input name="ptitle" required data-fa-placeholder="عنوان پاپ‌آپ..." data-en-placeholder="Popup title..." placeholder="عنوان پاپ‌آپ..."/>
+          </div>
+          <div>
+            <label data-fa="عنوان (انگلیسی)" data-en="Title (English)">عنوان (انگلیسی)</label>
+            <input name="ptitleEn" placeholder="Popup title in English..."/>
+          </div>
+
+          <div class="pf-full">
+            <label data-fa="متن اصلی (فارسی)" data-en="Body text (Persian)">متن اصلی (فارسی)</label>
+            <textarea name="pbody" required data-fa-placeholder="توضیح پاپ‌آپ..." data-en-placeholder="Popup body text..." placeholder="توضیح پاپ‌آپ..."></textarea>
+          </div>
+          <div class="pf-full">
+            <label data-fa="متن اصلی (انگلیسی)" data-en="Body text (English)">متن اصلی (انگلیسی)</label>
+            <textarea name="pbodyEn" placeholder="Popup body in English..."></textarea>
+          </div>
+
+          <div>
+            <label data-fa="برچسب بالا (فارسی)" data-en="Badge (Persian)">برچسب بالا (فارسی)</label>
+            <input name="pbadge" placeholder="مثال: پیشنهاد ویژه"/>
+          </div>
+          <div>
+            <label data-fa="برچسب بالا (انگلیسی)" data-en="Badge (English)">برچسب بالا (انگلیسی)</label>
+            <input name="pbadgeEn" placeholder="e.g. Special offer"/>
+          </div>
+
+          <div>
+            <label data-fa="رنگ برچسب" data-en="Badge color">رنگ برچسب</label>
+            <input name="pbadgeColor" type="color" value="#e76f51" style="height:40px;padding:4px 8px"/>
+          </div>
+          <div>
+            <label data-fa="نوع نمایش (Trigger)" data-en="Display trigger">نوع نمایش (Trigger)</label>
+            <select name="ptrigger">
+              <option value="exit"    data-fa="هنگام خروج (Exit Intent)"   data-en="On exit intent">هنگام خروج (Exit Intent)</option>
+              <option value="scroll50" data-fa="بعد از ۵۰٪ اسکرول"         data-en="After 50% scroll">بعد از ۵۰٪ اسکرول</option>
+              <option value="delay30" data-fa="بعد از ۳۰ ثانیه"            data-en="After 30 seconds">بعد از ۳۰ ثانیه</option>
+              <option value="delay45" data-fa="بعد از ۴۵ ثانیه"            data-en="After 45 seconds">بعد از ۴۵ ثانیه</option>
+            </select>
+          </div>
+
+          <div>
+            <label data-fa="متن دکمه اول" data-en="Button 1 text">متن دکمه اول</label>
+            <input name="pcta1text" placeholder="مثال: شروع پروژه"/>
+          </div>
+          <div>
+            <label data-fa="لینک دکمه اول" data-en="Button 1 link">لینک دکمه اول</label>
+            <input name="pcta1href" placeholder="order.html"/>
+          </div>
+
+          <div>
+            <label data-fa="متن دکمه دوم" data-en="Button 2 text">متن دکمه دوم (اختیاری)</label>
+            <input name="pcta2text" placeholder="مثال: بررسی رایگان"/>
+          </div>
+          <div>
+            <label data-fa="لینک دکمه دوم" data-en="Button 2 link">لینک دکمه دوم</label>
+            <input name="pcta2href" placeholder="audit.html"/>
+          </div>
+
+          <div>
+            <label data-fa="متن رد کردن" data-en="Skip text">متن رد کردن</label>
+            <input name="pskip" placeholder="نه ممنون, ادامه می‌دهم"/>
+          </div>
+          <div>
+            <label data-fa="وضعیت" data-en="Status">وضعیت</label>
+            <select name="pactive">
+              <option value="1" data-fa="فعال — نمایش در سایت" data-en="Active — show on site">فعال — نمایش در سایت</option>
+              <option value="0" data-fa="غیرفعال — پنهان"       data-en="Inactive — hidden">غیرفعال — پنهان</option>
+            </select>
+          </div>
+
+          <div class="pf-full">
+            <label data-fa="صفحات نمایش (با کاما جدا کنید)" data-en="Display pages (comma separated)">
+              صفحات نمایش — با کاما جدا کنید
+            </label>
+            <input name="ppages" placeholder="index, services, packages" value="index"/>
+            <span style="font-size:11px;color:var(--faint);margin-top:4px;display:block"
+                  data-fa="مقادیر مجاز: index, services, packages, portfolio, process, faq, about, order, audit, all"
+                  data-en="Allowed: index, services, packages, portfolio, process, faq, about, order, audit, all">
+              مقادیر مجاز: index · services · packages · portfolio · process · faq · about · order · audit · all
+            </span>
+          </div>
+
+          <div class="pf-full" style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary" type="submit" data-fa="ذخیره پاپ‌آپ" data-en="Save popup">ذخیره پاپ‌آپ</button>
+            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">پاک کردن</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
 
   <!-- REPORTS -->
   <section id="reports" style="margin-top:32px;margin-bottom:48px">

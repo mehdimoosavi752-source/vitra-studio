@@ -8,11 +8,43 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body class="demo-site demo-food-page">
+  <!-- DEMO ORDER BANNER -->
+  <div class="demo-order-bar" id="demo-bar">
+    <div>
+      <span data-fa="دمو:" data-en="Demo:">دمو:</span>
+      <strong data-fa="سایت رستوران و کافه" data-en="Restaurant & Cafe">سایت رستوران و کافه</strong>
+    </div>
+    <span class="demo-price" data-fa="از ۲۰ میلیون" data-en="از ۲۰ میلیون">از ۲۰ میلیون</span>
+    <div class="viewport-toggle" id="vp-toggle">
+      <button class="vt-btn" data-vp="mobile" title="Mobile">📱</button>
+      <button class="vt-btn" data-vp="tablet" title="Tablet">💻</button>
+      <button class="vt-btn active" data-vp="desktop" title="Desktop">🖥</button>
+    </div>
+    <div class="demo-acts">
+      <a class="btn btn-outline btn-sm" href="portfolio.html" style="color:#fff;border-color:rgba(255,255,255,.25)" data-fa="همه دموها" data-en="All demos">همه دموها</a>
+      <a class="btn btn-primary btn-sm btn-magnetic" href="order.html?demo=restaurant" data-fa="سفارش این سایت" data-en="Order this site">سفارش این سایت</a>
+    </div>
+  </div>
+  <div id="demo-frame-wrap" class="demo-frame-wrap desktop">
+
     <header class="demo-nav"><a href="portfolio.html">بازگشت به نمونه‌کارها</a><b>رستوران و رزرو</b><a class="btn btn-primary" href="index.html#contact">درخواست مشابه</a></header>
     <main>
       <section class="demo-hero-page"><div><small>منو و رزرو</small><h1>رستوران با منوی پویا، رزرو میز و پیشنهاد روز</h1><p>دموی مناسب کافه و رستوران که می‌خواهد منو، عکس، قیمت، رزرو و سفارش سریع را آنلاین کند.</p><a class="btn btn-primary" href="#menu">مشاهده منو</a></div><div class="food-visual"><i></i><i></i><i></i></div></section>
       <section id="menu" class="demo-section demo-three"><article><h2>پاستا ویژه</h2><strong>۳۸۰ هزار</strong><p>قیمت و عکس قابل تغییر.</p></article><article><h2>پیتزا روز</h2><strong>۴۲۰ هزار</strong><p>پیشنهاد ویژه صفحه اول.</p></article><article><h2>رزرو میز</h2><strong>آنلاین</strong><p>فرم رزرو و پیام تایید.</p></article></section>
       <section class="demo-section demo-feature"><h2>قابلیت‌های این دمو</h2><div><span>ویرایش منو</span><span>قیمت غذا</span><span>رزرو میز</span><span>سفارش آنلاین</span><span>پیشنهاد روز</span></div></section>
     </main>
-  </body>
+    </div><!-- /demo-frame-wrap -->
+  <script>
+  // Viewport toggle
+  var btns = document.querySelectorAll('[data-vp]');
+  var wrap = document.getElementById('demo-frame-wrap');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      wrap.className = 'demo-frame-wrap ' + b.dataset.vp;
+    });
+  });
+  </script>
+</body>
 </html>

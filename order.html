@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title data-fa="شروع پروژه — ویترا استودیو" data-en="Start Your Project — Vitra Studio">شروع پروژه — ویترا استودیو</title>
   <meta name="description" data-fa-content="در کمتر از ۵ دقیقه نیاز پروژه‌تان را ثبت کنید — طراحی سایت، فروشگاه، رزرو آنلاین یا پنل مدیریت. در ۲۴ ساعت با شما تماس می‌گیریم." data-en-content="Register your project needs in under 5 minutes — website, online shop, booking system or admin portal. We'll contact you within 24 hours." content="در کمتر از ۵ دقیقه نیاز پروژه‌تان را ثبت کنید — طراحی سایت، فروشگاه، رزرو آنلاین یا پنل مدیریت. در ۲۴ ساعت با شما تماس می‌گیریم."/>
+  <!-- Security Meta Tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
   <link rel="stylesheet" href="styles.css"/>
   
@@ -14,6 +19,19 @@
   <meta property="og:site_name" content="Vitra Studio"/>
   <meta property="og:image" content="https://vitrastudio.ir/assets/vitra-hero.webp"/>
   <meta name="twitter:card" content="summary_large_image"/>
+  <!-- Performance: Font Preloads -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v13/Ybj--hiO9bHBbkU2uB-TB7Xm5ps.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/fraunces/v24/6NUh8FyLNQOQZAnv9ZwNjuc.woff2" as="font" type="font/woff2" crossorigin/>
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com"/>
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="canonical" href="https://yourdomain.com/order.html"/>
+  <meta name="robots" content="index,follow"/>
+  <link rel="alternate" hreflang="fa" href="https://yourdomain.com/order.html"/>
+  <link rel="alternate" hreflang="en" href="https://yourdomain.com/order.html?lang=en"/>
 </head>
 <body data-page="order">
   <header class="topbar" id="topbar">
@@ -196,6 +214,18 @@
   </footer>
 </main>
   <button id="back-top" class="back-top" aria-label="Back to top">↑</button>
+
+<!-- Site popup -->
+<div class="site-popup-overlay" id="site-popup-overlay">
+  <div class="site-popup" id="site-popup-box" role="dialog" aria-modal="true">
+    <button class="site-popup-close" id="site-popup-close" aria-label="Close">×</button>
+    <span class="site-popup-badge" id="site-popup-badge"></span>
+    <h2 id="site-popup-title"></h2>
+    <p id="site-popup-body"></p>
+    <div class="site-popup-actions" id="site-popup-actions"></div>
+    <p class="site-popup-skip" id="site-popup-skip"></p>
+  </div>
+</div>
 
 <script src="app.js"></script>
 </body>

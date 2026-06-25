@@ -496,7 +496,8 @@
       var p = Math.min((ts - start) / duration, 1);
       var eased = 1 - Math.pow(1 - p, 3);
       var val = Math.round(eased * target);
-      el.textContent = (suffix === '%' ? '' : '+') + val.toLocaleString('fa-IR') + suffix;
+      var locale = document.documentElement.lang === 'en' ? 'en-US' : 'fa-IR';
+      el.textContent = (suffix === '%' ? '' : (locale === 'en-US' ? '+' : '+')) + val.toLocaleString(locale) + suffix;
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -673,5 +674,237 @@
     });
   }
 
+
+
+
+  /* ── POPUP MANAGER SYSTEM ──────────────────────────
+     localStorage key: 's-popups' → array of popup objects
+     Each: { id, title, body, badge, cta1Text, cta1Href,
+             cta2Text, cta2Href, skipText, trigger,
+             pages, active, badgeColor, shown }
+  ──────────────────────────────────────────────────── */
+  var POPUP_KEY = 's-popups';
+
+  function getPopups() {
+    var defaults = [
+      {
+        id: 1,
+        title: 'بررسی رایگان سایتت را دریافت کن',
+        titleEn: 'Get your free website review',
+        body: 'اگه سایت داری، در ۲۰ دقیقه بهت می‌گوییم دقیقاً چه مشکلی داره و چطور می‌توانی مشتری بیشتری از آن بگیری — کاملاً رایگان.',
+        bodyEn: "If you have a site, in 20 minutes we'll tell you what's wrong and how to get more clients — completely free.",
+        badge: 'قبل از رفتن',
+        badgeEn: 'Before you go',
+        badgeColor: '#e76f51',
+        cta1Text: 'دریافت بررسی رایگان',
+        cta1TextEn: 'Get free review',
+        cta1Href: 'audit.html',
+        cta2Text: 'شروع پروژه',
+        cta2TextEn: 'Start project',
+        cta2Href: 'order.html',
+        skipText: 'نه ممنون، ادامه می‌دهم',
+        skipTextEn: 'No thanks',
+        trigger: 'exit',   // exit | scroll50 | delay30 | delay45
+        pages: ['index'],  // index | all | services | packages | portfolio
+        active: true,
+      }
+    ];
+    try {
+      var stored = JSON.parse(localStorage.getItem(POPUP_KEY));
+      return (stored && stored.length) ? stored : defaults;
+    } catch(e) { return defaults; }
+  }
+
+  function savePopups(list) {
+    localStorage.setItem(POPUP_KEY, JSON.stringify(list));
+  }
+
+  /* ── Render admin popup list ── */
+  function renderAdminPopups() {
+    var el = document.getElementById('admin-popup-list');
+    if (!el) return;
+    var list = getPopups();
+    el.innerHTML = list.map(function(p, i) {
+      return '<div class="popup-item">' +
+        '<div>' +
+          '<div class="popup-item-title">' + p.title + '</div>' +
+          '<div class="popup-item-meta">' +
+            '<span>Trigger: <b>' + p.trigger + '</b></span>' +
+            '<span>Pages: <b>' + p.pages.join(', ') + '</b></span>' +
+            '<span class="' + (p.active ? 'tag-active' : 'tag-inactive') + '">' + (p.active ? (lang==='en'?'Active':'فعال') : (lang==='en'?'Inactive':'غیرفعال')) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="popup-item-actions">' +
+          '<button class="btn btn-outline btn-sm" onclick="editPopup(' + i + ')" data-fa="ویرایش" data-en="Edit">' + (lang==='en'?'Edit':'ویرایش') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="togglePopup(' + i + ')">' + (p.active ? (lang==='en'?'Disable':'غیرفعال') : (lang==='en'?'Enable':'فعال')) + '</button>' +
+          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deletePopup(' + i + ')">' + (lang==='en'?'Delete':'حذف') + '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('') || '<p style="font-size:13px;color:var(--faint)">' + (lang==='en'?'No popups yet.':'هنوز پاپ‌آپی تعریف نشده.') + '</p>';
+  }
+
+  window.editPopup = function(i) {
+    var list = getPopups();
+    var p = list[i];
+    if (!p) return;
+    var f = document.getElementById('popup-form');
+    if (!f) return;
+    f.querySelector('[name=ptitle]').value    = p.title || '';
+    f.querySelector('[name=ptitleEn]').value  = p.titleEn || '';
+    f.querySelector('[name=pbody]').value     = p.body || '';
+    f.querySelector('[name=pbodyEn]').value   = p.bodyEn || '';
+    f.querySelector('[name=pbadge]').value    = p.badge || '';
+    f.querySelector('[name=pbadgeEn]').value  = p.badgeEn || '';
+    f.querySelector('[name=pbadgeColor]').value = p.badgeColor || '#e76f51';
+    f.querySelector('[name=pcta1text]').value = p.cta1Text || '';
+    f.querySelector('[name=pcta1href]').value = p.cta1Href || '';
+    f.querySelector('[name=pcta2text]').value = p.cta2Text || '';
+    f.querySelector('[name=pcta2href]').value = p.cta2Href || '';
+    f.querySelector('[name=pskip]').value     = p.skipText || '';
+    f.querySelector('[name=ptrigger]').value  = p.trigger || 'exit';
+    f.querySelector('[name=ppages]').value    = (p.pages || []).join(', ');
+    f.querySelector('[name=pactive]').value   = p.active ? '1' : '0';
+    f.dataset.editId = p.id;
+    f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var title = document.getElementById('popup-form-title');
+    if (title) title.textContent = lang === 'en' ? 'Edit popup' : 'ویرایش پاپ‌آپ';
+  };
+
+  window.togglePopup = function(i) {
+    var list = getPopups();
+    if (!list[i]) return;
+    list[i].active = !list[i].active;
+    savePopups(list);
+    renderAdminPopups();
+  };
+
+  window.deletePopup = function(i) {
+    var list = getPopups();
+    var msg = lang === 'en' ? 'Delete this popup?' : 'این پاپ‌آپ حذف شود؟';
+    if (confirm(msg)) {
+      list.splice(i, 1);
+      savePopups(list);
+      renderAdminPopups();
+    }
+  };
+
+  var popupForm = document.getElementById('popup-form');
+  if (popupForm) {
+    popupForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var list = getPopups();
+      var editId = popupForm.dataset.editId ? parseInt(popupForm.dataset.editId) : null;
+      var pagesRaw = popupForm.querySelector('[name=ppages]').value;
+      var pages = pagesRaw.split(',').map(function(s){return s.trim();}).filter(Boolean);
+      var np = {
+        id:          editId || Date.now(),
+        title:       popupForm.querySelector('[name=ptitle]').value,
+        titleEn:     popupForm.querySelector('[name=ptitleEn]').value,
+        body:        popupForm.querySelector('[name=pbody]').value,
+        bodyEn:      popupForm.querySelector('[name=pbodyEn]').value,
+        badge:       popupForm.querySelector('[name=pbadge]').value,
+        badgeEn:     popupForm.querySelector('[name=pbadgeEn]').value,
+        badgeColor:  popupForm.querySelector('[name=pbadgeColor]').value,
+        cta1Text:    popupForm.querySelector('[name=pcta1text]').value,
+        cta1TextEn:  popupForm.querySelector('[name=pcta1text]').value,
+        cta1Href:    popupForm.querySelector('[name=pcta1href]').value,
+        cta2Text:    popupForm.querySelector('[name=pcta2text]').value,
+        cta2TextEn:  popupForm.querySelector('[name=pcta2text]').value,
+        cta2Href:    popupForm.querySelector('[name=pcta2href]').value,
+        skipText:    popupForm.querySelector('[name=pskip]').value,
+        skipTextEn:  popupForm.querySelector('[name=pskip]').value,
+        trigger:     popupForm.querySelector('[name=ptrigger]').value,
+        pages:       pages,
+        active:      popupForm.querySelector('[name=pactive]').value === '1',
+      };
+      if (editId) {
+        var idx = list.findIndex(function(x){ return x.id === editId; });
+        if (idx >= 0) list[idx] = np; else list.unshift(np);
+      } else {
+        list.unshift(np);
+      }
+      savePopups(list);
+      renderAdminPopups();
+      popupForm.reset();
+      delete popupForm.dataset.editId;
+      var title = document.getElementById('popup-form-title');
+      if (title) title.textContent = lang === 'en' ? 'Add new popup' : 'افزودن پاپ‌آپ جدید';
+      var sub = popupForm.querySelector('[type=submit]');
+      if (sub) { sub.textContent = lang==='en'?'Saved ✓':'ذخیره شد ✓'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'ذخیره'; },2000); }
+      // update stat
+      var sc = document.getElementById('stat-popups');
+      if (sc) sc.textContent = getPopups().filter(function(p){return p.active;}).length;
+    });
+  }
+
+  renderAdminPopups();
+
+  /* ── Show popup on public pages ── */
+  var popupOverlay = document.getElementById('site-popup-overlay');
+  if (popupOverlay) {
+    var pageName = (document.body.dataset.page || 'index').toLowerCase();
+    var allPopups = getPopups();
+    var match = null;
+    for (var pi = 0; pi < allPopups.length; pi++) {
+      var pp = allPopups[pi];
+      if (!pp.active) continue;
+      if (pp.pages.indexOf('all') < 0 && pp.pages.indexOf(pageName) < 0) continue;
+      var shownKey = 's-popup-shown-' + pp.id;
+      if (sessionStorage.getItem(shownKey)) continue;
+      match = pp; break;
+    }
+
+    if (match) {
+      function showSitePopup(p) {
+        var isEn = lang === 'en';
+        var badge   = document.getElementById('site-popup-badge');
+        var titleEl = document.getElementById('site-popup-title');
+        var bodyEl  = document.getElementById('site-popup-body');
+        var acts    = document.getElementById('site-popup-actions');
+        var skip    = document.getElementById('site-popup-skip');
+        if (badge) { badge.textContent = isEn ? (p.badgeEn||p.badge) : p.badge; badge.style.background = (p.badgeColor||'#e76f51') + '18'; badge.style.borderColor = (p.badgeColor||'#e76f51') + '30'; badge.style.color = p.badgeColor||'#e76f51'; }
+        if (titleEl) titleEl.textContent = isEn ? (p.titleEn||p.title) : p.title;
+        if (bodyEl)  bodyEl.textContent  = isEn ? (p.bodyEn||p.body)   : p.body;
+        if (acts) {
+          acts.innerHTML = '';
+          if (p.cta1Text) { var a1 = document.createElement('a'); a1.className='btn btn-primary'; a1.href=p.cta1Href||'#'; a1.textContent=isEn?(p.cta1TextEn||p.cta1Text):p.cta1Text; acts.appendChild(a1); }
+          if (p.cta2Text) { var a2 = document.createElement('a'); a2.className='btn btn-outline'; a2.href=p.cta2Href||'#'; a2.textContent=isEn?(p.cta2TextEn||p.cta2Text):p.cta2Text; acts.appendChild(a2); }
+        }
+        if (skip) { skip.textContent = isEn ? (p.skipTextEn||p.skipText||'Close') : (p.skipText||'بستن'); }
+        sessionStorage.setItem('s-popup-shown-' + p.id, '1');
+        popupOverlay.classList.add('show');
+      }
+
+      function closeSitePopup() { popupOverlay.classList.remove('show'); }
+      document.getElementById('site-popup-close').addEventListener('click', closeSitePopup);
+      document.getElementById('site-popup-skip').addEventListener('click', closeSitePopup);
+      popupOverlay.addEventListener('click', function(e){ if(e.target===popupOverlay) closeSitePopup(); });
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeSitePopup(); });
+
+      // trigger
+      if (match.trigger === 'exit') {
+        var exitFired = false;
+        document.addEventListener('mouseleave', function(e){
+          if (e.clientY < 40 && !exitFired) { exitFired=true; setTimeout(function(){ showSitePopup(match); },200); }
+        });
+        setTimeout(function(){ if(!exitFired){ exitFired=true; showSitePopup(match); } }, 45000);
+      } else if (match.trigger === 'scroll50') {
+        window.addEventListener('scroll', function onScr(){
+          if (window.scrollY / (document.body.scrollHeight - window.innerHeight) > 0.5) {
+            window.removeEventListener('scroll', onScr);
+            showSitePopup(match);
+          }
+        }, { passive: true });
+      } else if (match.trigger === 'delay30') {
+        setTimeout(function(){ showSitePopup(match); }, 30000);
+      } else if (match.trigger === 'delay45') {
+        setTimeout(function(){ showSitePopup(match); }, 45000);
+      }
+    }
+  }
+
+  /* update popup stat in admin */
+  var sc = document.getElementById('stat-popups');
+  if (sc) sc.textContent = getPopups().filter(function(p){return p.active;}).length;
 
 })();

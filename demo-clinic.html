@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="demo-suite.css" />
   </head>
   <body class="suite-demo clinic-suite">
+  <!-- DEMO ORDER BANNER -->
+  <div class="demo-order-bar" id="demo-bar">
+    <div>
+      <span data-fa="دمو:" data-en="Demo:">دمو:</span>
+      <strong data-fa="سایت مطب و کلینیک" data-en="Clinic Website">سایت مطب و کلینیک</strong>
+    </div>
+    <span class="demo-price" data-fa="از ۲۴ میلیون" data-en="از ۲۴ میلیون">از ۲۴ میلیون</span>
+    <div class="viewport-toggle" id="vp-toggle">
+      <button class="vt-btn" data-vp="mobile" title="Mobile">📱</button>
+      <button class="vt-btn" data-vp="tablet" title="Tablet">💻</button>
+      <button class="vt-btn active" data-vp="desktop" title="Desktop">🖥</button>
+    </div>
+    <div class="demo-acts">
+      <a class="btn btn-outline btn-sm" href="portfolio.html" style="color:#fff;border-color:rgba(255,255,255,.25)" data-fa="همه دموها" data-en="All demos">همه دموها</a>
+      <a class="btn btn-primary btn-sm btn-magnetic" href="order.html?demo=clinic" data-fa="سفارش این سایت" data-en="Order this site">سفارش این سایت</a>
+    </div>
+  </div>
+  <div id="demo-frame-wrap" class="demo-frame-wrap desktop">
+
     <header class="suite-nav">
       <a class="suite-mark" href="portfolio.html">Vitra</a>
       <strong>DentaLine</strong>
@@ -92,5 +111,18 @@
       </form>
     </div>
     <script src="demo-suite.js"></script>
-  </body>
+    </div><!-- /demo-frame-wrap -->
+  <script>
+  // Viewport toggle
+  var btns = document.querySelectorAll('[data-vp]');
+  var wrap = document.getElementById('demo-frame-wrap');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      wrap.className = 'demo-frame-wrap ' + b.dataset.vp;
+    });
+  });
+  </script>
+</body>
 </html>
