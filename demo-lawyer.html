@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>دفتر حقوقی پارسا — دمو</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#1a1714;--muted:#5c5650;--faint:#9a9085;
+      --bg:#faf9f7;--panel:#ffffff;--soft:#f2f0ec;
+      --navy:#1b2d4f;--navy-l:#2a4270;--gold:#b8965a;
+      --line:rgba(26,23,20,.1);--r:12px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:Vazirmatn,Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+
+    /* ORDER BAR */
+    .demo-order-bar{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;background:var(--navy);font-size:13px;color:rgba(255,255,255,.7);flex-wrap:wrap}
+    .demo-order-bar strong{color:#fff}
+    .demo-acts{display:flex;gap:8px;margin-inline-start:auto}
+    .btn-bar-outline{padding:6px 14px;border:1px solid rgba(255,255,255,.2);border-radius:8px;font-size:12px;color:rgba(255,255,255,.7);transition:all .2s}
+    .btn-bar-outline:hover{border-color:rgba(255,255,255,.5);color:#fff}
+    .btn-bar-primary{padding:6px 14px;background:var(--gold);color:#fff;border-radius:8px;font-size:12px;font-weight:700}
+    .demo-price-badge{padding:3px 10px;border-radius:999px;font-size:10px;font-weight:800;background:rgba(184,150,90,.2);color:var(--gold);border:1px solid rgba(184,150,90,.3)}
+
+    /* NAV */
+    nav.top{background:var(--navy);padding:0 60px;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo-wrap{display:flex;align-items:center;gap:12px}
+    .logo-icon{width:36px;height:36px;border-radius:8px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px}
+    .logo-text strong{display:block;font-size:15px;font-weight:800;color:#fff}
+    .logo-text small{display:block;font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em}
+    .nav-links{display:flex;gap:24px}
+    .nav-links a{font-size:13px;color:rgba(255,255,255,.65);transition:color .2s}
+    .nav-links a:hover{color:#fff}
+    .nav-cta{padding:9px 22px;background:var(--gold);color:#fff;border-radius:8px;font-size:13px;font-weight:700;transition:opacity .2s}
+    .nav-cta:hover{opacity:.88}
+
+    /* HERO */
+    .hero{background:var(--navy);padding:90px 60px 80px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,150,90,.06) 0%,transparent 60%)}
+    /* subtle grid */
+    .hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none}
+    .hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:2}
+    .hero-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border:1px solid rgba(184,150,90,.35);border-radius:999px;font-size:11px;color:var(--gold);letter-spacing:.08em;margin-bottom:22px}
+    .hero-badge::before{content:'⚖';font-size:14px}
+    .hero h1{font-size:clamp(32px,4vw,54px);font-weight:900;line-height:1.1;color:#fff;margin-bottom:16px}
+    .hero h1 span{color:var(--gold)}
+    .hero p{font-size:15px;color:rgba(255,255,255,.6);line-height:1.85;margin-bottom:32px;max-width:440px}
+    .hero-acts{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-primary-navy{padding:13px 28px;background:var(--gold);color:#fff;border-radius:10px;font-size:14px;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
+    .btn-primary-navy:hover{opacity:.9;transform:translateY(-1px)}
+    .btn-outline-white{padding:13px 28px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);border-radius:10px;font-size:14px;font-weight:600;transition:all .2s}
+    .btn-outline-white:hover{border-color:rgba(255,255,255,.5);color:#fff}
+
+    /* Hero card */
+    .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px;backdrop-filter:blur(10px)}
+    .hc-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .hc-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .hc-row:last-child{border-bottom:none}
+    .hc-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .hc-icon.gold{background:rgba(184,150,90,.15)}
+    .hc-icon.blue{background:rgba(255,255,255,.08)}
+    .hc-info b{display:block;font-size:13px;color:#fff;margin-bottom:2px}
+    .hc-info span{font-size:11px;color:rgba(255,255,255,.45)}
+    .hc-status{margin-inline-start:auto;padding:3px 9px;border-radius:999px;font-size:10px;font-weight:800}
+    .hc-status.active{background:rgba(34,197,94,.15);color:#4ade80}
+    .hc-status.pending{background:rgba(251,191,36,.15);color:#fbbf24}
+
+    /* STATS STRIP */
+    .stats-strip{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0}
+    .stats-inner{max-width:1100px;margin:0 auto;display:flex}
+    .st-item{flex:1;padding:28px 24px;text-align:center;border-inline-end:1px solid var(--line)}
+    .st-item:last-child{border-inline-end:none}
+    .st-item strong{display:block;font-size:clamp(26px,3vw,40px);font-weight:900;color:var(--navy);line-height:1;margin-bottom:6px}
+    .st-item span{font-size:11px;color:var(--faint);letter-spacing:.06em}
+
+    /* PRACTICE AREAS */
+    .sec{padding:70px 60px;max-width:1100px;margin:0 auto}
+    .sec-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+    .sec h2{font-size:clamp(26px,3vw,40px);font-weight:900;margin-bottom:8px;line-height:1.1;color:var(--navy)}
+    .sec p.lead{font-size:14px;color:var(--muted);max-width:480px;line-height:1.8;margin-bottom:36px}
+
+    .practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .pa-card{padding:26px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);transition:all .25s;cursor:default}
+    .pa-card:hover{border-color:var(--gold);box-shadow:0 12px 36px rgba(27,45,79,.1);transform:translateY(-3px)}
+    .pa-icon{width:44px;height:44px;border-radius:12px;background:rgba(27,45,79,.07);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px}
+    .pa-card:hover .pa-icon{background:rgba(184,150,90,.12)}
+    .pa-card h3{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:8px}
+    .pa-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+    /* ATTORNEYS */
+    .attorneys{background:var(--soft);padding:70px 60px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .att-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:36px auto 0}
+    .att-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+    .att-card:hover{transform:translateY(-4px);box-shadow:0 16px 44px rgba(27,45,79,.12)}
+    .att-photo{height:200px;display:flex;align-items:center;justify-content:center;font-size:56px}
+    .att-photo.navy{background:linear-gradient(135deg,var(--navy),var(--navy-l))}
+    .att-photo.gold-bg{background:linear-gradient(135deg,#3d2a0f,#5c3e15)}
+    .att-photo.teal{background:linear-gradient(135deg,#0d2d2a,#1a4a44)}
+    .att-info{padding:20px}
+    .att-info h3{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:4px}
+    .att-info .title{font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px;display:block}
+    .att-info p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+    .att-tags{display:flex;flex-wrap:wrap;gap:6px}
+    .att-tag{padding:3px 9px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(27,45,79,.07);color:var(--navy)}
+
+    /* CONSULTATION FORM */
+    .consult{background:var(--navy);padding:70px 60px}
+    .consult-inner{max-width:800px;margin:0 auto}
+    .consult p.lead{color:rgba(255,255,255,.6);font-size:14px;margin-bottom:32px}
+    .c-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .cf-full{grid-column:1/-1}
+    .cf label{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
+    .cf input,.cf select,.cf textarea{width:100%;padding:11px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color .15s}
+    .cf input:focus,.cf select:focus,.cf textarea:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
+    .cf input::placeholder,.cf textarea::placeholder{color:rgba(255,255,255,.3)}
+    .cf textarea{min-height:100px;resize:vertical}
+    .cf select option{background:var(--navy);color:#fff}
+
+    /* TESTIMONIALS */
+    .t-wrap{padding:70px 60px;max-width:1100px;margin:0 auto}
+    .t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+    .t-card{padding:24px;border-radius:14px;background:var(--panel);border:1px solid var(--line);box-shadow:0 4px 16px rgba(27,45,79,.06)}
+    .t-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+    .t-card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:16px;font-style:italic}
+    .t-auth{display:flex;align-items:center;gap:10px}
+    .t-av{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+    .t-auth b{display:block;font-size:13px;font-weight:800;color:var(--navy)}
+    .t-auth small{font-size:11px;color:var(--faint)}
+
+    /* FOOTER */
+    footer{background:var(--navy);padding:52px 60px 28px;border-top:3px solid var(--gold)}
+    .footer-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:24px}
+    .f-brand strong{display:block;font-size:18px;font-weight:900;color:#fff;margin-bottom:8px}
+    .f-brand p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.75;max-width:240px}
+    .f-col h4{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);font-weight:800;margin-bottom:14px}
+    .f-col a{display:block;font-size:13px;color:rgba(255,255,255,.55);margin-bottom:8px;transition:color .15s}
+    .f-col a:hover{color:var(--gold)}
+    .footer-bottom-bar{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.3)}
+
+    @media(max-width:960px){
+      .hero-inner{grid-template-columns:1fr}
+      .hero-card{display:none}
+      .practice-grid{grid-template-columns:1fr}
+      .att-grid{grid-template-columns:1fr}
+      .c-form{grid-template-columns:1fr}
+      .t-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      nav.top .nav-links{display:none}
+      .sec,.booking,.consult,.t-wrap,.attorneys{padding:50px 20px}
+      .hero{padding:60px 20px}
+    }
+  </style>
+</head>
+<body>
+
+<div class="demo-order-bar">
+  <div>دمو: <strong>دفتر حقوقی و وکالت</strong></div>
+  <span class="demo-price-badge">از ۲۲ میلیون</span>
+  <div class="demo-acts">
+    <a class="btn-bar-outline" href="portfolio.html">همه دموها</a>
+    <a class="btn-bar-primary" href="order.html?demo=lawyer">سفارش این سایت</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="logo-wrap">
+    <div class="logo-icon">پ</div>
+    <div class="logo-text">
+      <strong>دفتر حقوقی پارسا</strong>
+      <small>مشاوره و وکالت</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#practice">تخصص‌ها</a>
+    <a href="#attorneys">وکلا</a>
+    <a href="#consult">مشاوره</a>
+    <a href="#">درباره ما</a>
+  </div>
+  <a class="nav-cta" href="#consult">مشاوره رایگان</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">دفتر وکالت معتبر</div>
+      <h1>حق شما را<br><span>ما دفاع می‌کنیم</span></h1>
+      <p>بیش از ۱۵ سال تجربه در پرونده‌های حقوقی، تجاری و خانوادگی. مشاوره اولیه رایگان — بدون تعهد.</p>
+      <div class="hero-acts">
+        <a class="btn-primary-navy" href="#consult">مشاوره رایگان ←</a>
+        <a class="btn-outline-white" href="#attorneys">آشنایی با وکلا</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hc-title">⚖ پرونده‌های اخیر</div>
+      <div class="hc-row">
+        <div class="hc-icon gold">🏢</div>
+        <div class="hc-info"><b>دعوای تجاری</b><span>شرکت الف vs شرکت ب</span></div>
+        <span class="hc-status active">برنده</span>
+      </div>
+      <div class="hc-row">
+        <div class="hc-icon blue">🏠</div>
+        <div class="hc-info"><b>اختلاف ملکی</b><span>پرونده انتقال سند</span></div>
+        <span class="hc-status active">برنده</span>
+      </div>
+      <div class="hc-row">
+        <div class="hc-icon gold">📋</div>
+        <div class="hc-info"><b>قرارداد کار</b><span>دعوای کارگری</span></div>
+        <span class="hc-status pending">در جریان</span>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:rgba(184,150,90,.08);border-radius:10px;border:1px solid rgba(184,150,90,.15);text-align:center">
+        <span style="font-size:12px;color:rgba(255,255,255,.55)">نرخ موفقیت</span>
+        <div style="font-size:28px;font-weight:900;color:var(--gold);margin:4px 0">۹۴٪</div>
+        <span style="font-size:11px;color:rgba(255,255,255,.35)">در ۵ سال اخیر</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="st-item"><strong>+۵۰۰</strong><span>پرونده موفق</span></div>
+    <div class="st-item"><strong>۹۴٪</strong><span>نرخ موفقیت</span></div>
+    <div class="st-item"><strong>۱۵+</strong><span>سال تجربه</span></div>
+    <div class="st-item"><strong>۳</strong><span>وکیل متخصص</span></div>
+  </div>
+</div>
+
+<!-- PRACTICE AREAS -->
+<div class="sec" id="practice">
+  <p class="sec-label">زمینه‌های تخصصی</p>
+  <h2>در چه حوزه‌هایی کمک می‌کنیم؟</h2>
+  <p class="lead">هر پرونده‌ای که داشته باشید — از اختلاف تجاری تا طلاق و حضانت — تیم ما آماده است.</p>
+  <div class="practice-grid">
+    <div class="pa-card"><div class="pa-icon">🏢</div><h3>حقوق تجاری</h3><p>قراردادها، اختلافات شرکتی، ادغام و تملیک، ثبت برند و مالکیت فکری.</p></div>
+    <div class="pa-card"><div class="pa-icon">🏠</div><h3>حقوق ملکی</h3><p>انتقال سند، اختلافات ملکی، پیش‌فروش آپارتمان، دعاوی ساختمانی.</p></div>
+    <div class="pa-card"><div class="pa-icon">👨‍👩‍👧</div><h3>حقوق خانواده</h3><p>طلاق، مهریه، حضانت فرزند، ارث و وصیت‌نامه.</p></div>
+    <div class="pa-card"><div class="pa-icon">⚖️</div><h3>دعاوی کیفری</h3><p>دفاع از متهم، شکایت کیفری، جرایم اقتصادی و سایبری.</p></div>
+    <div class="pa-card"><div class="pa-icon">💼</div><h3>حقوق کار</h3><p>دعاوی کارگری، قراردادهای کاری، اخراج، بیمه بیکاری.</p></div>
+    <div class="pa-card"><div class="pa-icon">🌍</div><h3>حقوق بین‌الملل</h3><p>قراردادهای بین‌المللی، داوری، اختلافات تجارت خارجی.</p></div>
+  </div>
+</div>
+
+<!-- ATTORNEYS -->
+<div class="attorneys" id="attorneys">
+  <div style="max-width:1100px;margin:0 auto">
+    <p class="sec-label">تیم وکلا</p>
+    <h2 style="font-size:clamp(26px,3vw,40px);font-weight:900;color:var(--navy)">با تیم ما آشنا شوید</h2>
+  </div>
+  <div class="att-grid">
+    <div class="att-card">
+      <div class="att-photo navy">👨‍⚖️</div>
+      <div class="att-info">
+        <h3>دکتر علی پارسا</h3>
+        <span class="title">وکیل پایه یک دادگستری</span>
+        <p>دکترای حقوق خصوصی از دانشگاه تهران. بیش از ۱۵ سال تخصص در دعاوی تجاری.</p>
+        <div class="att-tags"><span class="att-tag">تجاری</span><span class="att-tag">ملکی</span><span class="att-tag">قراردادها</span></div>
+      </div>
+    </div>
+    <div class="att-card">
+      <div class="att-photo gold-bg">👩‍⚖️</div>
+      <div class="att-info">
+        <h3>مریم صادقی</h3>
+        <span class="title">وکیل پایه یک دادگستری</span>
+        <p>کارشناسی ارشد حقوق خانواده. متخصص پرونده‌های طلاق، حضانت و مهریه.</p>
+        <div class="att-tags"><span class="att-tag">خانواده</span><span class="att-tag">ارث</span><span class="att-tag">طلاق</span></div>
+      </div>
+    </div>
+    <div class="att-card">
+      <div class="att-photo teal">⚖️</div>
+      <div class="att-info">
+        <h3>رضا کریمی</h3>
+        <span class="title">مشاور حقوقی ارشد</span>
+        <p>تخصص در حقوق کار و دعاوی کیفری. سابقه همکاری با شرکت‌های بزرگ.</p>
+        <div class="att-tags"><span class="att-tag">کیفری</span><span class="att-tag">کار</span><span class="att-tag">بین‌الملل</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="t-wrap">
+  <p class="sec-label">نظرات موکلان</p>
+  <h2 style="font-size:clamp(24px,3vw,38px);font-weight:900;color:var(--navy)">آنچه موکلان می‌گویند</h2>
+  <div class="t-grid">
+    <div class="t-card"><div class="t-stars">★★★★★</div><p>«دکتر پارسا پرونده ملکی پیچیده ما را در کمتر از ۳ ماه به نتیجه رساند. حرفه‌ای و قابل اعتماد.»</p><div class="t-auth"><div class="t-av">ح</div><div><b>حسین رضایی</b><small>مدیرعامل</small></div></div></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p>«خانم صادقی در پرونده حضانت فرزندم با صبر و دقت همراهم بودند. ممنونم از این تیم محترم.»</p><div class="t-auth"><div class="t-av">س</div><div><b>سارا محمدی</b><small>مراجعه‌کننده</small></div></div></div>
+    <div class="t-card"><div class="t-stars">★★★★★</div><p>«مشاوره اولیه رایگان خیلی کمک کرد. فهمیدم حقم چیه و چطور باید پیش برم. توصیه می‌کنم.»</p><div class="t-auth"><div class="t-av">ا</div><div><b>احمد کریمی</b><small>صاحب کسب‌وکار</small></div></div></div>
+  </div>
+</div>
+
+<!-- CONSULTATION FORM -->
+<div class="consult" id="consult">
+  <div class="consult-inner">
+    <p class="sec-label" style="color:var(--gold)">مشاوره رایگان</p>
+    <h2 style="font-size:clamp(26px,3vw,40px);font-weight:900;color:#fff;margin-bottom:8px">پرونده‌تان را برایمان توضیح دهید</h2>
+    <p class="lead">اولین مشاوره کاملاً رایگان است — بدون تعهد، فقط راهنمایی صادقانه.</p>
+    <div class="c-form">
+      <div class="cf"><label>نام کامل</label><input type="text" placeholder="نام و نام خانوادگی"/></div>
+      <div class="cf"><label>شماره تماس</label><input type="tel" placeholder="09..."/></div>
+      <div class="cf"><label>حوزه حقوقی</label>
+        <select><option>تجاری</option><option>ملکی</option><option>خانواده</option><option>کیفری</option><option>کار</option><option>سایر</option></select>
+      </div>
+      <div class="cf"><label>زمان ترجیحی</label>
+        <select><option>صبح (۹-۱۲)</option><option>ظهر (۱۲-۱۵)</option><option>بعدازظهر (۱۵-۱۸)</option></select>
+      </div>
+      <div class="cf cf-full"><label>توضیح پرونده</label><textarea placeholder="خلاصه‌ای از موضوع حقوقی شما..."></textarea></div>
+      <div class="cf cf-full"><a class="btn-primary-navy" href="#" style="display:inline-flex;padding:14px 32px">ثبت درخواست مشاوره →</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="f-brand">
+      <strong>دفتر حقوقی پارسا</strong>
+      <p>بیش از ۱۵ سال تجربه در دفاع از حقوق موکلان — با صداقت، دقت و تعهد.</p>
+    </div>
+    <div class="f-col"><h4>تخصص‌ها</h4><a href="#">حقوق تجاری</a><a href="#">حقوق ملکی</a><a href="#">حقوق خانواده</a><a href="#">حقوق کیفری</a></div>
+    <div class="f-col"><h4>دفتر</h4><a href="#">تهران، خیابان ولیعصر</a><a href="#">۰۲۱-XXXX-XXXX</a><a href="#">info@parsa-law.ir</a></div>
+    <div class="f-col"><h4>ساعات کاری</h4><a href="#">شنبه تا چهارشنبه</a><a href="#">۹ صبح تا ۶ عصر</a><a href="#">پنجشنبه: ۹ تا ۱</a></div>
+  </div>
+  <div class="footer-bottom-bar"><span>© ۱۴۰۴ دفتر حقوقی پارسا</span><span>طراحی‌شده با استودیو</span></div>
+</footer>
+
+</body>
+</html>

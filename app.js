@@ -907,4 +907,154 @@
   var sc = document.getElementById('stat-popups');
   if (sc) sc.textContent = getPopups().filter(function(p){return p.active;}).length;
 
+
+
+  /* ══════════════════════════════════════════════════
+     PREMIUM INTERACTIONS & ANIMATIONS
+     ══════════════════════════════════════════════════ */
+
+  /* ── Page scroll progress bar ─────────────────── */
+  var pgBar = document.createElement('div');
+  pgBar.className = 'page-progress';
+  document.body.prepend(pgBar);
+  window.addEventListener('scroll', function(){
+    var pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    pgBar.style.transform = 'scaleX(' + Math.min(1, pct) + ')';
+  }, { passive:true });
+
+  /* ── Scroll hint on hero ─────────────────────── */
+  var heroWrap = document.getElementById('hero-wrap');
+  if (heroWrap) {
+    var hint = document.createElement('div');
+    hint.className = 'scroll-hint';
+    hint.innerHTML = '<div class="scroll-hint-wheel"></div><span data-fa="اسکرول کنید" data-en="Scroll">اسکرول کنید</span>';
+    var sticky = document.getElementById('hero-sticky');
+    if (sticky) sticky.appendChild(hint);
+    window.addEventListener('scroll', function(){
+      if (window.scrollY > 80 && hint.parentNode) hint.style.opacity = '0';
+      else hint.style.opacity = '';
+    }, { passive:true });
+  }
+
+  /* ── 3D Card tilt ────────────────────────────── */
+  if (window.matchMedia('(hover:hover) and (min-width:960px)').matches) {
+    document.querySelectorAll('.path-card,.demo-card,.t-card,.pkg-card').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r   = card.getBoundingClientRect();
+        var cx  = r.left + r.width  / 2;
+        var cy  = r.top  + r.height / 2;
+        var dx  = (e.clientX - cx) / (r.width  / 2);
+        var dy  = (e.clientY - cy) / (r.height / 2);
+        card.style.transform = 'perspective(700px) rotateY(' + (dx * 4) + 'deg) rotateX(' + (-dy * 4) + 'deg) translateY(-4px)';
+        card.style.transition = 'transform .12s ease';
+        card.style.boxShadow  = '0 20px 50px rgba(28,26,23,.18)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform  = '';
+        card.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .3s';
+        card.style.boxShadow  = '';
+      });
+    });
+  }
+
+  /* ── Button ripple effect ────────────────────── */
+  document.querySelectorAll('.btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var r = btn.getBoundingClientRect();
+      var ripple = document.createElement('span');
+      var size = Math.max(r.width, r.height) * 2;
+      ripple.className = 'btn-ripple';
+      ripple.style.cssText = 'width:' + size + 'px;height:' + size + 'px;' +
+        'left:' + (e.clientX - r.left - size/2) + 'px;' +
+        'top:'  + (e.clientY - r.top  - size/2) + 'px';
+      btn.appendChild(ripple);
+      setTimeout(function(){ ripple.remove(); }, 600);
+    });
+  });
+
+  /* ── Stat glow on counter complete ──────────────── */
+  document.querySelectorAll('.stat,.pp-item').forEach(function(el){
+    var obs2 = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          setTimeout(function(){
+            e.target.classList.add('glowing');
+          }, 1200);
+          obs2.unobserve(e.target);
+        }
+      });
+    }, { threshold:.8 });
+    obs2.observe(el);
+  });
+
+  /* ── Typewriter on hero h1 cue 0 ─────────────── */
+  (function(){
+    var cue0 = document.querySelector('.hero-cue[data-cue="0"] h1');
+    if (!cue0) return;
+    var fullText = cue0.dataset[document.documentElement.lang === 'en' ? 'en' : 'fa'] || cue0.textContent;
+    var cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    var done = false;
+
+    function type(el, text, speed) {
+      if (done) return;
+      el.innerHTML = '';
+      el.appendChild(cursor);
+      var i = 0;
+      var iv = setInterval(function(){
+        if (i >= text.length) { clearInterval(iv); done = true; return; }
+        el.insertBefore(document.createTextNode(text[i]), cursor);
+        i++;
+      }, speed);
+    }
+
+    // Only run when cue becomes active
+    var twObs = new MutationObserver(function(){
+      if (cue0.closest('.hero-cue').classList.contains('active') && !done) {
+        setTimeout(function(){ type(cue0, fullText, 38); }, 300);
+      }
+    });
+    var parent = cue0.closest('.hero-cue');
+    if (parent) twObs.observe(parent, { attributes:true, attributeFilter:['class'] });
+    // Also run on page load if already active
+    if (parent && parent.classList.contains('active')) {
+      setTimeout(function(){ type(cue0, fullText, 38); }, 800);
+    }
+  })();
+
+  /* ── Demo card hover text ────────────────────── */
+  (function(){
+    var hoverTexts = {
+      'demo-salon.html':      lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+      'demo-academy.html':    lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+      'demo-clinic.html':     lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+      'demo-shop.html':       lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+      'demo-restaurant.html': lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+    };
+    document.querySelectorAll('.demo-card[href]').forEach(function(card){
+      var href = card.getAttribute('href');
+      var key  = Object.keys(hoverTexts).find(function(k){ return href && href.includes(k); });
+      if (key) card.dataset.hoverText = hoverTexts[key];
+    });
+  })();
+
+  /* ── Reveal left/right/scale for variety ──────── */
+  (function(){
+    var leftEls  = document.querySelectorAll('.reveal-left,.reveal-right,.reveal-scale');
+    if (!leftEls.length || !window.IntersectionObserver) {
+      leftEls.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var o = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); o.unobserve(e.target); }
+      });
+    },{ threshold:.12 });
+    leftEls.forEach(function(el){ o.observe(el); });
+  })();
+
+  /* ── Smooth number update on lang change ─────── */
+  var _origApply = window.__applyLang;
+
+
 })();

@@ -1177,3 +1177,167 @@ body::after {
 
 /* ── POPUP STAT IN ADMIN ────────────────────────── */
 #stat-popups { }
+
+
+/* ══════════════════════════════════════════════════
+   PREMIUM ANIMATIONS & MICRO-INTERACTIONS
+   ══════════════════════════════════════════════════ */
+
+/* ── Page load reveal ──────────────────────────── */
+@keyframes fadeUp   { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+@keyframes scaleIn  { from{opacity:0;transform:scale(.94)} to{opacity:1;transform:scale(1)} }
+@keyframes slideInR { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideInL { from{opacity:0;transform:translateX(-32px)} to{opacity:1;transform:translateX(0)} }
+@keyframes float    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes shimmer  { from{background-position:-200% 0} to{background-position:200% 0} }
+@keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes pulse-ring {
+  0%  { transform:scale(1);   opacity:.7 }
+  70% { transform:scale(1.6); opacity:0  }
+  100%{ transform:scale(1.6); opacity:0  }
+}
+
+/* ── Topbar entrance ───────────────────────────── */
+.topbar { animation: fadeIn .5s ease both }
+
+/* ── Hero cue text animations ─────────────────── */
+.hero-cue.active .hero-tag { animation: fadeUp .45s .05s ease both }
+.hero-cue.active h1        { animation: fadeUp .55s .12s ease both }
+.hero-cue.active .sub      { animation: fadeUp .55s .22s ease both }
+.hero-cue.active .hero-acts{ animation: fadeUp .55s .32s ease both }
+.hero-cue.active .hero-social-proof { animation: fadeUp .45s .44s ease both }
+
+/* ── Floating badge in hero ────────────────────── */
+.hero-tag { animation: float 4s ease-in-out infinite !important }
+.hero-cue.active .hero-tag { animation: fadeUp .45s .05s ease both, float 4s .5s ease-in-out infinite !important }
+
+/* ── Live dot pulse ring ───────────────────────── */
+.live-badge::after {
+  content:'';
+  position:absolute;
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(34,197,94,.5);
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+.live-badge { position:relative }
+
+/* ── Card hover — 3D tilt ──────────────────────── */
+.path-card, .demo-card, .t-card, .pkg-card {
+  transform-style: preserve-3d;
+  transition: transform .3s ease, box-shadow .3s ease;
+  will-change: transform;
+}
+
+/* ── Shimmer loading skeleton ──────────────────── */
+.shimmer {
+  background: linear-gradient(90deg, var(--soft) 25%, var(--panel) 50%, var(--soft) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* ── Typewriter cursor ─────────────────────────── */
+.typewriter { display:inline }
+.typewriter-cursor {
+  display:inline-block;
+  width:3px;height:1em;
+  background:rgba(255,255,255,.8);
+  margin-inline-start:2px;
+  vertical-align:text-bottom;
+  animation:blink .7s step-end infinite;
+}
+@keyframes blink { 50%{opacity:0} }
+
+/* ── Scroll progress bar (full page) ──────────── */
+.page-progress {
+  position:fixed;top:0;left:0;right:0;
+  height:2px;z-index:9999;
+  background:linear-gradient(90deg,var(--accent),var(--leaf),var(--coral));
+  transform-origin:left;
+  transform:scaleX(0);
+  transition:transform .05s linear;
+}
+
+/* ── Demo card — preview on hover ─────────────── */
+.demo-card { position:relative;overflow:hidden }
+.demo-card::after {
+  content: attr(data-hover-text);
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(45,106,79,.92),rgba(28,26,23,.88));
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;
+  opacity:0;
+  transition:opacity .25s;
+  padding:20px;text-align:center;
+  backdrop-filter:blur(2px);
+}
+.demo-card:hover::after { opacity:1 }
+
+/* ── Stat cards — glow on enter ────────────────── */
+.stat.glowing {
+  box-shadow: 0 0 0 0 rgba(82,183,136,.4);
+  animation: stat-glow 1s ease-out forwards;
+}
+@keyframes stat-glow {
+  0%  { box-shadow:0 0 0 0 rgba(82,183,136,.5) }
+  70% { box-shadow:0 0 0 14px rgba(82,183,136,0) }
+  100%{ box-shadow:0 0 0 0 rgba(82,183,136,0) }
+}
+
+/* ── Section reveal — more variety ─────────────── */
+.reveal-left  { opacity:0;transform:translateX(-28px);transition:opacity .6s ease,transform .6s ease }
+.reveal-right { opacity:0;transform:translateX(28px);transition:opacity .6s ease,transform .6s ease }
+.reveal-scale { opacity:0;transform:scale(.93);transition:opacity .6s ease,transform .6s ease }
+.reveal-left.in,.reveal-right.in,.reveal-scale.in { opacity:1;transform:none }
+
+/* ── Ticker hover pause + glow ─────────────────── */
+.ticker-inner .ti:hover {
+  color:var(--accent);
+  cursor:default;
+}
+
+/* ── Button ripple ──────────────────────────────── */
+.btn { overflow:hidden;position:relative }
+.btn-ripple {
+  position:absolute;border-radius:50%;
+  background:rgba(255,255,255,.3);
+  transform:scale(0);
+  animation:ripple .5s linear;
+  pointer-events:none;
+}
+@keyframes ripple { to{transform:scale(4);opacity:0} }
+
+/* ── Hero scroll indicator ──────────────────────── */
+.scroll-hint {
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:rgba(255,255,255,.45);font-size:11px;font-weight:600;letter-spacing:.06em;
+  animation:fadeIn 1s 2s ease both;
+  pointer-events:none;
+}
+.scroll-hint-wheel {
+  width:22px;height:34px;border-radius:999px;
+  border:1.5px solid rgba(255,255,255,.3);
+  display:flex;justify-content:center;padding-top:5px;
+}
+.scroll-hint-wheel::before {
+  content:'';width:3px;height:6px;border-radius:999px;
+  background:rgba(255,255,255,.6);
+  animation:scroll-wheel 1.8s ease-in-out infinite;
+}
+@keyframes scroll-wheel {
+  0%{transform:translateY(0);opacity:1}
+  80%{transform:translateY(10px);opacity:0}
+  100%{transform:translateY(0);opacity:0}
+}
+
+/* ── Reduced motion overrides ───────────────────── */
+@media(prefers-reduced-motion:reduce) {
+  .hero-tag, .page-progress, .typewriter-cursor { animation:none !important }
+  .hero-cue.active .hero-tag,
+  .hero-cue.active h1,
+  .hero-cue.active .sub,
+  .hero-cue.active .hero-acts { animation:none !important;opacity:1;transform:none }
+}
