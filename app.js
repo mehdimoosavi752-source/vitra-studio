@@ -8,7 +8,7 @@
   'use strict';
 
   /* ── 1. LANGUAGE ─────────────────────────────────── */
-  var lang = localStorage.getItem('s-lang') || 'fa';
+  var lang = localStorage.getItem('s-lang') || 'en';
 
   function applyLang(l) {
     lang = l;
