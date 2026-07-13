@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moodline | Shop Demo</title><meta http-equiv="X-Content-Type-Options" content="nosniff"/><meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/><meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/><meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Fraunces:opsz,wght@9..144,400..900&family=Inter:wght@400;500;600;700;800&display=swap"/>
+    <link rel="stylesheet" href="styles.css" /><link rel="canonical" href="https://vitrastudio.ir/demo-shop.html"/><meta property="og:title" content="Moodline | Shop Demo"/><meta property="og:url" content="https://vitrastudio.ir/demo-shop.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Vitra Studio"/><meta property="og:image" content="https://vitrastudio.ir/assets/og-image.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/>
+    <link rel="stylesheet" href="demo-suite.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script></head>
+  <body class="suite-demo shop-suite is-ltr">
+  <!-- DEMO ORDER BANNER -->
+  <div class="demo-order-bar" id="demo-bar">
+    <div>
+      <span data-fa="دمو:" data-en="Demo:">Demo:</span>
+      <strong data-fa="فروشگاه آنلاین" data-en="Online Shop">Online Shop</strong>
+    </div>
+    <span class="demo-price" data-fa="از ۳۵ میلیون" data-en="از ۳۵ میلیون">از ۳۵ میلیون</span>
+    <div class="viewport-toggle" id="vp-toggle">
+      <button class="vt-btn" data-vp="mobile" title="Mobile">📱</button>
+      <button class="vt-btn" data-vp="tablet" title="Tablet">💻</button>
+      <button class="vt-btn active" data-vp="desktop" title="Desktop">🖥</button>
+    </div>
+    <div class="demo-acts">
+      <a class="btn btn-outline btn-sm" href="portfolio.html" style="color:#fff;border-color:rgba(255,255,255,.25)" data-fa="همه دموها" data-en="All demos">All demos</a>
+      <a class="btn btn-primary btn-sm btn-magnetic" href="order.html?demo=shop" data-fa="سفارش این سایت" data-en="Order this site">Order this site</a>
+    </div>
+  </div>
+  <div id="demo-frame-wrap" class="demo-frame-wrap desktop">
+
+    <header class="suite-nav">
+      <a class="suite-mark" href="portfolio.html">Vitra</a>
+      <strong>Moodline</strong>
+      <nav>
+        <a href="#products" data-fa="فروشگاه" data-en="Shop">Shop</a>
+        <a href="#track" data-fa="پیگیری سفارش" data-en="Track order">Track order</a>
+      </nav>
+      <button class="cart-button" data-open-modal="shopCart"><span data-cart-count>0</span> <span data-fa="سبد" data-en="Cart">Cart</span></button>
+      <button class="lang-toggle" data-lang-toggle>EN</button>
+    </header>
+    <main>
+      <section class="shop-landing">
+        <div>
+          <span class="eyebrow" data-fa="فروشگاه پوشاک کامل" data-en="Complete fashion store">Complete fashion store</span>
+          <h1 data-fa="فروشگاه پوشاک با دسته بندی، فیلتر، رنگ، مشاهده سریع، سبد و پیگیری سفارش." data-en="Fashion store with categories, filters, colors, quick view, cart and order tracking.">Fashion store with categories, filters, colors, quick view, cart and order tracking.</h1>
+        </div>
+        <div class="order-track-mini">
+          <img src="assets/shop-hero-photo.webp" width="1536" height="1024" alt="کمپین فروشگاه پوشاک" fetchpriority="high"/>
+          <b data-fa="پیگیری سریع سفارش" data-en="Quick order tracking">Quick order tracking</b>
+          <input data-order-code placeholder="ML-2048" />
+          <button data-track-order data-fa="پیگیری" data-en="Track">Track</button>
+          <small data-track-output data-fa="کد سفارش را وارد کنید." data-en="Enter order code.">Enter order code.</small>
+        </div>
+      </section>
+      <section class="suite-section shop-controls">
+        <button class="is-active" data-shop-category="all" data-fa="همه" data-en="All">All</button>
+        <button data-shop-category="knit" data-fa="بافت" data-en="Knitwear">Knitwear</button>
+        <button data-shop-category="set" data-fa="ست" data-en="Sets">Sets</button>
+        <button data-shop-category="pants" data-fa="شلوار" data-en="Pants">Pants</button>
+        <button data-shop-category="coat" data-fa="مانتو و پالتو" data-en="Coats">Coats</button>
+        <select data-shop-sort><option value="latest">جدیدترین</option><option value="low">ارزان ترین</option><option value="high">گران ترین</option></select>
+      </section>
+      <section class="suite-section shop-grid" id="products">
+        <article class="fashion-card" data-category="knit" data-price="298000">
+          <div class="cloth-art blue"></div><h2 data-fa="بلوز یقه قایقی" data-en="Boat neck blouse">Boat neck blouse</h2><b>298.000 تومان</b>
+          <div class="swatches"><i style="background:#2563eb"></i><i style="background:#991b1b"></i><i style="background:#111"></i></div>
+          <button data-add-cart="بلوز یقه قایقی" data-price="298000" data-fa="افزودن به سبد" data-en="Add to cart">Add to cart</button><button class="ghost" data-quick-view="بلوز یقه قایقی|298.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">Quick view</button>
+        </article>
+        <article class="fashion-card" data-category="set" data-price="498000">
+          <div class="cloth-art pink"></div><h2 data-fa="ست بافت طرح ۳۱" data-en="Pattern 31 set">Pattern 31 set</h2><b>498.000 تومان</b>
+          <div class="swatches"><i style="background:#f9a8d4"></i><i style="background:#78350f"></i><i style="background:#0f172a"></i></div>
+          <button data-add-cart="ست بافت طرح ۳۱" data-price="498000" data-fa="انتخاب گزینه ها" data-en="Choose options">Choose options</button><button class="ghost" data-quick-view="ست بافت طرح ۳۱|498.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">Quick view</button>
+        </article>
+        <article class="fashion-card" data-category="pants" data-price="998000">
+          <div class="cloth-art cream"></div><h2 data-fa="شلوار بگ ایشو" data-en="Issue baggy pants">Issue baggy pants</h2><b>998.000 تومان</b>
+          <div class="swatches"><i style="background:#f5e7ce"></i><i style="background:#111"></i></div>
+          <button data-add-cart="شلوار بگ ایشو" data-price="998000" data-fa="انتخاب گزینه ها" data-en="Choose options">Choose options</button><button class="ghost" data-quick-view="شلوار بگ ایشو|998.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">Quick view</button>
+        </article>
+        <article class="fashion-card" data-category="coat" data-price="698000">
+          <div class="cloth-art black"></div><h2 data-fa="کت چرم پوست ماری" data-en="Snake texture jacket">Snake texture jacket</h2><b>698.000 تومان</b>
+          <div class="swatches"><i style="background:#fff"></i><i style="background:#111"></i></div>
+          <button data-add-cart="کت چرم پوست ماری" data-price="698000" data-fa="افزودن به سبد" data-en="Add to cart">Add to cart</button><button class="ghost" data-quick-view="کت چرم پوست ماری|698.000 تومان" data-fa="مشاهده سریع" data-en="Quick view">Quick view</button>
+        </article>
+      </section>
+      <section class="suite-section track-band" id="track">
+        <h2 data-fa="پیگیری سفارشات سایت" data-en="Track website orders">Track website orders</h2>
+        <p data-fa="نمایش وضعیت پرداخت، آماده سازی، ارسال و تحویل برای مشتری." data-en="Shows payment, packing, shipping and delivery status for customers.">Shows payment, packing, shipping and delivery status for customers.</p>
+      </section>
+
+      <section class="suite-section lookbook-section">
+        <div>
+          <h2 data-fa="لوک‌بوک و صفحه محصول واقعی" data-en="Lookbook and real product page">Lookbook and real product page</h2>
+          <p data-fa="برای نزدیک شدن به یک فروشگاه واقعی، دمو شامل بنر کمپین، مجموعه فصلی، رنگ‌بندی، سایزبندی، علاقه‌مندی و سبد خرید زنده است." data-en="To feel like a real store, the demo includes campaign banner, seasonal collection, colors, sizes, wishlist and live cart.">To feel like a real store, the demo includes campaign banner, seasonal collection, colors, sizes, wishlist and live cart.</p>
+          <div class="size-row"><button>36</button><button>38</button><button>40</button><button>42</button></div>
+        </div>
+        <div class="lookbook-visual">
+          <img src="assets/shop-hero-photo.webp" width="1536" height="1024" alt="لوک‌بوک فروشگاه پوشاک" loading="lazy"/>
+          <span>Winter Drop</span>
+        </div>
+      </section>
+
+      <section class="suite-section shop-service-row">
+        <article><b data-fa="ارسال سریع" data-en="Fast delivery">Fast delivery</b><p data-fa="اتصال به پست و پیک شهری." data-en="Postal and city courier integration.">Postal and city courier integration.</p></article>
+        <article><b data-fa="کد تخفیف" data-en="Coupons">Coupons</b><p data-fa="کمپین، درصد تخفیف و محدودیت محصول." data-en="Campaigns, percent discounts and product limits.">Campaigns, percent discounts and product limits.</p></article>
+        <article><b data-fa="پنل سفارش" data-en="Order panel">Order panel</b><p data-fa="وضعیت پرداخت، مرجوعی و فاکتور." data-en="Payment status, returns and invoice.">Payment status, returns and invoice.</p></article>
+      </section>
+    </main>
+    <div class="suite-modal" id="shopCart" aria-hidden="true"><form><button type="button" class="modal-close" data-close-modal>×</button><h2 data-fa="سبد خرید" data-en="Shopping cart">Shopping cart</h2><div data-cart-lines data-fa="سبد خالی است." data-en="Cart is empty.">Cart is empty.</div><button type="button" data-submit-demo data-fa="پرداخت آزمایشی" data-en="Demo checkout">Demo checkout</button></form></div>
+    <div class="suite-modal" id="quickView" aria-hidden="true"><form><button type="button" class="modal-close" data-close-modal>×</button><h2 data-qv-title>محصول</h2><p data-qv-price></p><button type="button" data-close-modal data-fa="بستن" data-en="Close">Close</button></form></div>
+    <script src="demo-suite.js"></script>
+    </div><!-- /demo-frame-wrap -->
+  <script>
+  // Viewport toggle
+  var btns = document.querySelectorAll('[data-vp]');
+  var wrap = document.getElementById('demo-frame-wrap');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      wrap.className = 'demo-frame-wrap ' + b.dataset.vp;
+    });
+  });
+  </script>
+</body>
+</html>

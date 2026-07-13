@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /client.html
+Disallow: /login.html
+Sitemap: https://vitrastudio.ir/sitemap.xml

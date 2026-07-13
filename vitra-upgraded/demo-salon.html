@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Velora Beauty | Salon Demo</title><meta http-equiv="X-Content-Type-Options" content="nosniff"/><meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/><meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/><meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Fraunces:opsz,wght@9..144,400..900&family=Inter:wght@400;500;600;700;800&display=swap"/>
+    <link rel="stylesheet" href="styles.css" /><link rel="canonical" href="https://vitrastudio.ir/demo-salon.html"/><meta property="og:title" content="Velora Beauty | Salon Demo"/><meta property="og:url" content="https://vitrastudio.ir/demo-salon.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Vitra Studio"/><meta property="og:image" content="https://vitrastudio.ir/assets/og-image.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/>
+    <link rel="stylesheet" href="demo-suite.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script></head>
+  <body class="suite-demo salon-suite is-ltr">
+  <!-- DEMO ORDER BANNER -->
+  <div class="demo-order-bar" id="demo-bar">
+    <div>
+      <span data-fa="دمو:" data-en="Demo:">Demo:</span>
+      <strong data-fa="مارکت‌پلیس سالن زیبایی" data-en="Beauty Salon Marketplace">Beauty Salon Marketplace</strong>
+    </div>
+    <span class="demo-price" data-fa="از ۲۸ میلیون" data-en="از ۲۸ میلیون">از ۲۸ میلیون</span>
+    <div class="viewport-toggle" id="vp-toggle">
+      <button class="vt-btn" data-vp="mobile" title="Mobile">📱</button>
+      <button class="vt-btn" data-vp="tablet" title="Tablet">💻</button>
+      <button class="vt-btn active" data-vp="desktop" title="Desktop">🖥</button>
+    </div>
+    <div class="demo-acts">
+      <a class="btn btn-outline btn-sm" href="portfolio.html" style="color:#fff;border-color:rgba(255,255,255,.25)" data-fa="همه دموها" data-en="All demos">All demos</a>
+      <a class="btn btn-primary btn-sm btn-magnetic" href="order.html?demo=salon" data-fa="سفارش این سایت" data-en="Order this site">Order this site</a>
+    </div>
+  </div>
+  <div id="demo-frame-wrap" class="demo-frame-wrap desktop">
+
+    <header class="suite-nav">
+      <a class="suite-mark" href="portfolio.html">Vitra</a>
+      <strong>Velora</strong>
+      <nav>
+        <a href="#search" data-fa="جستجو" data-en="Search">Search</a>
+        <a href="#venues" data-fa="سالن ها" data-en="Venues">Venues</a>
+        <a href="#reviews" data-fa="نظرات" data-en="Reviews">Reviews</a>
+      </nav>
+      <button class="lang-toggle" data-lang-toggle>EN</button>
+    </header>
+
+    <main>
+      <section class="salon-finder" id="search">
+        <div>
+          <span class="eyebrow" data-fa="مارکت پلیس رزرو زیبایی" data-en="Beauty booking marketplace">Beauty booking marketplace</span>
+          <h1 data-fa="رزرو سالن زیبایی با جستجوی سرویس، موقعیت، تاریخ و ساعت." data-en="Book beauty salons by service, location, date and time.">Book beauty salons by service, location, date and time.</h1>
+        </div>
+        <div class="search-panel">
+          <label><span data-fa="سرویس" data-en="Service">Service</span><input data-salon-query data-fa-placeholder="مثلا فیشیال یا میکاپ" data-en-placeholder="e.g. Facial or makeup" placeholder="e.g. Facial or makeup" /></label>
+          <label><span data-fa="شهر" data-en="City">City</span><input value="تهران" data-fa-placeholder="شهر" data-en-placeholder="City" placeholder="City" /></label>
+          <label><span data-fa="تاریخ" data-en="Date">Date</span><input type="date" /></label>
+          <label><span data-fa="ساعت" data-en="Time">Time</span><input type="time" /></label>
+          <button data-salon-search data-fa="جستجو" data-en="Search">Search</button>
+        </div>
+      </section>
+
+      <section class="suite-section salon-chips">
+        <button class="is-active" data-salon-chip="all">Beauty Salon</button>
+        <button data-salon-chip="facial">Facial</button>
+        <button data-salon-chip="makeup">Makeup</button>
+        <button data-salon-chip="wax">Waxing</button>
+        <button data-salon-chip="nail">Nail Art</button>
+        <button data-salon-chip="massage">Massage</button>
+      </section>
+
+      <section class="suite-section salon-results" id="venues">
+        <aside class="salon-map">
+          <img src="assets/salon-hero-photo.webp" width="1717" height="916" alt="فضای سالن زیبایی مدرن" fetchpriority="high"/>
+          <span data-fa="نقشه زنده" data-en="Live map">Live map</span>
+          <i></i><i></i><i></i>
+        </aside>
+        <div class="venue-list">
+          <article class="venue-card" data-salon-type="facial makeup">
+            <div class="venue-art rose"></div>
+            <div><h2>Rose Lab Beauty</h2><p data-fa="خیابان ولیعصر، تهران" data-en="Valiasr St, Tehran">Valiasr St, Tehran</p><b>5.0 - 3713 reviews</b></div>
+            <ul><li>Facial 45m</li><li>Bridal makeup</li><li>Threading</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Rose Lab Beauty" data-fa="رزرو" data-en="Book">Book</button>
+          </article>
+          <article class="venue-card" data-salon-type="nail wax">
+            <div class="venue-art pearl"></div>
+            <div><h2>Pearl Studio</h2><p data-fa="سعادت آباد، تهران" data-en="Saadat Abad, Tehran">Saadat Abad, Tehran</p><b>4.9 - 862 reviews</b></div>
+            <ul><li>Nail Art</li><li>Waxing</li><li>Skin care</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Pearl Studio" data-fa="رزرو" data-en="Book">Book</button>
+          </article>
+          <article class="venue-card" data-salon-type="massage facial">
+            <div class="venue-art jade"></div>
+            <div><h2>Jade Wellness</h2><p data-fa="الهیه، تهران" data-en="Elahiyeh, Tehran">Elahiyeh, Tehran</p><b>4.8 - 421 reviews</b></div>
+            <ul><li>Massage</li><li>Oxygen facial</li><li>Dermaplaning</li></ul>
+            <button data-open-modal="salonBooking" data-booking-title="Jade Wellness" data-fa="رزرو" data-en="Book">Book</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="suite-section reviews-wall" id="reviews">
+        <h2 data-fa="نظرات مشتریان" data-en="Customer reviews">Customer reviews</h2>
+        <p data-fa="بهترین تجربه رزرو سریع، نمایش شماره تماس، خدمات و امتیاز سالن." data-en="Fast booking, phone reveal, services and salon rating in one flow.">Fast booking, phone reveal, services and salon rating in one flow.</p>
+        <button data-show-phone data-fa="نمایش شماره تماس" data-en="Show phone number">Show phone number</button>
+        <strong data-phone-output>••• ••• •••</strong>
+      </section>
+
+      <section class="suite-section salon-editorial">
+        <div class="salon-photo-wall">
+          <div class="salon-shot shot-a"><img src="assets/salon-hero-photo.webp" width="1717" height="916" alt="گالری سالن زیبایی" loading="lazy"/></div>
+          <div class="salon-shot shot-b"><img src="assets/salon-hero-photo.webp" width="1717" height="916" alt="اتاق خدمات زیبایی" loading="lazy"/></div>
+          <div class="salon-shot shot-c"><img src="assets/salon-hero-photo.webp" width="1717" height="916" alt="میز آرایش و مراقبت پوست" loading="lazy"/></div>
+        </div>
+        <div>
+          <h2 data-fa="صفحه اختصاصی هر سالن" data-en="Dedicated page for each salon">Dedicated page for each salon</h2>
+          <p data-fa="در دمو، هر سالن می‌تواند صفحه خودش را داشته باشد: گالری، لیست قیمت، متخصص‌ها، زمان‌های خالی، قوانین کنسلی و نظرات." data-en="Each salon can have its own page: gallery, price list, specialists, available slots, cancellation rules and reviews.">Each salon can have its own page: gallery, price list, specialists, available slots, cancellation rules and reviews.</p>
+          <div class="staff-row">
+            <article><b>MN</b><span>Mina</span><small>Colorist</small></article>
+            <article><b>RV</b><span>Roya</span><small>Makeup</small></article>
+            <article><b>LA</b><span>Lara</span><small>Skin care</small></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="suite-section offer-band">
+        <h2 data-fa="پیشنهادهای امروز" data-en="Today offers">Today offers</h2>
+        <article><strong>Facial Glow</strong><span>20% OFF</span><button data-open-modal="salonBooking" data-fa="رزرو سریع" data-en="Quick book">Quick book</button></article>
+        <article><strong>Bridal Trial</strong><span>Free consult</span><button data-open-modal="salonBooking" data-fa="رزرو سریع" data-en="Quick book">Quick book</button></article>
+      </section>
+    </main>
+    <div class="suite-modal" id="salonBooking" aria-hidden="true">
+      <form>
+        <button type="button" class="modal-close" data-close-modal>×</button>
+        <h2 data-booking-heading data-fa="رزرو سالن" data-en="Book salon">Book salon</h2>
+        <select><option>Facial</option><option>Makeup</option><option>Nail Art</option></select>
+        <input type="date" />
+        <input type="time" />
+        <button type="button" data-submit-demo data-fa="رزرو ثبت شد" data-en="Booking saved">Booking saved</button>
+      </form>
+    </div>
+    <script src="demo-suite.js"></script>
+    </div><!-- /demo-frame-wrap -->
+  <script>
+  // Viewport toggle
+  var btns = document.querySelectorAll('[data-vp]');
+  var wrap = document.getElementById('demo-frame-wrap');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      wrap.className = 'demo-frame-wrap ' + b.dataset.vp;
+    });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>هتل پارسیان — دمو</title><meta http-equiv="X-Content-Type-Options" content="nosniff"/><meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/><meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/><meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Inter:wght@400;500;600;700;800&display=swap"/>
+  <style>
+    /* ── HOTEL — DARK LUXURY THEME ── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#f5f0e8;--muted:rgba(245,240,232,.6);--faint:rgba(245,240,232,.35);
+      --bg:#0a0806;--panel:#12100d;--soft:#1c1914;
+      --gold:#c9a96e;--gold-l:#e8c98a;--line:rgba(245,240,232,.1);
+      --r:14px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:Vazirmatn,Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .display{font-family:'Vazirmatn',Georgia,serif;font-weight:800}
+
+    /* NAV */
+    nav.top{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(10,8,6,.9),transparent);backdrop-filter:blur(12px)}
+    .logo{font-size:20px;font-weight:700;letter-spacing:.06em;color:var(--gold)}
+    .logo small{display:block;font-size:10px;font-weight:400;letter-spacing:.15em;color:var(--faint);text-transform:uppercase}
+    .nav-links{display:flex;gap:28px}
+    .nav-links a{font-size:13px;color:var(--muted);transition:color .2s;letter-spacing:.04em}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{padding:9px 22px;border:1px solid var(--gold);color:var(--gold);border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;transition:all .2s}
+    .nav-cta:hover{background:var(--gold);color:#0a0806}
+
+    /* HERO */
+    .hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+    .hero-bg{position:absolute;inset:0;background:
+      linear-gradient(160deg,rgba(10,8,6,.3) 0%,rgba(10,8,6,.1) 40%,rgba(10,8,6,.7) 100%),
+      linear-gradient(135deg,#1a1209 0%,#2d1f0a 30%,#1a1410 60%,#0a0806 100%)}
+    /* Decorative grid overlay */
+    .hero-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(201,169,110,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,169,110,.04) 1px,transparent 1px);background-size:60px 60px}
+    .hero-content{position:relative;z-index:2;padding:0 60px 80px;max-width:720px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(201,169,110,.3);border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+    .hero-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold)}
+    .hero h1{font-size:clamp(40px,6vw,80px);line-height:1.05;font-weight:700;margin-bottom:16px}
+    .hero h1 em{font-style:normal;color:var(--gold)}
+    .hero p{font-size:16px;color:var(--muted);line-height:1.8;max-width:480px;margin-bottom:36px}
+    .hero-acts{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-gold{padding:14px 32px;background:var(--gold);color:#0a0806;border-radius:8px;font-size:14px;font-weight:800;letter-spacing:.04em;transition:all .2s}
+    .btn-gold:hover{background:var(--gold-l)}
+    .btn-ghost-gold{padding:14px 32px;border:1px solid rgba(201,169,110,.35);color:var(--gold);border-radius:8px;font-size:14px;font-weight:600;transition:all .2s}
+    .btn-ghost-gold:hover{border-color:var(--gold);background:rgba(201,169,110,.08)}
+
+    /* SCROLL indicator */
+    .scroll-ind{position:absolute;bottom:30px;right:50px;display:flex;align-items:center;gap:10px;color:var(--faint);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+    .scroll-line{width:40px;height:1px;background:var(--gold);transform-origin:right;animation:grow-line 2s ease-in-out infinite}
+    @keyframes grow-line{0%,100%{transform:scaleX(.3)}50%{transform:scaleX(1)}}
+
+    /* STATS ROW */
+    .stats{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 60px;display:flex;gap:0}
+    .stat-item{flex:1;text-align:center;padding:0 20px;border-inline-end:1px solid var(--line)}
+    .stat-item:last-child{border-inline-end:none}
+    .stat-item strong{display:block;font-size:clamp(28px,3vw,42px);font-weight:700;color:var(--gold);font-family:'Vazirmatn',Georgia,serif;line-height:1;margin-bottom:6px}
+    .stat-item span{font-size:11px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+
+    /* ROOMS */
+    .sec{padding:80px 60px;max-width:1200px;margin:0 auto}
+    .sec-label{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+    .sec h2{font-size:clamp(28px,3.5vw,46px);font-weight:700;margin-bottom:8px;line-height:1.1}
+    .sec p.lead{font-size:15px;color:var(--muted);max-width:500px;line-height:1.8;margin-bottom:40px}
+
+    .rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .room-card{border-radius:16px;overflow:hidden;background:var(--panel);border:1px solid var(--line);transition:transform .3s,box-shadow .3s}
+    .room-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+    .room-thumb{height:220px;position:relative;overflow:hidden}
+    .room-thumb-bg{width:100%;height:100%;transition:transform .5s ease}
+    .room-card:hover .room-thumb-bg{transform:scale(1.05)}
+    .room-badge{position:absolute;top:12px;right:12px;padding:4px 11px;border-radius:999px;font-size:10px;font-weight:800;background:rgba(201,169,110,.9);color:#0a0806}
+    .room-body{padding:20px}
+    .room-body h3{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+    .room-body .room-meta{font-size:12px;color:var(--faint);margin-bottom:14px;display:flex;gap:14px}
+    .room-price{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line)}
+    .room-price .price{font-size:18px;font-weight:800;color:var(--gold)}
+    .room-price .price small{font-size:10px;font-weight:400;color:var(--faint);display:block}
+    .btn-sm-gold{padding:7px 16px;background:rgba(201,169,110,.12);border:1px solid rgba(201,169,110,.3);color:var(--gold);border-radius:8px;font-size:12px;font-weight:700;transition:all .2s}
+    .btn-sm-gold:hover{background:var(--gold);color:#0a0806}
+
+    /* AMENITIES */
+    .amenities{background:var(--panel);padding:70px 60px;border-top:1px solid var(--line)}
+    .am-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1200px;margin:36px auto 0}
+    .am-item{text-align:center;padding:28px 20px;border:1px solid var(--line);border-radius:14px;transition:border-color .2s,background .2s}
+    .am-item:hover{border-color:rgba(201,169,110,.35);background:rgba(201,169,110,.04)}
+    .am-icon{font-size:32px;margin-bottom:12px;display:block}
+    .am-item b{display:block;font-size:14px;color:var(--ink);margin-bottom:4px}
+    .am-item span{font-size:12px;color:var(--faint)}
+
+    /* BOOKING FORM */
+    .booking{background:linear-gradient(135deg,#1c1409,#0f0c07);padding:70px 60px;border-top:1px solid var(--line)}
+    .booking-inner{max-width:900px;margin:0 auto}
+    .book-form{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px;margin-top:32px;align-items:end;background:var(--panel);border:1px solid var(--line);padding:24px;border-radius:16px}
+    .book-field label{font-size:11px;color:var(--faint);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
+    .book-field input,.book-field select{width:100%;padding:11px 14px;background:var(--soft);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-size:14px;outline:none;transition:border-color .15s}
+    .book-field input:focus,.book-field select:focus{border-color:var(--gold)}
+
+    /* GALLERY */
+    .gallery{padding:70px 60px;max-width:1200px;margin:0 auto}
+    .gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:200px 200px;gap:12px}
+    .g-item{border-radius:12px;overflow:hidden}
+    .g-item:first-child{grid-row:1/3}
+    .g-item-bg{width:100%;height:100%;transition:transform .5s}
+    .g-item:hover .g-item-bg{transform:scale(1.05)}
+
+    /* FOOTER */
+    footer{background:var(--panel);border-top:1px solid var(--line);padding:50px 60px 30px}
+    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:28px}
+    .footer-brand .logo{font-size:24px;margin-bottom:12px;display:block}
+    .footer-brand p{font-size:13px;color:var(--faint);line-height:1.8;max-width:240px}
+    .footer-col h4{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+    .footer-col a{display:block;font-size:13px;color:rgba(245,240,232,.5);margin-bottom:8px;transition:color .15s}
+    .footer-col a:hover{color:var(--gold)}
+    .footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;font-size:11px;color:var(--faint)}
+
+    /* ORDER BAR */
+    .demo-order-bar{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 20px;background:rgba(10,8,6,.95);border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+    .demo-order-bar strong{color:var(--gold)}
+    .demo-acts{display:flex;gap:8px;margin-inline-start:auto}
+    .btn-outline-sm{padding:6px 14px;border:1px solid var(--line);border-radius:8px;font-size:12px;font-weight:600;color:var(--muted);transition:all .2s}
+    .btn-outline-sm:hover{border-color:var(--gold);color:var(--gold)}
+    .btn-primary-sm{padding:6px 14px;background:var(--gold);color:#0a0806;border-radius:8px;font-size:12px;font-weight:700;transition:opacity .2s}
+    .btn-primary-sm:hover{opacity:.88}
+
+    /* Gradients for room/gallery items */
+    .bg-suite{background:linear-gradient(135deg,#2d1f0a,#1a1209);display:flex;align-items:center;justify-content:center;font-size:40px}
+    .bg-deluxe{background:linear-gradient(135deg,#0d1f1a,#081510);display:flex;align-items:center;justify-content:center;font-size:40px}
+    .bg-premium{background:linear-gradient(135deg,#0a0d20,#060810);display:flex;align-items:center;justify-content:center;font-size:40px}
+    .bg-g1{background:linear-gradient(160deg,#1c1409,#2d1f0a 60%,#1a1209);height:100%;display:flex;align-items:center;justify-content:center;font-size:60px}
+    .bg-g2{background:linear-gradient(135deg,#0a0d1a,#0d1520);height:100%;display:flex;align-items:center;justify-content:center;font-size:36px}
+    .bg-g3{background:linear-gradient(135deg,#1a1209,#0f0c07);height:100%;display:flex;align-items:center;justify-content:center;font-size:36px}
+    .bg-g4{background:linear-gradient(135deg,#0d1a10,#091209);height:100%;display:flex;align-items:center;justify-content:center;font-size:36px}
+    .bg-g5{background:linear-gradient(135deg,#1a0d09,#0f0806);height:100%;display:flex;align-items:center;justify-content:center;font-size:36px}
+
+    @media(max-width:960px){
+      .rooms-grid{grid-template-columns:1fr}
+      .am-grid{grid-template-columns:repeat(2,1fr)}
+      .book-form{grid-template-columns:1fr 1fr}
+      .footer-inner{grid-template-columns:1fr 1fr}
+      .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+      .g-item:first-child{grid-row:auto}
+      nav.top .nav-links{display:none}
+    }
+  </style><link rel="canonical" href="https://vitrastudio.ir/demo-hotel.html"/><meta property="og:title" content="هتل پارسیان — دمو"/><meta property="og:url" content="https://vitrastudio.ir/demo-hotel.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Vitra Studio"/><meta property="og:image" content="https://vitrastudio.ir/assets/og-image.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script></head>
+<body>
+
+<div class="demo-order-bar">
+  <div>دمو: <strong>هتل و اقامتگاه لاکچری</strong></div>
+  <span style="padding:3px 10px;border-radius:999px;font-size:10px;font-weight:800;background:rgba(201,169,110,.15);color:#c9a96e;border:1px solid rgba(201,169,110,.25)">از ۲۸ میلیون</span>
+  <div class="demo-acts">
+    <a class="btn-outline-sm" href="portfolio.html">همه دموها</a>
+    <a class="btn-primary-sm" href="order.html?demo=hotel">سفارش این سایت</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">اقامتگاه لاکچری</div>
+    <h1 class="display">تجربه‌ای<br><em>متفاوت</em> از اقامت</h1>
+    <p>هتل پارسیان — جایی که هر جزئیات با دقت طراحی شده تا اقامتتان را فراموش‌نشدنی کند.</p>
+    <div class="hero-acts">
+      <a class="btn-gold" href="#booking">رزرو اتاق</a>
+      <a class="btn-ghost-gold" href="#rooms">مشاهده اتاق‌ها</a>
+    </div>
+  </div>
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    <span>اسکرول</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item"><strong>۱۲۰</strong><span>اتاق و سوئیت</span></div>
+  <div class="stat-item"><strong>۴.۹</strong><span>امتیاز میهمانان</span></div>
+  <div class="stat-item"><strong>۱۵</strong><span>سال تجربه</span></div>
+  <div class="stat-item"><strong>۲۴/۷</strong><span>خدمات در دسترس</span></div>
+</div>
+
+<!-- ROOMS -->
+<div class="sec" id="rooms">
+  <p class="sec-label">اتاق‌ها و سوئیت‌ها</p>
+  <h2 class="display">فضایی برای<br>استراحت واقعی</h2>
+  <p class="lead">از اتاق استاندارد تا سوئیت شاهانه — هر اتاق با متریال دست‌چین و طراحی اختصاصی.</p>
+  <div class="rooms-grid">
+    <div class="room-card">
+      <div class="room-thumb"><div class="room-thumb-bg bg-suite">🛋</div><span class="room-badge">رزرو شده</span></div>
+      <div class="room-body">
+        <h3>سوئیت رویال</h3>
+        <div class="room-meta"><span>۸۵ متر</span><span>۲ تخت</span><span>چشم‌انداز کوه</span></div>
+        <div class="room-price"><div class="price">۴.۵ میلیون<small>در شب</small></div><a class="btn-sm-gold" href="#booking">رزرو</a></div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-thumb"><div class="room-thumb-bg bg-deluxe">🪴</div></div>
+      <div class="room-body">
+        <h3>دلوکس دوتخته</h3>
+        <div class="room-meta"><span>۴۵ متر</span><span>۲ تخت</span><span>منظره باغ</span></div>
+        <div class="room-price"><div class="price">۲.۲ میلیون<small>در شب</small></div><a class="btn-sm-gold" href="#booking">رزرو</a></div>
+      </div>
+    </div>
+    <div class="room-card">
+      <div class="room-thumb"><div class="room-thumb-bg bg-premium">🌙</div></div>
+      <div class="room-body">
+        <h3>پریمیوم سینگل</h3>
+        <div class="room-meta"><span>۳۲ متر</span><span>۱ تخت</span><span>منظره شهر</span></div>
+        <div class="room-price"><div class="price">۱.۶ میلیون<small>در شب</small></div><a class="btn-sm-gold" href="#booking">رزرو</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <p class="sec-label">گالری هتل</p>
+  <div class="gallery-grid">
+    <div class="g-item"><div class="g-item-bg bg-g1">🏨</div></div>
+    <div class="g-item"><div class="g-item-bg bg-g2">🍽</div></div>
+    <div class="g-item"><div class="g-item-bg bg-g3">🏊</div></div>
+    <div class="g-item"><div class="g-item-bg bg-g4">💆</div></div>
+    <div class="g-item"><div class="g-item-bg bg-g5">☕</div></div>
+  </div>
+</div>
+
+<!-- AMENITIES -->
+<div class="amenities">
+  <div style="max-width:1200px;margin:0 auto">
+    <p class="sec-label" style="text-align:center">امکانات</p>
+    <h2 class="display" style="text-align:center;font-size:clamp(28px,3vw,44px);margin-bottom:8px">همه چیز در یک مکان</h2>
+    <div class="am-grid">
+      <div class="am-item"><span class="am-icon">🏊‍♂️</span><b>استخر روباز</b><span>۲۵ متر — تمیز و گرم</span></div>
+      <div class="am-item"><span class="am-icon">🍽️</span><b>رستوران ۵ستاره</b><span>صبحانه تا شام</span></div>
+      <div class="am-item"><span class="am-icon">💆‍♀️</span><b>سپا و ماساژ</b><span>رزرو آنلاین</span></div>
+      <div class="am-item"><span class="am-icon">🚗</span><b>پارکینگ رایگان</b><span>برای همه میهمانان</span></div>
+      <div class="am-item"><span class="am-icon">📶</span><b>WiFi نامحدود</b><span>تا ۱ گیگابیت</span></div>
+      <div class="am-item"><span class="am-icon">🏋️</span><b>سالن ورزشی</b><span>۲۴ ساعته</span></div>
+      <div class="am-item"><span class="am-icon">🎭</span><b>سالن کنفرانس</b><span>ظرفیت ۲۰۰ نفر</span></div>
+      <div class="am-item"><span class="am-icon">✈️</span><b>ترانسفر فرودگاه</b><span>رزرو از پیشخوان</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div class="booking" id="booking">
+  <div class="booking-inner">
+    <p class="sec-label">رزرو آنلاین</p>
+    <h2 class="display" style="font-size:clamp(28px,3vw,44px);margin-bottom:8px">اتاق خود را رزرو کنید</h2>
+    <p style="color:var(--muted);font-size:14px">تأیید فوری — بدون کارمزد لغو تا ۴۸ ساعت قبل</p>
+    <div class="book-form">
+      <div class="book-field"><label>ورود</label><input type="date"/></div>
+      <div class="book-field"><label>خروج</label><input type="date"/></div>
+      <div class="book-field"><label>نوع اتاق</label>
+        <select><option>سوئیت رویال</option><option>دلوکس دوتخته</option><option>پریمیوم سینگل</option></select>
+      </div>
+      <div class="book-field"><label>مهمانان</label>
+        <select><option>۱ نفر</option><option>۲ نفر</option><option>۳ نفر</option></select>
+      </div>
+      <a class="btn-gold" href="#" style="padding:11px 28px;text-align:center;font-size:14px;border-radius:10px">جستجو</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo" style="color:var(--gold)">هتل پارسیان</span>
+      <p>اقامتگاهی که تجربه را فراموش‌نشدنی می‌کند — از ۱۳۸۵ تا کنون.</p>
+    </div>
+    <div class="footer-col"><h4>اتاق‌ها</h4><a href="#">سوئیت رویال</a><a href="#">دلوکس دوتخته</a><a href="#">پریمیوم</a></div>
+    <div class="footer-col"><h4>امکانات</h4><a href="#">رستوران</a><a href="#">سپا</a><a href="#">کنفرانس</a></div>
+    <div class="footer-col"><h4>تماس</h4><a href="#">۰۲۱-XXXX-XXXX</a><a href="#">info@hotel.ir</a><a href="#">تهران، خیابان ...</a></div>
+  </div>
+  <div class="footer-bottom"><span>© ۱۴۰۴ هتل پارسیان</span><span>طراحی‌شده با استودیو</span></div>
+</footer>
+</body>
+</html>
