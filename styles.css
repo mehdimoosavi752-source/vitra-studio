@@ -560,6 +560,32 @@ body.is-ltr .display-headline {
   font-weight: 900;
 }
 
+/* ── RTL / PERSIAN INTEGRITY GUARD ───────────────────
+   Belt-and-suspenders. No matter what other rule exists anywhere in this
+   file (now or added later, in this file or a leftover cached one), Persian
+   text must never end up with non-zero letter-spacing or a font that lacks
+   Persian letterforms — both break Arabic/Persian letter-joining. This runs
+   LAST in the file and uses !important, so nothing upstream can win by
+   accident. Code/monospace elements are explicitly excluded since they
+   don't carry Persian text.
+   ------------------------------------------------------------------------ */
+body:not(.is-ltr) * {
+  letter-spacing: normal !important;
+}
+body:not(.is-ltr) h1, body:not(.is-ltr) h2, body:not(.is-ltr) h3, body:not(.is-ltr) h4,
+body:not(.is-ltr) h5, body:not(.is-ltr) h6, body:not(.is-ltr) p, body:not(.is-ltr) span,
+body:not(.is-ltr) div, body:not(.is-ltr) a, body:not(.is-ltr) button, body:not(.is-ltr) label,
+body:not(.is-ltr) li, body:not(.is-ltr) td, body:not(.is-ltr) th, body:not(.is-ltr) input,
+body:not(.is-ltr) textarea, body:not(.is-ltr) select, body:not(.is-ltr) strong, body:not(.is-ltr) em {
+  font-family: 'Vazirmatn', Tahoma, sans-serif !important;
+}
+body:not(.is-ltr) .order-code,
+body:not(.is-ltr) code,
+body:not(.is-ltr) pre {
+  font-family: monospace !important;
+  letter-spacing: .05em !important;
+}
+
 /* ── NOISE TEXTURE ───────────────────────────────── */
 body::after {
   content: '';
