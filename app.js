@@ -1813,5 +1813,83 @@
   /* ── Smooth number update on lang change ─────── */
   var _origApply = window.__applyLang;
 
+  /* ── Showcase layer: site-wide visual polish ───────── */
+  (function(){
+    document.body.classList.add('premium-showcase');
+
+    if (!document.querySelector('.ambient-stage')) {
+      var ambient = document.createElement('div');
+      ambient.className = 'ambient-stage';
+      ambient.setAttribute('aria-hidden', 'true');
+      ambient.innerHTML = '<span></span><span></span><span></span>';
+      document.body.prepend(ambient);
+    }
+
+    if (!document.querySelector('.cursor-light') && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      var light = document.createElement('div');
+      light.className = 'cursor-light';
+      light.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(light);
+      var lx = window.innerWidth / 2, ly = window.innerHeight / 2, tx = lx, ty = ly;
+      window.addEventListener('mousemove', function(e){
+        tx = e.clientX; ty = e.clientY;
+        light.style.opacity = '1';
+      }, { passive:true });
+      window.addEventListener('mouseleave', function(){ light.style.opacity = '0'; });
+      function followLight(){
+        lx += (tx - lx) * .14;
+        ly += (ty - ly) * .14;
+        light.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)';
+        requestAnimationFrame(followLight);
+      }
+      followLight();
+    }
+
+    document.querySelectorAll('main > .wrap.sec, main section, .sec, .panel-split, .form-wrap, .portal-grid, .manager-grid').forEach(function(el, i){
+      if (!el.classList.contains('showcase-block')) el.classList.add('showcase-block');
+      el.style.setProperty('--block-i', String(i % 7));
+    });
+
+    document.querySelectorAll('.path-card,.demo-card,.pkg-card,.svc-card,.t-card,.p-card,.manager-card,.ps-card,.stat,.pf-item,.faq-item,.deliverable-grid a').forEach(function(card){
+      card.classList.add('premium-card');
+      if (!card.querySelector(':scope > .card-shine')) {
+        var shine = document.createElement('span');
+        shine.className = 'card-shine';
+        shine.setAttribute('aria-hidden', 'true');
+        card.appendChild(shine);
+      }
+    });
+
+    if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+      document.querySelectorAll('.premium-card').forEach(function(card){
+        card.addEventListener('mousemove', function(e){
+          var r = card.getBoundingClientRect();
+          var x = ((e.clientX - r.left) / r.width) * 100;
+          var y = ((e.clientY - r.top) / r.height) * 100;
+          card.style.setProperty('--mx', x + '%');
+          card.style.setProperty('--my', y + '%');
+        });
+      });
+    }
+
+    document.querySelectorAll('h1,h2').forEach(function(h){
+      if (!h.closest('.portal-body') && !h.classList.contains('gradient-title')) {
+        h.classList.add('gradient-title');
+      }
+    });
+
+    var showcaseObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('showcase-in');
+          showcaseObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('.showcase-block,.premium-card,.gradient-title').forEach(function(el){
+      showcaseObserver.observe(el);
+    });
+  })();
+
 
 })();
