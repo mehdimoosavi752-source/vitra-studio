@@ -324,9 +324,10 @@
       var u = ((loginForm.querySelector('[name=username]') || loginForm.querySelector('[name=email]') || {}).value || '').trim().toLowerCase();
       var p = ((loginForm.querySelector('[name=password]') || {}).value || '').trim();
       var account = demoAccounts[u];
-      var loginScope = loginForm.dataset.loginScope || (document.body.dataset.page === 'admin-login' ? 'admin' : 'client');
+      var loginScope = loginForm.dataset.loginScope || (document.body.dataset.page === 'admin-login' ? 'admin' : 'any');
       var error = document.querySelector('[data-login-error]');
-      if (!account || account.password !== p || account.role !== loginScope) {
+      var scopeMismatch = account && loginScope !== 'any' && account.role !== loginScope;
+      if (!account || account.password !== p || scopeMismatch) {
         if (error) {
           error.hidden = false;
           error.textContent = lang === 'en' ? 'Username or password is incorrect for this portal.' : 'نام کاربری یا رمز عبور برای این پنل درست نیست.';
@@ -353,7 +354,7 @@
     if (pageName !== 'admin' && pageName !== 'client') return;
     var user = getAuthUser();
     if (!user) {
-      window.location.href = pageName === 'admin' ? 'admin-login.html' : 'login.html';
+      window.location.href = 'login.html';
       return;
     }
     if (pageName === 'admin' && user.role !== 'admin') {
@@ -415,6 +416,60 @@
   });
 
   /* ── 12. APPLY LANGUAGE ON LOAD ──────────────────── */
+  function initPortalPages() {
+    var pageName = (document.body.dataset.page || '').toLowerCase();
+    if (pageName !== 'admin' && pageName !== 'client') return;
+
+    var main = document.querySelector(pageName === 'admin' ? '.portal-main' : '.real-main');
+    var sidebar = document.querySelector(pageName === 'admin' ? '.sidebar nav' : '.real-sidebar nav');
+    if (!main || !sidebar) return;
+
+    var defaultPanel = pageName === 'admin' ? 'overview' : 'dashboard';
+    var links = Array.prototype.slice.call(sidebar.querySelectorAll('a[href^="#"]'));
+
+    function showPanel(rawId, shouldScroll) {
+      var id = (rawId || defaultPanel).replace('#', '');
+      var target = main.querySelector('#' + CSS.escape(id));
+      if (!target) {
+        id = defaultPanel;
+        target = main.querySelector('#' + CSS.escape(id));
+      }
+      if (!target) return;
+
+      main.querySelectorAll(':scope > section[id], :scope > [data-panel-for]').forEach(function(section) {
+        var belongsTo = section.getAttribute('data-panel-for');
+        var isActive = section.id === id || belongsTo === id;
+        section.classList.toggle('active-panel', isActive);
+        section.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      });
+
+      links.forEach(function(link) {
+        var active = (link.getAttribute('href') || '') === '#' + id;
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
+
+      if (shouldScroll !== false) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    links.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = (link.getAttribute('href') || '').replace('#', '') || defaultPanel;
+        if (location.hash !== '#' + id) location.hash = id;
+        showPanel(id, true);
+      });
+    });
+
+    window.addEventListener('hashchange', function() {
+      showPanel(location.hash || defaultPanel, true);
+    });
+    showPanel(location.hash || defaultPanel, false);
+  }
+
+  initPortalPages();
+
   applyLang(lang);
 
   /* ── 12b. WORDPRESS-LIKE SITE EDITOR ─────────────── */
