@@ -59,6 +59,7 @@
   document.addEventListener('click', function (e) {
     if (e.target.matches('.lang-btn, .sb-lang, #drawer-lang, .df-lang')) {
       applyLang(lang === 'fa' ? 'en' : 'fa');
+      if (typeof applySiteContent === 'function') applySiteContent();
     }
   });
 
@@ -309,6 +310,216 @@
 
   /* ── 12. APPLY LANGUAGE ON LOAD ──────────────────── */
   applyLang(lang);
+
+  /* ── 12b. WORDPRESS-LIKE SITE EDITOR ─────────────── */
+  var SITE_CONTENT_KEY = 's-site-content';
+  var THEME_KEY = 's-theme-settings';
+  var editableBlocks = {
+    'site.brand': {
+      label: 'Site identity',
+      selector: '.brand-name, .dh-brand',
+      fa: 'استودیو',
+      en: 'Studio'
+    },
+    'home.hero.tag': {
+      label: 'Homepage hero label',
+      selector: '.hero-cue[data-cue="0"] .hero-tag',
+      fa: 'طراحی دیجیتال — نسل بعدی',
+      en: 'Digital Design — Next Generation'
+    },
+    'home.hero.title': {
+      label: 'Homepage headline',
+      selector: '.hero-cue[data-cue="0"] h1',
+      fa: 'آخرین باری که سایتت برات مشتری آورد، کی بود؟',
+      en: 'When was the last time your website brought you a client?'
+    },
+    'home.hero.sub': {
+      label: 'Homepage supporting copy',
+      selector: '.hero-cue[data-cue="0"] .sub',
+      fa: 'ما سایت نمی‌سازیم — سیستم رشد می‌سازیم.',
+      en: "We don't build websites — we build growth systems."
+    },
+    'home.hero.ctaPrimary': {
+      label: 'Primary CTA',
+      selector: '.hero-cue[data-cue="0"] .hero-acts .btn-primary',
+      fa: 'شروع پروژه',
+      en: 'Start project'
+    },
+    'home.hero.ctaSecondary': {
+      label: 'Secondary CTA',
+      selector: '.hero-cue[data-cue="0"] .hero-acts .btn-ghost',
+      fa: 'مشاهده دموها',
+      en: 'View demos'
+    },
+    'home.hero.price': {
+      label: 'Price note',
+      selector: '.hero-cue[data-cue="0"] .price-anchor',
+      fa: 'شروع از ۱۸ میلیون تومان',
+      en: 'From 18M toman'
+    },
+    'seo.home.title': {
+      label: 'Homepage SEO title',
+      meta: 'title',
+      fa: 'استودیو — طراحی که کار می‌کند',
+      en: 'Studio — Design That Works'
+    },
+    'seo.home.description': {
+      label: 'Homepage SEO description',
+      meta: 'description',
+      fa: 'طراحی سایت حرفه‌ای با پنل مدیریت — تحویل در ۱۴ روز.',
+      en: 'Professional website design with an admin panel — delivered in 14 days.'
+    }
+  };
+
+  function getSiteContent() {
+    try { return JSON.parse(localStorage.getItem(SITE_CONTENT_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+
+  function saveSiteContent(data) {
+    localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(data));
+  }
+
+  function blockValue(key) {
+    var saved = getSiteContent()[key] || {};
+    var def = editableBlocks[key] || {};
+    return {
+      fa: saved.fa || def.fa || '',
+      en: saved.en || def.en || '',
+      label: def.label || key
+    };
+  }
+
+  function applySiteContent() {
+    var currentLang = document.documentElement.lang === 'fa' ? 'fa' : 'en';
+    Object.keys(editableBlocks).forEach(function(key) {
+      var def = editableBlocks[key];
+      var value = blockValue(key);
+      if (def.meta === 'title') {
+        if (document.body.dataset.page !== 'home') return;
+        document.title = value[currentLang] || value.en || value.fa || document.title;
+        return;
+      }
+      if (def.meta === 'description') {
+        if (document.body.dataset.page !== 'home') return;
+        var desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute('content', value[currentLang] || value.en || value.fa || '');
+        return;
+      }
+      document.querySelectorAll(def.selector).forEach(function(el) {
+        el.dataset.fa = value.fa;
+        el.dataset.en = value.en;
+        el.textContent = currentLang === 'en' ? value.en : value.fa;
+      });
+    });
+  }
+
+  function applyThemeSettings() {
+    var theme = {};
+    try { theme = JSON.parse(localStorage.getItem(THEME_KEY)) || {}; } catch(e) {}
+    if (theme.accent) document.documentElement.style.setProperty('--accent', theme.accent);
+    if (theme.leaf) document.documentElement.style.setProperty('--leaf', theme.leaf);
+    if (theme.radius) document.documentElement.style.setProperty('--r', theme.radius + 'px');
+  }
+
+  applyThemeSettings();
+  applySiteContent();
+
+  function initSiteEditor() {
+    var pagesList = document.querySelector('[data-wp-pages-list]');
+    if (pagesList) {
+      var pages = [
+        ['Home', 'index.html'], ['Services', 'services.html'], ['Demos', 'portfolio.html'],
+        ['Packages', 'packages.html'], ['Process', 'process.html'], ['Blog', 'blog.html'],
+        ['FAQ', 'faq.html'], ['About', 'about.html'], ['Order', 'order.html'], ['Audit', 'audit.html']
+      ];
+      pagesList.innerHTML = pages.map(function(p) {
+        return '<tr><td><strong>' + p[0] + '</strong></td><td>' + p[1] + '</td>' +
+          '<td><span class="badge badge-green">' + (lang === 'en' ? 'Published' : 'منتشرشده') + '</span></td>' +
+          '<td><a class="btn btn-outline btn-sm" href="#content">' + (lang === 'en' ? 'Edit' : 'ویرایش') + '</a> ' +
+          '<a class="btn btn-outline btn-sm" target="_blank" href="' + p[1] + '">' + (lang === 'en' ? 'View' : 'نمایش') + '</a></td></tr>';
+      }).join('');
+    }
+
+    var form = document.getElementById('site-editor-form');
+    if (form) {
+      var keyInput = form.querySelector('[name=contentKey]');
+      var faInput = form.querySelector('[name=fa]');
+      var enInput = form.querySelector('[name=en]');
+      var typeInput = form.querySelector('[name=contentType]');
+      var previewTitle = document.querySelector('[data-editor-preview-title]');
+      var previewBody = document.querySelector('[data-editor-preview-body]');
+      var status = document.querySelector('[data-site-editor-status]');
+
+      function loadBlock() {
+        var key = keyInput.value;
+        var value = blockValue(key);
+        faInput.value = value.fa;
+        enInput.value = value.en;
+        if (typeInput) typeInput.value = editableBlocks[key] && editableBlocks[key].meta ? 'SEO meta' : 'Text block';
+        if (previewTitle) previewTitle.textContent = value.label;
+        if (previewBody) previewBody.textContent = lang === 'en' ? value.en : value.fa;
+      }
+
+      keyInput.addEventListener('change', loadBlock);
+      [faInput, enInput].forEach(function(input) {
+        input.addEventListener('input', function() {
+          if (previewBody) previewBody.textContent = lang === 'en' ? enInput.value : faInput.value;
+        });
+      });
+
+      var copyEn = document.querySelector('[data-editor-copy-en]');
+      var copyFa = document.querySelector('[data-editor-copy-fa]');
+      if (copyEn) copyEn.addEventListener('click', function(){ faInput.value = enInput.value; faInput.dispatchEvent(new Event('input')); });
+      if (copyFa) copyFa.addEventListener('click', function(){ enInput.value = faInput.value; enInput.dispatchEvent(new Event('input')); });
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var all = getSiteContent();
+        all[keyInput.value] = { fa: faInput.value.trim(), en: enInput.value.trim(), updatedAt: new Date().toISOString() };
+        saveSiteContent(all);
+        applySiteContent();
+        if (status) {
+          status.textContent = lang === 'en' ? 'Saved and published in this browser.' : 'ذخیره و در همین مرورگر منتشر شد.';
+          setTimeout(function(){ status.textContent = ''; }, 2600);
+        }
+      });
+
+      var reset = document.querySelector('[data-reset-site-content]');
+      if (reset) reset.addEventListener('click', function() {
+        if (!confirm(lang === 'en' ? 'Reset edited site content?' : 'محتوای ویرایش‌شده ریست شود؟')) return;
+        localStorage.removeItem(SITE_CONTENT_KEY);
+        loadBlock();
+        applySiteContent();
+      });
+
+      loadBlock();
+    }
+
+    document.querySelectorAll('[data-asset]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var path = btn.dataset.asset;
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(path);
+        var st = document.querySelector('[data-media-status]');
+        if (st) st.textContent = (lang === 'en' ? 'Copied: ' : 'کپی شد: ') + path;
+      });
+    });
+
+    var saveTheme = document.querySelector('[data-save-theme]');
+    if (saveTheme) {
+      saveTheme.addEventListener('click', function() {
+        var accent = (document.querySelector('[data-theme-color="accent"]') || {}).value || '#2d6a4f';
+        var leaf = (document.querySelector('[data-theme-color="leaf"]') || {}).value || '#52b788';
+        var radius = (document.querySelector('[data-theme-radius]') || {}).value || 18;
+        localStorage.setItem(THEME_KEY, JSON.stringify({ accent: accent, leaf: leaf, radius: radius }));
+        applyThemeSettings();
+        saveTheme.textContent = lang === 'en' ? 'Saved ✓' : 'ذخیره شد ✓';
+        setTimeout(function(){ saveTheme.textContent = lang === 'en' ? 'Save appearance' : 'ذخیره ظاهر'; }, 1800);
+      });
+    }
+  }
+
+  initSiteEditor();
 
 
 

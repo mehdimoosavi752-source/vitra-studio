@@ -392,6 +392,36 @@ details.faq-item p{margin-top:12px;font-size:14px;line-height:1.8;padding-top:12
 .p-form textarea{min-height:80px;resize:vertical}
 .p-form label{font-size:12px;font-weight:700;display:block;margin-bottom:5px}
 
+/* WordPress-style admin upgrades */
+.wp-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.wp-card-head h2{margin-bottom:6px}
+.wp-card-head p{font-size:13px;max-width:680px}
+.wp-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.wp-pages-table strong{font-weight:800;color:var(--ink)}
+.wp-editor-grid{align-items:start}
+.wp-editor-form textarea{min-height:116px}
+.wp-preview-box{
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:linear-gradient(180deg,var(--panel),var(--soft));
+}
+.wp-preview-box small{display:block;font-size:11px;font-weight:800;color:var(--accent);margin-bottom:8px}
+.wp-preview-box strong{display:block;font-size:clamp(18px,2vw,28px);line-height:1.2;margin-bottom:8px;color:var(--ink);font-family:var(--font-display)}
+.wp-preview-box p{font-size:14px;margin:0}
+.wp-save-note{min-height:18px;font-size:12px;color:var(--accent);font-weight:700;margin-top:10px}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.media-item{
+  display:flex;flex-direction:column;gap:8px;text-align:start;
+  border:1px solid var(--line);border-radius:12px;background:var(--soft);
+  padding:8px;cursor:pointer;color:var(--ink);transition:transform .16s,box-shadow .16s,border-color .16s;
+}
+.media-item:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--shadow);border-color:rgba(45,106,79,.28)}
+.media-item img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:9px;background:var(--deep)}
+.media-item span{font-size:11px;font-weight:700;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.menu-list{display:flex;flex-wrap:wrap;gap:8px}
+.menu-list span{padding:7px 10px;border-radius:999px;background:var(--soft);border:1px solid var(--line);font-size:12px;font-weight:700;color:var(--muted)}
+
 /* mini chart */
 .mini-chart{display:flex;align-items:flex-end;gap:4px;height:60px;padding:8px 0}
 .mini-chart span{flex:1;border-radius:4px 4px 0 0;background:var(--btn);height:var(--h,50%);transition:height .4s ease}
