@@ -407,6 +407,39 @@
   }
 
   /* ── 11. MARK ACTIVE NAV ─────────────────────────── */
+  function ensureStudioLabLinks() {
+    function makeLink() {
+      var a = document.createElement('a');
+      a.href = 'studio-lab.html';
+      a.dataset.fa = 'توانایی‌ها';
+      a.dataset.en = 'Studio Lab';
+      a.textContent = 'Studio Lab';
+      return a;
+    }
+
+    function addLink(container, beforeSelector) {
+      if (!container || container.querySelector('a[href="studio-lab.html"]')) return;
+      var link = makeLink();
+      var before = beforeSelector ? container.querySelector(beforeSelector) : null;
+      if (before && before.parentNode === container) container.insertBefore(link, before);
+      else container.appendChild(link);
+    }
+
+    document.querySelectorAll('.t-nav').forEach(function(nav) {
+      addLink(nav, 'a[href="packages.html"], a[href="process.html"], a.cta');
+    });
+    document.querySelectorAll('.dl').forEach(function(nav) {
+      addLink(nav, 'a[href="packages.html"], a[href="process.html"], .d-cta');
+    });
+    document.querySelectorAll('.footer-nav .footer-col').forEach(function(col) {
+      if (col.querySelector('a[href="packages.html"], a[href="process.html"], a[href="faq.html"]')) {
+        addLink(col, 'a[href="order.html"]');
+      }
+    });
+  }
+
+  ensureStudioLabLinks();
+
   var page = (document.body.dataset.page || '').toLowerCase();
   document.querySelectorAll('.t-nav a, .sb-nav a').forEach(function (a) {
     var href = (a.getAttribute('href') || '').replace('.html', '');
@@ -536,8 +569,8 @@
       page: 'global',
       label: 'Homepage SEO description',
       meta: 'description',
-      fa: 'طراحی سایت حرفه‌ای با پنل مدیریت — تحویل در ۱۴ روز.',
-      en: 'Professional website design with an admin panel — delivered in 14 days.'
+      fa: 'طراحی سایت حرفه‌ای با پنل مدیریت — نسخه اولیه ۲۱ تا ۳۰ روز کاری، تحویل نهایی وابسته به محتوا و اصلاحیه‌ها.',
+      en: 'Professional website design with an admin panel — initial draft in 21–30 working days; final launch depends on content and revisions.'
     },
     'services.hero.title': {
       page: 'services',
@@ -875,7 +908,8 @@
         var checked = [].slice.call(boxes).filter(function(b){ return b.checked; });
         var base = parseInt((budget || {}).value || 30, 10);
         var estimate = base + checked.length * 4;
-        var days = 10 + checked.length * 2 + (service && service.value === 'shop' ? 5 : 0);
+        var daysMin = 21 + checked.length * 2 + (service && service.value === 'shop' ? 7 : 0);
+        var daysMax = 30 + checked.length * 3 + (service && service.value === 'shop' ? 10 : 0);
         var title = document.querySelector('[data-config-title]');
         var price = document.querySelector('[data-config-price]');
         var time = document.querySelector('[data-config-time]');
@@ -1066,7 +1100,7 @@
     var defaults = [
       { id: 1, name: 'محمد رضایی', role: 'مدیر کلینیک دکتر رضایی', nameEn: 'Mohammad Rezaei', roleEn: 'Director, Dr. Rezaei Clinic', text: '«سایت ما در ۱۲ روز تحویل شد. پنل مدیریت دقیقاً همان چیزی بود که می‌خواستیم — بدون نیاز به طراح.»', textEn: '"Our site was delivered in 12 days. The admin portal was exactly what we needed — no developer required."', stars: 5, published: true, avatar: 'م' },
       { id: 2, name: 'سارا احمدی', role: 'مدیر آموزشگاه نوا', nameEn: 'Sara Ahmadi', roleEn: 'Director, Nova Academy', text: '«ثبت‌نام آنلاین دانش‌آموزان از صفر به روزانه ۱۵ نفر رسید. پنل ساده و کاربردیه.»', textEn: '"Online student enrollment went from zero to 15 per day. The portal is simple and practical."', stars: 5, published: true, avatar: 'س' },
-      { id: 3, name: 'رضا نوری', role: 'صاحب فروشگاه Volt Shop', nameEn: 'Reza Nouri', roleEn: 'Owner, Volt Shop', text: '«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه.»', textEn: '"Our online store launched in 18 days. The mobile design is flawless."', stars: 5, published: false, avatar: 'ر' }
+      { id: 3, name: 'رضا نوری', role: 'صاحب فروشگاه Volt Shop', nameEn: 'Reza Nouri', roleEn: 'Owner, Volt Shop', text: '«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه.»', textEn: '"The first store draft was prepared quickly; final launch followed revisions and mobile QA."', stars: 5, published: false, avatar: 'ر' }
     ];
     try { return JSON.parse(localStorage.getItem(TESTI_KEY)) || defaults; } catch(e) { return defaults; }
   }
@@ -1825,6 +1859,14 @@
       document.body.prepend(ambient);
     }
 
+    if (!document.querySelector('.motion-orbits') && !document.body.classList.contains('portal-body')) {
+      var orbits = document.createElement('div');
+      orbits.className = 'motion-orbits';
+      orbits.setAttribute('aria-hidden', 'true');
+      orbits.innerHTML = '<i></i><i></i><i></i><i></i><i></i>';
+      document.body.appendChild(orbits);
+    }
+
     if (!document.querySelector('.cursor-light') && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
       var light = document.createElement('div');
       light.className = 'cursor-light';
@@ -1875,6 +1917,15 @@
     document.querySelectorAll('h1,h2').forEach(function(h){
       if (!h.closest('.portal-body') && !h.classList.contains('gradient-title')) {
         h.classList.add('gradient-title');
+      }
+    });
+
+    document.querySelectorAll('.sec-head,.page-hero,.panel-info,.form-wrap,.cta-band').forEach(function(el){
+      if (!el.querySelector(':scope > .section-accent')) {
+        var accent = document.createElement('span');
+        accent.className = 'section-accent';
+        accent.setAttribute('aria-hidden', 'true');
+        el.prepend(accent);
       }
     });
 
