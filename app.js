@@ -8,7 +8,12 @@
   'use strict';
 
   /* ── 1. LANGUAGE ─────────────────────────────────── */
-  var lang = localStorage.getItem('s-lang') || 'en';
+  var storedLang = localStorage.getItem('s-lang');
+  if (!localStorage.getItem('s-lang-primary-en')) {
+    storedLang = 'en';
+    localStorage.setItem('s-lang-primary-en', '1');
+  }
+  var lang = storedLang === 'fa' || storedLang === 'en' ? storedLang : 'en';
 
   function applyLang(l) {
     lang = l;
@@ -48,6 +53,7 @@
     var codeLabel = document.getElementById('order-code-label');
     if (codeLabel) codeLabel.textContent = l === 'en' ? 'Tracking code' : 'کد پیگیری';
   }
+  window.__applyLang = applyLang;
 
   /* bind all lang buttons */
   document.addEventListener('click', function (e) {
@@ -991,6 +997,10 @@
   (function(){
     var cue0 = document.querySelector('.hero-cue[data-cue="0"] h1');
     if (!cue0) return;
+    if (document.documentElement.lang !== 'en') {
+      cue0.textContent = cue0.dataset.fa || cue0.textContent;
+      return;
+    }
     var fullText = cue0.dataset[document.documentElement.lang === 'en' ? 'en' : 'fa'] || cue0.textContent;
     var cursor = document.createElement('span');
     cursor.className = 'typewriter-cursor';

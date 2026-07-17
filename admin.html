@@ -3,49 +3,57 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title data-fa="پنل مدیریت — ویترا استودیو" data-en="Admin Panel — Vitra Studio">Admin Panel — Vitra Studio</title>
+  <title data-fa="پنل مدیریت — ویترا استودیو" data-en="Admin Panel — Vitra Studio">پنل مدیریت — ویترا استودیو</title>
   <!-- Security Meta Tags -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN"/>
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/><link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/><link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/><link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Vitra Studio"/>
+  <meta property="og:image" content="assets/og-image.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <!-- Performance: Font Preloads -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/vazirmatn/v13/Ybj--hiO9bHBbkU2uB-TB7Xm5ps.woff2" as="font" type="font/woff2" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/fraunces/v24/6NUh8FyLNQOQZAnv9ZwNjuc.woff2" as="font" type="font/woff2" crossorigin/>
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com"/>
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Fraunces:opsz,wght@9..144,400..900&family=Inter:wght@400;500;600;700;800&display=swap"/>
-  <link rel="stylesheet" href="styles.css"/><meta property="og:title" content="Admin Panel — Vitra Studio"/><meta property="og:url" content="https://vitrastudio.ir/admin.html"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Vitra Studio"/><meta property="og:image" content="https://vitrastudio.ir/assets/og-image.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta name="twitter:card" content="summary_large_image"/><meta name="robots" content="noindex,nofollow"/>
-  <!-- Performance: Font Preloads -->
-  <!-- DNS Prefetch -->
-  <!-- Preconnect -->
-  <link rel="canonical" href="https://vitrastudio.ir/admin.html"/>
+  <link rel="canonical" href="https://yourdomain.com/admin.html"/>
   <meta name="robots" content="noindex,nofollow"/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script></head>
-<body class="portal-body is-ltr" data-page="admin">
+</head>
+<body class="portal-body" data-page="admin">
 
 <aside class="sidebar" id="sidebar">
   <a class="sb-brand" href="index.html">
     <img src="assets/vitra-logo.svg" alt=""/>
-    <span data-fa="پنل مدیریت" data-en="Admin Panel">Admin Panel</span>
+    <span data-fa="پنل مدیریت" data-en="Admin Panel">پنل مدیریت</span>
   </a>
   <div class="sb-user">
-    <strong data-fa="مدیر استودیو" data-en="Studio Admin">Studio Admin</strong>
+    <strong data-fa="مدیر استودیو" data-en="Studio Admin">مدیر استودیو</strong>
     <span>admin@studio.ir</span>
   </div>
   <nav class="sb-nav">
-    <a href="#overview" class="active"><span class="sb-icon">⊟</span><span data-fa="داشبورد" data-en="Dashboard">Dashboard</span></a>
-    <a href="#requests"><span class="sb-icon">📥</span><span data-fa="درخواست‌ها" data-en="Requests">Requests</span></a>
-    <a href="#testimonials"><span class="sb-icon">★</span><span data-fa="نظرات مشتریان" data-en="Testimonials">Testimonials</span></a>
-    <a href="#content"><span class="sb-icon">✎</span><span data-fa="محتوا و سئو" data-en="Content & SEO">Content & SEO</span></a>
-    <a href="#services"><span class="sb-icon">◈</span><span data-fa="خدمات و قیمت" data-en="Services & Pricing">Services & Pricing</span></a>
-    <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">Clients</span></a>
-    <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">Tickets</span></a>
-    <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">Social Links</span></a>
-    <a href="#popups"><span class="sb-icon">💬</span><span data-fa="پاپ‌آپ‌ها" data-en="Popups">Popups</span></a>
-    <a href="#reports"><span class="sb-icon">📊</span><span data-fa="گزارش‌ها" data-en="Reports">Reports</span></a>
+    <a href="#overview" class="active"><span class="sb-icon">⊟</span><span data-fa="داشبورد" data-en="Dashboard">داشبورد</span></a>
+    <a href="#requests"><span class="sb-icon">📥</span><span data-fa="درخواست‌ها" data-en="Requests">درخواست‌ها</span></a>
+    <a href="#testimonials"><span class="sb-icon">★</span><span data-fa="نظرات مشتریان" data-en="Testimonials">نظرات مشتریان</span></a>
+    <a href="#content"><span class="sb-icon">✎</span><span data-fa="محتوا و سئو" data-en="Content & SEO">محتوا و سئو</span></a>
+    <a href="#services"><span class="sb-icon">◈</span><span data-fa="خدمات و قیمت" data-en="Services & Pricing">خدمات و قیمت</span></a>
+    <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
+    <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span></a>
+    <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">شبکه‌های اجتماعی</span></a>
+    <a href="#popups"><span class="sb-icon">💬</span><span data-fa="پاپ‌آپ‌ها" data-en="Popups">پاپ‌آپ‌ها</span></a>
+    <a href="#reports"><span class="sb-icon">📊</span><span data-fa="گزارش‌ها" data-en="Reports">گزارش‌ها</span></a>
   </nav>
   <div class="sb-foot">
-    <button class="sb-lang lang-btn" type="button">FA</button>
-    <a class="sb-exit" href="login.html" data-fa="خروج از پنل" data-en="Sign out">Sign out</a>
+    <button class="sb-lang lang-btn" type="button">EN</button>
+    <a class="sb-exit" href="login.html" data-fa="خروج از پنل" data-en="Sign out">خروج از پنل</a>
   </div>
 </aside>
 
@@ -54,50 +62,50 @@
   <!-- OVERVIEW -->
   <section id="overview">
     <div class="portal-header">
-      <h1 data-fa="داشبورد مدیریت" data-en="Admin Dashboard">Admin Dashboard</h1>
-      <p data-fa="خلاصه وضعیت سایت، درخواست‌ها و فعالیت‌ها" data-en="Overview of site status, requests and activity">Overview of site status, requests and activity</p>
+      <h1 data-fa="داشبورد مدیریت" data-en="Admin Dashboard">داشبورد مدیریت</h1>
+      <p data-fa="خلاصه وضعیت سایت، درخواست‌ها و فعالیت‌ها" data-en="Overview of site status, requests and activity">خلاصه وضعیت سایت، درخواست‌ها و فعالیت‌ها</p>
     </div>
     <div class="portal-stats">
       <div class="ps-card">
-        <div class="ps-label" data-fa="کل درخواست‌ها" data-en="Total requests">Total requests</div>
+        <div class="ps-label" data-fa="کل درخواست‌ها" data-en="Total requests">کل درخواست‌ها</div>
         <strong id="stat-orders">0</strong>
-        <small data-fa="از فرم سفارش" data-en="From order form">From order form</small>
+        <small data-fa="از فرم سفارش" data-en="From order form">از فرم سفارش</small>
       </div>
       <div class="ps-card">
-        <div class="ps-label" data-fa="نظرات منتشرشده" data-en="Published reviews">Published reviews</div>
+        <div class="ps-label" data-fa="نظرات منتشرشده" data-en="Published reviews">نظرات منتشرشده</div>
         <strong id="stat-testi">0</strong>
-        <small data-fa="در صفحه اصلی" data-en="On homepage">On homepage</small>
+        <small data-fa="در صفحه اصلی" data-en="On homepage">در صفحه اصلی</small>
       </div>
       <div class="ps-card">
-        <div class="ps-label" data-fa="تیکت‌های باز" data-en="Open tickets">Open tickets</div>
+        <div class="ps-label" data-fa="تیکت‌های باز" data-en="Open tickets">تیکت‌های باز</div>
         <strong data-ticket-count>0</strong>
-        <small data-fa="نیاز به پاسخ" data-en="Need response">Need response</small>
+        <small data-fa="نیاز به پاسخ" data-en="Need response">نیاز به پاسخ</small>
       </div>
       <div class="ps-card">
-        <div class="ps-label" data-fa="صفحات سایت" data-en="Site pages">Site pages</div>
+        <div class="ps-label" data-fa="صفحات سایت" data-en="Site pages">صفحات سایت</div>
         <strong>12</strong>
-        <small data-fa="فعال و منتشرشده" data-en="Active and published">Active and published</small>
+        <small data-fa="فعال و منتشرشده" data-en="Active and published">فعال و منتشرشده</small>
       </div>
       <div class="ps-card">
-        <div class="ps-label" data-fa="پاپ‌آپ‌های فعال" data-en="Active popups">Active popups</div>
+        <div class="ps-label" data-fa="پاپ‌آپ‌های فعال" data-en="Active popups">پاپ‌آپ‌های فعال</div>
         <strong id="stat-popups">0</strong>
-        <small data-fa="در حال نمایش" data-en="Currently showing">Currently showing</small>
+        <small data-fa="در حال نمایش" data-en="Currently showing">در حال نمایش</small>
       </div>
     </div>
 
     <!-- Mini chart -->
     <div class="p-card" style="margin-top:16px">
-      <h2 data-fa="روند درخواست‌ها (هفتگی)" data-en="Request trend (weekly)">Request trend (weekly)</h2>
+      <h2 data-fa="روند درخواست‌ها (هفتگی)" data-en="Request trend (weekly)">روند درخواست‌ها (هفتگی)</h2>
       <div class="mini-chart" style="margin-top:12px">
         <span style="--h:40%"></span><span style="--h:65%"></span><span style="--h:50%"></span>
         <span style="--h:80%"></span><span style="--h:60%"></span><span style="--h:90%"></span>
         <span style="--h:75%"></span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--faint);margin-top:6px">
-        <span data-fa="شنبه" data-en="Sat">Sat</span><span data-fa="یک" data-en="Sun">Sun</span>
-        <span data-fa="دو" data-en="Mon">Mon</span><span data-fa="سه" data-en="Tue">Tue</span>
-        <span data-fa="چهار" data-en="Wed">Wed</span><span data-fa="پنج" data-en="Thu">Thu</span>
-        <span data-fa="جمعه" data-en="Fri">Fri</span>
+        <span data-fa="شنبه" data-en="Sat">شنبه</span><span data-fa="یک" data-en="Sun">یک</span>
+        <span data-fa="دو" data-en="Mon">دو</span><span data-fa="سه" data-en="Tue">سه</span>
+        <span data-fa="چهار" data-en="Wed">چهار</span><span data-fa="پنج" data-en="Thu">پنج</span>
+        <span data-fa="جمعه" data-en="Fri">جمعه</span>
       </div>
     </div>
   </section>
@@ -105,26 +113,26 @@
   <!-- REQUESTS -->
   <section id="requests" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="درخواست‌های پروژه" data-en="Project Requests">Project Requests</h2>
-      <p style="font-size:13px;margin-bottom:16px" data-fa="درخواست‌هایی که از صفحه شروع پروژه ثبت شده‌اند." data-en="Requests submitted from the start project page.">Requests submitted from the start project page.</p>
+      <h2 data-fa="درخواست‌های پروژه" data-en="Project Requests">درخواست‌های پروژه</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="درخواست‌هایی که از صفحه شروع پروژه ثبت شده‌اند." data-en="Requests submitted from the start project page.">درخواست‌هایی که از صفحه شروع پروژه ثبت شده‌اند.</p>
       <div style="overflow-x:auto">
         <table class="ptable">
           <thead>
             <tr>
-              <th data-fa="کد" data-en="Code">Code</th>
-              <th data-fa="نام" data-en="Name">Name</th>
-              <th data-fa="خدمت" data-en="Service">Service</th>
-              <th data-fa="بودجه" data-en="Budget">Budget</th>
-              <th data-fa="وضعیت" data-en="Status">Status</th>
+              <th data-fa="کد" data-en="Code">کد</th>
+              <th data-fa="نام" data-en="Name">نام</th>
+              <th data-fa="خدمت" data-en="Service">خدمت</th>
+              <th data-fa="بودجه" data-en="Budget">بودجه</th>
+              <th data-fa="وضعیت" data-en="Status">وضعیت</th>
             </tr>
           </thead>
           <tbody data-orders-list>
-            <tr><td colspan="5" style="color:var(--faint);font-size:13px;padding:16px 10px" data-fa="هنوز درخواستی ثبت نشده." data-en="No requests yet.">No requests yet.</td></tr>
+            <tr><td colspan="5" style="color:var(--faint);font-size:13px;padding:16px 10px" data-fa="هنوز درخواستی ثبت نشده." data-en="No requests yet.">هنوز درخواستی ثبت نشده.</td></tr>
           </tbody>
         </table>
       </div>
       <div style="margin-top:14px">
-        <a class="btn btn-outline btn-sm" href="order.html" data-fa="ثبت درخواست آزمایشی" data-en="Create test request">Create test request</a>
+        <a class="btn btn-outline btn-sm" href="order.html" data-fa="ثبت درخواست آزمایشی" data-en="Create test request">ثبت درخواست آزمایشی</a>
       </div>
     </div>
   </section>
@@ -132,42 +140,42 @@
   <!-- TESTIMONIALS -->
   <section id="testimonials" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="مدیریت نظرات مشتریان" data-en="Testimonial Management">Testimonial Management</h2>
-      <p style="font-size:13px;margin-bottom:16px" data-fa="نظرات منتشرشده در صفحه اصلی سایت نمایش داده می‌شوند. می‌توانید نظر جدید اضافه، ویرایش، پنهان یا حذف کنید." data-en="Published testimonials appear on the homepage. You can add, edit, hide or delete reviews.">Published testimonials appear on the homepage. You can add, edit, hide or delete reviews.</p>
+      <h2 data-fa="مدیریت نظرات مشتریان" data-en="Testimonial Management">مدیریت نظرات مشتریان</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="نظرات منتشرشده در صفحه اصلی سایت نمایش داده می‌شوند. می‌توانید نظر جدید اضافه، ویرایش، پنهان یا حذف کنید." data-en="Published testimonials appear on the homepage. You can add, edit, hide or delete reviews.">نظرات منتشرشده در صفحه اصلی سایت نمایش داده می‌شوند. می‌توانید نظر جدید اضافه، ویرایش، پنهان یا حذف کنید.</p>
 
       <!-- List -->
       <div class="testi-admin-list" id="admin-testi-list"></div>
 
       <!-- Add / Edit Form -->
       <div style="border-top:1px solid var(--line);padding-top:20px;margin-top:4px">
-        <p class="kicker" id="testi-form-title" data-fa="افزودن نظر جدید" data-en="Add new review">Add new review</p>
+        <p class="kicker" id="testi-form-title" data-fa="افزودن نظر جدید" data-en="Add new review">افزودن نظر جدید</p>
         <form id="testi-form" class="testi-form" style="margin-top:14px">
           <div>
-            <label data-fa="نام (فارسی)" data-en="Name (Persian)">Name (Persian)</label>
-            <input name="tname" required data-fa-placeholder="مثال: علی رضایی" data-en-placeholder="e.g. Ali Rezaei" placeholder="e.g. Ali Rezaei"/>
+            <label data-fa="نام (فارسی)" data-en="Name (Persian)">نام (فارسی)</label>
+            <input name="tname" required data-fa-placeholder="مثال: علی رضایی" data-en-placeholder="e.g. Ali Rezaei" placeholder="مثال: علی رضایی"/>
           </div>
           <div>
-            <label data-fa="نام (انگلیسی)" data-en="Name (English)">Name (English)</label>
+            <label data-fa="نام (انگلیسی)" data-en="Name (English)">نام (انگلیسی)</label>
             <input name="tnameEn" placeholder="e.g. Ali Rezaei"/>
           </div>
           <div>
-            <label data-fa="سمت (فارسی)" data-en="Role (Persian)">Role (Persian)</label>
-            <input name="trole" data-fa-placeholder="مثال: مدیر کلینیک" data-en-placeholder="e.g. Clinic Director" placeholder="e.g. Clinic Director"/>
+            <label data-fa="سمت (فارسی)" data-en="Role (Persian)">سمت (فارسی)</label>
+            <input name="trole" data-fa-placeholder="مثال: مدیر کلینیک" data-en-placeholder="e.g. Clinic Director" placeholder="مثال: مدیر کلینیک"/>
           </div>
           <div>
-            <label data-fa="سمت (انگلیسی)" data-en="Role (English)">Role (English)</label>
+            <label data-fa="سمت (انگلیسی)" data-en="Role (English)">سمت (انگلیسی)</label>
             <input name="troleEn" placeholder="e.g. Clinic Director"/>
           </div>
           <div class="tf-full">
-            <label data-fa="متن نظر (فارسی)" data-en="Review text (Persian)">Review text (Persian)</label>
-            <textarea name="ttext" required data-fa-placeholder="«نظر مشتری به فارسی...»" data-en-placeholder="Customer review in Persian..." placeholder="Customer review in Persian..."></textarea>
+            <label data-fa="متن نظر (فارسی)" data-en="Review text (Persian)">متن نظر (فارسی)</label>
+            <textarea name="ttext" required data-fa-placeholder="«نظر مشتری به فارسی...»" data-en-placeholder="Customer review in Persian..." placeholder="«نظر مشتری به فارسی...»"></textarea>
           </div>
           <div class="tf-full">
-            <label data-fa="متن نظر (انگلیسی)" data-en="Review text (English)">Review text (English)</label>
+            <label data-fa="متن نظر (انگلیسی)" data-en="Review text (English)">متن نظر (انگلیسی)</label>
             <textarea name="ttextEn" placeholder="Customer review in English..."></textarea>
           </div>
           <div>
-            <label data-fa="امتیاز (۱-۵)" data-en="Rating (1-5)">Rating (1-5)</label>
+            <label data-fa="امتیاز (۱-۵)" data-en="Rating (1-5)">امتیاز (۱-۵)</label>
             <select name="tstars">
               <option value="5">★★★★★</option>
               <option value="4">★★★★☆</option>
@@ -175,15 +183,15 @@
             </select>
           </div>
           <div>
-            <label data-fa="وضعیت انتشار" data-en="Publish status">Publish status</label>
+            <label data-fa="وضعیت انتشار" data-en="Publish status">وضعیت انتشار</label>
             <select name="tpublished">
-              <option value="1" data-fa="منتشرشده — نمایش در سایت" data-en="Published — show on site">Published — show on site</option>
-              <option value="0" data-fa="پیش‌نویس — پنهان" data-en="Draft — hidden">Draft — hidden</option>
+              <option value="1" data-fa="منتشرشده — نمایش در سایت" data-en="Published — show on site">منتشرشده — نمایش در سایت</option>
+              <option value="0" data-fa="پیش‌نویس — پنهان" data-en="Draft — hidden">پیش‌نویس — پنهان</option>
             </select>
           </div>
           <div class="tf-full" style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" type="submit" data-fa="ذخیره" data-en="Save">Save</button>
-            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">Clear</button>
+            <button class="btn btn-primary" type="submit" data-fa="ذخیره" data-en="Save">ذخیره</button>
+            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">پاک کردن</button>
           </div>
         </form>
       </div>
@@ -193,37 +201,37 @@
   <!-- CONTENT & SEO -->
   <section id="content" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="ویرایش محتوا و سئو" data-en="Content and SEO Editor">Content and SEO Editor</h2>
+      <h2 data-fa="ویرایش محتوا و سئو" data-en="Content and SEO Editor">ویرایش محتوا و سئو</h2>
       <div class="p-form" style="margin-top:16px">
         <div>
-          <label data-fa="بخش سایت" data-en="Site section">Site section</label>
+          <label data-fa="بخش سایت" data-en="Site section">بخش سایت</label>
           <select>
-            <option data-fa="هیرو صفحه اصلی" data-en="Homepage hero">Homepage hero</option>
-            <option data-fa="معرفی خدمات" data-en="Services intro">Services intro</option>
-            <option data-fa="فوتر" data-en="Footer">Footer</option>
+            <option data-fa="هیرو صفحه اصلی" data-en="Homepage hero">هیرو صفحه اصلی</option>
+            <option data-fa="معرفی خدمات" data-en="Services intro">معرفی خدمات</option>
+            <option data-fa="فوتر" data-en="Footer">فوتر</option>
           </select>
         </div>
         <div>
-          <label data-fa="زبان" data-en="Language">Language</label>
+          <label data-fa="زبان" data-en="Language">زبان</label>
           <select>
-            <option data-fa="فارسی" data-en="Persian">Persian</option>
+            <option data-fa="فارسی" data-en="Persian">فارسی</option>
             <option>English</option>
           </select>
         </div>
         <div>
-          <label data-fa="عنوان سئو" data-en="SEO title">SEO title</label>
+          <label data-fa="عنوان سئو" data-en="SEO title">عنوان سئو</label>
           <input value="ویترا استودیو — طراحی سایت، پنل مدیریت و رشد"/>
         </div>
         <div>
-          <label data-fa="کلمات کلیدی" data-en="Keywords">Keywords</label>
+          <label data-fa="کلمات کلیدی" data-en="Keywords">کلمات کلیدی</label>
           <input value="طراحی سایت، پنل مدیریت، سئو"/>
         </div>
         <div class="pf-full">
-          <label data-fa="توضیحات متا" data-en="Meta description">Meta description</label>
+          <label data-fa="توضیحات متا" data-en="Meta description">توضیحات متا</label>
           <textarea style="min-height:72px">طراحی سایت حرفه‌ای با پنل مدیریت — تحویل در ۱۴ روز</textarea>
         </div>
       </div>
-      <button class="btn btn-primary btn-sm" type="button" style="margin-top:12px" data-fa="ذخیره تغییرات" data-en="Save changes">Save changes</button>
+      <button class="btn btn-primary btn-sm" type="button" style="margin-top:12px" data-fa="ذخیره تغییرات" data-en="Save changes">ذخیره تغییرات</button>
     </div>
   </section>
 
@@ -231,54 +239,54 @@
   <section id="services" style="margin-top:32px">
     <div class="portal-grid">
       <div class="p-card">
-        <h2 data-fa="ویرایش خدمات و قیمت" data-en="Edit Services & Pricing">Edit Services & Pricing</h2>
+        <h2 data-fa="ویرایش خدمات و قیمت" data-en="Edit Services & Pricing">ویرایش خدمات و قیمت</h2>
         <div class="p-form" style="margin-top:14px">
           <div>
-            <label data-fa="نام خدمت (فارسی)" data-en="Service name (FA)">Service name (FA)</label>
+            <label data-fa="نام خدمت (فارسی)" data-en="Service name (FA)">نام خدمت (فارسی)</label>
             <input value="طراحی سایت جدید"/>
           </div>
           <div>
-            <label data-fa="نام (انگلیسی)" data-en="Service name (EN)">Service name (EN)</label>
+            <label data-fa="نام (انگلیسی)" data-en="Service name (EN)">نام (انگلیسی)</label>
             <input value="New Website Design"/>
           </div>
           <div>
-            <label data-fa="قیمت پایه" data-en="Base price">Base price</label>
+            <label data-fa="قیمت پایه" data-en="Base price">قیمت پایه</label>
             <input value="از ۱۸ میلیون تومان"/>
           </div>
           <div>
-            <label data-fa="زمان اجرا" data-en="Timeline">Timeline</label>
+            <label data-fa="زمان اجرا" data-en="Timeline">زمان اجرا</label>
             <input value="۱۰–۱۲ روز کاری"/>
           </div>
           <div>
-            <label data-fa="وضعیت" data-en="Status">Status</label>
+            <label data-fa="وضعیت" data-en="Status">وضعیت</label>
             <select>
-              <option data-fa="فعال" data-en="Active">Active</option>
-              <option data-fa="غیرفعال" data-en="Inactive">Inactive</option>
+              <option data-fa="فعال" data-en="Active">فعال</option>
+              <option data-fa="غیرفعال" data-en="Inactive">غیرفعال</option>
             </select>
           </div>
           <div style="display:flex;align-items:flex-end">
-            <button class="btn btn-primary btn-sm" type="button" style="width:100%;justify-content:center" data-fa="ذخیره خدمت" data-en="Save service">Save service</button>
+            <button class="btn btn-primary btn-sm" type="button" style="width:100%;justify-content:center" data-fa="ذخیره خدمت" data-en="Save service">ذخیره خدمت</button>
           </div>
         </div>
       </div>
       <div class="p-card">
-        <h2 data-fa="محاسبه سریع قیمت" data-en="Quick Price Calculator">Quick Price Calculator</h2>
+        <h2 data-fa="محاسبه سریع قیمت" data-en="Quick Price Calculator">محاسبه سریع قیمت</h2>
         <div class="p-form" style="margin-top:14px;grid-template-columns:1fr">
           <div>
-            <label data-fa="تعداد صفحات" data-en="Number of pages">Number of pages</label>
+            <label data-fa="تعداد صفحات" data-en="Number of pages">تعداد صفحات</label>
             <input type="number" value="6" data-pages-count min="1" max="30"/>
           </div>
           <div>
-            <label data-fa="سطح پنل" data-en="Portal level">Portal level</label>
+            <label data-fa="سطح پنل" data-en="Portal level">سطح پنل</label>
             <select data-panel-level>
-              <option value="0" data-fa="بدون پنل" data-en="No portal">No portal</option>
-              <option value="12000000" data-fa="پنل مشتری" data-en="Client portal">Client portal</option>
-              <option value="22000000" data-fa="پنل مدیریت کامل" data-en="Full admin">Full admin</option>
+              <option value="0" data-fa="بدون پنل" data-en="No portal">بدون پنل</option>
+              <option value="12000000" data-fa="پنل مشتری" data-en="Client portal">پنل مشتری</option>
+              <option value="22000000" data-fa="پنل مدیریت کامل" data-en="Full admin">پنل مدیریت کامل</option>
             </select>
           </div>
         </div>
-        <button class="btn btn-outline btn-sm" type="button" data-calc-price style="margin-top:12px" data-fa="محاسبه" data-en="Calculate">Calculate</button>
-        <p data-price-result style="margin-top:10px;font-size:14px;font-weight:700;color:var(--accent)" data-fa="آماده محاسبه" data-en="Ready to calculate">Ready to calculate</p>
+        <button class="btn btn-outline btn-sm" type="button" data-calc-price style="margin-top:12px" data-fa="محاسبه" data-en="Calculate">محاسبه</button>
+        <p data-price-result style="margin-top:10px;font-size:14px;font-weight:700;color:var(--accent)" data-fa="آماده محاسبه" data-en="Ready to calculate">آماده محاسبه</p>
       </div>
     </div>
   </section>
@@ -286,22 +294,22 @@
   <!-- CLIENTS -->
   <section id="clients" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="مشتریان و پروژه‌ها" data-en="Clients and Projects">Clients and Projects</h2>
+      <h2 data-fa="مشتریان و پروژه‌ها" data-en="Clients and Projects">مشتریان و پروژه‌ها</h2>
       <div style="overflow-x:auto;margin-top:14px">
         <table class="ptable">
           <thead>
             <tr>
-              <th data-fa="مشتری" data-en="Client">Client</th>
-              <th data-fa="پروژه" data-en="Project">Project</th>
-              <th data-fa="وضعیت" data-en="Status">Status</th>
-              <th data-fa="ارزش" data-en="Value">Value</th>
+              <th data-fa="مشتری" data-en="Client">مشتری</th>
+              <th data-fa="پروژه" data-en="Project">پروژه</th>
+              <th data-fa="وضعیت" data-en="Status">وضعیت</th>
+              <th data-fa="ارزش" data-en="Value">ارزش</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td data-fa="موسسه علامه سخن" data-en="Allameh Sokhan">Allameh Sokhan</td><td data-fa="سایت آموزشگاه" data-en="Academy site">Academy site</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">Delivered</span></td><td>28M</td></tr>
-            <tr><td>Luna Beauty</td><td data-fa="مارکت‌پلیس سالن" data-en="Salon marketplace">Salon marketplace</td><td><span class="badge badge-orange" data-fa="در حال توسعه" data-en="In development">In development</span></td><td>18M</td></tr>
-            <tr><td data-fa="کلینیک سپید" data-en="Sepid Clinic">Sepid Clinic</td><td data-fa="نوبت‌دهی آنلاین" data-en="Online booking">Online booking</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">Delivered</span></td><td>22M</td></tr>
-            <tr><td>Volt Shop</td><td data-fa="فروشگاه آنلاین" data-en="Online shop">Online shop</td><td><span class="badge badge-gray" data-fa="پیش‌نویس" data-en="Draft">Draft</span></td><td>34M</td></tr>
+            <tr><td data-fa="موسسه علامه سخن" data-en="Allameh Sokhan">موسسه علامه سخن</td><td data-fa="سایت آموزشگاه" data-en="Academy site">سایت آموزشگاه</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">تحویل‌شده</span></td><td>28M</td></tr>
+            <tr><td>Luna Beauty</td><td data-fa="مارکت‌پلیس سالن" data-en="Salon marketplace">مارکت‌پلیس سالن</td><td><span class="badge badge-orange" data-fa="در حال توسعه" data-en="In development">در حال توسعه</span></td><td>18M</td></tr>
+            <tr><td data-fa="کلینیک سپید" data-en="Sepid Clinic">کلینیک سپید</td><td data-fa="نوبت‌دهی آنلاین" data-en="Online booking">نوبت‌دهی آنلاین</td><td><span class="badge badge-green" data-fa="تحویل‌شده" data-en="Delivered">تحویل‌شده</span></td><td>22M</td></tr>
+            <tr><td>Volt Shop</td><td data-fa="فروشگاه آنلاین" data-en="Online shop">فروشگاه آنلاین</td><td><span class="badge badge-gray" data-fa="پیش‌نویس" data-en="Draft">پیش‌نویس</span></td><td>34M</td></tr>
           </tbody>
         </table>
       </div>
@@ -312,25 +320,25 @@
   <section id="tickets" style="margin-top:32px">
     <div class="portal-grid">
       <div class="p-card">
-        <h2 data-fa="تیکت جدید" data-en="New Ticket">New Ticket</h2>
+        <h2 data-fa="تیکت جدید" data-en="New Ticket">تیکت جدید</h2>
         <div class="p-form" style="margin-top:14px;grid-template-columns:1fr">
           <div>
-            <label data-fa="موضوع" data-en="Subject">Subject</label>
-            <input data-ticket-title data-fa-placeholder="موضوع تیکت..." data-en-placeholder="Ticket subject..." placeholder="Ticket subject..."/>
+            <label data-fa="موضوع" data-en="Subject">موضوع</label>
+            <input data-ticket-title data-fa-placeholder="موضوع تیکت..." data-en-placeholder="Ticket subject..." placeholder="موضوع تیکت..."/>
           </div>
           <div>
-            <label data-fa="توضیح" data-en="Description">Description</label>
-            <textarea data-fa-placeholder="جزئیات..." data-en-placeholder="Details..." placeholder="Details..."></textarea>
+            <label data-fa="توضیح" data-en="Description">توضیح</label>
+            <textarea data-fa-placeholder="جزئیات..." data-en-placeholder="Details..." placeholder="جزئیات..."></textarea>
           </div>
         </div>
-        <button class="btn btn-primary btn-sm" type="button" data-submit-ticket style="margin-top:12px" data-fa="ثبت تیکت" data-en="Submit ticket">Submit ticket</button>
+        <button class="btn btn-primary btn-sm" type="button" data-submit-ticket style="margin-top:12px" data-fa="ثبت تیکت" data-en="Submit ticket">ثبت تیکت</button>
       </div>
       <div class="p-card">
-        <h2 data-fa="تیکت‌های اخیر" data-en="Recent Tickets">Recent Tickets (<span data-ticket-count>0</span>)</h2>
+        <h2 data-fa="تیکت‌های اخیر" data-en="Recent Tickets">تیکت‌های اخیر (<span data-ticket-count>0</span>)</h2>
         <div class="ticket-list" data-ticket-list style="margin-top:14px">
-          <p style="font-size:13px;color:var(--faint)" data-fa="تیکتی ثبت نشده." data-en="No tickets yet.">No tickets yet.</p>
+          <p style="font-size:13px;color:var(--faint)" data-fa="تیکتی ثبت نشده." data-en="No tickets yet.">تیکتی ثبت نشده.</p>
         </div>
-        <button class="btn btn-outline btn-sm" type="button" data-new-ticket style="margin-top:12px" data-fa="+ تیکت جدید" data-en="+ New ticket">+ New ticket</button>
+        <button class="btn btn-outline btn-sm" type="button" data-new-ticket style="margin-top:12px" data-fa="+ تیکت جدید" data-en="+ New ticket">+ تیکت جدید</button>
       </div>
     </div>
   </section>
@@ -338,8 +346,8 @@
   <!-- SOCIAL LINKS -->
   <section id="socials" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="لینک‌های شبکه‌های اجتماعی" data-en="Social Media Links">Social Media Links</h2>
-      <p style="font-size:13px;margin-bottom:16px" data-fa="لینک‌های ذخیره‌شده در فوتر سایت نمایش داده می‌شوند." data-en="Saved links appear in the site footer.">Saved links appear in the site footer.</p>
+      <h2 data-fa="لینک‌های شبکه‌های اجتماعی" data-en="Social Media Links">لینک‌های شبکه‌های اجتماعی</h2>
+      <p style="font-size:13px;margin-bottom:16px" data-fa="لینک‌های ذخیره‌شده در فوتر سایت نمایش داده می‌شوند." data-en="Saved links appear in the site footer.">لینک‌های ذخیره‌شده در فوتر سایت نمایش داده می‌شوند.</p>
       <div class="p-form">
         <div>
           <label>Instagram</label>
@@ -358,22 +366,22 @@
           <input data-social-input="linkedin" placeholder="https://linkedin.com/..."/>
         </div>
         <div class="pf-full">
-          <label data-fa="ایمیل" data-en="Email">Email</label>
+          <label data-fa="ایمیل" data-en="Email">ایمیل</label>
           <input data-social-input="email" placeholder="mailto:hello@studio.ir"/>
         </div>
       </div>
-      <button class="btn btn-primary btn-sm" type="button" data-save-socials style="margin-top:14px" data-fa="ذخیره لینک‌ها" data-en="Save links">Save links</button>
+      <button class="btn btn-primary btn-sm" type="button" data-save-socials style="margin-top:14px" data-fa="ذخیره لینک‌ها" data-en="Save links">ذخیره لینک‌ها</button>
     </div>
   </section>
 
   <!-- POPUP MANAGER -->
   <section id="popups" style="margin-top:32px">
     <div class="p-card">
-      <h2 data-fa="مدیریت پاپ‌آپ‌ها" data-en="Popup Manager">Popup Manager</h2>
+      <h2 data-fa="مدیریت پاپ‌آپ‌ها" data-en="Popup Manager">مدیریت پاپ‌آپ‌ها</h2>
       <p style="font-size:13px;margin-bottom:16px;color:var(--muted)"
          data-fa="پاپ‌آپ‌های فعال در صفحات مشخص نمایش داده می‌شوند. می‌توانید متن، دکمه‌ها، زمان نمایش و صفحه مقصد را تعیین کنید."
          data-en="Active popups are shown on specified pages. You can set text, buttons, trigger timing and target pages.">
-        Active popups are shown on specified pages. You can set text, buttons, trigger timing and target pages.
+        پاپ‌آپ‌های فعال در صفحات مشخص نمایش داده می‌شوند. می‌توانید متن، دکمه‌ها، زمان نمایش و صفحه مقصد را تعیین کنید.
       </p>
 
       <!-- List -->
@@ -381,95 +389,95 @@
 
       <!-- Add / Edit Form -->
       <div style="border-top:1px solid var(--line);padding-top:20px;margin-top:8px">
-        <p class="kicker" id="popup-form-title" data-fa="افزودن پاپ‌آپ جدید" data-en="Add new popup">Add new popup</p>
+        <p class="kicker" id="popup-form-title" data-fa="افزودن پاپ‌آپ جدید" data-en="Add new popup">افزودن پاپ‌آپ جدید</p>
         <form id="popup-form" class="popup-form" style="margin-top:14px">
 
           <div>
-            <label data-fa="عنوان (فارسی)" data-en="Title (Persian)">Title (Persian)</label>
-            <input name="ptitle" required data-fa-placeholder="عنوان پاپ‌آپ..." data-en-placeholder="Popup title..." placeholder="Popup title..."/>
+            <label data-fa="عنوان (فارسی)" data-en="Title (Persian)">عنوان (فارسی)</label>
+            <input name="ptitle" required data-fa-placeholder="عنوان پاپ‌آپ..." data-en-placeholder="Popup title..." placeholder="عنوان پاپ‌آپ..."/>
           </div>
           <div>
-            <label data-fa="عنوان (انگلیسی)" data-en="Title (English)">Title (English)</label>
+            <label data-fa="عنوان (انگلیسی)" data-en="Title (English)">عنوان (انگلیسی)</label>
             <input name="ptitleEn" placeholder="Popup title in English..."/>
           </div>
 
           <div class="pf-full">
-            <label data-fa="متن اصلی (فارسی)" data-en="Body text (Persian)">Body text (Persian)</label>
-            <textarea name="pbody" required data-fa-placeholder="توضیح پاپ‌آپ..." data-en-placeholder="Popup body text..." placeholder="Popup body text..."></textarea>
+            <label data-fa="متن اصلی (فارسی)" data-en="Body text (Persian)">متن اصلی (فارسی)</label>
+            <textarea name="pbody" required data-fa-placeholder="توضیح پاپ‌آپ..." data-en-placeholder="Popup body text..." placeholder="توضیح پاپ‌آپ..."></textarea>
           </div>
           <div class="pf-full">
-            <label data-fa="متن اصلی (انگلیسی)" data-en="Body text (English)">Body text (English)</label>
+            <label data-fa="متن اصلی (انگلیسی)" data-en="Body text (English)">متن اصلی (انگلیسی)</label>
             <textarea name="pbodyEn" placeholder="Popup body in English..."></textarea>
           </div>
 
           <div>
-            <label data-fa="برچسب بالا (فارسی)" data-en="Badge (Persian)">Badge (Persian)</label>
+            <label data-fa="برچسب بالا (فارسی)" data-en="Badge (Persian)">برچسب بالا (فارسی)</label>
             <input name="pbadge" placeholder="مثال: پیشنهاد ویژه"/>
           </div>
           <div>
-            <label data-fa="برچسب بالا (انگلیسی)" data-en="Badge (English)">Badge (English)</label>
+            <label data-fa="برچسب بالا (انگلیسی)" data-en="Badge (English)">برچسب بالا (انگلیسی)</label>
             <input name="pbadgeEn" placeholder="e.g. Special offer"/>
           </div>
 
           <div>
-            <label data-fa="رنگ برچسب" data-en="Badge color">Badge color</label>
+            <label data-fa="رنگ برچسب" data-en="Badge color">رنگ برچسب</label>
             <input name="pbadgeColor" type="color" value="#e76f51" style="height:40px;padding:4px 8px"/>
           </div>
           <div>
-            <label data-fa="نوع نمایش (Trigger)" data-en="Display trigger">Display trigger</label>
+            <label data-fa="نوع نمایش (Trigger)" data-en="Display trigger">نوع نمایش (Trigger)</label>
             <select name="ptrigger">
-              <option value="exit"    data-fa="هنگام خروج (Exit Intent)"   data-en="On exit intent">On exit intent</option>
-              <option value="scroll50" data-fa="بعد از ۵۰٪ اسکرول"         data-en="After 50% scroll">After 50% scroll</option>
-              <option value="delay30" data-fa="بعد از ۳۰ ثانیه"            data-en="After 30 seconds">After 30 seconds</option>
-              <option value="delay45" data-fa="بعد از ۴۵ ثانیه"            data-en="After 45 seconds">After 45 seconds</option>
+              <option value="exit"    data-fa="هنگام خروج (Exit Intent)"   data-en="On exit intent">هنگام خروج (Exit Intent)</option>
+              <option value="scroll50" data-fa="بعد از ۵۰٪ اسکرول"         data-en="After 50% scroll">بعد از ۵۰٪ اسکرول</option>
+              <option value="delay30" data-fa="بعد از ۳۰ ثانیه"            data-en="After 30 seconds">بعد از ۳۰ ثانیه</option>
+              <option value="delay45" data-fa="بعد از ۴۵ ثانیه"            data-en="After 45 seconds">بعد از ۴۵ ثانیه</option>
             </select>
           </div>
 
           <div>
-            <label data-fa="متن دکمه اول" data-en="Button 1 text">Button 1 text</label>
+            <label data-fa="متن دکمه اول" data-en="Button 1 text">متن دکمه اول</label>
             <input name="pcta1text" placeholder="مثال: شروع پروژه"/>
           </div>
           <div>
-            <label data-fa="لینک دکمه اول" data-en="Button 1 link">Button 1 link</label>
+            <label data-fa="لینک دکمه اول" data-en="Button 1 link">لینک دکمه اول</label>
             <input name="pcta1href" placeholder="order.html"/>
           </div>
 
           <div>
-            <label data-fa="متن دکمه دوم" data-en="Button 2 text">Button 2 text (optional)</label>
+            <label data-fa="متن دکمه دوم" data-en="Button 2 text">متن دکمه دوم (اختیاری)</label>
             <input name="pcta2text" placeholder="مثال: بررسی رایگان"/>
           </div>
           <div>
-            <label data-fa="لینک دکمه دوم" data-en="Button 2 link">Button 2 link</label>
+            <label data-fa="لینک دکمه دوم" data-en="Button 2 link">لینک دکمه دوم</label>
             <input name="pcta2href" placeholder="audit.html"/>
           </div>
 
           <div>
-            <label data-fa="متن رد کردن" data-en="Skip text">Skip text</label>
+            <label data-fa="متن رد کردن" data-en="Skip text">متن رد کردن</label>
             <input name="pskip" placeholder="نه ممنون, ادامه می‌دهم"/>
           </div>
           <div>
-            <label data-fa="وضعیت" data-en="Status">Status</label>
+            <label data-fa="وضعیت" data-en="Status">وضعیت</label>
             <select name="pactive">
-              <option value="1" data-fa="فعال — نمایش در سایت" data-en="Active — show on site">Active — show on site</option>
-              <option value="0" data-fa="غیرفعال — پنهان"       data-en="Inactive — hidden">Inactive — hidden</option>
+              <option value="1" data-fa="فعال — نمایش در سایت" data-en="Active — show on site">فعال — نمایش در سایت</option>
+              <option value="0" data-fa="غیرفعال — پنهان"       data-en="Inactive — hidden">غیرفعال — پنهان</option>
             </select>
           </div>
 
           <div class="pf-full">
             <label data-fa="صفحات نمایش (با کاما جدا کنید)" data-en="Display pages (comma separated)">
-              Display pages — comma separated
+              صفحات نمایش — با کاما جدا کنید
             </label>
             <input name="ppages" placeholder="index, services, packages" value="index"/>
             <span style="font-size:11px;color:var(--faint);margin-top:4px;display:block"
                   data-fa="مقادیر مجاز: index, services, packages, portfolio, process, faq, about, order, audit, all"
                   data-en="Allowed: index, services, packages, portfolio, process, faq, about, order, audit, all">
-              Allowed: index · services · packages · portfolio · process · faq · about · order · audit · all
+              مقادیر مجاز: index · services · packages · portfolio · process · faq · about · order · audit · all
             </span>
           </div>
 
           <div class="pf-full" style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-primary" type="submit" data-fa="ذخیره پاپ‌آپ" data-en="Save popup">Save popup</button>
-            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">Clear</button>
+            <button class="btn btn-primary" type="submit" data-fa="ذخیره پاپ‌آپ" data-en="Save popup">ذخیره پاپ‌آپ</button>
+            <button class="btn btn-outline" type="reset" data-fa="پاک کردن" data-en="Clear">پاک کردن</button>
           </div>
 
         </form>
@@ -481,27 +489,27 @@
   <!-- REPORTS -->
   <section id="reports" style="margin-top:32px;margin-bottom:48px">
     <div class="p-card">
-      <h2 data-fa="گزارش‌های سایت" data-en="Site Reports">Site Reports</h2>
+      <h2 data-fa="گزارش‌های سایت" data-en="Site Reports">گزارش‌های سایت</h2>
       <div class="portal-stats" style="margin-top:16px">
         <div class="ps-card">
-          <div class="ps-label" data-fa="پربازدیدترین صفحه" data-en="Most visited">Most visited</div>
-          <strong style="font-size:16px" data-fa="نمونه‌کارها" data-en="Portfolio">Portfolio</strong>
-          <small data-fa="۱۴۲ بازدید این هفته" data-en="142 visits this week">142 visits this week</small>
+          <div class="ps-label" data-fa="پربازدیدترین صفحه" data-en="Most visited">پربازدیدترین صفحه</div>
+          <strong style="font-size:16px" data-fa="نمونه‌کارها" data-en="Portfolio">نمونه‌کارها</strong>
+          <small data-fa="۱۴۲ بازدید این هفته" data-en="142 visits this week">۱۴۲ بازدید این هفته</small>
         </div>
         <div class="ps-card">
-          <div class="ps-label" data-fa="بیشترین کلیک CTA" data-en="Top CTA click">Top CTA click</div>
-          <strong style="font-size:16px" data-fa="شروع پروژه" data-en="Start project">Start project</strong>
-          <small data-fa="۳۸ کلیک" data-en="38 clicks">38 clicks</small>
+          <div class="ps-label" data-fa="بیشترین کلیک CTA" data-en="Top CTA click">بیشترین کلیک CTA</div>
+          <strong style="font-size:16px" data-fa="شروع پروژه" data-en="Start project">شروع پروژه</strong>
+          <small data-fa="۳۸ کلیک" data-en="38 clicks">۳۸ کلیک</small>
         </div>
         <div class="ps-card">
-          <div class="ps-label" data-fa="زبان غالب" data-en="Primary language">Primary language</div>
+          <div class="ps-label" data-fa="زبان غالب" data-en="Primary language">زبان غالب</div>
           <strong style="font-size:16px">FA</strong>
-          <small data-fa="۷۸٪ کاربران" data-en="78% of users">78% of users</small>
+          <small data-fa="۷۸٪ کاربران" data-en="78% of users">۷۸٪ کاربران</small>
         </div>
         <div class="ps-card">
-          <div class="ps-label" data-fa="موبایل/دسکتاپ" data-en="Mobile/Desktop">Mobile/Desktop</div>
+          <div class="ps-label" data-fa="موبایل/دسکتاپ" data-en="Mobile/Desktop">موبایل/دسکتاپ</div>
           <strong style="font-size:16px">62/38</strong>
-          <small data-fa="درصد بازدید" data-en="Visit percentage">Visit percentage</small>
+          <small data-fa="درصد بازدید" data-en="Visit percentage">درصد بازدید</small>
         </div>
       </div>
     </div>
