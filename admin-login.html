@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title data-fa="ورود مدیریت — ویترا استودیو" data-en="Admin Sign In — Vitra Studio">ورود مدیریت — ویترا استودیو</title>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body data-page="admin-login">
+  <main>
+    <div class="wrap" style="max-width:420px;padding-top:80px">
+      <div style="text-align:center;margin-bottom:32px">
+        <h1 data-fa="ورود مدیر سایت" data-en="Admin sign in">ورود مدیر سایت</h1>
+        <p data-fa="این صفحه فقط برای مدیر سایت است و در مسیر کاربران عادی نمایش داده نمی‌شود." data-en="This page is only for site admins and is not shown in the regular user flow.">این صفحه فقط برای مدیر سایت است و در مسیر کاربران عادی نمایش داده نمی‌شود.</p>
+      </div>
+      <div class="form-wrap">
+        <form data-login-form data-login-scope="admin" style="display:flex;flex-direction:column;gap:14px">
+          <div class="field">
+            <label for="admin-user" data-fa="نام کاربری مدیریت" data-en="Admin username">نام کاربری مدیریت</label>
+            <input id="admin-user" name="username" required autocomplete="username" placeholder="vitra-admin"/>
+          </div>
+          <div class="field">
+            <label for="admin-pass" data-fa="رمز عبور مدیریت" data-en="Admin password">رمز عبور مدیریت</label>
+            <input id="admin-pass" name="password" type="password" required autocomplete="current-password" placeholder="Password"/>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center" data-fa="ورود به مدیریت" data-en="Sign in to admin">ورود به مدیریت</button>
+          <p class="login-error" data-login-error hidden></p>
+          <div class="demo-accounts">
+            <div>
+              <b data-fa="اکانت مدیریت" data-en="Admin account">اکانت مدیریت</b>
+              <span>user: vitra-admin</span>
+              <span>pass: Vitra@2026</span>
+            </div>
+          </div>
+          <button class="btn btn-outline btn-sm" type="button" data-fill-login="admin" data-fa="پر کردن مدیریت" data-en="Fill admin">پر کردن مدیریت</button>
+        </form>
+      </div>
+      <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--faint)">
+        <a href="index.html" data-fa="← بازگشت به سایت" data-en="← Back to site">← بازگشت به سایت</a>
+      </p>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

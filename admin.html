@@ -36,8 +36,9 @@
     <span data-fa="پنل مدیریت" data-en="Admin Panel">پنل مدیریت</span>
   </a>
   <div class="sb-user">
-    <strong data-fa="مدیر استودیو" data-en="Studio Admin">مدیر استودیو</strong>
-    <span>admin@studio.ir</span>
+    <strong data-auth-name data-fa="مدیر ویترا استودیو" data-en="Vitra Studio Admin">مدیر ویترا استودیو</strong>
+    <span data-auth-email>admin@vitra.studio</span>
+    <small class="role-pill" data-fa="دسترسی کامل مدیریت" data-en="Full admin access">دسترسی کامل مدیریت</small>
   </div>
   <nav class="sb-nav">
     <a href="#overview" class="active"><span class="sb-icon">⊟</span><span data-fa="داشبورد" data-en="Dashboard">داشبورد</span></a>
@@ -45,7 +46,10 @@
     <a href="#content"><span class="sb-icon">✎</span><span data-fa="ویرایشگر سایت" data-en="Site Editor">ویرایشگر سایت</span></a>
     <a href="#media"><span class="sb-icon">▧</span><span data-fa="رسانه‌ها" data-en="Media">رسانه‌ها</span></a>
     <a href="#appearance"><span class="sb-icon">◐</span><span data-fa="ظاهر و منوها" data-en="Appearance">ظاهر و منوها</span></a>
+    <a href="#recommendations"><span class="sb-icon">✦</span><span data-fa="پیشنهاد قابلیت‌ها" data-en="Feature Ideas">پیشنهاد قابلیت‌ها</span></a>
     <a href="#requests"><span class="sb-icon">📥</span><span data-fa="درخواست‌ها" data-en="Requests">درخواست‌ها</span></a>
+    <a href="#lead-crm"><span class="sb-icon">◇</span><span data-fa="CRM لیدها" data-en="Lead CRM">CRM لیدها</span></a>
+    <a href="#blog-seo"><span class="sb-icon">▤</span><span data-fa="وبلاگ و سئو" data-en="Blog & SEO">وبلاگ و سئو</span></a>
     <a href="#testimonials"><span class="sb-icon">★</span><span data-fa="نظرات مشتریان" data-en="Testimonials">نظرات مشتریان</span></a>
     <a href="#services"><span class="sb-icon">◈</span><span data-fa="خدمات و قیمت" data-en="Services & Pricing">خدمات و قیمت</span></a>
     <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
@@ -53,11 +57,13 @@
     <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span></a>
     <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">شبکه‌های اجتماعی</span></a>
     <a href="#popups"><span class="sb-icon">💬</span><span data-fa="پاپ‌آپ‌ها" data-en="Popups">پاپ‌آپ‌ها</span></a>
+    <a href="#backup"><span class="sb-icon">↥</span><span data-fa="بکاپ" data-en="Backup">بکاپ</span></a>
+    <a href="#activity-log"><span class="sb-icon">◷</span><span data-fa="لاگ فعالیت" data-en="Activity log">لاگ فعالیت</span></a>
     <a href="#reports"><span class="sb-icon">📊</span><span data-fa="گزارش‌ها" data-en="Reports">گزارش‌ها</span></a>
   </nav>
   <div class="sb-foot">
     <button class="sb-lang lang-btn" type="button">EN</button>
-    <a class="sb-exit" href="login.html" data-fa="خروج از پنل" data-en="Sign out">خروج از پنل</a>
+    <a class="sb-exit" data-logout href="login.html" data-fa="خروج از پنل" data-en="Sign out">خروج از پنل</a>
   </div>
 </aside>
 
@@ -157,17 +163,22 @@
 
         <form id="site-editor-form" class="p-form wp-editor-form" style="margin-top:16px">
           <div>
+            <label data-fa="صفحه سایت" data-en="Site page">صفحه سایت</label>
+            <select name="editorPage" data-site-editor-page>
+              <option value="home" data-fa="خانه" data-en="Home">خانه</option>
+              <option value="services" data-fa="خدمات" data-en="Services">خدمات</option>
+              <option value="portfolio" data-fa="دموها / نمونه‌کارها" data-en="Demos / Portfolio">دموها / نمونه‌کارها</option>
+              <option value="packages" data-fa="پکیج‌ها" data-en="Packages">پکیج‌ها</option>
+              <option value="process" data-fa="فرایند" data-en="Process">فرایند</option>
+              <option value="about" data-fa="درباره" data-en="About">درباره</option>
+              <option value="faq" data-fa="سوالات" data-en="FAQ">سوالات</option>
+              <option value="order" data-fa="شروع پروژه / فرم سفارش" data-en="Start project / Order form">شروع پروژه / فرم سفارش</option>
+              <option value="global" data-fa="عمومی / هویت و سئو" data-en="Global / Identity and SEO">عمومی / هویت و سئو</option>
+            </select>
+          </div>
+          <div>
             <label data-fa="بخش قابل ویرایش" data-en="Editable block">بخش قابل ویرایش</label>
             <select name="contentKey" data-site-editor-key>
-              <option value="site.brand" data-fa="هویت سایت / نام برند" data-en="Site identity / brand name">هویت سایت / نام برند</option>
-              <option value="home.hero.tag" data-fa="خانه / برچسب هیرو" data-en="Home / hero label">خانه / برچسب هیرو</option>
-              <option value="home.hero.title" data-fa="خانه / تیتر اصلی" data-en="Home / main headline">خانه / تیتر اصلی</option>
-              <option value="home.hero.sub" data-fa="خانه / متن توضیحی" data-en="Home / supporting copy">خانه / متن توضیحی</option>
-              <option value="home.hero.ctaPrimary" data-fa="خانه / دکمه اصلی" data-en="Home / primary button">خانه / دکمه اصلی</option>
-              <option value="home.hero.ctaSecondary" data-fa="خانه / دکمه دوم" data-en="Home / secondary button">خانه / دکمه دوم</option>
-              <option value="home.hero.price" data-fa="خانه / قیمت کوتاه" data-en="Home / price note">خانه / قیمت کوتاه</option>
-              <option value="seo.home.title" data-fa="سئو / عنوان صفحه خانه" data-en="SEO / homepage title">سئو / عنوان صفحه خانه</option>
-              <option value="seo.home.description" data-fa="سئو / توضیحات صفحه خانه" data-en="SEO / homepage description">سئو / توضیحات صفحه خانه</option>
             </select>
           </div>
           <div>
@@ -215,6 +226,16 @@
         <button class="media-item" type="button" data-asset="assets/clinic-hero-photo.webp"><img src="assets/clinic-hero-photo.webp" alt="Clinic demo"/><span>clinic-hero-photo.webp</span></button>
         <button class="media-item" type="button" data-asset="assets/academy-hero-photo.webp"><img src="assets/academy-hero-photo.webp" alt="Academy demo"/><span>academy-hero-photo.webp</span></button>
       </div>
+      <div class="p-form" style="margin-top:14px">
+        <div>
+          <label data-fa="افزودن رسانه نمایشی" data-en="Add demo media">افزودن رسانه نمایشی</label>
+          <input type="file" accept="image/*" data-media-upload/>
+        </div>
+        <div>
+          <label data-fa="Alt text" data-en="Alt text">Alt text</label>
+          <input data-media-alt placeholder="Hero image alt text"/>
+        </div>
+      </div>
       <p class="wp-save-note" data-media-status></p>
     </div>
   </section>
@@ -250,6 +271,56 @@
     </div>
   </section>
 
+  <!-- RECOMMENDATIONS -->
+  <section id="recommendations" style="margin-top:32px">
+    <div class="p-card">
+      <div class="wp-card-head">
+        <div>
+          <h2 data-fa="پیشنهاد قابلیت‌های پنل" data-en="Recommended Panel Features">پیشنهاد قابلیت‌های پنل</h2>
+          <p data-fa="ماژول‌هایی که برای تبدیل این پنل به یک CMS جدی‌تر پیشنهاد می‌شود." data-en="Modules recommended for turning this panel into a stronger CMS.">ماژول‌هایی که برای تبدیل این پنل به یک CMS جدی‌تر پیشنهاد می‌شود.</p>
+        </div>
+      </div>
+      <div class="feature-idea-grid">
+        <article><b data-fa="مدیریت کامل خدمات" data-en="Full service management">مدیریت کامل خدمات</b><span data-fa="افزودن/ویرایش خدمت، قیمت، زمان اجرا و وضعیت انتشار." data-en="Add/edit services, prices, timelines and publish status.">افزودن/ویرایش خدمت، قیمت، زمان اجرا و وضعیت انتشار.</span></article>
+        <article><b data-fa="مدیریت سفارش و لید" data-en="Orders and lead CRM">مدیریت سفارش و لید</b><span data-fa="وضعیت، اولویت، تماس بعدی، یادداشت داخلی و خروجی CSV." data-en="Status, priority, follow-up date, internal notes and CSV export.">وضعیت، اولویت، تماس بعدی، یادداشت داخلی و خروجی CSV.</span></article>
+        <article><b data-fa="وبلاگ و سئو" data-en="Blog and SEO">وبلاگ و سئو</b><span data-fa="نوشته‌ها، دسته‌بندی، متاتگ، اسکیما و پیش‌نمایش گوگل." data-en="Posts, categories, meta tags, schema and Google preview.">نوشته‌ها، دسته‌بندی، متاتگ، اسکیما و پیش‌نمایش گوگل.</span></article>
+        <article><b data-fa="مدیریت رسانه واقعی" data-en="Real media manager">مدیریت رسانه واقعی</b><span data-fa="آپلود، جایگزینی تصویر، alt text و فشرده‌سازی." data-en="Upload, replace images, alt text and compression.">آپلود، جایگزینی تصویر، alt text و فشرده‌سازی.</span></article>
+        <article><b data-fa="کاربران و سطح دسترسی" data-en="Users and permissions">کاربران و سطح دسترسی</b><span data-fa="مدیر، ویرایشگر، فروش، پشتیبانی و لاگ فعالیت." data-en="Admin, editor, sales, support and activity logs.">مدیر، ویرایشگر، فروش، پشتیبانی و لاگ فعالیت.</span></article>
+        <article><b data-fa="اتصال‌ها" data-en="Integrations">اتصال‌ها</b><span data-fa="پرداخت، پیامک، واتساپ، ایمیل، آنالیتیکس و بکاپ." data-en="Payments, SMS, WhatsApp, email, analytics and backups.">پرداخت، پیامک، واتساپ، ایمیل، آنالیتیکس و بکاپ.</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG & SEO -->
+  <section id="blog-seo" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="وبلاگ و نوشته‌ها" data-en="Blog Posts">وبلاگ و نوشته‌ها</h2>
+        <div class="mini-list admin-list" data-admin-posts></div>
+        <form class="p-form" data-post-form style="margin-top:14px">
+          <div><label data-fa="عنوان نوشته" data-en="Post title">عنوان نوشته</label><input name="title" required value="چک‌لیست طراحی سایت حرفه‌ای"/></div>
+          <div><label data-fa="دسته‌بندی" data-en="Category">دسته‌بندی</label><input name="category" value="طراحی سایت"/></div>
+          <div class="pf-full"><label data-fa="خلاصه" data-en="Excerpt">خلاصه</label><textarea name="excerpt">قبل از شروع طراحی سایت، این موارد را مشخص کنید.</textarea></div>
+          <div><label data-fa="وضعیت" data-en="Status">وضعیت</label><select name="status"><option value="published" data-fa="منتشرشده" data-en="Published">منتشرشده</option><option value="draft" data-fa="پیش‌نویس" data-en="Draft">پیش‌نویس</option></select></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn btn-primary btn-sm" type="submit" data-fa="ذخیره نوشته" data-en="Save post">ذخیره نوشته</button></div>
+        </form>
+      </div>
+      <div class="p-card">
+        <h2 data-fa="سئو و پیش‌نمایش گوگل" data-en="SEO and Google Preview">سئو و پیش‌نمایش گوگل</h2>
+        <div class="p-form" style="grid-template-columns:1fr">
+          <div><label data-fa="عنوان سئو" data-en="SEO title">عنوان سئو</label><input data-seo-title value="Vitra Studio — Website Design & Admin Panels"/></div>
+          <div><label data-fa="توضیحات متا" data-en="Meta description">توضیحات متا</label><textarea data-seo-desc>Professional bilingual websites with admin panels, SEO and support.</textarea></div>
+          <div><label data-fa="اسکیما" data-en="Schema type">اسکیما</label><select data-seo-schema><option>LocalBusiness</option><option>Organization</option><option>Service</option><option>Article</option></select></div>
+        </div>
+        <div class="google-preview" style="margin-top:14px">
+          <span>vitra.studio</span>
+          <b data-google-title>Vitra Studio — Website Design & Admin Panels</b>
+          <p data-google-desc>Professional bilingual websites with admin panels, SEO and support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- REQUESTS -->
   <section id="requests" style="margin-top:32px">
     <div class="p-card">
@@ -273,6 +344,27 @@
       </div>
       <div style="margin-top:14px">
         <a class="btn btn-outline btn-sm" href="order.html" data-fa="ثبت درخواست آزمایشی" data-en="Create test request">ثبت درخواست آزمایشی</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD CRM -->
+  <section id="lead-crm" style="margin-top:32px">
+    <div class="p-card">
+      <div class="wp-card-head">
+        <div>
+          <h2 data-fa="CRM سفارش‌ها و لیدها" data-en="Orders and Lead CRM">CRM سفارش‌ها و لیدها</h2>
+          <p data-fa="وضعیت، اولویت، تماس بعدی و یادداشت داخلی برای هر درخواست." data-en="Status, priority, next follow-up and internal notes for each request.">وضعیت، اولویت، تماس بعدی و یادداشت داخلی برای هر درخواست.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" type="button" data-export-leads data-fa="خروجی CSV" data-en="Export CSV">خروجی CSV</button>
+      </div>
+      <div style="overflow-x:auto;margin-top:14px">
+        <table class="ptable">
+          <thead>
+            <tr><th data-fa="لید" data-en="Lead">لید</th><th data-fa="خدمت" data-en="Service">خدمت</th><th data-fa="اولویت" data-en="Priority">اولویت</th><th data-fa="وضعیت" data-en="Status">وضعیت</th><th data-fa="تماس بعدی" data-en="Follow-up">تماس بعدی</th><th data-fa="یادداشت" data-en="Note">یادداشت</th></tr>
+          </thead>
+          <tbody data-lead-crm-list></tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -343,34 +435,35 @@
     <div class="portal-grid">
       <div class="p-card">
         <h2 data-fa="ویرایش خدمات و قیمت" data-en="Edit Services & Pricing">ویرایش خدمات و قیمت</h2>
-        <div class="p-form" style="margin-top:14px">
+        <div class="mini-list admin-list" data-admin-services></div>
+        <form class="p-form" data-service-form style="margin-top:14px">
           <div>
             <label data-fa="نام خدمت (فارسی)" data-en="Service name (FA)">نام خدمت (فارسی)</label>
-            <input value="طراحی سایت جدید"/>
+            <input name="nameFa" value="طراحی سایت جدید"/>
           </div>
           <div>
             <label data-fa="نام (انگلیسی)" data-en="Service name (EN)">نام (انگلیسی)</label>
-            <input value="New Website Design"/>
+            <input name="nameEn" value="New Website Design"/>
           </div>
           <div>
             <label data-fa="قیمت پایه" data-en="Base price">قیمت پایه</label>
-            <input value="از ۱۸ میلیون تومان"/>
+            <input name="price" value="از ۱۸ میلیون تومان"/>
           </div>
           <div>
             <label data-fa="زمان اجرا" data-en="Timeline">زمان اجرا</label>
-            <input value="۱۰–۱۲ روز کاری"/>
+            <input name="timeline" value="۱۰–۱۲ روز کاری"/>
           </div>
           <div>
             <label data-fa="وضعیت" data-en="Status">وضعیت</label>
-            <select>
+            <select name="status">
               <option data-fa="فعال" data-en="Active">فعال</option>
               <option data-fa="غیرفعال" data-en="Inactive">غیرفعال</option>
             </select>
           </div>
           <div style="display:flex;align-items:flex-end">
-            <button class="btn btn-primary btn-sm" type="button" style="width:100%;justify-content:center" data-fa="ذخیره خدمت" data-en="Save service">ذخیره خدمت</button>
+            <button class="btn btn-primary btn-sm" type="submit" style="width:100%;justify-content:center" data-fa="ذخیره خدمت" data-en="Save service">ذخیره خدمت</button>
           </div>
-        </div>
+        </form>
       </div>
       <div class="p-card">
         <h2 data-fa="محاسبه سریع قیمت" data-en="Quick Price Calculator">محاسبه سریع قیمت</h2>
@@ -612,6 +705,43 @@
     </div>
   </section>
 
+
+  <!-- BACKUP & INTEGRATIONS -->
+  <section id="backup" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="بکاپ و بازیابی" data-en="Backup and Restore">بکاپ و بازیابی</h2>
+        <p style="font-size:13px;margin-bottom:14px" data-fa="از تنظیمات ذخیره‌شده در مرورگر خروجی JSON بگیرید یا نسخه قبلی را برگردانید." data-en="Export browser-saved settings as JSON or restore a previous backup.">از تنظیمات ذخیره‌شده در مرورگر خروجی JSON بگیرید یا نسخه قبلی را برگردانید.</p>
+        <div class="wp-actions">
+          <button class="btn btn-primary btn-sm" type="button" data-export-backup data-fa="دانلود بکاپ" data-en="Download backup">دانلود بکاپ</button>
+          <button class="btn btn-outline btn-sm" type="button" data-import-backup data-fa="بازیابی نمونه" data-en="Restore sample">بازیابی نمونه</button>
+        </div>
+        <textarea data-backup-output readonly style="margin-top:14px;min-height:120px;width:100%" placeholder="Backup JSON"></textarea>
+      </div>
+      <div class="p-card">
+        <h2 data-fa="اتصال‌ها" data-en="Integrations">اتصال‌ها</h2>
+        <div class="integration-grid">
+          <label><input type="checkbox" checked/> SMS</label>
+          <label><input type="checkbox" checked/> WhatsApp</label>
+          <label><input type="checkbox"/> Payment Gateway</label>
+          <label><input type="checkbox" checked/> Email</label>
+          <label><input type="checkbox" checked/> Analytics</label>
+          <label><input type="checkbox"/> Auto Backup</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVITY LOG -->
+  <section id="activity-log" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="لاگ فعالیت مدیریت" data-en="Admin Activity Log">لاگ فعالیت مدیریت</h2>
+      <div class="activity-feed admin-activity" data-admin-activity>
+        <div><b data-fa="ویرایشگر صفحه‌به‌صفحه فعال شد" data-en="Page-by-page editor enabled">ویرایشگر صفحه‌به‌صفحه فعال شد</b><span data-fa="امروز" data-en="Today">امروز</span></div>
+        <div><b data-fa="دسترسی کاربر و مدیر جدا شد" data-en="Client and admin access separated">دسترسی کاربر و مدیر جدا شد</b><span data-fa="امروز" data-en="Today">امروز</span></div>
+      </div>
+    </div>
+  </section>
 
   <!-- REPORTS -->
   <section id="reports" style="margin-top:32px;margin-bottom:48px">

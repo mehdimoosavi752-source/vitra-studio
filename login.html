@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title data-fa="ورود به پنل — ویترا استودیو" data-en="Sign In to Portal — Vitra Studio">ورود به پنل — ویترا استودیو</title>
-  <meta name="description" data-fa-content="ورود مشتریان به پنل مدیریت پروژه ویترا استودیو." data-en-content="Client sign-in to the Vitra Studio project management portal." content="ورود مشتریان به پنل مدیریت پروژه ویترا استودیو."/>
+  <title data-fa="ورود کاربر — ویترا استودیو" data-en="Client Sign In — Vitra Studio">ورود کاربر — ویترا استودیو</title>
+  <meta name="description" data-fa-content="ورود کاربران عادی به پنل پروژه ویترا استودیو." data-en-content="Client sign-in for the Vitra Studio project portal." content="ورود کاربران عادی به پنل پروژه ویترا استودیو."/>
   <meta name="robots" content="noindex,nofollow"/>
   <!-- Security Meta Tags -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
@@ -73,16 +73,16 @@
 <main>
   <div class="wrap" style="max-width:420px;padding-top:40px">
     <div style="text-align:center;margin-bottom:32px">
-      <h1 data-fa="ورود به پنل" data-en="Sign in to portal">ورود به پنل</h1>
-      <p data-fa="با ایمیل یا نام کاربری وارد شوید." data-en="Sign in with your email or username.">با ایمیل یا نام کاربری وارد شوید.</p>
+      <h1 data-fa="ورود به پنل کاربر" data-en="Sign in to client portal">ورود به پنل کاربر</h1>
+      <p data-fa="کاربران عادی فقط به بخش‌های پروژه، تیکت، فایل و پرداخت دسترسی دارند." data-en="Regular users only access project, ticket, file and billing sections.">کاربران عادی فقط به بخش‌های پروژه، تیکت، فایل و پرداخت دسترسی دارند.</p>
     </div>
     <div class="form-wrap">
-      <form data-login-form style="display:flex;flex-direction:column;gap:14px">
+      <form data-login-form data-login-scope="client" style="display:flex;flex-direction:column;gap:14px">
         <div class="field">
           <label for="l-user" data-fa="ایمیل یا نام کاربری" data-en="Email or username">ایمیل یا نام کاربری</label>
           <input id="l-user" name="username" required autocomplete="username"
-            data-fa-placeholder="admin@studio.ir" data-en-placeholder="admin@studio.ir"
-            placeholder="admin@studio.ir"/>
+            data-fa-placeholder="vitra-client" data-en-placeholder="vitra-client"
+            placeholder="vitra-client"/>
         </div>
         <div class="field">
           <label for="l-pass" data-fa="رمز عبور" data-en="Password">رمز عبور</label>
@@ -92,7 +92,17 @@
         </div>
         <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center"
           data-fa="ورود" data-en="Sign in">ورود</button>
-        <p class="form-note" style="text-align:center" data-fa="برای تست: admin@studio.ir" data-en="For demo: admin@studio.ir">برای تست: admin@studio.ir</p>
+        <p class="login-error" data-login-error hidden></p>
+        <div class="demo-accounts">
+          <div>
+            <b data-fa="اکانت کاربر عادی" data-en="Regular user account">اکانت کاربر عادی</b>
+            <span>user: vitra-client</span>
+            <span>pass: Client@2026</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+          <button class="btn btn-outline btn-sm" type="button" data-fill-login="client" data-fa="پر کردن کاربر" data-en="Fill user">پر کردن کاربر</button>
+        </div>
       </form>
     </div>
     <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--faint)">

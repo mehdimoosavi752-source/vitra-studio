@@ -260,14 +260,120 @@
   renderOrders();
 
   /* ── 8. LOGIN ────────────────────────────────────── */
+  var AUTH_KEY = 's-auth-user';
+  var demoAccounts = {
+    'vitra-admin': {
+      password: 'Vitra@2026',
+      role: 'admin',
+      name: 'Vitra Studio Admin',
+      nameFa: 'مدیر ویترا استودیو',
+      email: 'admin@vitra.studio'
+    },
+    'admin@vitra.studio': {
+      password: 'Vitra@2026',
+      role: 'admin',
+      name: 'Vitra Studio Admin',
+      nameFa: 'مدیر ویترا استودیو',
+      email: 'admin@vitra.studio'
+    },
+    'vitra-client': {
+      password: 'Client@2026',
+      role: 'client',
+      name: 'Demo Client',
+      nameFa: 'مشتری نمونه',
+      email: 'client@vitra.studio'
+    },
+    'client@vitra.studio': {
+      password: 'Client@2026',
+      role: 'client',
+      name: 'Demo Client',
+      nameFa: 'مشتری نمونه',
+      email: 'client@vitra.studio'
+    }
+  };
+
+  function getAuthUser() {
+    try { return JSON.parse(sessionStorage.getItem(AUTH_KEY)) || null; }
+    catch(e) { return null; }
+  }
+
+  function setAuthUser(user) {
+    sessionStorage.setItem(AUTH_KEY, JSON.stringify(user));
+  }
+
+  function clearAuthUser() {
+    sessionStorage.removeItem(AUTH_KEY);
+  }
+
   var loginForm = document.querySelector('[data-login-form]');
   if (loginForm) {
+    document.querySelectorAll('[data-fill-login]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var kind = btn.dataset.fillLogin;
+        var username = kind === 'client' ? 'vitra-client' : 'vitra-admin';
+        var password = kind === 'client' ? 'Client@2026' : 'Vitra@2026';
+        var userInput = loginForm.querySelector('[name=username]');
+        var passInput = loginForm.querySelector('[name=password]');
+        if (userInput) userInput.value = username;
+        if (passInput) passInput.value = password;
+      });
+    });
+
     loginForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var u = (loginForm.querySelector('[name=username]') || loginForm.querySelector('[name=email]') || {}).value || '';
-      window.location.href = (u.includes('admin') || u.includes('studio')) ? 'admin.html' : 'client.html';
+      var u = ((loginForm.querySelector('[name=username]') || loginForm.querySelector('[name=email]') || {}).value || '').trim().toLowerCase();
+      var p = ((loginForm.querySelector('[name=password]') || {}).value || '').trim();
+      var account = demoAccounts[u];
+      var loginScope = loginForm.dataset.loginScope || (document.body.dataset.page === 'admin-login' ? 'admin' : 'client');
+      var error = document.querySelector('[data-login-error]');
+      if (!account || account.password !== p || account.role !== loginScope) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = lang === 'en' ? 'Username or password is incorrect for this portal.' : 'نام کاربری یا رمز عبور برای این پنل درست نیست.';
+        }
+        return;
+      }
+      setAuthUser({
+        role: account.role,
+        name: account.name,
+        nameFa: account.nameFa,
+        email: account.email,
+        loginAt: new Date().toISOString()
+      });
+      window.location.href = account.role === 'admin' ? 'admin.html' : 'client.html';
     });
   }
+
+  document.querySelectorAll('[data-logout], .sb-exit, .back-site').forEach(function(link) {
+    link.addEventListener('click', function() { clearAuthUser(); });
+  });
+
+  function protectPortal() {
+    var pageName = (document.body.dataset.page || '').toLowerCase();
+    if (pageName !== 'admin' && pageName !== 'client') return;
+    var user = getAuthUser();
+    if (!user) {
+      window.location.href = pageName === 'admin' ? 'admin-login.html' : 'login.html';
+      return;
+    }
+    if (pageName === 'admin' && user.role !== 'admin') {
+      window.location.href = 'client.html';
+      return;
+    }
+    if (pageName === 'client' && user.role !== 'client') {
+      window.location.href = 'admin.html';
+      return;
+    }
+    document.body.setAttribute('data-user-role', user.role);
+    document.querySelectorAll('[data-auth-name]').forEach(function(el) {
+      el.textContent = lang === 'en' ? user.name : (user.nameFa || user.name);
+    });
+    document.querySelectorAll('[data-auth-email]').forEach(function(el) {
+      el.textContent = user.email;
+    });
+  }
+
+  protectPortal();
 
   /* ── 9. PORTAL TICKETS ───────────────────────────── */
   document.querySelectorAll('[data-new-ticket]').forEach(function (btn) {
@@ -316,58 +422,165 @@
   var THEME_KEY = 's-theme-settings';
   var editableBlocks = {
     'site.brand': {
+      page: 'global',
       label: 'Site identity',
       selector: '.brand-name, .dh-brand',
       fa: 'استودیو',
       en: 'Studio'
     },
     'home.hero.tag': {
+      page: 'home',
       label: 'Homepage hero label',
       selector: '.hero-cue[data-cue="0"] .hero-tag',
       fa: 'طراحی دیجیتال — نسل بعدی',
       en: 'Digital Design — Next Generation'
     },
     'home.hero.title': {
+      page: 'home',
       label: 'Homepage headline',
       selector: '.hero-cue[data-cue="0"] h1',
       fa: 'آخرین باری که سایتت برات مشتری آورد، کی بود؟',
       en: 'When was the last time your website brought you a client?'
     },
     'home.hero.sub': {
+      page: 'home',
       label: 'Homepage supporting copy',
       selector: '.hero-cue[data-cue="0"] .sub',
       fa: 'ما سایت نمی‌سازیم — سیستم رشد می‌سازیم.',
       en: "We don't build websites — we build growth systems."
     },
     'home.hero.ctaPrimary': {
+      page: 'home',
       label: 'Primary CTA',
       selector: '.hero-cue[data-cue="0"] .hero-acts .btn-primary',
       fa: 'شروع پروژه',
       en: 'Start project'
     },
     'home.hero.ctaSecondary': {
+      page: 'home',
       label: 'Secondary CTA',
       selector: '.hero-cue[data-cue="0"] .hero-acts .btn-ghost',
       fa: 'مشاهده دموها',
       en: 'View demos'
     },
     'home.hero.price': {
+      page: 'home',
       label: 'Price note',
       selector: '.hero-cue[data-cue="0"] .price-anchor',
       fa: 'شروع از ۱۸ میلیون تومان',
       en: 'From 18M toman'
     },
     'seo.home.title': {
+      page: 'global',
       label: 'Homepage SEO title',
       meta: 'title',
       fa: 'استودیو — طراحی که کار می‌کند',
       en: 'Studio — Design That Works'
     },
     'seo.home.description': {
+      page: 'global',
       label: 'Homepage SEO description',
       meta: 'description',
       fa: 'طراحی سایت حرفه‌ای با پنل مدیریت — تحویل در ۱۴ روز.',
       en: 'Professional website design with an admin panel — delivered in 14 days.'
+    },
+    'services.hero.title': {
+      page: 'services',
+      label: 'Services page headline',
+      selector: 'body[data-page="services"] .page-hero h1',
+      fa: 'خدماتی که کسب‌وکار شما را آنلاین می‌کنند',
+      en: 'Services that bring your business online'
+    },
+    'services.hero.lead': {
+      page: 'services',
+      label: 'Services page intro',
+      selector: 'body[data-page="services"] .page-hero .lead',
+      fa: 'از طراحی اولیه تا پشتیبانی ماهانه — هر چیزی که برای یک حضور آنلاین حرفه‌ای نیاز دارید.',
+      en: 'From initial design to monthly support — everything you need for a professional online presence.'
+    },
+    'portfolio.hero.title': {
+      page: 'portfolio',
+      label: 'Portfolio page headline',
+      selector: 'body[data-page="portfolio"] .page-hero h1',
+      fa: 'دموهایی که می‌شود تجربه کرد',
+      en: 'Demos you can actually experience'
+    },
+    'portfolio.hero.lead': {
+      page: 'portfolio',
+      label: 'Portfolio page intro',
+      selector: 'body[data-page="portfolio"] .page-hero .lead',
+      fa: 'مثل سایت واقعی — قابل کلیک، نه فقط تصویر.',
+      en: 'Like real websites — clickable, not just screenshots.'
+    },
+    'packages.hero.title': {
+      page: 'packages',
+      label: 'Packages page headline',
+      selector: 'body[data-page="packages"] .page-hero h1',
+      fa: 'پکیج‌هایی برای شروع روشن',
+      en: 'Packages with a clear starting point'
+    },
+    'packages.hero.lead': {
+      page: 'packages',
+      label: 'Packages page intro',
+      selector: 'body[data-page="packages"] .page-hero .lead',
+      fa: 'هر پکیج قابل شخصی‌سازی است؛ این‌ها نقطه شروع مذاکره‌اند.',
+      en: 'Every package is customizable; these are starting points.'
+    },
+    'process.hero.title': {
+      page: 'process',
+      label: 'Process page headline',
+      selector: 'body[data-page="process"] .page-hero h1',
+      fa: 'فرایندی شفاف، قابل پیگیری و سریع',
+      en: 'A transparent, trackable and fast process'
+    },
+    'process.hero.lead': {
+      page: 'process',
+      label: 'Process page intro',
+      selector: 'body[data-page="process"] .page-hero .lead',
+      fa: 'از شناخت تا تحویل، هر مرحله خروجی مشخص دارد.',
+      en: 'From discovery to delivery, every step has a clear output.'
+    },
+    'about.hero.title': {
+      page: 'about',
+      label: 'About page headline',
+      selector: 'body[data-page="about"] .page-hero h1',
+      fa: 'استودیویی برای ساخت سایت‌هایی که کار می‌کنند',
+      en: 'A studio for websites that work'
+    },
+    'about.hero.lead': {
+      page: 'about',
+      label: 'About page intro',
+      selector: 'body[data-page="about"] .page-hero .lead',
+      fa: 'تمرکز ما روی طراحی زیبا، مسیر فروش روشن و پنل قابل مدیریت است.',
+      en: 'We focus on beautiful design, clear sales flow and manageable portals.'
+    },
+    'faq.hero.title': {
+      page: 'faq',
+      label: 'FAQ page headline',
+      selector: 'body[data-page="faq"] .page-hero h1',
+      fa: 'سوالات پرتکرار قبل از شروع پروژه',
+      en: 'Frequently asked questions before starting'
+    },
+    'faq.hero.lead': {
+      page: 'faq',
+      label: 'FAQ page intro',
+      selector: 'body[data-page="faq"] .page-hero .lead',
+      fa: 'پاسخ کوتاه به مواردی که قبل از سفارش باید بدانید.',
+      en: 'Short answers to what you should know before ordering.'
+    },
+    'order.hero.title': {
+      page: 'order',
+      label: 'Order page headline',
+      selector: 'body[data-page="order"] .page-hero h1',
+      fa: 'شروع پروژه سایت شما',
+      en: 'Start your website project'
+    },
+    'order.hero.lead': {
+      page: 'order',
+      label: 'Order page intro',
+      selector: 'body[data-page="order"] .page-hero .lead',
+      fa: 'چند سؤال کوتاه جواب دهید تا مسیر، زمان و بودجه پروژه روشن شود.',
+      en: 'Answer a few short questions so we can clarify scope, timeline and budget.'
     }
   };
 
@@ -429,20 +642,21 @@
     var pagesList = document.querySelector('[data-wp-pages-list]');
     if (pagesList) {
       var pages = [
-        ['Home', 'index.html'], ['Services', 'services.html'], ['Demos', 'portfolio.html'],
-        ['Packages', 'packages.html'], ['Process', 'process.html'], ['Blog', 'blog.html'],
-        ['FAQ', 'faq.html'], ['About', 'about.html'], ['Order', 'order.html'], ['Audit', 'audit.html']
+        ['Home', 'index.html', 'home'], ['Services', 'services.html', 'services'], ['Demos', 'portfolio.html', 'portfolio'],
+        ['Packages', 'packages.html', 'packages'], ['Process', 'process.html', 'process'], ['FAQ', 'faq.html', 'faq'],
+        ['About', 'about.html', 'about'], ['Order', 'order.html', 'order'], ['Audit', 'audit.html', 'global']
       ];
       pagesList.innerHTML = pages.map(function(p) {
         return '<tr><td><strong>' + p[0] + '</strong></td><td>' + p[1] + '</td>' +
           '<td><span class="badge badge-green">' + (lang === 'en' ? 'Published' : 'منتشرشده') + '</span></td>' +
-          '<td><a class="btn btn-outline btn-sm" href="#content">' + (lang === 'en' ? 'Edit' : 'ویرایش') + '</a> ' +
+          '<td><a class="btn btn-outline btn-sm" href="#content" data-edit-page="' + p[2] + '">' + (lang === 'en' ? 'Edit' : 'ویرایش') + '</a> ' +
           '<a class="btn btn-outline btn-sm" target="_blank" href="' + p[1] + '">' + (lang === 'en' ? 'View' : 'نمایش') + '</a></td></tr>';
       }).join('');
     }
 
     var form = document.getElementById('site-editor-form');
     if (form) {
+      var pageInput = form.querySelector('[name=editorPage]');
       var keyInput = form.querySelector('[name=contentKey]');
       var faInput = form.querySelector('[name=fa]');
       var enInput = form.querySelector('[name=en]');
@@ -451,7 +665,21 @@
       var previewBody = document.querySelector('[data-editor-preview-body]');
       var status = document.querySelector('[data-site-editor-status]');
 
+      function fillBlockOptions() {
+        var selectedPage = pageInput ? pageInput.value : 'home';
+        var keys = Object.keys(editableBlocks).filter(function(key) {
+          return (editableBlocks[key].page || 'global') === selectedPage;
+        });
+        if (!keys.length) keys = Object.keys(editableBlocks).filter(function(key) {
+          return (editableBlocks[key].page || 'global') === 'global';
+        });
+        keyInput.innerHTML = keys.map(function(key) {
+          return '<option value="' + key + '">' + ((editableBlocks[key] || {}).label || key) + '</option>';
+        }).join('');
+      }
+
       function loadBlock() {
+        if (!keyInput.value) fillBlockOptions();
         var key = keyInput.value;
         var value = blockValue(key);
         faInput.value = value.fa;
@@ -461,6 +689,10 @@
         if (previewBody) previewBody.textContent = lang === 'en' ? value.en : value.fa;
       }
 
+      if (pageInput) pageInput.addEventListener('change', function() {
+        fillBlockOptions();
+        loadBlock();
+      });
       keyInput.addEventListener('change', loadBlock);
       [faInput, enInput].forEach(function(input) {
         input.addEventListener('input', function() {
@@ -493,6 +725,16 @@
         applySiteContent();
       });
 
+      document.querySelectorAll('[data-edit-page]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          if (!pageInput) return;
+          pageInput.value = link.dataset.editPage || 'home';
+          fillBlockOptions();
+          loadBlock();
+        });
+      });
+
+      fillBlockOptions();
       loadBlock();
     }
 
@@ -503,6 +745,25 @@
         var st = document.querySelector('[data-media-status]');
         if (st) st.textContent = (lang === 'en' ? 'Copied: ' : 'کپی شد: ') + path;
       });
+    });
+    var mediaUpload = document.querySelector('[data-media-upload]');
+    if (mediaUpload) mediaUpload.addEventListener('change', function() {
+      var file = mediaUpload.files && mediaUpload.files[0];
+      var grid = document.querySelector('[data-media-library]');
+      if (!file || !grid) return;
+      var reader = new FileReader();
+      reader.onload = function() {
+        var btn = document.createElement('button');
+        btn.className = 'media-item';
+        btn.type = 'button';
+        btn.dataset.asset = file.name;
+        btn.innerHTML = '<img src="' + reader.result + '" alt="' + ((document.querySelector('[data-media-alt]') || {}).value || file.name) + '"/><span>' + file.name + '</span>';
+        grid.prepend(btn);
+        var st = document.querySelector('[data-media-status]');
+        if (st) st.textContent = lang === 'en' ? 'Demo media added to this browser.' : 'رسانه نمایشی در همین مرورگر اضافه شد.';
+        logActivity(lang === 'en' ? 'Demo media added' : 'رسانه نمایشی اضافه شد');
+      };
+      reader.readAsDataURL(file);
     });
 
     var saveTheme = document.querySelector('[data-save-theme]');
@@ -520,6 +781,226 @@
   }
 
   initSiteEditor();
+
+  /* ── 12x. SHOWCASE INTERACTIONS ─────────────────── */
+  (function(){
+    var stage = document.querySelector('.hero-product-stage');
+    if (stage && window.matchMedia('(min-width: 760px)').matches) {
+      window.addEventListener('scroll', function(){
+        var y = Math.min(window.scrollY / 900, 1);
+        stage.style.transform = 'translateY(' + (y * 48) + 'px) rotate(' + (y * -2) + 'deg)';
+        stage.style.opacity = String(1 - y * .22);
+      }, { passive:true });
+    }
+
+    var tabData = {
+      pages:   { title: 'Page editor', bars: ['82%','64%','94%'] },
+      leads:   { title: 'Lead CRM', bars: ['72%','88%','56%'] },
+      seo:     { title: 'SEO preview', bars: ['92%','78%','68%'] },
+      reports: { title: 'Live reports', bars: ['58%','96%','84%'] }
+    };
+    document.querySelectorAll('[data-admin-tab]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.querySelectorAll('[data-admin-tab]').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var data = tabData[btn.dataset.adminTab] || tabData.pages;
+        var title = document.querySelector('[data-preview-title]');
+        if (title) title.textContent = data.title;
+        document.querySelectorAll('.preview-bars i').forEach(function(bar, i){ bar.style.width = data.bars[i] || '70%'; });
+      });
+    });
+
+    var orderForm = document.querySelector('[data-order-form]');
+    if (orderForm) {
+      var service = orderForm.querySelector('[name=service]');
+      var budget = orderForm.querySelector('[name=budget]');
+      var boxes = orderForm.querySelectorAll('[name=features]');
+      function updateConfig(){
+        var selected = service && service.options[service.selectedIndex] ? service.options[service.selectedIndex].textContent : 'Website';
+        var checked = [].slice.call(boxes).filter(function(b){ return b.checked; });
+        var base = parseInt((budget || {}).value || 30, 10);
+        var estimate = base + checked.length * 4;
+        var days = 10 + checked.length * 2 + (service && service.value === 'shop' ? 5 : 0);
+        var title = document.querySelector('[data-config-title]');
+        var price = document.querySelector('[data-config-price]');
+        var time = document.querySelector('[data-config-time]');
+        var tags = document.querySelector('[data-config-tags]');
+        if (title) title.textContent = selected;
+        if (price) price.textContent = estimate + 'M';
+        if (time) time.textContent = days + (lang === 'en' ? ' days' : ' روز');
+        if (tags) tags.innerHTML = checked.map(function(b){ return '<span>' + (b.nextElementSibling ? b.nextElementSibling.textContent : b.value) + '</span>'; }).join('') || '<span>' + (lang === 'en' ? 'Core website' : 'سایت پایه') + '</span>';
+      }
+      if (service) service.addEventListener('change', updateConfig);
+      if (budget) budget.addEventListener('input', updateConfig);
+      boxes.forEach(function(b){ b.addEventListener('change', updateConfig); });
+      updateConfig();
+    }
+  })();
+
+  /* ── 12c. ADMIN/CLIENT MODULES ───────────────────── */
+  function storageList(key, defaults) {
+    try {
+      var saved = JSON.parse(localStorage.getItem(key));
+      return Array.isArray(saved) ? saved : defaults;
+    } catch(e) { return defaults; }
+  }
+  function saveList(key, list) { localStorage.setItem(key, JSON.stringify(list)); }
+  function logActivity(text) {
+    var items = storageList('s-activity-log', []);
+    items.unshift({ text: text, at: new Date().toLocaleString() });
+    saveList('s-activity-log', items.slice(0, 30));
+    renderActivityLog();
+  }
+  function renderActivityLog() {
+    var el = document.querySelector('[data-admin-activity]');
+    if (!el) return;
+    var items = storageList('s-activity-log', [
+      { text: lang === 'en' ? 'Role-based access enabled' : 'دسترسی نقش‌محور فعال شد', at: lang === 'en' ? 'Today' : 'امروز' }
+    ]);
+    el.innerHTML = items.map(function(i) {
+      return '<div><b>' + i.text + '</b><span>' + i.at + '</span></div>';
+    }).join('');
+  }
+
+  function renderPosts() {
+    var el = document.querySelector('[data-admin-posts]');
+    if (!el) return;
+    var posts = storageList('s-posts', [
+      { title: 'چک‌لیست طراحی سایت حرفه‌ای', category: 'طراحی سایت', excerpt: 'قبل از شروع طراحی سایت، این موارد را مشخص کنید.', status: 'published' }
+    ]);
+    el.innerHTML = posts.map(function(p) {
+      return '<div><b>' + p.title + '</b><span>' + p.category + ' · ' + p.status + '</span><small>' + p.excerpt + '</small></div>';
+    }).join('');
+  }
+  var postForm = document.querySelector('[data-post-form]');
+  if (postForm) postForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var posts = storageList('s-posts', []);
+    posts.unshift({
+      title: postForm.querySelector('[name=title]').value,
+      category: postForm.querySelector('[name=category]').value,
+      excerpt: postForm.querySelector('[name=excerpt]').value,
+      status: postForm.querySelector('[name=status]').value
+    });
+    saveList('s-posts', posts);
+    renderPosts();
+    logActivity(lang === 'en' ? 'Blog post saved' : 'نوشته وبلاگ ذخیره شد');
+  });
+  renderPosts();
+
+  function renderServicesAdmin() {
+    var el = document.querySelector('[data-admin-services]');
+    if (!el) return;
+    var services = storageList('s-services', [
+      { nameFa: 'طراحی سایت جدید', nameEn: 'New Website Design', price: 'از ۱۸ میلیون تومان', timeline: '۱۰–۱۲ روز کاری', status: 'فعال' },
+      { nameFa: 'سئو و محتوا', nameEn: 'SEO and Content', price: 'ماهانه', timeline: '۳۰ روزه', status: 'فعال' }
+    ]);
+    el.innerHTML = services.map(function(s) {
+      return '<div><b>' + (lang === 'en' ? s.nameEn : s.nameFa) + '</b><span>' + s.price + ' · ' + s.timeline + ' · ' + s.status + '</span></div>';
+    }).join('');
+  }
+  var serviceForm = document.querySelector('[data-service-form]');
+  if (serviceForm) serviceForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var services = storageList('s-services', []);
+    services.unshift({
+      nameFa: serviceForm.querySelector('[name=nameFa]').value,
+      nameEn: serviceForm.querySelector('[name=nameEn]').value,
+      price: serviceForm.querySelector('[name=price]').value,
+      timeline: serviceForm.querySelector('[name=timeline]').value,
+      status: serviceForm.querySelector('[name=status]').value
+    });
+    saveList('s-services', services);
+    renderServicesAdmin();
+    logActivity(lang === 'en' ? 'Service saved' : 'خدمت ذخیره شد');
+  });
+  renderServicesAdmin();
+
+  ['input','change'].forEach(function(evt) {
+    document.querySelectorAll('[data-seo-title],[data-seo-desc],[data-seo-schema]').forEach(function(el) {
+      el.addEventListener(evt, function() {
+        var title = (document.querySelector('[data-seo-title]') || {}).value || '';
+        var desc = (document.querySelector('[data-seo-desc]') || {}).value || '';
+        var gt = document.querySelector('[data-google-title]');
+        var gd = document.querySelector('[data-google-desc]');
+        if (gt) gt.textContent = title;
+        if (gd) gd.textContent = desc;
+      });
+    });
+  });
+
+  function renderLeadCrm() {
+    var el = document.querySelector('[data-lead-crm-list]');
+    if (!el) return;
+    var leads = storageList('s-leads', [
+      { name: 'Allameh Sokhan', service: 'Academy website', priority: 'High', status: 'Follow-up', follow: 'Tomorrow', note: 'Needs pricing call' },
+      { name: 'Luna Beauty', service: 'Salon marketplace', priority: 'Medium', status: 'Proposal sent', follow: 'Friday', note: 'Waiting for approval' }
+    ]);
+    el.innerHTML = leads.map(function(l, i) {
+      return '<tr><td>' + l.name + '</td><td>' + l.service + '</td><td><span class="badge badge-orange">' + l.priority + '</span></td>' +
+        '<td>' + l.status + '</td><td>' + l.follow + '</td><td><input data-lead-note="' + i + '" value="' + l.note + '"/></td></tr>';
+    }).join('');
+    document.querySelectorAll('[data-lead-note]').forEach(function(input) {
+      input.addEventListener('change', function() {
+        var list = storageList('s-leads', leads);
+        list[parseInt(input.dataset.leadNote, 10)].note = input.value;
+        saveList('s-leads', list);
+        logActivity(lang === 'en' ? 'Lead note updated' : 'یادداشت لید به‌روزرسانی شد');
+      });
+    });
+  }
+  renderLeadCrm();
+  var exportLeads = document.querySelector('[data-export-leads]');
+  if (exportLeads) exportLeads.addEventListener('click', function() {
+    var leads = storageList('s-leads', []);
+    var csv = 'name,service,priority,status,follow,note\n' + leads.map(function(l) {
+      return [l.name,l.service,l.priority,l.status,l.follow,l.note].map(function(v){ return '"' + String(v || '').replace(/"/g,'""') + '"'; }).join(',');
+    }).join('\n');
+    var out = document.querySelector('[data-backup-output]');
+    if (out) out.value = csv;
+    logActivity(lang === 'en' ? 'Leads exported as CSV' : 'خروجی CSV لیدها ساخته شد');
+  });
+
+  var exportBackup = document.querySelector('[data-export-backup]');
+  if (exportBackup) exportBackup.addEventListener('click', function() {
+    var backup = {};
+    ['s-site-content','s-theme-settings','s-posts','s-leads','s-testimonials','s-popups','s-activity-log'].forEach(function(k) {
+      backup[k] = localStorage.getItem(k);
+    });
+    var out = document.querySelector('[data-backup-output]');
+    if (out) out.value = JSON.stringify(backup, null, 2);
+    logActivity(lang === 'en' ? 'Backup generated' : 'بکاپ ساخته شد');
+  });
+  var importBackup = document.querySelector('[data-import-backup]');
+  if (importBackup) importBackup.addEventListener('click', function() {
+    localStorage.setItem('s-theme-settings', JSON.stringify({ accent: '#2d6a4f', leaf: '#52b788', radius: 18 }));
+    applyThemeSettings();
+    logActivity(lang === 'en' ? 'Sample backup restored' : 'بکاپ نمونه بازیابی شد');
+  });
+  renderActivityLog();
+
+  var submitChange = document.querySelector('[data-submit-change]');
+  if (submitChange) submitChange.addEventListener('click', function() {
+    var wrap = document.querySelector('[data-client-change-form]');
+    var list = document.querySelector('[data-client-change-list]');
+    if (!wrap || !list) return;
+    var pageField = wrap.querySelector('input');
+    var typeField = wrap.querySelector('select');
+    var descField = wrap.querySelector('textarea');
+    var item = document.createElement('div');
+    item.innerHTML = '<b>' + (pageField ? pageField.value : 'Change request') + '</b><span>' + (typeField ? typeField.value : 'Change') + ' · ' + (lang === 'en' ? 'Sent' : 'ارسال شد') + '</span><small>' + (descField ? descField.value : '') + '</small>';
+    list.prepend(item);
+  });
+  document.querySelectorAll('[data-approve-item]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var row = btn.closest('div');
+      if (!row) return;
+      var span = row.querySelector('span');
+      if (span) span.textContent = lang === 'en' ? 'Approved' : 'تایید شد';
+      btn.textContent = lang === 'en' ? 'Done' : 'انجام شد';
+      btn.disabled = true;
+    });
+  });
 
 
 
