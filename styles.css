@@ -1831,18 +1831,30 @@ body::after {
 /* ── Demo card — preview on hover ─────────────── */
 .demo-card { position:relative;overflow:hidden }
 .demo-card::after {
-  content: attr(data-hover-text);
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(45,106,79,.92),rgba(28,26,23,.88));
-  color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;font-weight:700;
+  content:"";
+  position:absolute;
+  inset:auto 16px 16px auto;
+  width:46px;
+  height:46px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(82,183,136,.16),rgba(255,255,255,.34));
+  border:1px solid rgba(255,255,255,.46);
+  transform:rotate(10deg) scale(.92);
   opacity:0;
-  transition:opacity .25s;
-  padding:20px;text-align:center;
-  backdrop-filter:blur(2px);
+  transition:opacity .25s,transform .25s;
+  pointer-events:none;
 }
-.demo-card:hover::after { opacity:1 }
+.demo-card:hover::after { opacity:1;transform:rotate(-8deg) scale(1) }
+
+@media (hover:none), (pointer:coarse) {
+  .demo-card::after,
+  .path-card::after,
+  .svc-card::after,
+  .pkg-card::after {
+    display:none!important;
+    content:""!important;
+  }
+}
 
 /* ── Stat cards — glow on enter ────────────────── */
 .stat.glowing {
