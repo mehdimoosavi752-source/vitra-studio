@@ -1,50 +1,74 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>دموی رستوران | Vitra Studio</title>
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body class="demo-site demo-food-page">
-  <!-- DEMO ORDER BANNER -->
-  <div class="demo-order-bar" id="demo-bar">
-    <div>
-      <span data-fa="دمو:" data-en="Demo:">دمو:</span>
-      <strong data-fa="سایت رستوران و کافه" data-en="Restaurant & Cafe">سایت رستوران و کافه</strong>
-    </div>
-    <span class="demo-price" data-fa="از ۲۰ میلیون" data-en="از ۲۰ میلیون">از ۲۰ میلیون</span>
-    <div class="viewport-toggle" id="vp-toggle">
-      <button class="vt-btn" data-vp="mobile" title="Mobile">📱</button>
-      <button class="vt-btn" data-vp="tablet" title="Tablet">💻</button>
-      <button class="vt-btn active" data-vp="desktop" title="Desktop">🖥</button>
-    </div>
-    <div class="demo-acts">
-      <a class="btn btn-outline btn-sm" href="portfolio.html" style="color:#fff;border-color:rgba(255,255,255,.25)" data-fa="همه دموها" data-en="All demos">همه دموها</a>
-      <a class="btn btn-primary btn-sm btn-magnetic" href="order.html?demo=restaurant" data-fa="سفارش این سایت" data-en="Order this site">سفارش این سایت</a>
-    </div>
-  </div>
-  <div id="demo-frame-wrap" class="demo-frame-wrap desktop">
-
-    <header class="demo-nav"><a href="portfolio.html">بازگشت به نمونه‌کارها</a><b>رستوران و رزرو</b><a class="btn btn-primary" href="index.html#contact">درخواست مشابه</a></header>
-    <main>
-      <section class="demo-hero-page"><div><small>منو و رزرو</small><h1>رستوران با منوی پویا، رزرو میز و پیشنهاد روز</h1><p>دموی مناسب کافه و رستوران که می‌خواهد منو، عکس، قیمت، رزرو و سفارش سریع را آنلاین کند.</p><a class="btn btn-primary" href="#menu">مشاهده منو</a></div><div class="food-visual"><i></i><i></i><i></i></div></section>
-      <section id="menu" class="demo-section demo-three"><article><h2>پاستا ویژه</h2><strong>۳۸۰ هزار</strong><p>قیمت و عکس قابل تغییر.</p></article><article><h2>پیتزا روز</h2><strong>۴۲۰ هزار</strong><p>پیشنهاد ویژه صفحه اول.</p></article><article><h2>رزرو میز</h2><strong>آنلاین</strong><p>فرم رزرو و پیام تایید.</p></article></section>
-      <section class="demo-section demo-feature"><h2>قابلیت‌های این دمو</h2><div><span>ویرایش منو</span><span>قیمت غذا</span><span>رزرو میز</span><span>سفارش آنلاین</span><span>پیشنهاد روز</span></div></section>
-    </main>
-    </div><!-- /demo-frame-wrap -->
-  <script>
-  // Viewport toggle
-  var btns = document.querySelectorAll('[data-vp]');
-  var wrap = document.getElementById('demo-frame-wrap');
-  btns.forEach(function(b){
-    b.addEventListener('click', function(){
-      btns.forEach(function(x){x.classList.remove('active')});
-      b.classList.add('active');
-      wrap.className = 'demo-frame-wrap ' + b.dataset.vp;
-    });
-  });
-  </script>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title data-fa="دموی رستوران و رزرو میز — ویترا" data-en="Restaurant Booking Demo — Vitra">Restaurant Booking Demo — Vitra</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body{background:#120b07;color:#fff;font-family:Vazirmatn,Inter,system-ui,sans-serif}
+    .food-demo{min-height:100vh;background:radial-gradient(circle at 75% 15%,rgba(255,141,73,.18),transparent 30%),#120b07;overflow:hidden}
+    .food-nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(18px,4vw,58px);background:rgba(18,11,7,.76);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .food-nav a{color:#fff;opacity:.78}.food-nav strong{font-size:22px}.food-nav .cta{padding:10px 18px;border-radius:999px;background:#e46f2f;color:#fff;opacity:1}
+    .food-hero{display:grid;grid-template-columns:1.02fr .98fr;gap:36px;align-items:center;padding:clamp(44px,7vw,90px) clamp(18px,5vw,70px)}
+    .food-copy small{display:inline-flex;padding:7px 13px;border-radius:999px;background:rgba(228,111,47,.16);color:#ffb088;border:1px solid rgba(228,111,47,.35);margin-bottom:18px}
+    .food-copy h1{font-size:clamp(40px,7vw,92px);line-height:.95;letter-spacing:-.05em;margin-bottom:22px}
+    .food-copy p{font-size:17px;line-height:1.9;color:rgba(255,255,255,.72);max-width:590px;margin-bottom:28px}
+    .food-actions{display:flex;gap:12px;flex-wrap:wrap}.food-actions a,.food-actions button{border:0;border-radius:16px;padding:14px 22px;font-weight:900;background:#e46f2f;color:#fff}.food-actions .ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
+    .food-visual-real{position:relative;border-radius:34px;overflow:hidden;box-shadow:0 40px 110px rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.12)}
+    .food-visual-real img{width:100%;height:min(620px,64vh);object-fit:cover;display:block}
+    .food-visual-real::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(18,11,7,.35))}
+    .booking-card{position:absolute;right:22px;bottom:22px;left:22px;z-index:2;background:rgba(18,11,7,.72);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);border-radius:24px;padding:18px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px}
+    .booking-card input,.booking-card select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:14px;padding:12px}.booking-card button{border:0;border-radius:14px;background:#f7b267;color:#160b04;font-weight:900;padding:12px 18px}
+    .food-section{padding:40px clamp(18px,5vw,70px) 70px}.food-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.food-head h2{font-size:clamp(28px,4vw,56px)}
+    .menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.dish-card{position:relative;overflow:hidden;min-height:250px;border-radius:28px;padding:22px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 70px rgba(0,0,0,.2);transition:transform .35s ease}
+    .dish-card:hover{transform:translateY(-8px)}.dish-card b{display:block;font-size:22px;margin-top:92px}.dish-card span{color:#f7b267;font-weight:900}.dish-card p{color:rgba(255,255,255,.65);line-height:1.8}
+    .dish-card::before{content:"";position:absolute;top:18px;left:18px;width:86px;height:86px;border-radius:28px;background:radial-gradient(circle,#f7b267,#e46f2f 65%,transparent 66%);box-shadow:0 24px 50px rgba(228,111,47,.28)}
+    .food-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.food-flow article{padding:22px;border-radius:24px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}.food-flow b{display:block;margin-bottom:8px}.food-flow p{color:rgba(255,255,255,.65);line-height:1.8}
+    @media(max-width:900px){.food-hero,.menu-grid,.food-flow{grid-template-columns:1fr}.booking-card{position:relative;right:auto;bottom:auto;left:auto;border-radius:0;grid-template-columns:1fr}.food-visual-real img{height:auto}}
+  </style>
+</head>
+<body data-page="restaurant-demo">
+  <main class="food-demo">
+    <nav class="food-nav">
+      <a href="portfolio.html" data-fa="بازگشت به دموها" data-en="Back to demos">Back to demos</a>
+      <strong data-fa="Volcano Table" data-en="Volcano Table">Volcano Table</strong>
+      <a class="cta" href="order.html?demo=restaurant" data-fa="سفارش مشابه" data-en="Order similar">Order similar</a>
+    </nav>
+    <section class="food-hero">
+      <div class="food-copy reveal">
+        <small data-fa="رستوران، منو و رزرو آنلاین" data-en="Restaurant, menu and booking">Restaurant, menu and booking</small>
+        <h1 data-fa="یک رستوران آنلاین که فقط منو نشان نمی‌دهد؛ میز رزرو می‌کند." data-en="A restaurant website that does more than show the menu; it books tables.">A restaurant website that does more than show the menu; it books tables.</h1>
+        <p data-fa="این دمو برای رستوران، کافه و لانژ طراحی شده؛ با منوی تصویری، پیشنهاد روز، رزرو میز، سفارش سریع و پنل مدیریت غذاها." data-en="Built for restaurants, cafes and lounges with visual menus, daily specials, table booking, quick ordering and menu management.">Built for restaurants, cafes and lounges with visual menus, daily specials, table booking, quick ordering and menu management.</p>
+        <div class="food-actions"><a href="#menu" data-fa="دیدن منو" data-en="View menu">View menu</a><a class="ghost" href="#booking" data-fa="رزرو میز" data-en="Book a table">Book a table</a></div>
+      </div>
+      <div class="food-visual-real reveal" id="booking">
+        <img src="assets/demo-restaurant-cover.webp" alt="" width="1100" height="620" fetchpriority="high" decoding="async"/>
+        <form class="booking-card">
+          <input type="date"/>
+          <select><option data-fa="۲ نفر" data-en="2 guests">2 guests</option><option data-fa="۴ نفر" data-en="4 guests">4 guests</option></select>
+          <button type="button" data-fa="بررسی ظرفیت" data-en="Check table">Check table</button>
+        </form>
+      </div>
+    </section>
+    <section class="food-section" id="menu">
+      <div class="food-head reveal"><div><small data-fa="منوی زنده" data-en="Live menu">Live menu</small><h2 data-fa="هر آیتم، یک کارت فروش واقعی." data-en="Every dish becomes a real sales card.">Every dish becomes a real sales card.</h2></div></div>
+      <div class="menu-grid stagger-group">
+        <article class="dish-card reveal"><span>Signature</span><b data-fa="استیک دودی" data-en="Smoked steak">Smoked steak</b><p data-fa="تصویر، قیمت، توضیح کوتاه و پیشنهاد نوشیدنی کنار غذا." data-en="Photo, price, short copy and matching drink suggestion.">Photo, price, short copy and matching drink suggestion.</p></article>
+        <article class="dish-card reveal"><span>Popular</span><b data-fa="پاستا ترافل" data-en="Truffle pasta">Truffle pasta</b><p data-fa="قابل مدیریت از پنل، مناسب پیشنهاد ویژه روز." data-en="Editable from the panel and perfect for daily specials.">Editable from the panel and perfect for daily specials.</p></article>
+        <article class="dish-card reveal"><span>Fast order</span><b data-fa="بشقاب اشتراکی" data-en="Sharing platter">Sharing platter</b><p data-fa="مناسب سفارش سریع، رزرو گروهی و فروش بیشتر." data-en="Great for quick orders, group booking and upsell.">Great for quick orders, group booking and upsell.</p></article>
+      </div>
+    </section>
+    <section class="food-section">
+      <div class="food-flow">
+        <article class="reveal"><b data-fa="رزرو میز" data-en="Table booking">Table booking</b><p data-fa="انتخاب تاریخ، تعداد نفرات و ثبت درخواست." data-en="Choose date, guests and submit request.">Choose date, guests and submit request.</p></article>
+        <article class="reveal"><b data-fa="مدیریت منو" data-en="Menu manager">Menu manager</b><p data-fa="افزودن غذا، قیمت، تصویر و وضعیت موجودی." data-en="Add dishes, prices, images and availability.">Add dishes, prices, images and availability.</p></article>
+        <article class="reveal"><b data-fa="پیشنهاد روز" data-en="Daily special">Daily special</b><p data-fa="نمایش پیشنهادهای فروشنده در صفحه اول." data-en="Show high-converting specials on the homepage.">Show high-converting specials on the homepage.</p></article>
+        <article class="reveal"><b data-fa="سفارش سریع" data-en="Quick order">Quick order</b><p data-fa="کاهش مسیر سفارش و افزایش تماس/رزرو." data-en="Shorter order path, more calls and bookings.">Shorter order path, more calls and bookings.</p></article>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
 </body>
 </html>

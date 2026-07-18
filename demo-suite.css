@@ -805,6 +805,37 @@
   pointer-events: none;
 }
 
+/* Vitra demo visual identity refresh */
+.suite-demo .demo-frame-wrap{background:
+  radial-gradient(circle at 18% 12%,rgba(255,255,255,.08),transparent 24%),
+  radial-gradient(circle at 84% 10%,rgba(255,255,255,.1),transparent 20%),
+  var(--suite-bg,#f7f2eb)}
+.suite-demo .suite-nav{box-shadow:0 18px 48px rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.06)}
+.suite-demo .suite-hero,.salon-finder,.shop-landing,.clinic-search-hero{position:relative;overflow:hidden}
+.suite-demo .suite-hero::before,.salon-finder::before,.shop-landing::before,.clinic-search-hero::before{
+  content:"";position:absolute;inset:18px;border-radius:34px;pointer-events:none;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);
+  opacity:.6;animation:demoLightSweep 8s ease-in-out infinite;
+}
+.suite-demo h1{letter-spacing:-.04em}
+.suite-demo .photo-card,.suite-demo .order-track-mini,.suite-demo .salon-map{
+  box-shadow:0 34px 90px rgba(0,0,0,.16)!important;transform:translateZ(0);
+}
+.suite-demo .photo-card img,.suite-demo .order-track-mini img,.suite-demo .salon-map img{filter:saturate(1.08) contrast(1.03)}
+.salon-suite{--suite-bg:#fff5f2;--suite-accent:#d98fa1}
+.salon-suite .salon-finder{background:linear-gradient(135deg,#fff7f3,#fde6e4 48%,#f8d7df)}
+.salon-suite .salon-map img{content:url('assets/demo-salon-cover-v2.webp')}
+.academy-suite{--suite-bg:#eef0ff;--suite-accent:#6d5dfc}
+.academy-suite .academy-landing{background:linear-gradient(135deg,#111827,#25235e 55%,#6d5dfc);color:#fff}
+.academy-suite .academy-orbit-card img{content:url('assets/demo-academy-cover-v2.webp')}
+.clinic-suite{--suite-bg:#effcff;--suite-accent:#02a6a6}
+.clinic-suite .clinic-search-hero{background:linear-gradient(135deg,#eafcff,#ffffff 52%,#dff8f7)}
+.clinic-suite .clinic-search-hero::after{content:"";position:absolute;inset:auto 40px 30px auto;width:310px;height:180px;border-radius:28px;background:url('assets/demo-clinic-cover-v2.webp') center/cover no-repeat;box-shadow:0 28px 70px rgba(0,139,139,.18);border:1px solid rgba(255,255,255,.7)}
+.shop-suite{--suite-bg:#f6eee6;--suite-accent:#a66a3f}
+.shop-suite .shop-landing{background:linear-gradient(135deg,#2a160d,#5c351e 54%,#d7aa76);color:#fff}
+.shop-suite .order-track-mini img{content:url('assets/demo-shop-cover-v2.webp')}
+@keyframes demoLightSweep{0%,100%{transform:translateX(-8%) skewX(-8deg);opacity:.3}50%{transform:translateX(8%) skewX(-8deg);opacity:.72}}
+
 .photo-caption,
 .campus-visual span,
 .salon-map span,

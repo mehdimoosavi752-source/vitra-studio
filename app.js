@@ -1,19 +1,39 @@
-/* ═══════════════════════════════════════════════════
-   STUDIO — UNIFIED APP.JS
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   STUDIO â€” UNIFIED APP.JS
    Handles: language, nav/drawer, reveal, social links
    order form, portal, login
-   ═══════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 (function () {
   'use strict';
 
-  /* ── 1. LANGUAGE ─────────────────────────────────── */
+  /* â”€â”€ 1. LANGUAGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var storedLang = localStorage.getItem('s-lang');
   if (!localStorage.getItem('s-lang-primary-en')) {
     storedLang = 'en';
     localStorage.setItem('s-lang-primary-en', '1');
   }
   var lang = storedLang === 'fa' || storedLang === 'en' ? storedLang : 'en';
+
+  function fixMojibakeText(value) {
+    if (!value || !/[ØÙÛÚª¬œŒ€â]/.test(value)) return value || '';
+    var map = {'€':0x80,'‚':0x82,'ƒ':0x83,'„':0x84,'…':0x85,'†':0x86,'‡':0x87,'ˆ':0x88,'‰':0x89,'Š':0x8A,'‹':0x8B,'Œ':0x8C,'Ž':0x8E,'‘':0x91,'’':0x92,'“':0x93,'”':0x94,'•':0x95,'–':0x96,'—':0x97,'˜':0x98,'™':0x99,'š':0x9A,'›':0x9B,'œ':0x9C,'ž':0x9E,'Ÿ':0x9F};
+    try {
+      var bytes = [];
+      for (var i = 0; i < value.length; i++) {
+        var ch = value.charAt(i);
+        var code = value.charCodeAt(i);
+        bytes.push(map[ch] !== undefined ? map[ch] : (code & 255));
+      }
+      return new TextDecoder('utf-8').decode(new Uint8Array(bytes));
+    } catch (e) {
+      return value;
+    }
+  }
+
+  function langValue(fa, en) {
+    return lang === 'en' ? (en || '') : fixMojibakeText(fa || '');
+  }
 
   function applyLang(l) {
     lang = l;
@@ -24,23 +44,23 @@
 
     /* translate all [data-fa][data-en] */
     document.querySelectorAll('[data-fa][data-en]').forEach(function (el) {
-      el.textContent = l === 'en' ? el.dataset.en : el.dataset.fa;
+      el.textContent = l === 'en' ? el.dataset.en : fixMojibakeText(el.dataset.fa);
     });
     /* placeholders */
     document.querySelectorAll('[data-fa-placeholder][data-en-placeholder]').forEach(function (el) {
-      el.placeholder = l === 'en' ? el.dataset.enPlaceholder : el.dataset.faPlaceholder;
+      el.placeholder = l === 'en' ? el.dataset.enPlaceholder : fixMojibakeText(el.dataset.faPlaceholder);
     });
     /* meta content (description, etc.) */
     document.querySelectorAll('[data-fa-content][data-en-content]').forEach(function (el) {
-      el.content = l === 'en' ? el.dataset.enContent : el.dataset.faContent;
+      el.content = l === 'en' ? el.dataset.enContent : fixMojibakeText(el.dataset.faContent);
     });
     /* image alt text */
     document.querySelectorAll('img[data-fa-alt][data-en-alt]').forEach(function (el) {
-      el.alt = l === 'en' ? el.dataset.enAlt : el.dataset.faAlt;
+      el.alt = l === 'en' ? el.dataset.enAlt : fixMojibakeText(el.dataset.faAlt);
     });
     /* options inside selects */
     document.querySelectorAll('option[data-fa][data-en]').forEach(function (el) {
-      el.textContent = l === 'en' ? el.dataset.en : el.dataset.fa;
+      el.textContent = l === 'en' ? el.dataset.en : fixMojibakeText(el.dataset.fa);
     });
     /* lang buttons */
     document.querySelectorAll('.lang-btn, .sb-lang, .df-lang').forEach(function (b) {
@@ -51,9 +71,37 @@
     if (dl) dl.textContent = l === 'en' ? 'Switch to FA' : 'Switch to EN';
     /* order code label if present */
     var codeLabel = document.getElementById('order-code-label');
-    if (codeLabel) codeLabel.textContent = l === 'en' ? 'Tracking code' : 'کد پیگیری';
+    if (codeLabel) codeLabel.textContent = l === 'en' ? 'Tracking code' : 'Ú©Ø¯ Ù¾ÛŒÚ¯ÛŒØ±ÛŒ';
+    applyHumanCopy();
   }
   window.__applyLang = applyLang;
+
+  function applyHumanCopy() {
+    function setCopy(selector, fa, en) {
+      var el = document.querySelector(selector);
+      if (!el) return;
+      el.dataset.fa = fa;
+      el.dataset.en = en;
+      el.textContent = lang === 'en' ? en : fixMojibakeText(fa);
+    }
+    setCopy('.hero-cue[data-cue="0"] .hero-tag','Ø·Ø±Ø§Ø­ÛŒ Ø³Ø§ÛŒØª Ø¨Ø±Ø§ÛŒ ÙØ±ÙˆØ´ØŒ Ù†Ù‡ ÙÙ‚Ø· Ù†Ù…Ø§ÛŒØ´','Websites built to sell, not just sit there');
+    setCopy('.hero-cue[data-cue="0"] h1','Ø¢Ø®Ø±ÛŒÙ† Ø¨Ø§Ø±ÛŒ Ú©Ù‡ Ø³Ø§ÛŒØªØª Ø¨Ø±Ø§ÛŒØª Ù…Ø´ØªØ±ÛŒ Ø¢ÙˆØ±Ø¯ØŒ Ú©ÛŒ Ø¨ÙˆØ¯ØŸ','When was the last time your website brought you a client?');
+    setCopy('.hero-cue[data-cue="0"] .sub','Ù…Ø§ Ø¨Ø±Ø§ÛŒ Ú©Ø³Ø¨â€ŒÙˆÚ©Ø§Ø±Ù‡Ø§ÛŒÛŒ Ø³Ø§ÛŒØª Ù…ÛŒâ€ŒØ³Ø§Ø²ÛŒÙ… Ú©Ù‡ Ù…ÛŒâ€ŒØ®ÙˆØ§Ù‡Ù†Ø¯ Ø¬Ø¯ÛŒâ€ŒØªØ± Ø¯ÛŒØ¯Ù‡ Ø´ÙˆÙ†Ø¯ØŒ Ø¨Ù‡ØªØ± ØªÙˆØ¶ÛŒØ­ Ø¨Ø¯Ù‡Ù†Ø¯ Ùˆ Ù…Ø´ØªØ±ÛŒ Ø¨ÛŒØ´ØªØ±ÛŒ Ø¨Ú¯ÛŒØ±Ù†Ø¯.','We build websites for businesses that want to look sharper, explain better and win more clients.');
+    setCopy('.hero-cue[data-cue="1"] .hero-tag','Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØªØŒ Ø¨Ø¯ÙˆÙ† Ù¾ÛŒÚ†ÛŒØ¯Ú¯ÛŒ','A management portal without the headache');
+    setCopy('.hero-cue[data-cue="1"] h1','Ø¨Ø¹Ø¯ Ø§Ø² ØªØ­ÙˆÛŒÙ„ØŒ Ø¨Ø±Ø§ÛŒ Ù‡Ø± ØªØºÛŒÛŒØ± Ú©ÙˆÚ†Ú© Ù…Ù†ØªØ¸Ø± Ù…Ø§ Ù†Ù…ÛŒâ€ŒÙ…Ø§Ù†ÛŒØ¯.','After launch, you will not wait on us for every small change.');
+    setCopy('.hero-cue[data-cue="1"] .sub','Ù‚ÛŒÙ…Øªâ€ŒÙ‡Ø§ØŒ Ù…ØªÙ†â€ŒÙ‡Ø§ØŒ Ø¯Ø±Ø®ÙˆØ§Ø³Øªâ€ŒÙ‡Ø§ØŒ Ú©Ø§Ø±Ø¨Ø±Ø§Ù† Ùˆ Ù¾ÛŒØ§Ù…â€ŒÙ‡Ø§ Ø§Ø² Ù¾Ù†Ù„ Ø®ÙˆØ¯ØªØ§Ù† Ù‚Ø§Ø¨Ù„ Ù…Ø¯ÛŒØ±ÛŒØª Ø§Ø³ØªØ› Ø³Ø§Ø¯Ù‡ØŒ Ø¬Ø¯Ø§ Ùˆ Ù‚Ø§Ø¨Ù„ ÙÙ‡Ù….','Prices, copy, requests, users and messages are managed from your own portal: simple, separated and understandable.');
+    setCopy('.hero-cue[data-cue="2"] .hero-tag','Ø²Ù…Ø§Ù†â€ŒØ¨Ù†Ø¯ÛŒ Ø´ÙØ§Ù Ùˆ Ù‚Ø§Ø¨Ù„ Ú©Ù†ØªØ±Ù„','Clear and controlled delivery');
+    setCopy('.hero-cue[data-cue="2"] h1','Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ Ø²Ù…Ø§Ù† Ù…Ø´Ø®Øµ Ø¯Ø§Ø±Ø¯Ø› Ø§ØµÙ„Ø§Ø­ÛŒÙ‡â€ŒÙ‡Ø§ Ù‡Ù… Ù‚Ø§Ù†ÙˆÙ† Ø¯Ø§Ø±Ù†Ø¯.','The first draft has a timeline; revisions have rules too.');
+    setCopy('.hero-cue[data-cue="2"] .sub','Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ Ù…Ø¹Ù…ÙˆÙ„Ø§Ù‹ Ø¯Ø± Û²Û± ØªØ§ Û³Û° Ø±ÙˆØ² Ú©Ø§Ø±ÛŒ Ø¢Ù…Ø§Ø¯Ù‡ Ù…ÛŒâ€ŒØ´ÙˆØ¯. ØªØ­ÙˆÛŒÙ„ Ù†Ù‡Ø§ÛŒÛŒ Ø¨Ù‡ Ø¢Ù…Ø§Ø¯Ù‡ Ø¨ÙˆØ¯Ù† Ù…Ø­ØªÙˆØ§ØŒ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡â€ŒÙ‡Ø§ Ùˆ ØªØ£ÛŒÛŒØ¯ Ù…Ø±Ø­Ù„Ù‡â€ŒØ§ÛŒ Ø¨Ø³ØªÚ¯ÛŒ Ø¯Ø§Ø±Ø¯.','The first draft usually takes 21â€“30 working days. Final launch depends on content readiness, revision rounds and milestone approvals.');
+    setCopy('body[data-page="services"] .page-hero h1','Ø®Ø¯Ù…Ø§ØªÛŒ Ú©Ù‡ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ø±Ø§ Ø§Ø² ÛŒÚ© ØµÙØ­Ù‡ Ø³Ø§Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ø³ÛŒØ³ØªÙ… ÙØ±ÙˆØ´ ØªØ¨Ø¯ÛŒÙ„ Ù…ÛŒâ€ŒÚ©Ù†Ø¯','Services that turn your website from a simple page into a sales system');
+    setCopy('body[data-page="services"] .page-hero .lead','Ø§Ø² Ø·Ø±Ø§Ø­ÛŒ Ø§ÙˆÙ„ÛŒÙ‡ ØªØ§ Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØªØŒ ØªÙˆÙ„ÛŒØ¯ Ù…Ø­ØªÙˆØ§ØŒ Ø³Ø¦Ùˆ Ùˆ Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒØ› Ù‡Ø± Ø¨Ø®Ø´ Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† Ø³Ø§Ø®ØªÙ‡ Ø´Ø¯Ù‡ Ú©Ù‡ Ú©Ø§Ø±Ø¨Ø± Ø±Ø§Ø­Øªâ€ŒØªØ± Ø§Ø¹ØªÙ…Ø§Ø¯ Ú©Ù†Ø¯ Ùˆ Ø³Ø±ÛŒØ¹â€ŒØªØ± Ø§Ù‚Ø¯Ø§Ù… Ú©Ù†Ø¯.','From design to admin portal, content, SEO and support; every part is built to help visitors trust faster and take action.');
+    setCopy('body[data-page="portfolio"] .page-hero h1','Ø¯Ù…ÙˆÙ‡Ø§ÛŒÛŒ Ú©Ù‡ ÙÙ‚Ø· ØªØµÙˆÛŒØ± Ù†ÛŒØ³ØªÙ†Ø¯Ø› ØªØ¬Ø±Ø¨Ù‡ ÙˆØ§Ù‚Ø¹ÛŒâ€ŒØ§Ù†Ø¯','Demos that are not just screenshots; they feel like real products');
+    setCopy('body[data-page="portfolio"] .page-hero .lead','Ù‡Ø± Ø¯Ù…Ùˆ Ø¨Ø±Ø§ÛŒ ÛŒÚ© ØµÙ†Ø¹Øª Ø¬Ø¯Ø§ Ø·Ø±Ø§Ø­ÛŒ Ø´Ø¯Ù‡ ØªØ§ Ù…Ø´ØªØ±ÛŒ Ø¨ØªÙˆØ§Ù†Ø¯ Ù‚Ø¨Ù„ Ø§Ø² Ø³ÙØ§Ø±Ø´ØŒ Ø­Ø³ Ø³Ø§ÛŒØª Ù†Ù‡Ø§ÛŒÛŒ Ø±Ø§ Ù„Ù…Ø³ Ú©Ù†Ø¯.','Each demo is designed for a different industry, so clients can feel the final product before ordering.');
+    setCopy('body[data-page="packages"] .page-hero h1','Ù¾Ú©ÛŒØ¬â€ŒÙ‡Ø§ Ø´ÙØ§Ùâ€ŒØ§Ù†Ø¯Ø› ØªØµÙ…ÛŒÙ…â€ŒÚ¯ÛŒØ±ÛŒ Ø±Ø§Ø­Øªâ€ŒØªØ± Ù…ÛŒâ€ŒØ´ÙˆØ¯','Clear packages make decisions easier');
+    setCopy('body[data-page="packages"] .page-hero .lead','Ù‚ÛŒÙ…ØªØŒ Ù…Ø­Ø¯ÙˆØ¯Ù‡ Ú©Ø§Ø±ØŒ Ø²Ù…Ø§Ù† Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ Ùˆ Ù‚ÙˆØ§Ù†ÛŒÙ† Ø§ØµÙ„Ø§Ø­ÛŒÙ‡ Ø§Ø² Ø§Ø¨ØªØ¯Ø§ Ø±ÙˆØ´Ù† Ø§Ø³Øª ØªØ§ Ù¾Ø±ÙˆÚ˜Ù‡ Ú©Ø´â€ŒØ¯Ø§Ø± Ùˆ Ù…Ø¨Ù‡Ù… Ù†Ø´ÙˆØ¯.','Price, scope, first-draft timing and revision rules are clear from the start, so the project does not drift.');
+    setCopy('body[data-page="process"] .page-hero h1','ÙØ±Ø§ÛŒÙ†Ø¯ÛŒ Ú©Ù‡ Ù¾Ø±ÙˆÚ˜Ù‡ Ø±Ø§ Ù‚Ø§Ø¨Ù„ Ù¾ÛŒÚ¯ÛŒØ±ÛŒ Ù†Ú¯Ù‡ Ù…ÛŒâ€ŒØ¯Ø§Ø±Ø¯','A process that keeps the project trackable');
+    setCopy('body[data-page="process"] .page-hero .lead','Ù…Ø±Ø­Ù„Ù‡â€ŒØ¨Ù‡â€ŒÙ…Ø±Ø­Ù„Ù‡ Ø¬Ù„Ùˆ Ù…ÛŒâ€ŒØ±ÙˆÛŒÙ…: Ø´Ù†Ø§Ø®ØªØŒ Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ØŒ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡ØŒ ØªÙˆØ³Ø¹Ù‡ØŒ ØªØ³Øª Ùˆ ØªØ­ÙˆÛŒÙ„.','We move step by step: discovery, first draft, revisions, development, testing and launch.');
+  }
 
   /* bind all lang buttons */
   document.addEventListener('click', function (e) {
@@ -67,7 +115,7 @@
     }
   });
 
-  /* ── 2. TOPBAR / DRAWER ──────────────────────────── */
+  /* â”€â”€ 2. TOPBAR / DRAWER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var menuBtn  = document.getElementById('menu-btn');
   var drawer   = document.getElementById('nav-drawer');
   var overlay  = document.getElementById('nav-overlay');
@@ -94,7 +142,7 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) closeDrawer(); });
   if (drawer) drawer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeDrawer); });
 
-  /* ── 3. HERO SCROLL ──────────────────────────────── */
+  /* â”€â”€ 3. HERO SCROLL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var wrap   = document.getElementById('hero-wrap');
   var vid    = document.getElementById('hero-vid');
   var fill   = document.getElementById('hero-fill');
@@ -163,7 +211,7 @@
     topbar.classList.remove('over-hero');
   }
 
-  /* ── 4. SCROLL REVEAL ────────────────────────────── */
+  /* â”€â”€ 4. SCROLL REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length) {
     if (window.IntersectionObserver) {
@@ -178,7 +226,7 @@
     }
   }
 
-  /* ── 5. SOCIAL LINKS ─────────────────────────────── */
+  /* â”€â”€ 5. SOCIAL LINKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function syncSocials() {
     var defaults = {
       instagram: 'https://instagram.com/',
@@ -200,11 +248,11 @@
         localStorage.setItem('s-social-' + inp.dataset.socialInput, inp.value);
       });
       syncSocials();
-      btn.textContent = lang === 'en' ? 'Saved' : 'ذخیره شد';
+      btn.textContent = lang === 'en' ? 'Saved' : 'Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯';
     });
   });
 
-  /* ── 6. ORDER FORM ───────────────────────────────── */
+  /* â”€â”€ 6. ORDER FORM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function makeCode() {
     var d = new Date();
     return 'STD-' + d.getFullYear() +
@@ -240,58 +288,58 @@
         res.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
       var sub = form.querySelector('[type=submit]');
-      if (sub) sub.textContent = lang === 'en' ? 'Request submitted ✓' : 'درخواست ثبت شد ✓';
+      if (sub) sub.textContent = lang === 'en' ? 'Request submitted âœ“' : 'Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø«Ø¨Øª Ø´Ø¯ âœ“';
       renderOrders();
     });
   });
 
-  /* ── 7. RENDER ORDERS IN PORTAL ─────────────────── */
+  /* â”€â”€ 7. RENDER ORDERS IN PORTAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function renderOrders() {
     var orders = JSON.parse(localStorage.getItem('s-orders') || '[]');
     document.querySelectorAll('[data-orders-list]').forEach(function (list) {
       if (!orders.length) {
         list.innerHTML = '<p style="color:var(--faint);font-size:13px;padding:12px 0">' +
-          (lang === 'en' ? 'No requests yet.' : 'هنوز درخواستی ثبت نشده.') + '</p>';
+          (lang === 'en' ? 'No requests yet.' : 'Ù‡Ù†ÙˆØ² Ø¯Ø±Ø®ÙˆØ§Ø³ØªÛŒ Ø«Ø¨Øª Ù†Ø´Ø¯Ù‡.') + '</p>';
         return;
       }
       list.innerHTML = orders.map(function (o) {
         return '<tr><td><strong>' + o.code + '</strong></td><td>' + (o.name || '-') + '</td>' +
           '<td>' + (o.service || '-') + '</td><td>' + (o.budget || '-') + '</td>' +
-          '<td><span class="badge badge-green">' + (lang === 'en' ? 'New' : 'جدید') + '</span></td></tr>';
+          '<td><span class="badge badge-green">' + (lang === 'en' ? 'New' : 'Ø¬Ø¯ÛŒØ¯') + '</span></td></tr>';
       }).join('');
     });
   }
   renderOrders();
 
-  /* ── 8. LOGIN ────────────────────────────────────── */
+  /* â”€â”€ 8. LOGIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var AUTH_KEY = 's-auth-user';
   var demoAccounts = {
     'vitra-admin': {
       password: 'Vitra@2026',
       role: 'admin',
       name: 'Vitra Studio Admin',
-      nameFa: 'مدیر ویترا استودیو',
+      nameFa: 'Ù…Ø¯ÛŒØ± ÙˆÛŒØªØ±Ø§ Ø§Ø³ØªÙˆØ¯ÛŒÙˆ',
       email: 'admin@vitra.studio'
     },
     'admin@vitra.studio': {
       password: 'Vitra@2026',
       role: 'admin',
       name: 'Vitra Studio Admin',
-      nameFa: 'مدیر ویترا استودیو',
+      nameFa: 'Ù…Ø¯ÛŒØ± ÙˆÛŒØªØ±Ø§ Ø§Ø³ØªÙˆØ¯ÛŒÙˆ',
       email: 'admin@vitra.studio'
     },
     'vitra-client': {
       password: 'Client@2026',
       role: 'client',
       name: 'Demo Client',
-      nameFa: 'مشتری نمونه',
+      nameFa: 'Ù…Ø´ØªØ±ÛŒ Ù†Ù…ÙˆÙ†Ù‡',
       email: 'client@vitra.studio'
     },
     'client@vitra.studio': {
       password: 'Client@2026',
       role: 'client',
       name: 'Demo Client',
-      nameFa: 'مشتری نمونه',
+      nameFa: 'Ù…Ø´ØªØ±ÛŒ Ù†Ù…ÙˆÙ†Ù‡',
       email: 'client@vitra.studio'
     }
   };
@@ -334,7 +382,7 @@
       if (!account || account.password !== p || scopeMismatch) {
         if (error) {
           error.hidden = false;
-          error.textContent = lang === 'en' ? 'Username or password is incorrect for this portal.' : 'نام کاربری یا رمز عبور برای این پنل درست نیست.';
+          error.textContent = lang === 'en' ? 'Username or password is incorrect for this portal.' : 'Ù†Ø§Ù… Ú©Ø§Ø±Ø¨Ø±ÛŒ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† Ù¾Ù†Ù„ Ø¯Ø±Ø³Øª Ù†ÛŒØ³Øª.';
         }
         return;
       }
@@ -380,42 +428,42 @@
 
   protectPortal();
 
-  /* ── 9. PORTAL TICKETS ───────────────────────────── */
+  /* â”€â”€ 9. PORTAL TICKETS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.querySelectorAll('[data-new-ticket]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var list = document.querySelector('[data-ticket-list]');
       if (!list) return;
-      var title = prompt(lang === 'en' ? 'Ticket subject:' : 'موضوع تیکت:');
+      var title = prompt(lang === 'en' ? 'Ticket subject:' : 'Ù…ÙˆØ¶ÙˆØ¹ ØªÛŒÚ©Øª:');
       if (!title) return;
       var row = document.createElement('div');
       row.className = 'ticket-item';
       row.innerHTML = '<span class="t-dot urgent"></span><div><b>' + title +
-        '</b><span>' + (lang === 'en' ? 'Just now — Open' : 'همین الان — باز') + '</span></div>';
+        '</b><span>' + (lang === 'en' ? 'Just now â€” Open' : 'Ù‡Ù…ÛŒÙ† Ø§Ù„Ø§Ù† â€” Ø¨Ø§Ø²') + '</span></div>';
       list.prepend(row);
       var cnt = document.querySelector('[data-ticket-count]');
       if (cnt) cnt.textContent = String(parseInt(cnt.textContent || 0) + 1);
     });
   });
 
-  /* ── 10. BUDGET RANGE ────────────────────────────── */
+  /* â”€â”€ 10. BUDGET RANGE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var bRange = document.querySelector('[data-budget]');
   var bOut   = document.querySelector('[data-budget-out]');
   if (bRange && bOut) {
     function updateBudget() {
       bOut.textContent = lang === 'en'
         ? 'About ' + bRange.value + 'M toman'
-        : 'حدود ' + new Intl.NumberFormat('fa-IR').format(bRange.value) + ' میلیون تومان';
+        : 'Ø­Ø¯ÙˆØ¯ ' + new Intl.NumberFormat('fa-IR').format(bRange.value) + ' Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†';
     }
     bRange.addEventListener('input', updateBudget);
     updateBudget();
   }
 
-  /* ── 11. MARK ACTIVE NAV ─────────────────────────── */
+  /* â”€â”€ 11. MARK ACTIVE NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function ensureStudioLabLinks() {
     function makeLink() {
       var a = document.createElement('a');
       a.href = 'studio-lab.html';
-      a.dataset.fa = 'توانایی‌ها';
+      a.dataset.fa = 'ØªÙˆØ§Ù†Ø§ÛŒÛŒâ€ŒÙ‡Ø§';
       a.dataset.en = 'Studio Lab';
       a.textContent = 'Studio Lab';
       return a;
@@ -450,16 +498,16 @@
     var hero = document.querySelector('.page-hero .container, .page-hero');
     if (!hero) return;
     var data = {
-      services: ['Services Engine', 'خدمات قابل مدیریت', 'From offer to request'],
-      portfolio: ['Demo Gallery', 'گالری دموها', 'Industry-specific live previews'],
-      packages: ['Package Builder', 'پکیج و قیمت‌گذاری', 'Clear scope, clear revisions'],
-      process: ['Delivery Roadmap', 'مسیر اجرای پروژه', 'Milestone-based production'],
-      faq: ['Answer Hub', 'مرکز پاسخ‌ها', 'Less doubt, faster decision'],
-      about: ['Studio Story', 'داستان استودیو', 'Design, systems and growth'],
-      order: ['Project Builder', 'ساخت پروژه', 'Smart request and estimate'],
-      audit: ['Website Audit', 'بررسی سایت', 'Find leaks before redesign'],
-      blog: ['Growth Journal', 'مجله رشد', 'Articles, SEO and strategy'],
-      'studio-lab': ['Capability Lab', 'آزمایشگاه توانایی‌ها', 'A live showcase of what we build']
+      services: ['Services Engine', 'Ø®Ø¯Ù…Ø§Øª Ù‚Ø§Ø¨Ù„ Ù…Ø¯ÛŒØ±ÛŒØª', 'From offer to request', ['Strategy','Design','Panel']],
+      portfolio: ['Demo Gallery', 'Ú¯Ø§Ù„Ø±ÛŒ Ø¯Ù…ÙˆÙ‡Ø§', 'Industry-specific live previews', ['Salon','Academy','Shop']],
+      packages: ['Package Builder', 'Ù¾Ú©ÛŒØ¬ Ùˆ Ù‚ÛŒÙ…Øªâ€ŒÚ¯Ø°Ø§Ø±ÛŒ', 'Clear scope, clear revisions', ['Scope','Timeline','Revisions']],
+      process: ['Delivery Roadmap', 'Ù…Ø³ÛŒØ± Ø§Ø¬Ø±Ø§ÛŒ Ù¾Ø±ÙˆÚ˜Ù‡', 'Milestone-based production', ['Brief','Draft','Launch']],
+      faq: ['Answer Hub', 'Ù…Ø±Ú©Ø² Ù¾Ø§Ø³Ø®â€ŒÙ‡Ø§', 'Less doubt, faster decision', ['Price','Time','Support']],
+      about: ['Studio Story', 'Ø¯Ø§Ø³ØªØ§Ù† Ø§Ø³ØªÙˆØ¯ÛŒÙˆ', 'Design, systems and growth', ['Taste','Trust','Systems']],
+      order: ['Project Builder', 'Ø³Ø§Ø®Øª Ù¾Ø±ÙˆÚ˜Ù‡', 'Smart request and estimate', ['Type','Budget','Features']],
+      audit: ['Website Audit', 'Ø¨Ø±Ø±Ø³ÛŒ Ø³Ø§ÛŒØª', 'Find leaks before redesign', ['Speed','SEO','Conversion']],
+      blog: ['Growth Journal', 'Ù…Ø¬Ù„Ù‡ Ø±Ø´Ø¯', 'Articles, SEO and strategy', ['SEO','Content','UX']],
+      'studio-lab': ['Capability Lab', 'Ø¢Ø²Ù…Ø§ÛŒØ´Ú¯Ø§Ù‡ ØªÙˆØ§Ù†Ø§ÛŒÛŒâ€ŒÙ‡Ø§', 'A live showcase of what we build', ['Admin','Client','Motion']]
     };
     var item = data[pageName];
     if (!item) return;
@@ -470,7 +518,7 @@
       '<span data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</span>' +
       '<b data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</b>' +
       '<p data-fa="' + item[1] + '" data-en="' + item[2] + '">' + (lang === 'en' ? item[2] : item[1]) + '</p>' +
-      '<i></i><i></i><i></i>' +
+      '<div class="poster-chips">' + item[3].map(function(x){ return '<em>' + x + '</em>'; }).join('') + '</div>' +
       '</div>';
     hero.appendChild(poster);
   }
@@ -485,7 +533,7 @@
     }
   });
 
-  /* ── 12. APPLY LANGUAGE ON LOAD ──────────────────── */
+  /* â”€â”€ 12. APPLY LANGUAGE ON LOAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function initPortalPages() {
     var pageName = (document.body.dataset.page || '').toLowerCase();
     if (pageName !== 'admin' && pageName !== 'client') return;
@@ -542,7 +590,7 @@
 
   applyLang(lang);
 
-  /* ── 12b. WORDPRESS-LIKE SITE EDITOR ─────────────── */
+  /* â”€â”€ 12b. WORDPRESS-LIKE SITE EDITOR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var SITE_CONTENT_KEY = 's-site-content';
   var THEME_KEY = 's-theme-settings';
   var editableBlocks = {
@@ -550,161 +598,161 @@
       page: 'global',
       label: 'Site identity',
       selector: '.brand-name, .dh-brand',
-      fa: 'استودیو',
+      fa: 'Ø§Ø³ØªÙˆØ¯ÛŒÙˆ',
       en: 'Studio'
     },
     'home.hero.tag': {
       page: 'home',
       label: 'Homepage hero label',
       selector: '.hero-cue[data-cue="0"] .hero-tag',
-      fa: 'طراحی دیجیتال — نسل بعدی',
-      en: 'Digital Design — Next Generation'
+      fa: 'Ø·Ø±Ø§Ø­ÛŒ Ø¯ÛŒØ¬ÛŒØªØ§Ù„ â€” Ù†Ø³Ù„ Ø¨Ø¹Ø¯ÛŒ',
+      en: 'Digital Design â€” Next Generation'
     },
     'home.hero.title': {
       page: 'home',
       label: 'Homepage headline',
       selector: '.hero-cue[data-cue="0"] h1',
-      fa: 'آخرین باری که سایتت برات مشتری آورد، کی بود؟',
+      fa: 'Ø¢Ø®Ø±ÛŒÙ† Ø¨Ø§Ø±ÛŒ Ú©Ù‡ Ø³Ø§ÛŒØªØª Ø¨Ø±Ø§Øª Ù…Ø´ØªØ±ÛŒ Ø¢ÙˆØ±Ø¯ØŒ Ú©ÛŒ Ø¨ÙˆØ¯ØŸ',
       en: 'When was the last time your website brought you a client?'
     },
     'home.hero.sub': {
       page: 'home',
       label: 'Homepage supporting copy',
       selector: '.hero-cue[data-cue="0"] .sub',
-      fa: 'ما سایت نمی‌سازیم — سیستم رشد می‌سازیم.',
-      en: "We don't build websites — we build growth systems."
+      fa: 'Ù…Ø§ Ø³Ø§ÛŒØª Ù†Ù…ÛŒâ€ŒØ³Ø§Ø²ÛŒÙ… â€” Ø³ÛŒØ³ØªÙ… Ø±Ø´Ø¯ Ù…ÛŒâ€ŒØ³Ø§Ø²ÛŒÙ….',
+      en: "We don't build websites â€” we build growth systems."
     },
     'home.hero.ctaPrimary': {
       page: 'home',
       label: 'Primary CTA',
       selector: '.hero-cue[data-cue="0"] .hero-acts .btn-primary',
-      fa: 'شروع پروژه',
+      fa: 'Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡',
       en: 'Start project'
     },
     'home.hero.ctaSecondary': {
       page: 'home',
       label: 'Secondary CTA',
       selector: '.hero-cue[data-cue="0"] .hero-acts .btn-ghost',
-      fa: 'مشاهده دموها',
+      fa: 'Ù…Ø´Ø§Ù‡Ø¯Ù‡ Ø¯Ù…ÙˆÙ‡Ø§',
       en: 'View demos'
     },
     'home.hero.price': {
       page: 'home',
       label: 'Price note',
       selector: '.hero-cue[data-cue="0"] .price-anchor',
-      fa: 'شروع از ۱۸ میلیون تومان',
+      fa: 'Ø´Ø±ÙˆØ¹ Ø§Ø² Û±Û¸ Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†',
       en: 'From 18M toman'
     },
     'seo.home.title': {
       page: 'global',
       label: 'Homepage SEO title',
       meta: 'title',
-      fa: 'استودیو — طراحی که کار می‌کند',
-      en: 'Studio — Design That Works'
+      fa: 'Ø§Ø³ØªÙˆØ¯ÛŒÙˆ â€” Ø·Ø±Ø§Ø­ÛŒ Ú©Ù‡ Ú©Ø§Ø± Ù…ÛŒâ€ŒÚ©Ù†Ø¯',
+      en: 'Studio â€” Design That Works'
     },
     'seo.home.description': {
       page: 'global',
       label: 'Homepage SEO description',
       meta: 'description',
-      fa: 'طراحی سایت حرفه‌ای با پنل مدیریت — نسخه اولیه ۲۱ تا ۳۰ روز کاری، تحویل نهایی وابسته به محتوا و اصلاحیه‌ها.',
-      en: 'Professional website design with an admin panel — initial draft in 21–30 working days; final launch depends on content and revisions.'
+      fa: 'Ø·Ø±Ø§Ø­ÛŒ Ø³Ø§ÛŒØª Ø­Ø±ÙÙ‡â€ŒØ§ÛŒ Ø¨Ø§ Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª â€” Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ Û²Û± ØªØ§ Û³Û° Ø±ÙˆØ² Ú©Ø§Ø±ÛŒØŒ ØªØ­ÙˆÛŒÙ„ Ù†Ù‡Ø§ÛŒÛŒ ÙˆØ§Ø¨Ø³ØªÙ‡ Ø¨Ù‡ Ù…Ø­ØªÙˆØ§ Ùˆ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡â€ŒÙ‡Ø§.',
+      en: 'Professional website design with an admin panel â€” initial draft in 21â€“30 working days; final launch depends on content and revisions.'
     },
     'services.hero.title': {
       page: 'services',
       label: 'Services page headline',
       selector: 'body[data-page="services"] .page-hero h1',
-      fa: 'خدماتی که کسب‌وکار شما را آنلاین می‌کنند',
+      fa: 'Ø®Ø¯Ù…Ø§ØªÛŒ Ú©Ù‡ Ú©Ø³Ø¨â€ŒÙˆÚ©Ø§Ø± Ø´Ù…Ø§ Ø±Ø§ Ø¢Ù†Ù„Ø§ÛŒÙ† Ù…ÛŒâ€ŒÚ©Ù†Ù†Ø¯',
       en: 'Services that bring your business online'
     },
     'services.hero.lead': {
       page: 'services',
       label: 'Services page intro',
       selector: 'body[data-page="services"] .page-hero .lead',
-      fa: 'از طراحی اولیه تا پشتیبانی ماهانه — هر چیزی که برای یک حضور آنلاین حرفه‌ای نیاز دارید.',
-      en: 'From initial design to monthly support — everything you need for a professional online presence.'
+      fa: 'Ø§Ø² Ø·Ø±Ø§Ø­ÛŒ Ø§ÙˆÙ„ÛŒÙ‡ ØªØ§ Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒ Ù…Ø§Ù‡Ø§Ù†Ù‡ â€” Ù‡Ø± Ú†ÛŒØ²ÛŒ Ú©Ù‡ Ø¨Ø±Ø§ÛŒ ÛŒÚ© Ø­Ø¶ÙˆØ± Ø¢Ù†Ù„Ø§ÛŒÙ† Ø­Ø±ÙÙ‡â€ŒØ§ÛŒ Ù†ÛŒØ§Ø² Ø¯Ø§Ø±ÛŒØ¯.',
+      en: 'From initial design to monthly support â€” everything you need for a professional online presence.'
     },
     'portfolio.hero.title': {
       page: 'portfolio',
       label: 'Portfolio page headline',
       selector: 'body[data-page="portfolio"] .page-hero h1',
-      fa: 'دموهایی که می‌شود تجربه کرد',
+      fa: 'Ø¯Ù…ÙˆÙ‡Ø§ÛŒÛŒ Ú©Ù‡ Ù…ÛŒâ€ŒØ´ÙˆØ¯ ØªØ¬Ø±Ø¨Ù‡ Ú©Ø±Ø¯',
       en: 'Demos you can actually experience'
     },
     'portfolio.hero.lead': {
       page: 'portfolio',
       label: 'Portfolio page intro',
       selector: 'body[data-page="portfolio"] .page-hero .lead',
-      fa: 'مثل سایت واقعی — قابل کلیک، نه فقط تصویر.',
-      en: 'Like real websites — clickable, not just screenshots.'
+      fa: 'Ù…Ø«Ù„ Ø³Ø§ÛŒØª ÙˆØ§Ù‚Ø¹ÛŒ â€” Ù‚Ø§Ø¨Ù„ Ú©Ù„ÛŒÚ©ØŒ Ù†Ù‡ ÙÙ‚Ø· ØªØµÙˆÛŒØ±.',
+      en: 'Like real websites â€” clickable, not just screenshots.'
     },
     'packages.hero.title': {
       page: 'packages',
       label: 'Packages page headline',
       selector: 'body[data-page="packages"] .page-hero h1',
-      fa: 'پکیج‌هایی برای شروع روشن',
+      fa: 'Ù¾Ú©ÛŒØ¬â€ŒÙ‡Ø§ÛŒÛŒ Ø¨Ø±Ø§ÛŒ Ø´Ø±ÙˆØ¹ Ø±ÙˆØ´Ù†',
       en: 'Packages with a clear starting point'
     },
     'packages.hero.lead': {
       page: 'packages',
       label: 'Packages page intro',
       selector: 'body[data-page="packages"] .page-hero .lead',
-      fa: 'هر پکیج قابل شخصی‌سازی است؛ این‌ها نقطه شروع مذاکره‌اند.',
+      fa: 'Ù‡Ø± Ù¾Ú©ÛŒØ¬ Ù‚Ø§Ø¨Ù„ Ø´Ø®ØµÛŒâ€ŒØ³Ø§Ø²ÛŒ Ø§Ø³ØªØ› Ø§ÛŒÙ†â€ŒÙ‡Ø§ Ù†Ù‚Ø·Ù‡ Ø´Ø±ÙˆØ¹ Ù…Ø°Ø§Ú©Ø±Ù‡â€ŒØ§Ù†Ø¯.',
       en: 'Every package is customizable; these are starting points.'
     },
     'process.hero.title': {
       page: 'process',
       label: 'Process page headline',
       selector: 'body[data-page="process"] .page-hero h1',
-      fa: 'فرایندی شفاف، قابل پیگیری و سریع',
+      fa: 'ÙØ±Ø§ÛŒÙ†Ø¯ÛŒ Ø´ÙØ§ÙØŒ Ù‚Ø§Ø¨Ù„ Ù¾ÛŒÚ¯ÛŒØ±ÛŒ Ùˆ Ø³Ø±ÛŒØ¹',
       en: 'A transparent, trackable and fast process'
     },
     'process.hero.lead': {
       page: 'process',
       label: 'Process page intro',
       selector: 'body[data-page="process"] .page-hero .lead',
-      fa: 'از شناخت تا تحویل، هر مرحله خروجی مشخص دارد.',
+      fa: 'Ø§Ø² Ø´Ù†Ø§Ø®Øª ØªØ§ ØªØ­ÙˆÛŒÙ„ØŒ Ù‡Ø± Ù…Ø±Ø­Ù„Ù‡ Ø®Ø±ÙˆØ¬ÛŒ Ù…Ø´Ø®Øµ Ø¯Ø§Ø±Ø¯.',
       en: 'From discovery to delivery, every step has a clear output.'
     },
     'about.hero.title': {
       page: 'about',
       label: 'About page headline',
       selector: 'body[data-page="about"] .page-hero h1',
-      fa: 'استودیویی برای ساخت سایت‌هایی که کار می‌کنند',
+      fa: 'Ø§Ø³ØªÙˆØ¯ÛŒÙˆÛŒÛŒ Ø¨Ø±Ø§ÛŒ Ø³Ø§Ø®Øª Ø³Ø§ÛŒØªâ€ŒÙ‡Ø§ÛŒÛŒ Ú©Ù‡ Ú©Ø§Ø± Ù…ÛŒâ€ŒÚ©Ù†Ù†Ø¯',
       en: 'A studio for websites that work'
     },
     'about.hero.lead': {
       page: 'about',
       label: 'About page intro',
       selector: 'body[data-page="about"] .page-hero .lead',
-      fa: 'تمرکز ما روی طراحی زیبا، مسیر فروش روشن و پنل قابل مدیریت است.',
+      fa: 'ØªÙ…Ø±Ú©Ø² Ù…Ø§ Ø±ÙˆÛŒ Ø·Ø±Ø§Ø­ÛŒ Ø²ÛŒØ¨Ø§ØŒ Ù…Ø³ÛŒØ± ÙØ±ÙˆØ´ Ø±ÙˆØ´Ù† Ùˆ Ù¾Ù†Ù„ Ù‚Ø§Ø¨Ù„ Ù…Ø¯ÛŒØ±ÛŒØª Ø§Ø³Øª.',
       en: 'We focus on beautiful design, clear sales flow and manageable portals.'
     },
     'faq.hero.title': {
       page: 'faq',
       label: 'FAQ page headline',
       selector: 'body[data-page="faq"] .page-hero h1',
-      fa: 'سوالات پرتکرار قبل از شروع پروژه',
+      fa: 'Ø³ÙˆØ§Ù„Ø§Øª Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ù‚Ø¨Ù„ Ø§Ø² Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡',
       en: 'Frequently asked questions before starting'
     },
     'faq.hero.lead': {
       page: 'faq',
       label: 'FAQ page intro',
       selector: 'body[data-page="faq"] .page-hero .lead',
-      fa: 'پاسخ کوتاه به مواردی که قبل از سفارش باید بدانید.',
+      fa: 'Ù¾Ø§Ø³Ø® Ú©ÙˆØªØ§Ù‡ Ø¨Ù‡ Ù…ÙˆØ§Ø±Ø¯ÛŒ Ú©Ù‡ Ù‚Ø¨Ù„ Ø§Ø² Ø³ÙØ§Ø±Ø´ Ø¨Ø§ÛŒØ¯ Ø¨Ø¯Ø§Ù†ÛŒØ¯.',
       en: 'Short answers to what you should know before ordering.'
     },
     'order.hero.title': {
       page: 'order',
       label: 'Order page headline',
       selector: 'body[data-page="order"] .page-hero h1',
-      fa: 'شروع پروژه سایت شما',
+      fa: 'Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡ Ø³Ø§ÛŒØª Ø´Ù…Ø§',
       en: 'Start your website project'
     },
     'order.hero.lead': {
       page: 'order',
       label: 'Order page intro',
       selector: 'body[data-page="order"] .page-hero .lead',
-      fa: 'چند سؤال کوتاه جواب دهید تا مسیر، زمان و بودجه پروژه روشن شود.',
+      fa: 'Ú†Ù†Ø¯ Ø³Ø¤Ø§Ù„ Ú©ÙˆØªØ§Ù‡ Ø¬ÙˆØ§Ø¨ Ø¯Ù‡ÛŒØ¯ ØªØ§ Ù…Ø³ÛŒØ±ØŒ Ø²Ù…Ø§Ù† Ùˆ Ø¨ÙˆØ¯Ø¬Ù‡ Ù¾Ø±ÙˆÚ˜Ù‡ Ø±ÙˆØ´Ù† Ø´ÙˆØ¯.',
       en: 'Answer a few short questions so we can clarify scope, timeline and budget.'
     }
   };
@@ -773,9 +821,9 @@
       ];
       pagesList.innerHTML = pages.map(function(p) {
         return '<tr><td><strong>' + p[0] + '</strong></td><td>' + p[1] + '</td>' +
-          '<td><span class="badge badge-green">' + (lang === 'en' ? 'Published' : 'منتشرشده') + '</span></td>' +
-          '<td><a class="btn btn-outline btn-sm" href="#content" data-edit-page="' + p[2] + '">' + (lang === 'en' ? 'Edit' : 'ویرایش') + '</a> ' +
-          '<a class="btn btn-outline btn-sm" target="_blank" href="' + p[1] + '">' + (lang === 'en' ? 'View' : 'نمایش') + '</a></td></tr>';
+          '<td><span class="badge badge-green">' + (lang === 'en' ? 'Published' : 'Ù…Ù†ØªØ´Ø±Ø´Ø¯Ù‡') + '</span></td>' +
+          '<td><a class="btn btn-outline btn-sm" href="#content" data-edit-page="' + p[2] + '">' + (lang === 'en' ? 'Edit' : 'ÙˆÛŒØ±Ø§ÛŒØ´') + '</a> ' +
+          '<a class="btn btn-outline btn-sm" target="_blank" href="' + p[1] + '">' + (lang === 'en' ? 'View' : 'Ù†Ù…Ø§ÛŒØ´') + '</a></td></tr>';
       }).join('');
     }
 
@@ -837,14 +885,14 @@
         saveSiteContent(all);
         applySiteContent();
         if (status) {
-          status.textContent = lang === 'en' ? 'Saved and published in this browser.' : 'ذخیره و در همین مرورگر منتشر شد.';
+          status.textContent = lang === 'en' ? 'Saved and published in this browser.' : 'Ø°Ø®ÛŒØ±Ù‡ Ùˆ Ø¯Ø± Ù‡Ù…ÛŒÙ† Ù…Ø±ÙˆØ±Ú¯Ø± Ù…Ù†ØªØ´Ø± Ø´Ø¯.';
           setTimeout(function(){ status.textContent = ''; }, 2600);
         }
       });
 
       var reset = document.querySelector('[data-reset-site-content]');
       if (reset) reset.addEventListener('click', function() {
-        if (!confirm(lang === 'en' ? 'Reset edited site content?' : 'محتوای ویرایش‌شده ریست شود؟')) return;
+        if (!confirm(lang === 'en' ? 'Reset edited site content?' : 'Ù…Ø­ØªÙˆØ§ÛŒ ÙˆÛŒØ±Ø§ÛŒØ´â€ŒØ´Ø¯Ù‡ Ø±ÛŒØ³Øª Ø´ÙˆØ¯ØŸ')) return;
         localStorage.removeItem(SITE_CONTENT_KEY);
         loadBlock();
         applySiteContent();
@@ -868,7 +916,7 @@
         var path = btn.dataset.asset;
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(path);
         var st = document.querySelector('[data-media-status]');
-        if (st) st.textContent = (lang === 'en' ? 'Copied: ' : 'کپی شد: ') + path;
+        if (st) st.textContent = (lang === 'en' ? 'Copied: ' : 'Ú©Ù¾ÛŒ Ø´Ø¯: ') + path;
       });
     });
     var mediaUpload = document.querySelector('[data-media-upload]');
@@ -885,8 +933,8 @@
         btn.innerHTML = '<img src="' + reader.result + '" alt="' + ((document.querySelector('[data-media-alt]') || {}).value || file.name) + '"/><span>' + file.name + '</span>';
         grid.prepend(btn);
         var st = document.querySelector('[data-media-status]');
-        if (st) st.textContent = lang === 'en' ? 'Demo media added to this browser.' : 'رسانه نمایشی در همین مرورگر اضافه شد.';
-        logActivity(lang === 'en' ? 'Demo media added' : 'رسانه نمایشی اضافه شد');
+        if (st) st.textContent = lang === 'en' ? 'Demo media added to this browser.' : 'Ø±Ø³Ø§Ù†Ù‡ Ù†Ù…Ø§ÛŒØ´ÛŒ Ø¯Ø± Ù‡Ù…ÛŒÙ† Ù…Ø±ÙˆØ±Ú¯Ø± Ø§Ø¶Ø§ÙÙ‡ Ø´Ø¯.';
+        logActivity(lang === 'en' ? 'Demo media added' : 'Ø±Ø³Ø§Ù†Ù‡ Ù†Ù…Ø§ÛŒØ´ÛŒ Ø§Ø¶Ø§ÙÙ‡ Ø´Ø¯');
       };
       reader.readAsDataURL(file);
     });
@@ -899,15 +947,15 @@
         var radius = (document.querySelector('[data-theme-radius]') || {}).value || 18;
         localStorage.setItem(THEME_KEY, JSON.stringify({ accent: accent, leaf: leaf, radius: radius }));
         applyThemeSettings();
-        saveTheme.textContent = lang === 'en' ? 'Saved ✓' : 'ذخیره شد ✓';
-        setTimeout(function(){ saveTheme.textContent = lang === 'en' ? 'Save appearance' : 'ذخیره ظاهر'; }, 1800);
+        saveTheme.textContent = lang === 'en' ? 'Saved âœ“' : 'Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯ âœ“';
+        setTimeout(function(){ saveTheme.textContent = lang === 'en' ? 'Save appearance' : 'Ø°Ø®ÛŒØ±Ù‡ Ø¸Ø§Ù‡Ø±'; }, 1800);
       });
     }
   }
 
   initSiteEditor();
 
-  /* ── 12x. SHOWCASE INTERACTIONS ─────────────────── */
+  /* â”€â”€ 12x. SHOWCASE INTERACTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   (function(){
     var stage = document.querySelector('.hero-product-stage');
     if (stage && window.matchMedia('(min-width: 760px)').matches) {
@@ -953,8 +1001,8 @@
         var tags = document.querySelector('[data-config-tags]');
         if (title) title.textContent = selected;
         if (price) price.textContent = estimate + 'M';
-        if (time) time.textContent = days + (lang === 'en' ? ' days' : ' روز');
-        if (tags) tags.innerHTML = checked.map(function(b){ return '<span>' + (b.nextElementSibling ? b.nextElementSibling.textContent : b.value) + '</span>'; }).join('') || '<span>' + (lang === 'en' ? 'Core website' : 'سایت پایه') + '</span>';
+        if (time) time.textContent = days + (lang === 'en' ? ' days' : ' Ø±ÙˆØ²');
+        if (tags) tags.innerHTML = checked.map(function(b){ return '<span>' + (b.nextElementSibling ? b.nextElementSibling.textContent : b.value) + '</span>'; }).join('') || '<span>' + (lang === 'en' ? 'Core website' : 'Ø³Ø§ÛŒØª Ù¾Ø§ÛŒÙ‡') + '</span>';
       }
       if (service) service.addEventListener('change', updateConfig);
       if (budget) budget.addEventListener('input', updateConfig);
@@ -963,7 +1011,7 @@
     }
   })();
 
-  /* ── 12c. ADMIN/CLIENT MODULES ───────────────────── */
+  /* â”€â”€ 12c. ADMIN/CLIENT MODULES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function storageList(key, defaults) {
     try {
       var saved = JSON.parse(localStorage.getItem(key));
@@ -977,12 +1025,15 @@
   function getPosts() {
     var saved = storageList('s-posts', []);
     DEFAULT_POSTS = [
-      {titleFa:'چرا سایت وردپرسی برای خیلی از کسب‌وکارها کافی نیست؟',titleEn:"Why a WordPress site isn't enough for many businesses",categoryFa:'استراتژی سایت',categoryEn:'Web Strategy',excerptFa:'وردپرس برای شروع خوب است، اما وقتی پنل اختصاصی، سرعت، امنیت و مسیر رشد مهم می‌شود، محدودیت‌ها خودش را نشان می‌دهد.',excerptEn:'WordPress can be a good start, but dedicated portals, performance, security and growth workflows often need a more custom system.',image:'assets/blog-redesign.webp',url:'article-wordpress-vs-custom.html',status:'published',readFa:'۸ دقیقه مطالعه',readEn:'8 min read'},
-      {titleFa:'پنل مدیریت چیست و چرا هر کسب‌وکاری به آن نیاز دارد؟',titleEn:'What is an admin portal and why does every business need one?',categoryFa:'پنل مدیریت',categoryEn:'Admin Portal',excerptFa:'اگر برای تغییر یک قیمت، متن یا تصویر باید منتظر طراح بمانید، سایت شما هنوز سیستم مدیریتی واقعی ندارد.',excerptEn:'If you need to wait for a developer to change one price, image or line of copy, your website does not yet have a real management system.',image:'assets/blog-admin-portal.webp',url:'article-admin-portal.html',status:'published',readFa:'۷ دقیقه مطالعه',readEn:'7 min read'},
-      {titleFa:'۷ اشتباه رایج سئو که رشد سایت را کند می‌کند',titleEn:'7 common SEO mistakes that slow website growth',categoryFa:'سئو',categoryEn:'SEO',excerptFa:'از عنوان‌های تکراری تا سرعت پایین و محتوای بدون ساختار؛ این‌ها همان خطاهایی هستند که رشد سایت را کند می‌کنند.',excerptEn:'From duplicate titles to slow pages and unstructured content, these are the mistakes that slow website growth.',image:'assets/blog-seo-growth.webp',url:'article-seo-mistakes.html',status:'published',readFa:'۶ دقیقه مطالعه',readEn:'6 min read'},
-      {titleFa:'چرا بازدیدکننده سایت تماس نمی‌گیرد؟',titleEn:"Why isn't your website visitor contacting you?",categoryFa:'تبدیل مشتری',categoryEn:'Conversion',excerptFa:'گاهی سایت ترافیک دارد، اما مسیر اعتماد، پیشنهاد روشن و فراخوان اقدام درست ندارد.',excerptEn:'Sometimes a site has traffic, but lacks trust, a clear offer and a strong call to action.',image:'assets/blog-conversion-funnel.webp',url:'article-conversion.html',status:'published',readFa:'۵ دقیقه مطالعه',readEn:'5 min read'},
-      {titleFa:'قبل از ساخت فروشگاه آنلاین این ۶ سوال را بپرسید',titleEn:'Ask these 6 questions before building an online shop',categoryFa:'فروشگاه',categoryEn:'E-commerce',excerptFa:'فروشگاه فقط صفحه محصول نیست؛ پرداخت، ارسال، موجودی، اعتماد و پشتیبانی هم باید درست طراحی شوند.',excerptEn:'An online shop is not just product pages; payment, delivery, inventory, trust and support need design too.',image:'assets/blog-ecommerce.webp',url:'article-ecommerce.html',status:'published',readFa:'۹ دقیقه مطالعه',readEn:'9 min read'},
-      {titleFa:'سرعت سایت چقدر روی فروش اثر می‌گذارد؟',titleEn:'How much does site speed affect sales?',categoryFa:'سرعت',categoryEn:'Performance',excerptFa:'هر ثانیه تأخیر، تجربه کاربر و نرخ تبدیل را پایین می‌آورد؛ مخصوصاً در موبایل.',excerptEn:'Every extra second hurts user experience and conversion, especially on mobile.',image:'assets/blog-speed.webp',url:'article-site-speed.html',status:'published',readFa:'۴ دقیقه مطالعه',readEn:'4 min read'}
+      {titleFa:'Ú†Ø±Ø§ Ø³Ø§ÛŒØª ÙˆØ±Ø¯Ù¾Ø±Ø³ÛŒ Ø¨Ø±Ø§ÛŒ Ø®ÛŒÙ„ÛŒ Ø§Ø² Ú©Ø³Ø¨â€ŒÙˆÚ©Ø§Ø±Ù‡Ø§ Ú©Ø§ÙÛŒ Ù†ÛŒØ³ØªØŸ',titleEn:"Why a WordPress site isn't enough for many businesses",categoryFa:'Ø§Ø³ØªØ±Ø§ØªÚ˜ÛŒ Ø³Ø§ÛŒØª',categoryEn:'Web Strategy',excerptFa:'ÙˆØ±Ø¯Ù¾Ø±Ø³ Ø¨Ø±Ø§ÛŒ Ø´Ø±ÙˆØ¹ Ø®ÙˆØ¨ Ø§Ø³ØªØŒ Ø§Ù…Ø§ ÙˆÙ‚ØªÛŒ Ù¾Ù†Ù„ Ø§Ø®ØªØµØ§ØµÛŒØŒ Ø³Ø±Ø¹ØªØŒ Ø§Ù…Ù†ÛŒØª Ùˆ Ù…Ø³ÛŒØ± Ø±Ø´Ø¯ Ù…Ù‡Ù… Ù…ÛŒâ€ŒØ´ÙˆØ¯ØŒ Ù…Ø­Ø¯ÙˆØ¯ÛŒØªâ€ŒÙ‡Ø§ Ø®ÙˆØ¯Ø´ Ø±Ø§ Ù†Ø´Ø§Ù† Ù…ÛŒâ€ŒØ¯Ù‡Ø¯.',excerptEn:'WordPress can be a good start, but dedicated portals, performance, security and growth workflows often need a more custom system.',image:'assets/blog-redesign.webp',url:'article-wordpress-vs-custom.html',status:'published',readFa:'Û¸ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'8 min read'},
+      {titleFa:'Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª Ú†ÛŒØ³Øª Ùˆ Ú†Ø±Ø§ Ù‡Ø± Ú©Ø³Ø¨â€ŒÙˆÚ©Ø§Ø±ÛŒ Ø¨Ù‡ Ø¢Ù† Ù†ÛŒØ§Ø² Ø¯Ø§Ø±Ø¯ØŸ',titleEn:'What is an admin portal and why does every business need one?',categoryFa:'Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª',categoryEn:'Admin Portal',excerptFa:'Ø§Ú¯Ø± Ø¨Ø±Ø§ÛŒ ØªØºÛŒÛŒØ± ÛŒÚ© Ù‚ÛŒÙ…ØªØŒ Ù…ØªÙ† ÛŒØ§ ØªØµÙˆÛŒØ± Ø¨Ø§ÛŒØ¯ Ù…Ù†ØªØ¸Ø± Ø·Ø±Ø§Ø­ Ø¨Ù…Ø§Ù†ÛŒØ¯ØŒ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ù‡Ù†ÙˆØ² Ø³ÛŒØ³ØªÙ… Ù…Ø¯ÛŒØ±ÛŒØªÛŒ ÙˆØ§Ù‚Ø¹ÛŒ Ù†Ø¯Ø§Ø±Ø¯.',excerptEn:'If you need to wait for a developer to change one price, image or line of copy, your website does not yet have a real management system.',image:'assets/blog-admin-portal.webp',url:'article-admin-portal.html',status:'published',readFa:'Û· Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'7 min read'},
+      {titleFa:'Û· Ø§Ø´ØªØ¨Ø§Ù‡ Ø±Ø§ÛŒØ¬ Ø³Ø¦Ùˆ Ú©Ù‡ Ø±Ø´Ø¯ Ø³Ø§ÛŒØª Ø±Ø§ Ú©Ù†Ø¯ Ù…ÛŒâ€ŒÚ©Ù†Ø¯',titleEn:'7 common SEO mistakes that slow website growth',categoryFa:'Ø³Ø¦Ùˆ',categoryEn:'SEO',excerptFa:'Ø§Ø² Ø¹Ù†ÙˆØ§Ù†â€ŒÙ‡Ø§ÛŒ ØªÚ©Ø±Ø§Ø±ÛŒ ØªØ§ Ø³Ø±Ø¹Øª Ù¾Ø§ÛŒÛŒÙ† Ùˆ Ù…Ø­ØªÙˆØ§ÛŒ Ø¨Ø¯ÙˆÙ† Ø³Ø§Ø®ØªØ§Ø±Ø› Ø§ÛŒÙ†â€ŒÙ‡Ø§ Ù‡Ù…Ø§Ù† Ø®Ø·Ø§Ù‡Ø§ÛŒÛŒ Ù‡Ø³ØªÙ†Ø¯ Ú©Ù‡ Ø±Ø´Ø¯ Ø³Ø§ÛŒØª Ø±Ø§ Ú©Ù†Ø¯ Ù…ÛŒâ€ŒÚ©Ù†Ù†Ø¯.',excerptEn:'From duplicate titles to slow pages and unstructured content, these are the mistakes that slow website growth.',image:'assets/blog-seo-growth.webp',url:'article-seo-mistakes.html',status:'published',readFa:'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'6 min read'},
+      {titleFa:'Ú†Ø±Ø§ Ø¨Ø§Ø²Ø¯ÛŒØ¯Ú©Ù†Ù†Ø¯Ù‡ Ø³Ø§ÛŒØª ØªÙ…Ø§Ø³ Ù†Ù…ÛŒâ€ŒÚ¯ÛŒØ±Ø¯ØŸ',titleEn:"Why isn't your website visitor contacting you?",categoryFa:'ØªØ¨Ø¯ÛŒÙ„ Ù…Ø´ØªØ±ÛŒ',categoryEn:'Conversion',excerptFa:'Ú¯Ø§Ù‡ÛŒ Ø³Ø§ÛŒØª ØªØ±Ø§ÙÛŒÚ© Ø¯Ø§Ø±Ø¯ØŒ Ø§Ù…Ø§ Ù…Ø³ÛŒØ± Ø§Ø¹ØªÙ…Ø§Ø¯ØŒ Ù¾ÛŒØ´Ù†Ù‡Ø§Ø¯ Ø±ÙˆØ´Ù† Ùˆ ÙØ±Ø§Ø®ÙˆØ§Ù† Ø§Ù‚Ø¯Ø§Ù… Ø¯Ø±Ø³Øª Ù†Ø¯Ø§Ø±Ø¯.',excerptEn:'Sometimes a site has traffic, but lacks trust, a clear offer and a strong call to action.',image:'assets/blog-conversion-funnel.webp',url:'article-conversion.html',status:'published',readFa:'Ûµ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'5 min read'},
+      {titleFa:'Ù‚Ø¨Ù„ Ø§Ø² Ø³Ø§Ø®Øª ÙØ±ÙˆØ´Ú¯Ø§Ù‡ Ø¢Ù†Ù„Ø§ÛŒÙ† Ø§ÛŒÙ† Û¶ Ø³ÙˆØ§Ù„ Ø±Ø§ Ø¨Ù¾Ø±Ø³ÛŒØ¯',titleEn:'Ask these 6 questions before building an online shop',categoryFa:'ÙØ±ÙˆØ´Ú¯Ø§Ù‡',categoryEn:'E-commerce',excerptFa:'ÙØ±ÙˆØ´Ú¯Ø§Ù‡ ÙÙ‚Ø· ØµÙØ­Ù‡ Ù…Ø­ØµÙˆÙ„ Ù†ÛŒØ³ØªØ› Ù¾Ø±Ø¯Ø§Ø®ØªØŒ Ø§Ø±Ø³Ø§Ù„ØŒ Ù…ÙˆØ¬ÙˆØ¯ÛŒØŒ Ø§Ø¹ØªÙ…Ø§Ø¯ Ùˆ Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒ Ù‡Ù… Ø¨Ø§ÛŒØ¯ Ø¯Ø±Ø³Øª Ø·Ø±Ø§Ø­ÛŒ Ø´ÙˆÙ†Ø¯.',excerptEn:'An online shop is not just product pages; payment, delivery, inventory, trust and support need design too.',image:'assets/blog-ecommerce.webp',url:'article-ecommerce.html',status:'published',readFa:'Û¹ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'9 min read'},
+      {titleFa:'Ø³Ø±Ø¹Øª Ø³Ø§ÛŒØª Ú†Ù‚Ø¯Ø± Ø±ÙˆÛŒ ÙØ±ÙˆØ´ Ø§Ø«Ø± Ù…ÛŒâ€ŒÚ¯Ø°Ø§Ø±Ø¯ØŸ',titleEn:'How much does site speed affect sales?',categoryFa:'Ø³Ø±Ø¹Øª',categoryEn:'Performance',excerptFa:'Ù‡Ø± Ø«Ø§Ù†ÛŒÙ‡ ØªØ£Ø®ÛŒØ±ØŒ ØªØ¬Ø±Ø¨Ù‡ Ú©Ø§Ø±Ø¨Ø± Ùˆ Ù†Ø±Ø® ØªØ¨Ø¯ÛŒÙ„ Ø±Ø§ Ù¾Ø§ÛŒÛŒÙ† Ù…ÛŒâ€ŒØ¢ÙˆØ±Ø¯Ø› Ù…Ø®ØµÙˆØµØ§Ù‹ Ø¯Ø± Ù…ÙˆØ¨Ø§ÛŒÙ„.',excerptEn:'Every extra second hurts user experience and conversion, especially on mobile.',image:'assets/blog-speed.webp',url:'article-site-speed.html',status:'published',readFa:'Û´ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'4 min read'},
+      {titleFa:'Ú†Ø·ÙˆØ± Ù…ØªÙ† Ø³Ø§ÛŒØª Ø±Ø§ Ø§Ù†Ø³Ø§Ù†ÛŒâ€ŒØªØ± Ùˆ ÙØ±ÙˆØ´Ù†Ø¯Ù‡â€ŒØªØ± Ø¨Ù†ÙˆÛŒØ³ÛŒÙ…ØŸ',titleEn:'How to write website copy that sounds human and sells',categoryFa:'Ú©Ù¾ÛŒâ€ŒØ±Ø§ÛŒØªÛŒÙ†Ú¯',categoryEn:'Copywriting',excerptFa:'Ù…ØªÙ† Ø®ÙˆØ¨ Ø´Ø¨ÛŒÙ‡ Ø­Ø±Ù Ø²Ø¯Ù† ÛŒÚ© Ø¢Ø¯Ù… ÙˆØ§Ù‚Ø¹ÛŒ Ø§Ø³ØªØ› ÙˆØ§Ø¶Ø­ØŒ Ú©ÙˆØªØ§Ù‡ØŒ Ù…Ø·Ù…Ø¦Ù† Ùˆ Ø¨Ø¯ÙˆÙ† Ø´Ø¹Ø§Ø±Ù‡Ø§ÛŒ ØªÚ©Ø±Ø§Ø±ÛŒ.',excerptEn:'Good website copy sounds like a real person: clear, concise, confident and free of tired slogans.',image:'assets/blog-copywriting-human.webp',url:'article-human-copywriting.html',status:'published',readFa:'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'6 min read'},
+      {titleFa:'Ú†Ø·ÙˆØ± Ø¬Ù„ÙˆÛŒ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒâ€ŒÙ¾Ø§ÛŒØ§Ù† Ù¾Ø±ÙˆÚ˜Ù‡ Ø±Ø§ Ø¨Ú¯ÛŒØ±ÛŒÙ…ØŸ',titleEn:'How to prevent endless project revisions',categoryFa:'Ù…Ø¯ÛŒØ±ÛŒØª Ù¾Ø±ÙˆÚ˜Ù‡',categoryEn:'Project Management',excerptFa:'ÙˆÙ‚ØªÛŒ Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ØŒ Ù…Ø­Ø¯ÙˆØ¯Ù‡ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡ Ùˆ ØªØµÙ…ÛŒÙ…â€ŒÙ‡Ø§ÛŒ Ø®Ø§Ø±Ø¬ Ø§Ø² ØªÙˆØ§ÙÙ‚ Ø§Ø² Ø§ÙˆÙ„ Ù…Ø´Ø®Øµ Ø¨Ø§Ø´Ø¯ØŒ Ù¾Ø±ÙˆÚ˜Ù‡ Ø³Ø§Ù„Ù…â€ŒØªØ± Ø¬Ù„Ùˆ Ù…ÛŒâ€ŒØ±ÙˆØ¯.',excerptEn:'When the first draft, revision rounds and out-of-scope changes are defined early, delivery stays healthier.',image:'assets/blog-project-timeline.webp',url:'article-revision-control.html',status:'published',readFa:'Û· Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'7 min read'},
+      {titleFa:'Ù¾Ù†Ù„ Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø®ÙˆØ¨ Ú†Ù‡ Ú†ÛŒØ²ÛŒ Ø¨Ù‡ Ù…Ø´ØªØ±ÛŒ Ù†Ø´Ø§Ù† Ù…ÛŒâ€ŒØ¯Ù‡Ø¯ØŸ',titleEn:'What should a good client portal show?',categoryFa:'Ù¾Ù†Ù„ Ú©Ø§Ø±Ø¨Ø±ÛŒ',categoryEn:'Client Portal',excerptFa:'Ú©Ø§Ø±Ø¨Ø± Ù†Ø¨Ø§ÛŒØ¯ Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª Ø¨Ø¨ÛŒÙ†Ø¯Ø› Ø¨Ø§ÛŒØ¯ ÙˆØ¶Ø¹ÛŒØª Ù¾Ø±ÙˆÚ˜Ù‡ØŒ ÙØ§ÛŒÙ„â€ŒÙ‡Ø§ØŒ Ù¾ÛŒØ§Ù…â€ŒÙ‡Ø§ØŒ Ù¾Ø±Ø¯Ø§Ø®Øªâ€ŒÙ‡Ø§ Ùˆ Ø¯Ø±Ø®ÙˆØ§Ø³Øªâ€ŒÙ‡Ø§ÛŒ Ø®ÙˆØ¯Ø´ Ø±Ø§ ÙˆØ§Ø¶Ø­ Ø¯Ù†Ø¨Ø§Ù„ Ú©Ù†Ø¯.',excerptEn:'Clients should not see admin tools; they should clearly track project status, files, messages, payments and their own requests.',image:'assets/blog-client-portal.webp',url:'article-client-portal.html',status:'published',readFa:'Ûµ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',readEn:'5 min read'}
     ];
     return saved.length ? saved : DEFAULT_POSTS;
   }
@@ -997,7 +1048,7 @@
     var el = document.querySelector('[data-admin-activity]');
     if (!el) return;
     var items = storageList('s-activity-log', [
-      { text: lang === 'en' ? 'Role-based access enabled' : 'دسترسی نقش‌محور فعال شد', at: lang === 'en' ? 'Today' : 'امروز' }
+      { text: lang === 'en' ? 'Role-based access enabled' : 'Ø¯Ø³ØªØ±Ø³ÛŒ Ù†Ù‚Ø´â€ŒÙ…Ø­ÙˆØ± ÙØ¹Ø§Ù„ Ø´Ø¯', at: lang === 'en' ? 'Today' : 'Ø§Ù…Ø±ÙˆØ²' }
     ]);
     el.innerHTML = items.map(function(i) {
       return '<div><b>' + i.text + '</b><span>' + i.at + '</span></div>';
@@ -1033,31 +1084,31 @@
       seoTitle: postForm.querySelector('[name=seoTitle]').value,
       seoDesc: postForm.querySelector('[name=seoDesc]').value,
       status: postForm.querySelector('[name=status]').value,
-      readFa: '۶ دقیقه مطالعه',
+      readFa: 'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡',
       readEn: '6 min read'
     });
     saveList('s-posts', posts);
     renderPosts();
     renderBlogPage();
-    logActivity(lang === 'en' ? 'Blog post saved' : 'نوشته وبلاگ ذخیره شد');
+    logActivity(lang === 'en' ? 'Blog post saved' : 'Ù†ÙˆØ´ØªÙ‡ ÙˆØ¨Ù„Ø§Ú¯ Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯');
   });
   renderPosts();
 
   function fixBlogEditorTexts() {
     var map = [
-      ['titleFa','عنوان فارسی','Persian title'],
-      ['titleEn','عنوان انگلیسی','English title'],
-      ['categoryFa','دسته‌بندی فارسی','Persian category'],
-      ['categoryEn','دسته‌بندی انگلیسی','English category'],
-      ['image','تصویر شاخص','Featured image'],
-      ['url','آدرس مقاله','Article URL'],
-      ['excerptFa','خلاصه فارسی','Persian excerpt'],
-      ['excerptEn','خلاصه انگلیسی','English excerpt'],
-      ['bodyFa','متن مقاله فارسی','Persian body'],
-      ['bodyEn','متن مقاله انگلیسی','English body'],
-      ['seoTitle','عنوان سئو','SEO title'],
-      ['seoDesc','توضیحات متا','Meta description'],
-      ['status','وضعیت','Status']
+      ['titleFa','Ø¹Ù†ÙˆØ§Ù† ÙØ§Ø±Ø³ÛŒ','Persian title'],
+      ['titleEn','Ø¹Ù†ÙˆØ§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ','English title'],
+      ['categoryFa','Ø¯Ø³ØªÙ‡â€ŒØ¨Ù†Ø¯ÛŒ ÙØ§Ø±Ø³ÛŒ','Persian category'],
+      ['categoryEn','Ø¯Ø³ØªÙ‡â€ŒØ¨Ù†Ø¯ÛŒ Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ','English category'],
+      ['image','ØªØµÙˆÛŒØ± Ø´Ø§Ø®Øµ','Featured image'],
+      ['url','Ø¢Ø¯Ø±Ø³ Ù…Ù‚Ø§Ù„Ù‡','Article URL'],
+      ['excerptFa','Ø®Ù„Ø§ØµÙ‡ ÙØ§Ø±Ø³ÛŒ','Persian excerpt'],
+      ['excerptEn','Ø®Ù„Ø§ØµÙ‡ Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ','English excerpt'],
+      ['bodyFa','Ù…ØªÙ† Ù…Ù‚Ø§Ù„Ù‡ ÙØ§Ø±Ø³ÛŒ','Persian body'],
+      ['bodyEn','Ù…ØªÙ† Ù…Ù‚Ø§Ù„Ù‡ Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ','English body'],
+      ['seoTitle','Ø¹Ù†ÙˆØ§Ù† Ø³Ø¦Ùˆ','SEO title'],
+      ['seoDesc','ØªÙˆØ¶ÛŒØ­Ø§Øª Ù…ØªØ§','Meta description'],
+      ['status','ÙˆØ¶Ø¹ÛŒØª','Status']
     ];
     map.forEach(function(item) {
       var input = postForm && postForm.querySelector('[name=' + item[0] + ']');
@@ -1069,9 +1120,9 @@
     });
     var save = postForm && postForm.querySelector('button[type=submit]');
     if (save) {
-      save.dataset.fa = 'ذخیره نوشته';
+      save.dataset.fa = 'Ø°Ø®ÛŒØ±Ù‡ Ù†ÙˆØ´ØªÙ‡';
       save.dataset.en = 'Save post';
-      save.textContent = lang === 'en' ? 'Save post' : 'ذخیره نوشته';
+      save.textContent = lang === 'en' ? 'Save post' : 'Ø°Ø®ÛŒØ±Ù‡ Ù†ÙˆØ´ØªÙ‡';
     }
   }
   fixBlogEditorTexts();
@@ -1085,14 +1136,14 @@
       var title = lang === 'en' ? (p.titleEn || p.titleFa) : (p.titleFa || p.titleEn);
       var cat = lang === 'en' ? (p.categoryEn || p.categoryFa) : (p.categoryFa || p.categoryEn);
       var ex = lang === 'en' ? (p.excerptEn || p.excerptFa) : (p.excerptFa || p.excerptEn);
-      var read = lang === 'en' ? (p.readEn || '6 min read') : (p.readFa || '۶ دقیقه مطالعه');
-      return '<a class="blog-card reveal" href="' + (p.url || '#') + '"><img class="blog-thumb-img" loading="lazy" decoding="async" src="' + (p.image || 'assets/blog-redesign.webp') + '" alt=""><div class="blog-body"><span class="blog-cat-inline">' + cat + '</span><div class="blog-meta"><span>' + read + '</span></div><h3>' + title + '</h3><p>' + ex + '</p><span class="blog-read">' + (lang === 'en' ? 'Read more' : 'ادامه مطلب') + '</span></div></a>';
+      var read = lang === 'en' ? (p.readEn || '6 min read') : (p.readFa || 'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡');
+      return '<a class="blog-card reveal" href="' + (p.url || '#') + '"><img class="blog-thumb-img" loading="lazy" decoding="async" src="' + (p.image || 'assets/blog-redesign.webp') + '" alt=""><div class="blog-body"><span class="blog-cat-inline">' + cat + '</span><div class="blog-meta"><span>' + read + '</span></div><h3>' + title + '</h3><p>' + ex + '</p><span class="blog-read">' + (lang === 'en' ? 'Read more' : 'Ø§Ø¯Ø§Ù…Ù‡ Ù…Ø·Ù„Ø¨') + '</span></div></a>';
     }
     if (featured && posts[0]) {
       var p = posts[0];
       var title = lang === 'en' ? p.titleEn : p.titleFa;
       var ex = lang === 'en' ? p.excerptEn : p.excerptFa;
-      featured.innerHTML = '<img class="blog-featured-img" loading="eager" decoding="async" src="' + p.image + '" alt=""><div><p class="kicker">' + (lang === 'en' ? 'Featured article' : 'مقاله ویژه') + '</p><h2>' + title + '</h2><p style="margin-bottom:20px">' + ex + '</p><a class="btn btn-primary" href="' + p.url + '">' + (lang === 'en' ? 'Read article' : 'مطالعه مقاله') + '</a></div>';
+      featured.innerHTML = '<img class="blog-featured-img" loading="eager" decoding="async" src="' + p.image + '" alt=""><div><p class="kicker">' + (lang === 'en' ? 'Featured article' : 'Ù…Ù‚Ø§Ù„Ù‡ ÙˆÛŒÚ˜Ù‡') + '</p><h2>' + title + '</h2><p style="margin-bottom:20px">' + ex + '</p><a class="btn btn-primary" href="' + p.url + '">' + (lang === 'en' ? 'Read article' : 'Ù…Ø·Ø§Ù„Ø¹Ù‡ Ù…Ù‚Ø§Ù„Ù‡') + '</a></div>';
     }
     if (grid) grid.innerHTML = posts.slice(1).map(card).join('');
   }
@@ -1107,15 +1158,15 @@
     var ex = lang === 'en' ? (post.excerptEn || post.excerptFa) : (post.excerptFa || post.excerptEn);
     var body = lang === 'en' ? (post.bodyEn || post.excerptEn || post.excerptFa) : (post.bodyFa || post.excerptFa || post.excerptEn);
     shell.innerHTML =
-      '<p class="kicker">' + (lang === 'en' ? 'Growth journal' : 'مجله رشد') + '</p>' +
+      '<p class="kicker">' + (lang === 'en' ? 'Growth journal' : 'Ù…Ø¬Ù„Ù‡ Ø±Ø´Ø¯') + '</p>' +
       '<h1>' + title + '</h1>' +
       '<p class="lead">' + ex + '</p>' +
       '<img class="article-cover" src="' + (post.image || 'assets/blog-redesign.webp') + '" loading="eager" decoding="async" alt="">' +
       '<article class="article-body"><p>' + body + '</p>' +
-      '<h2>' + (lang === 'en' ? 'Practical takeaways' : 'نکته‌های اجرایی') + '</h2>' +
-      '<ul class="article-list"><li>' + (lang === 'en' ? 'Define the page goal before design starts.' : 'هدف صفحه را قبل از طراحی مشخص کنید.') + '</li><li>' + (lang === 'en' ? 'Copy, visuals and calls to action should work together.' : 'محتوا، تصویر و مسیر اقدام باید هماهنگ باشند.') + '</li><li>' + (lang === 'en' ? 'Prepare the portal and site structure for future growth.' : 'پنل و ساختار سایت را برای رشد آینده آماده کنید.') + '</li></ul>' +
-      '<p>' + (lang === 'en' ? 'If you want this path designed for your website, submit your request from the start project page.' : 'اگر می‌خواهید همین مسیر برای سایت شما طراحی شود، از صفحه شروع پروژه درخواستتان را ثبت کنید.') + '</p>' +
-      '<a class="btn btn-primary" href="order.html">' + (lang === 'en' ? 'Start project' : 'شروع پروژه') + '</a></article>';
+      '<h2>' + (lang === 'en' ? 'Practical takeaways' : 'Ù†Ú©ØªÙ‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬Ø±Ø§ÛŒÛŒ') + '</h2>' +
+      '<ul class="article-list"><li>' + (lang === 'en' ? 'Define the page goal before design starts.' : 'Ù‡Ø¯Ù ØµÙØ­Ù‡ Ø±Ø§ Ù‚Ø¨Ù„ Ø§Ø² Ø·Ø±Ø§Ø­ÛŒ Ù…Ø´Ø®Øµ Ú©Ù†ÛŒØ¯.') + '</li><li>' + (lang === 'en' ? 'Copy, visuals and calls to action should work together.' : 'Ù…Ø­ØªÙˆØ§ØŒ ØªØµÙˆÛŒØ± Ùˆ Ù…Ø³ÛŒØ± Ø§Ù‚Ø¯Ø§Ù… Ø¨Ø§ÛŒØ¯ Ù‡Ù…Ø§Ù‡Ù†Ú¯ Ø¨Ø§Ø´Ù†Ø¯.') + '</li><li>' + (lang === 'en' ? 'Prepare the portal and site structure for future growth.' : 'Ù¾Ù†Ù„ Ùˆ Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§ÛŒØª Ø±Ø§ Ø¨Ø±Ø§ÛŒ Ø±Ø´Ø¯ Ø¢ÛŒÙ†Ø¯Ù‡ Ø¢Ù…Ø§Ø¯Ù‡ Ú©Ù†ÛŒØ¯.') + '</li></ul>' +
+      '<p>' + (lang === 'en' ? 'If you want this path designed for your website, submit your request from the start project page.' : 'Ø§Ú¯Ø± Ù…ÛŒâ€ŒØ®ÙˆØ§Ù‡ÛŒØ¯ Ù‡Ù…ÛŒÙ† Ù…Ø³ÛŒØ± Ø¨Ø±Ø§ÛŒ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ø·Ø±Ø§Ø­ÛŒ Ø´ÙˆØ¯ØŒ Ø§Ø² ØµÙØ­Ù‡ Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡ Ø¯Ø±Ø®ÙˆØ§Ø³ØªØªØ§Ù† Ø±Ø§ Ø«Ø¨Øª Ú©Ù†ÛŒØ¯.') + '</p>' +
+      '<a class="btn btn-primary" href="order.html">' + (lang === 'en' ? 'Start project' : 'Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡') + '</a></article>';
   }
   renderArticlePage();
 
@@ -1123,11 +1174,11 @@
     var el = document.querySelector('[data-admin-services]');
     if (!el) return;
     var services = storageList('s-services', [
-      { nameFa: 'طراحی سایت جدید', nameEn: 'New Website Design', price: 'از ۱۸ میلیون تومان', timeline: '۱۰–۱۲ روز کاری', status: 'فعال' },
-      { nameFa: 'سئو و محتوا', nameEn: 'SEO and Content', price: 'ماهانه', timeline: '۳۰ روزه', status: 'فعال' }
+      { nameFa: 'Ø·Ø±Ø§Ø­ÛŒ Ø³Ø§ÛŒØª Ø¬Ø¯ÛŒØ¯', nameEn: 'New Website Design', price: 'Ø§Ø² Û±Û¸ Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†', timeline: 'Û±Û°â€“Û±Û² Ø±ÙˆØ² Ú©Ø§Ø±ÛŒ', status: 'ÙØ¹Ø§Ù„' },
+      { nameFa: 'Ø³Ø¦Ùˆ Ùˆ Ù…Ø­ØªÙˆØ§', nameEn: 'SEO and Content', price: 'Ù…Ø§Ù‡Ø§Ù†Ù‡', timeline: 'Û³Û° Ø±ÙˆØ²Ù‡', status: 'ÙØ¹Ø§Ù„' }
     ]);
     el.innerHTML = services.map(function(s) {
-      return '<div><b>' + (lang === 'en' ? s.nameEn : s.nameFa) + '</b><span>' + s.price + ' · ' + s.timeline + ' · ' + s.status + '</span></div>';
+      return '<div><b>' + (lang === 'en' ? s.nameEn : s.nameFa) + '</b><span>' + s.price + ' Â· ' + s.timeline + ' Â· ' + s.status + '</span></div>';
     }).join('');
   }
   var serviceForm = document.querySelector('[data-service-form]');
@@ -1143,7 +1194,7 @@
     });
     saveList('s-services', services);
     renderServicesAdmin();
-    logActivity(lang === 'en' ? 'Service saved' : 'خدمت ذخیره شد');
+    logActivity(lang === 'en' ? 'Service saved' : 'Ø®Ø¯Ù…Øª Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯');
   });
   renderServicesAdmin();
 
@@ -1176,7 +1227,7 @@
         var list = storageList('s-leads', leads);
         list[parseInt(input.dataset.leadNote, 10)].note = input.value;
         saveList('s-leads', list);
-        logActivity(lang === 'en' ? 'Lead note updated' : 'یادداشت لید به‌روزرسانی شد');
+        logActivity(lang === 'en' ? 'Lead note updated' : 'ÛŒØ§Ø¯Ø¯Ø§Ø´Øª Ù„ÛŒØ¯ Ø¨Ù‡â€ŒØ±ÙˆØ²Ø±Ø³Ø§Ù†ÛŒ Ø´Ø¯');
       });
     });
   }
@@ -1189,7 +1240,7 @@
     }).join('\n');
     var out = document.querySelector('[data-backup-output]');
     if (out) out.value = csv;
-    logActivity(lang === 'en' ? 'Leads exported as CSV' : 'خروجی CSV لیدها ساخته شد');
+    logActivity(lang === 'en' ? 'Leads exported as CSV' : 'Ø®Ø±ÙˆØ¬ÛŒ CSV Ù„ÛŒØ¯Ù‡Ø§ Ø³Ø§Ø®ØªÙ‡ Ø´Ø¯');
   });
 
   var exportBackup = document.querySelector('[data-export-backup]');
@@ -1200,13 +1251,13 @@
     });
     var out = document.querySelector('[data-backup-output]');
     if (out) out.value = JSON.stringify(backup, null, 2);
-    logActivity(lang === 'en' ? 'Backup generated' : 'بکاپ ساخته شد');
+    logActivity(lang === 'en' ? 'Backup generated' : 'Ø¨Ú©Ø§Ù¾ Ø³Ø§Ø®ØªÙ‡ Ø´Ø¯');
   });
   var importBackup = document.querySelector('[data-import-backup]');
   if (importBackup) importBackup.addEventListener('click', function() {
     localStorage.setItem('s-theme-settings', JSON.stringify({ accent: '#2d6a4f', leaf: '#52b788', radius: 18 }));
     applyThemeSettings();
-    logActivity(lang === 'en' ? 'Sample backup restored' : 'بکاپ نمونه بازیابی شد');
+    logActivity(lang === 'en' ? 'Sample backup restored' : 'Ø¨Ú©Ø§Ù¾ Ù†Ù…ÙˆÙ†Ù‡ Ø¨Ø§Ø²ÛŒØ§Ø¨ÛŒ Ø´Ø¯');
   });
   renderActivityLog();
 
@@ -1219,7 +1270,7 @@
     var typeField = wrap.querySelector('select');
     var descField = wrap.querySelector('textarea');
     var item = document.createElement('div');
-    item.innerHTML = '<b>' + (pageField ? pageField.value : 'Change request') + '</b><span>' + (typeField ? typeField.value : 'Change') + ' · ' + (lang === 'en' ? 'Sent' : 'ارسال شد') + '</span><small>' + (descField ? descField.value : '') + '</small>';
+    item.innerHTML = '<b>' + (pageField ? pageField.value : 'Change request') + '</b><span>' + (typeField ? typeField.value : 'Change') + ' Â· ' + (lang === 'en' ? 'Sent' : 'Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯') + '</span><small>' + (descField ? descField.value : '') + '</small>';
     list.prepend(item);
   });
   document.querySelectorAll('[data-approve-item]').forEach(function(btn) {
@@ -1227,22 +1278,22 @@
       var row = btn.closest('div');
       if (!row) return;
       var span = row.querySelector('span');
-      if (span) span.textContent = lang === 'en' ? 'Approved' : 'تایید شد';
-      btn.textContent = lang === 'en' ? 'Done' : 'انجام شد';
+      if (span) span.textContent = lang === 'en' ? 'Approved' : 'ØªØ§ÛŒÛŒØ¯ Ø´Ø¯';
+      btn.textContent = lang === 'en' ? 'Done' : 'Ø§Ù†Ø¬Ø§Ù… Ø´Ø¯';
       btn.disabled = true;
     });
   });
 
 
 
-  /* ── 13. TESTIMONIALS SYSTEM ─────────────────────── */
+  /* â”€â”€ 13. TESTIMONIALS SYSTEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var TESTI_KEY = 's-testimonials';
 
   function getTestimonials() {
     var defaults = [
-      { id: 1, name: 'محمد رضایی', role: 'مدیر کلینیک دکتر رضایی', nameEn: 'Mohammad Rezaei', roleEn: 'Director, Dr. Rezaei Clinic', text: '«سایت ما در ۱۲ روز تحویل شد. پنل مدیریت دقیقاً همان چیزی بود که می‌خواستیم — بدون نیاز به طراح.»', textEn: '"Our site was delivered in 12 days. The admin portal was exactly what we needed — no developer required."', stars: 5, published: true, avatar: 'م' },
-      { id: 2, name: 'سارا احمدی', role: 'مدیر آموزشگاه نوا', nameEn: 'Sara Ahmadi', roleEn: 'Director, Nova Academy', text: '«ثبت‌نام آنلاین دانش‌آموزان از صفر به روزانه ۱۵ نفر رسید. پنل ساده و کاربردیه.»', textEn: '"Online student enrollment went from zero to 15 per day. The portal is simple and practical."', stars: 5, published: true, avatar: 'س' },
-      { id: 3, name: 'رضا نوری', role: 'صاحب فروشگاه Volt Shop', nameEn: 'Reza Nouri', roleEn: 'Owner, Volt Shop', text: '«فروشگاه آنلاین ما در ۱۸ روز راه افتاد. طراحی موبایل بی‌نقصه.»', textEn: '"The first store draft was prepared quickly; final launch followed revisions and mobile QA."', stars: 5, published: false, avatar: 'ر' }
+      { id: 1, name: 'Ù…Ø­Ù…Ø¯ Ø±Ø¶Ø§ÛŒÛŒ', role: 'Ù…Ø¯ÛŒØ± Ú©Ù„ÛŒÙ†ÛŒÚ© Ø¯Ú©ØªØ± Ø±Ø¶Ø§ÛŒÛŒ', nameEn: 'Mohammad Rezaei', roleEn: 'Director, Dr. Rezaei Clinic', text: 'Â«Ø³Ø§ÛŒØª Ù…Ø§ Ø¯Ø± Û±Û² Ø±ÙˆØ² ØªØ­ÙˆÛŒÙ„ Ø´Ø¯. Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª Ø¯Ù‚ÛŒÙ‚Ø§Ù‹ Ù‡Ù…Ø§Ù† Ú†ÛŒØ²ÛŒ Ø¨ÙˆØ¯ Ú©Ù‡ Ù…ÛŒâ€ŒØ®ÙˆØ§Ø³ØªÛŒÙ… â€” Ø¨Ø¯ÙˆÙ† Ù†ÛŒØ§Ø² Ø¨Ù‡ Ø·Ø±Ø§Ø­.Â»', textEn: '"Our site was delivered in 12 days. The admin portal was exactly what we needed â€” no developer required."', stars: 5, published: true, avatar: 'Ù…' },
+      { id: 2, name: 'Ø³Ø§Ø±Ø§ Ø§Ø­Ù…Ø¯ÛŒ', role: 'Ù…Ø¯ÛŒØ± Ø¢Ù…ÙˆØ²Ø´Ú¯Ø§Ù‡ Ù†ÙˆØ§', nameEn: 'Sara Ahmadi', roleEn: 'Director, Nova Academy', text: 'Â«Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¢Ù†Ù„Ø§ÛŒÙ† Ø¯Ø§Ù†Ø´â€ŒØ¢Ù…ÙˆØ²Ø§Ù† Ø§Ø² ØµÙØ± Ø¨Ù‡ Ø±ÙˆØ²Ø§Ù†Ù‡ Û±Ûµ Ù†ÙØ± Ø±Ø³ÛŒØ¯. Ù¾Ù†Ù„ Ø³Ø§Ø¯Ù‡ Ùˆ Ú©Ø§Ø±Ø¨Ø±Ø¯ÛŒÙ‡.Â»', textEn: '"Online student enrollment went from zero to 15 per day. The portal is simple and practical."', stars: 5, published: true, avatar: 'Ø³' },
+      { id: 3, name: 'Ø±Ø¶Ø§ Ù†ÙˆØ±ÛŒ', role: 'ØµØ§Ø­Ø¨ ÙØ±ÙˆØ´Ú¯Ø§Ù‡ Volt Shop', nameEn: 'Reza Nouri', roleEn: 'Owner, Volt Shop', text: 'Â«ÙØ±ÙˆØ´Ú¯Ø§Ù‡ Ø¢Ù†Ù„Ø§ÛŒÙ† Ù…Ø§ Ø¯Ø± Û±Û¸ Ø±ÙˆØ² Ø±Ø§Ù‡ Ø§ÙØªØ§Ø¯. Ø·Ø±Ø§Ø­ÛŒ Ù…ÙˆØ¨Ø§ÛŒÙ„ Ø¨ÛŒâ€ŒÙ†Ù‚ØµÙ‡.Â»', textEn: '"The first store draft was prepared quickly; final launch followed revisions and mobile QA."', stars: 5, published: false, avatar: 'Ø±' }
     ];
     try { return JSON.parse(localStorage.getItem(TESTI_KEY)) || defaults; } catch(e) { return defaults; }
   }
@@ -1262,7 +1313,7 @@
         var role = lang === 'en' ? (t.roleEn || t.role) : t.role;
         var text = lang === 'en' ? (t.textEn || t.text) : t.text;
         return '<div class="t-card reveal in">' +
-          '<div class="t-stars">' + '★'.repeat(t.stars || 5) + '</div>' +
+          '<div class="t-stars">' + 'â˜…'.repeat(t.stars || 5) + '</div>' +
           '<p>' + text + '</p>' +
           '<div class="t-author">' +
             '<div class="t-avatar">' + (t.avatar || name[0]) + '</div>' +
@@ -1283,18 +1334,18 @@
           '<div><span class="ta-name">' + t.name + '</span> &nbsp;<span class="ta-meta">' + t.role + '</span></div>' +
           '<div style="display:flex;gap:6px;align-items:center">' +
             '<span class="' + (t.published ? 'tag-published' : 'tag-draft') + '">' +
-              (t.published ? (lang==='en'?'Published':'منتشرشده') : (lang==='en'?'Draft':'پیش‌نویس')) + '</span>' +
+              (t.published ? (lang==='en'?'Published':'Ù…Ù†ØªØ´Ø±Ø´Ø¯Ù‡') : (lang==='en'?'Draft':'Ù¾ÛŒØ´â€ŒÙ†ÙˆÛŒØ³')) + '</span>' +
           '</div>' +
         '</div>' +
         '<div class="ta-text">' + t.text + '</div>' +
         '<div class="ta-actions">' +
-          '<button class="btn btn-outline btn-sm" onclick="editTesti(' + i + ')" data-fa="ویرایش" data-en="Edit">' + (lang==='en'?'Edit':'ویرایش') + '</button>' +
-          '<button class="btn btn-outline btn-sm" onclick="toggleTesti(' + i + ')" data-fa="' + (t.published?'پنهان':'انتشار') + '" data-en="' + (t.published?'Unpublish':'Publish') + '">' +
-            (t.published ? (lang==='en'?'Unpublish':'پنهان‌کردن') : (lang==='en'?'Publish':'انتشار')) + '</button>' +
-          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deleteTesti(' + i + ')" data-fa="حذف" data-en="Delete">' + (lang==='en'?'Delete':'حذف') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="editTesti(' + i + ')" data-fa="ÙˆÛŒØ±Ø§ÛŒØ´" data-en="Edit">' + (lang==='en'?'Edit':'ÙˆÛŒØ±Ø§ÛŒØ´') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="toggleTesti(' + i + ')" data-fa="' + (t.published?'Ù¾Ù†Ù‡Ø§Ù†':'Ø§Ù†ØªØ´Ø§Ø±') + '" data-en="' + (t.published?'Unpublish':'Publish') + '">' +
+            (t.published ? (lang==='en'?'Unpublish':'Ù¾Ù†Ù‡Ø§Ù†â€ŒÚ©Ø±Ø¯Ù†') : (lang==='en'?'Publish':'Ø§Ù†ØªØ´Ø§Ø±')) + '</button>' +
+          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deleteTesti(' + i + ')" data-fa="Ø­Ø°Ù" data-en="Delete">' + (lang==='en'?'Delete':'Ø­Ø°Ù') + '</button>' +
         '</div>' +
       '</div>';
-    }).join('') || '<p style="color:var(--faint);font-size:13px">هنوز نظری ثبت نشده.</p>';
+    }).join('') || '<p style="color:var(--faint);font-size:13px">Ù‡Ù†ÙˆØ² Ù†Ø¸Ø±ÛŒ Ø«Ø¨Øª Ù†Ø´Ø¯Ù‡.</p>';
   }
 
   window.editTesti = function(i) {
@@ -1326,7 +1377,7 @@
 
   window.deleteTesti = function(i) {
     var list = getTestimonials();
-    if (confirm(lang === 'en' ? 'Delete this testimonial?' : 'این نظر حذف شود؟')) {
+    if (confirm(lang === 'en' ? 'Delete this testimonial?' : 'Ø§ÛŒÙ† Ù†Ø¸Ø± Ø­Ø°Ù Ø´ÙˆØ¯ØŸ')) {
       list.splice(i, 1);
       saveTestimonials(list);
       renderAdminTestimonials();
@@ -1350,7 +1401,7 @@
         textEn:    testiForm.querySelector('[name=ttextEn]').value,
         stars:     parseInt(testiForm.querySelector('[name=tstars]').value) || 5,
         published: testiForm.querySelector('[name=tpublished]').value === '1',
-        avatar:    testiForm.querySelector('[name=tname]').value[0] || 'م'
+        avatar:    testiForm.querySelector('[name=tname]').value[0] || 'Ù…'
       };
       if (editId) {
         var idx = list.findIndex(function(t){ return t.id === editId; });
@@ -1364,14 +1415,14 @@
       testiForm.reset();
       delete testiForm.dataset.editId;
       var sub = testiForm.querySelector('[type=submit]');
-      if (sub) { sub.textContent = lang==='en'?'Saved ✓':'ذخیره شد ✓'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'ذخیره'; },2000); }
+      if (sub) { sub.textContent = lang==='en'?'Saved âœ“':'Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯ âœ“'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'Ø°Ø®ÛŒØ±Ù‡'; },2000); }
     });
   }
 
   renderAdminTestimonials();
   renderPublicTestimonials();
 
-  /* ── 14. BACK TO TOP ─────────────────────────────── */
+  /* â”€â”€ 14. BACK TO TOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var bt = document.getElementById('back-top');
   if (bt) {
     window.addEventListener('scroll', function() {
@@ -1380,7 +1431,7 @@
     bt.addEventListener('click', function() { window.scrollTo({ top: 0, behavior: 'smooth' }); });
   }
 
-  /* ── 15. PRICE CALCULATOR IN ADMIN ──────────────── */
+  /* â”€â”€ 15. PRICE CALCULATOR IN ADMIN â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var calcBtn = document.querySelector('[data-calc-price]');
   if (calcBtn) {
     calcBtn.addEventListener('click', function() {
@@ -1390,18 +1441,18 @@
       var res   = document.querySelector('[data-price-result]');
       if (res) res.textContent = lang === 'en'
         ? 'Estimated: ' + Math.round(base/1000000) + 'M toman'
-        : 'تخمین: ' + new Intl.NumberFormat('fa-IR').format(Math.round(base/1000000)) + ' میلیون تومان';
+        : 'ØªØ®Ù…ÛŒÙ†: ' + new Intl.NumberFormat('fa-IR').format(Math.round(base/1000000)) + ' Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†';
     });
   }
 
 
 
 
-  /* ══════════════════════════════════════════════════
-     UPGRADE PACK — PREMIUM INTERACTIONS
-     ══════════════════════════════════════════════════ */
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+     UPGRADE PACK â€” PREMIUM INTERACTIONS
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* ── STAGGER REVEAL ──────────────────────────────── */
+  /* â”€â”€ STAGGER REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var revEls = document.querySelectorAll('.reveal');
   if (revEls.length && window.IntersectionObserver) {
     var staggerObs = new IntersectionObserver(function(entries) {
@@ -1417,7 +1468,7 @@
     revEls.forEach(function(el) { staggerObs.observe(el); });
   }
 
-  /* ── COUNTER ANIMATION ───────────────────────────── */
+  /* â”€â”€ COUNTER ANIMATION â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   function animateCount(el, target, suffix, duration) {
     var start = null;
     function step(ts) {
@@ -1447,7 +1498,7 @@
   }, { threshold: 0.5 });
   document.querySelectorAll('.stat, .pp-item').forEach(function(el) { statObs.observe(el); });
 
-  /* ── PHILOSOPHY REVEAL ───────────────────────────── */
+  /* â”€â”€ PHILOSOPHY REVEAL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var philObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (!e.isIntersecting) return;
@@ -1459,7 +1510,7 @@
   }, { threshold: 0.25 });
   document.querySelectorAll('.philosophy-wrap').forEach(function(el) { philObs.observe(el); });
 
-  /* ── MAGNETIC BUTTONS ────────────────────────────── */
+  /* â”€â”€ MAGNETIC BUTTONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   if (window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.btn-primary, .btn-magnetic').forEach(function(btn) {
       btn.addEventListener('mousemove', function(e) {
@@ -1476,7 +1527,7 @@
     });
   }
 
-  /* ── BEFORE / AFTER SLIDER ───────────────────────── */
+  /* â”€â”€ BEFORE / AFTER SLIDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.querySelectorAll('.ba-wrap').forEach(function(wrap) {
     var active = false;
     var isRtl  = document.documentElement.dir === 'rtl';
@@ -1507,7 +1558,7 @@
     window.addEventListener('touchend',  function() { active = false; });
   });
 
-  /* ── EXIT INTENT POPUP ───────────────────────────── */
+  /* â”€â”€ EXIT INTENT POPUP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var exitOverlay = document.getElementById('exit-popup');
   var exitShown   = sessionStorage.getItem('exit-shown');
 
@@ -1547,7 +1598,7 @@
     });
   }
 
-  /* ── CURSOR GLOW (desktop only) ─────────────────── */
+  /* â”€â”€ CURSOR GLOW (desktop only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   if (window.matchMedia('(hover: hover) and (min-width: 960px)').matches) {
     var glow = document.createElement('div');
     glow.style.cssText = [
@@ -1572,7 +1623,7 @@
     document.addEventListener('mouseleave', function() { glow.style.opacity = '0'; });
   }
 
-  /* ── SMOOTH SCROLL FOR ANCHOR LINKS ─────────────── */
+  /* â”€â”€ SMOOTH SCROLL FOR ANCHOR LINKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.querySelectorAll('a[href^="#"]').forEach(function(a) {
     a.addEventListener('click', function(e) {
       var target = document.querySelector(a.getAttribute('href'));
@@ -1583,7 +1634,7 @@
     });
   });
 
-  /* ── TOPBAR SCROLL SHRINK ────────────────────────── */
+  /* â”€â”€ TOPBAR SCROLL SHRINK â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var topbarEl = document.getElementById('topbar');
   if (topbarEl) {
     window.addEventListener('scroll', function() {
@@ -1592,7 +1643,7 @@
     }, { passive: true });
   }
 
-  /* ── BACK TO TOP ─────────────────────────────────── */
+  /* â”€â”€ BACK TO TOP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var bt = document.getElementById('back-top');
   if (bt) {
     window.addEventListener('scroll', function() {
@@ -1606,32 +1657,32 @@
 
 
 
-  /* ── POPUP MANAGER SYSTEM ──────────────────────────
-     localStorage key: 's-popups' → array of popup objects
+  /* â”€â”€ POPUP MANAGER SYSTEM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+     localStorage key: 's-popups' â†’ array of popup objects
      Each: { id, title, body, badge, cta1Text, cta1Href,
              cta2Text, cta2Href, skipText, trigger,
              pages, active, badgeColor, shown }
-  ──────────────────────────────────────────────────── */
+  â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var POPUP_KEY = 's-popups';
 
   function getPopups() {
     var defaults = [
       {
         id: 1,
-        title: 'بررسی رایگان سایتت را دریافت کن',
+        title: 'Ø¨Ø±Ø±Ø³ÛŒ Ø±Ø§ÛŒÚ¯Ø§Ù† Ø³Ø§ÛŒØªØª Ø±Ø§ Ø¯Ø±ÛŒØ§ÙØª Ú©Ù†',
         titleEn: 'Get your free website review',
-        body: 'اگه سایت داری، در ۲۰ دقیقه بهت می‌گوییم دقیقاً چه مشکلی داره و چطور می‌توانی مشتری بیشتری از آن بگیری — کاملاً رایگان.',
-        bodyEn: "If you have a site, in 20 minutes we'll tell you what's wrong and how to get more clients — completely free.",
-        badge: 'قبل از رفتن',
+        body: 'Ø§Ú¯Ù‡ Ø³Ø§ÛŒØª Ø¯Ø§Ø±ÛŒØŒ Ø¯Ø± Û²Û° Ø¯Ù‚ÛŒÙ‚Ù‡ Ø¨Ù‡Øª Ù…ÛŒâ€ŒÚ¯ÙˆÛŒÛŒÙ… Ø¯Ù‚ÛŒÙ‚Ø§Ù‹ Ú†Ù‡ Ù…Ø´Ú©Ù„ÛŒ Ø¯Ø§Ø±Ù‡ Ùˆ Ú†Ø·ÙˆØ± Ù…ÛŒâ€ŒØªÙˆØ§Ù†ÛŒ Ù…Ø´ØªØ±ÛŒ Ø¨ÛŒØ´ØªØ±ÛŒ Ø§Ø² Ø¢Ù† Ø¨Ú¯ÛŒØ±ÛŒ â€” Ú©Ø§Ù…Ù„Ø§Ù‹ Ø±Ø§ÛŒÚ¯Ø§Ù†.',
+        bodyEn: "If you have a site, in 20 minutes we'll tell you what's wrong and how to get more clients â€” completely free.",
+        badge: 'Ù‚Ø¨Ù„ Ø§Ø² Ø±ÙØªÙ†',
         badgeEn: 'Before you go',
         badgeColor: '#e76f51',
-        cta1Text: 'دریافت بررسی رایگان',
+        cta1Text: 'Ø¯Ø±ÛŒØ§ÙØª Ø¨Ø±Ø±Ø³ÛŒ Ø±Ø§ÛŒÚ¯Ø§Ù†',
         cta1TextEn: 'Get free review',
         cta1Href: 'audit.html',
-        cta2Text: 'شروع پروژه',
+        cta2Text: 'Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡',
         cta2TextEn: 'Start project',
         cta2Href: 'order.html',
-        skipText: 'نه ممنون، ادامه می‌دهم',
+        skipText: 'Ù†Ù‡ Ù…Ù…Ù†ÙˆÙ†ØŒ Ø§Ø¯Ø§Ù…Ù‡ Ù…ÛŒâ€ŒØ¯Ù‡Ù…',
         skipTextEn: 'No thanks',
         trigger: 'exit',   // exit | scroll50 | delay30 | delay45
         pages: ['index'],  // index | all | services | packages | portfolio
@@ -1648,7 +1699,7 @@
     localStorage.setItem(POPUP_KEY, JSON.stringify(list));
   }
 
-  /* ── Render admin popup list ── */
+  /* â”€â”€ Render admin popup list â”€â”€ */
   function renderAdminPopups() {
     var el = document.getElementById('admin-popup-list');
     if (!el) return;
@@ -1660,16 +1711,16 @@
           '<div class="popup-item-meta">' +
             '<span>Trigger: <b>' + p.trigger + '</b></span>' +
             '<span>Pages: <b>' + p.pages.join(', ') + '</b></span>' +
-            '<span class="' + (p.active ? 'tag-active' : 'tag-inactive') + '">' + (p.active ? (lang==='en'?'Active':'فعال') : (lang==='en'?'Inactive':'غیرفعال')) + '</span>' +
+            '<span class="' + (p.active ? 'tag-active' : 'tag-inactive') + '">' + (p.active ? (lang==='en'?'Active':'ÙØ¹Ø§Ù„') : (lang==='en'?'Inactive':'ØºÛŒØ±ÙØ¹Ø§Ù„')) + '</span>' +
           '</div>' +
         '</div>' +
         '<div class="popup-item-actions">' +
-          '<button class="btn btn-outline btn-sm" onclick="editPopup(' + i + ')" data-fa="ویرایش" data-en="Edit">' + (lang==='en'?'Edit':'ویرایش') + '</button>' +
-          '<button class="btn btn-outline btn-sm" onclick="togglePopup(' + i + ')">' + (p.active ? (lang==='en'?'Disable':'غیرفعال') : (lang==='en'?'Enable':'فعال')) + '</button>' +
-          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deletePopup(' + i + ')">' + (lang==='en'?'Delete':'حذف') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="editPopup(' + i + ')" data-fa="ÙˆÛŒØ±Ø§ÛŒØ´" data-en="Edit">' + (lang==='en'?'Edit':'ÙˆÛŒØ±Ø§ÛŒØ´') + '</button>' +
+          '<button class="btn btn-outline btn-sm" onclick="togglePopup(' + i + ')">' + (p.active ? (lang==='en'?'Disable':'ØºÛŒØ±ÙØ¹Ø§Ù„') : (lang==='en'?'Enable':'ÙØ¹Ø§Ù„')) + '</button>' +
+          '<button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#dc2626;border:1px solid rgba(239,68,68,.2)" onclick="deletePopup(' + i + ')">' + (lang==='en'?'Delete':'Ø­Ø°Ù') + '</button>' +
         '</div>' +
       '</div>';
-    }).join('') || '<p style="font-size:13px;color:var(--faint)">' + (lang==='en'?'No popups yet.':'هنوز پاپ‌آپی تعریف نشده.') + '</p>';
+    }).join('') || '<p style="font-size:13px;color:var(--faint)">' + (lang==='en'?'No popups yet.':'Ù‡Ù†ÙˆØ² Ù¾Ø§Ù¾â€ŒØ¢Ù¾ÛŒ ØªØ¹Ø±ÛŒÙ Ù†Ø´Ø¯Ù‡.') + '</p>';
   }
 
   window.editPopup = function(i) {
@@ -1696,7 +1747,7 @@
     f.dataset.editId = p.id;
     f.scrollIntoView({ behavior: 'smooth', block: 'center' });
     var title = document.getElementById('popup-form-title');
-    if (title) title.textContent = lang === 'en' ? 'Edit popup' : 'ویرایش پاپ‌آپ';
+    if (title) title.textContent = lang === 'en' ? 'Edit popup' : 'ÙˆÛŒØ±Ø§ÛŒØ´ Ù¾Ø§Ù¾â€ŒØ¢Ù¾';
   };
 
   window.togglePopup = function(i) {
@@ -1709,7 +1760,7 @@
 
   window.deletePopup = function(i) {
     var list = getPopups();
-    var msg = lang === 'en' ? 'Delete this popup?' : 'این پاپ‌آپ حذف شود؟';
+    var msg = lang === 'en' ? 'Delete this popup?' : 'Ø§ÛŒÙ† Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ø­Ø°Ù Ø´ÙˆØ¯ØŸ';
     if (confirm(msg)) {
       list.splice(i, 1);
       savePopups(list);
@@ -1757,9 +1808,9 @@
       popupForm.reset();
       delete popupForm.dataset.editId;
       var title = document.getElementById('popup-form-title');
-      if (title) title.textContent = lang === 'en' ? 'Add new popup' : 'افزودن پاپ‌آپ جدید';
+      if (title) title.textContent = lang === 'en' ? 'Add new popup' : 'Ø§ÙØ²ÙˆØ¯Ù† Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ø¬Ø¯ÛŒØ¯';
       var sub = popupForm.querySelector('[type=submit]');
-      if (sub) { sub.textContent = lang==='en'?'Saved ✓':'ذخیره شد ✓'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'ذخیره'; },2000); }
+      if (sub) { sub.textContent = lang==='en'?'Saved âœ“':'Ø°Ø®ÛŒØ±Ù‡ Ø´Ø¯ âœ“'; setTimeout(function(){ sub.textContent=lang==='en'?'Save':'Ø°Ø®ÛŒØ±Ù‡'; },2000); }
       // update stat
       var sc = document.getElementById('stat-popups');
       if (sc) sc.textContent = getPopups().filter(function(p){return p.active;}).length;
@@ -1768,7 +1819,7 @@
 
   renderAdminPopups();
 
-  /* ── Show popup on public pages ── */
+  /* â”€â”€ Show popup on public pages â”€â”€ */
   var popupOverlay = document.getElementById('site-popup-overlay');
   if (popupOverlay) {
     var pageName = (document.body.dataset.page || 'index').toLowerCase();
@@ -1799,7 +1850,7 @@
           if (p.cta1Text) { var a1 = document.createElement('a'); a1.className='btn btn-primary'; a1.href=p.cta1Href||'#'; a1.textContent=isEn?(p.cta1TextEn||p.cta1Text):p.cta1Text; acts.appendChild(a1); }
           if (p.cta2Text) { var a2 = document.createElement('a'); a2.className='btn btn-outline'; a2.href=p.cta2Href||'#'; a2.textContent=isEn?(p.cta2TextEn||p.cta2Text):p.cta2Text; acts.appendChild(a2); }
         }
-        if (skip) { skip.textContent = isEn ? (p.skipTextEn||p.skipText||'Close') : (p.skipText||'بستن'); }
+        if (skip) { skip.textContent = isEn ? (p.skipTextEn||p.skipText||'Close') : (p.skipText||'Ø¨Ø³ØªÙ†'); }
         sessionStorage.setItem('s-popup-shown-' + p.id, '1');
         popupOverlay.classList.add('show');
       }
@@ -1838,11 +1889,11 @@
 
 
 
-  /* ══════════════════════════════════════════════════
+  /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
      PREMIUM INTERACTIONS & ANIMATIONS
-     ══════════════════════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-  /* ── Page scroll progress bar ─────────────────── */
+  /* â”€â”€ Page scroll progress bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var pgBar = document.createElement('div');
   pgBar.className = 'page-progress';
   document.body.prepend(pgBar);
@@ -1851,12 +1902,12 @@
     pgBar.style.transform = 'scaleX(' + Math.min(1, pct) + ')';
   }, { passive:true });
 
-  /* ── Scroll hint on hero ─────────────────────── */
+  /* â”€â”€ Scroll hint on hero â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   var heroWrap = document.getElementById('hero-wrap');
   if (heroWrap) {
     var hint = document.createElement('div');
     hint.className = 'scroll-hint';
-    hint.innerHTML = '<div class="scroll-hint-wheel"></div><span data-fa="اسکرول کنید" data-en="Scroll">اسکرول کنید</span>';
+    hint.innerHTML = '<div class="scroll-hint-wheel"></div><span data-fa="Ø§Ø³Ú©Ø±ÙˆÙ„ Ú©Ù†ÛŒØ¯" data-en="Scroll">Ø§Ø³Ú©Ø±ÙˆÙ„ Ú©Ù†ÛŒØ¯</span>';
     var sticky = document.getElementById('hero-sticky');
     if (sticky) sticky.appendChild(hint);
     window.addEventListener('scroll', function(){
@@ -1865,7 +1916,7 @@
     }, { passive:true });
   }
 
-  /* ── 3D Card tilt ────────────────────────────── */
+  /* â”€â”€ 3D Card tilt â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   if (window.matchMedia('(hover:hover) and (min-width:960px)').matches) {
     document.querySelectorAll('.path-card,.demo-card,.t-card,.pkg-card').forEach(function(card){
       card.addEventListener('mousemove', function(e){
@@ -1886,7 +1937,7 @@
     });
   }
 
-  /* ── Button ripple effect ────────────────────── */
+  /* â”€â”€ Button ripple effect â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.querySelectorAll('.btn').forEach(function(btn){
     btn.addEventListener('click', function(e){
       var r = btn.getBoundingClientRect();
@@ -1901,7 +1952,7 @@
     });
   });
 
-  /* ── Stat glow on counter complete ──────────────── */
+  /* â”€â”€ Stat glow on counter complete â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   document.querySelectorAll('.stat,.pp-item').forEach(function(el){
     var obs2 = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
@@ -1916,7 +1967,7 @@
     obs2.observe(el);
   });
 
-  /* ── Typewriter on hero h1 cue 0 ─────────────── */
+  /* â”€â”€ Typewriter on hero h1 cue 0 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   (function(){
     var cue0 = document.querySelector('.hero-cue[data-cue="0"] h1');
     if (!cue0) return;
@@ -1955,14 +2006,14 @@
     }
   })();
 
-  /* ── Demo card hover text ────────────────────── */
+  /* â”€â”€ Demo card hover text â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   (function(){
     var hoverTexts = {
-      'demo-salon.html':      lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
-      'demo-academy.html':    lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
-      'demo-clinic.html':     lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
-      'demo-shop.html':       lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
-      'demo-restaurant.html': lang==='en' ? 'Click to explore the live demo →' : 'کلیک کنید — دمو زنده →',
+      'demo-salon.html':      lang==='en' ? 'Click to explore the live demo â†’' : 'Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯ â€” Ø¯Ù…Ùˆ Ø²Ù†Ø¯Ù‡ â†’',
+      'demo-academy.html':    lang==='en' ? 'Click to explore the live demo â†’' : 'Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯ â€” Ø¯Ù…Ùˆ Ø²Ù†Ø¯Ù‡ â†’',
+      'demo-clinic.html':     lang==='en' ? 'Click to explore the live demo â†’' : 'Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯ â€” Ø¯Ù…Ùˆ Ø²Ù†Ø¯Ù‡ â†’',
+      'demo-shop.html':       lang==='en' ? 'Click to explore the live demo â†’' : 'Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯ â€” Ø¯Ù…Ùˆ Ø²Ù†Ø¯Ù‡ â†’',
+      'demo-restaurant.html': lang==='en' ? 'Click to explore the live demo â†’' : 'Ú©Ù„ÛŒÚ© Ú©Ù†ÛŒØ¯ â€” Ø¯Ù…Ùˆ Ø²Ù†Ø¯Ù‡ â†’',
     };
     document.querySelectorAll('.demo-card[href]').forEach(function(card){
       var href = card.getAttribute('href');
@@ -1971,7 +2022,7 @@
     });
   })();
 
-  /* ── Reveal left/right/scale for variety ──────── */
+  /* â”€â”€ Reveal left/right/scale for variety â”€â”€â”€â”€â”€â”€â”€â”€ */
   (function(){
     var leftEls  = document.querySelectorAll('.reveal-left,.reveal-right,.reveal-scale');
     if (!leftEls.length || !window.IntersectionObserver) {
@@ -1986,10 +2037,10 @@
     leftEls.forEach(function(el){ o.observe(el); });
   })();
 
-  /* ── Smooth number update on lang change ─────── */
+  /* â”€â”€ Smooth number update on lang change â”€â”€â”€â”€â”€â”€â”€ */
   var _origApply = window.__applyLang;
 
-  /* ── Showcase layer: site-wide visual polish ───────── */
+  /* â”€â”€ Showcase layer: site-wide visual polish â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
   (function(){
     document.body.classList.add('premium-showcase');
 
@@ -2086,3 +2137,4 @@
 
 
 })();
+

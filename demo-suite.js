@@ -3,15 +3,26 @@ const $ = (selector, root = document) => root.querySelector(selector);
 let activeLang = document.documentElement.lang === "en" ? "en" : "fa";
 const cart = [];
 
+function fixMojibakeText(value) {
+  if (!value || !/[ØÙÛÚª¬œŒ€â]/.test(value)) return value || "";
+  const map = {"€":0x80,"‚":0x82,"ƒ":0x83,"„":0x84,"…":0x85,"†":0x86,"‡":0x87,"ˆ":0x88,"‰":0x89,"Š":0x8A,"‹":0x8B,"Œ":0x8C,"Ž":0x8E,"‘":0x91,"’":0x92,"“":0x93,"”":0x94,"•":0x95,"–":0x96,"—":0x97,"˜":0x98,"™":0x99,"š":0x9A,"›":0x9B,"œ":0x9C,"ž":0x9E,"Ÿ":0x9F};
+  try {
+    const bytes = [...value].map((ch) => map[ch] !== undefined ? map[ch] : (ch.charCodeAt(0) & 255));
+    return new TextDecoder("utf-8").decode(new Uint8Array(bytes));
+  } catch (e) {
+    return value;
+  }
+}
+
 function applyLang(lang) {
   activeLang = lang;
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
   $$("[data-fa][data-en]").forEach((node) => {
-    node.textContent = node.dataset[lang];
+    node.textContent = lang === "fa" ? fixMojibakeText(node.dataset.fa) : node.dataset.en;
   });
   $$("[data-fa-placeholder][data-en-placeholder]").forEach((node) => {
-    node.placeholder = node.dataset[`${lang}Placeholder`];
+    node.placeholder = lang === "fa" ? fixMojibakeText(node.dataset.faPlaceholder) : node.dataset.enPlaceholder;
   });
   const toggle = $("[data-lang-toggle]");
   if (toggle) toggle.textContent = lang === "fa" ? "EN" : "FA";
