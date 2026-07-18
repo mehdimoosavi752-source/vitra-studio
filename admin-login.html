@@ -6,42 +6,54 @@
   <title data-fa="ورود مدیریت — ویترا استودیو" data-en="Admin Sign In — Vitra Studio">ورود مدیریت — ویترا استودیو</title>
   <meta name="robots" content="noindex,nofollow"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
-  <link rel="stylesheet" href="styles.css?v=20260718-clean2"/>
+  <link rel="stylesheet" href="styles.css?v=20260718-panel-upgrade2"/>
 </head>
-<body data-page="admin-login">
-  <main>
-    <div class="wrap" style="max-width:420px;padding-top:80px">
-      <div style="text-align:center;margin-bottom:32px">
-        <h1 data-fa="ورود مدیر سایت" data-en="Admin sign in">ورود مدیر سایت</h1>
-        <p data-fa="این صفحه فقط برای مدیر سایت است و در مسیر کاربران عادی نمایش داده نمی‌شود." data-en="This page is only for site admins and is not shown in the regular user flow.">این صفحه فقط برای مدیر سایت است و در مسیر کاربران عادی نمایش داده نمی‌شود.</p>
+<body data-page="admin-login" class="auth-page">
+  <header class="topbar" id="topbar">
+    <a class="brand" href="index.html">
+      <img src="assets/vitra-logo.svg" alt="Vitra Studio logo" decoding="async">
+      <span class="brand-name" data-fa="ویـترا استودیو" data-en="Vitra Studio">Vitra Studio</span>
+    </a>
+    <nav class="t-nav">
+      <a href="index.html" data-fa="خانه" data-en="Home">Home</a>
+      <a href="services.html" data-fa="خدمات" data-en="Services">Services</a>
+      <a href="portfolio.html" data-fa="دموها" data-en="Demos">Demos</a>
+      <a href="login.html" data-fa="ورود یکپارچه" data-en="Unified login">Unified login</a>
+    </nav>
+    <button class="lang-btn" type="button">FA</button>
+  </header>
+
+  <main class="auth-stage">
+    <div class="auth-orb auth-orb-a"></div>
+    <div class="auth-orb auth-orb-b"></div>
+    <section class="auth-shell auth-shell-single">
+      <div class="auth-copy">
+        <p class="kicker" data-fa="مسیر امن مدیریت" data-en="Secure admin access">Secure admin access</p>
+        <h1 data-fa="ورود مدیر بدون نمایش اطلاعات حساس" data-en="Admin login without exposed credentials">Admin login without exposed credentials</h1>
+        <p data-fa="این مسیر فقط برای حساب‌های مدیریتی فعال است. کاربران عادی حتی اگر این صفحه را باز کنند، به پنل مشتری هدایت نمی‌شوند و دسترسی مدیریتی نمی‌گیرند." data-en="This route only accepts admin accounts. Regular users cannot access management features from here.">This route only accepts admin accounts. Regular users cannot access management features from here.</p>
+        <div class="auth-points">
+          <span data-fa="ورود نقش‌محور" data-en="Role-based login">Role-based login</span>
+          <span data-fa="بدون نمایش رمز نمونه" data-en="No public sample password">No public sample password</span>
+          <span data-fa="هدایت امن به پنل" data-en="Secure panel routing">Secure panel routing</span>
+        </div>
       </div>
-      <div class="form-wrap">
-        <form data-login-form data-login-scope="admin" style="display:flex;flex-direction:column;gap:14px">
+
+      <div class="auth-card">
+        <form data-login-form data-login-scope="admin" class="auth-form active">
           <div class="field">
             <label for="admin-user" data-fa="نام کاربری مدیریت" data-en="Admin username">نام کاربری مدیریت</label>
-            <input id="admin-user" name="username" required autocomplete="username" placeholder="vitra-admin"/>
+            <input id="admin-user" name="username" required autocomplete="username" data-fa-placeholder="نام کاربری یا ایمیل مدیر" data-en-placeholder="Admin username or email" placeholder="Admin username or email"/>
           </div>
           <div class="field">
             <label for="admin-pass" data-fa="رمز عبور مدیریت" data-en="Admin password">رمز عبور مدیریت</label>
-            <input id="admin-pass" name="password" type="password" required autocomplete="current-password" placeholder="Password"/>
+            <input id="admin-pass" name="password" type="password" required autocomplete="current-password" data-fa-placeholder="رمز عبور" data-en-placeholder="Password" placeholder="Password"/>
           </div>
-          <button class="btn btn-primary" type="submit" style="width:100%;justify-content:center" data-fa="ورود به مدیریت" data-en="Sign in to admin">ورود به مدیریت</button>
+          <button class="btn btn-primary auth-submit" type="submit" data-fa="ورود به مدیریت" data-en="Sign in to admin">Sign in to admin</button>
           <p class="login-error" data-login-error hidden></p>
-          <div class="demo-accounts">
-            <div>
-              <b data-fa="اکانت مدیریت" data-en="Admin account">اکانت مدیریت</b>
-              <span>user: vitra-admin</span>
-              <span>pass: Vitra@2026</span>
-            </div>
-          </div>
-          <button class="btn btn-outline btn-sm" type="button" data-fill-login="admin" data-fa="پر کردن مدیریت" data-en="Fill admin">پر کردن مدیریت</button>
         </form>
       </div>
-      <p style="text-align:center;margin-top:20px;font-size:13px;color:var(--faint)">
-        <a href="index.html" data-fa="← بازگشت به سایت" data-en="← Back to site">← بازگشت به سایت</a>
-      </p>
-    </div>
+    </section>
   </main>
-  <script src="app.js?v=20260718-clean2"></script>
+  <script src="app.js?v=20260718-panel-upgrade2"></script>
 </body>
 </html>

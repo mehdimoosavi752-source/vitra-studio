@@ -10,7 +10,7 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
-  <link rel="stylesheet" href="styles.css?v=20260718-clean2"/>
+  <link rel="stylesheet" href="styles.css?v=20260718-panel-upgrade2"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Vitra Studio"/>
   <meta property="og:image" content="assets/og-image.jpg"/>
@@ -54,6 +54,10 @@
     <a href="#services"><span class="sb-icon">◈</span><span data-fa="خدمات و قیمت" data-en="Services & Pricing">خدمات و قیمت</span></a>
     <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
     <a href="#users"><span class="sb-icon">◉</span><span data-fa="کاربران" data-en="Users">کاربران</span></a>
+    <a href="#automation"><span class="sb-icon">⚡</span><span data-fa="اتوماسیون" data-en="Automation">اتوماسیون</span></a>
+    <a href="#campaigns"><span class="sb-icon">◆</span><span data-fa="کمپین‌ها" data-en="Campaigns">کمپین‌ها</span></a>
+    <a href="#security"><span class="sb-icon">◎</span><span data-fa="امنیت" data-en="Security">امنیت</span></a>
+    <a href="#health"><span class="sb-icon">✓</span><span data-fa="سلامت سایت" data-en="Site Health">سلامت سایت</span></a>
     <a href="#tickets"><span class="sb-icon">🎫</span><span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span></a>
     <a href="#socials"><span class="sb-icon">🔗</span><span data-fa="شبکه‌های اجتماعی" data-en="Social Links">شبکه‌های اجتماعی</span></a>
     <a href="#popups"><span class="sb-icon">💬</span><span data-fa="پاپ‌آپ‌ها" data-en="Popups">پاپ‌آپ‌ها</span></a>
@@ -525,7 +529,30 @@
   <section id="users" style="margin-top:32px">
     <div class="p-card">
       <h2 data-fa="کاربران و نقش‌ها" data-en="Users and Roles">کاربران و نقش‌ها</h2>
-      <p style="font-size:13px;margin-bottom:14px" data-fa="در نسخه استاتیک، نقش‌ها نمایشی هستند. برای ورود واقعی چندکاربره باید بک‌اند اضافه شود." data-en="In this static version, roles are presentational. Real multi-user login needs a backend.">در نسخه استاتیک، نقش‌ها نمایشی هستند. برای ورود واقعی چندکاربره باید بک‌اند اضافه شود.</p>
+      <p style="font-size:13px;margin-bottom:14px" data-fa="کاربران جدیدی که از صفحه ثبت‌نام ساخته می‌شوند اینجا نمایش داده می‌شوند. در نسخه نهایی می‌توان این بخش را به دیتابیس واقعی وصل کرد." data-en="Users created from the registration page appear here. In a production version this module can connect to a real database.">کاربران جدیدی که از صفحه ثبت‌نام ساخته می‌شوند اینجا نمایش داده می‌شوند. در نسخه نهایی می‌توان این بخش را به دیتابیس واقعی وصل کرد.</p>
+      <form class="admin-user-form" data-admin-create-user>
+        <div class="field">
+          <label data-fa="نام کاربر" data-en="User name">نام کاربر</label>
+          <input name="fullName" required data-fa-placeholder="مثلاً علی رضایی" data-en-placeholder="e.g. Alex Morgan" placeholder="e.g. Alex Morgan">
+        </div>
+        <div class="field">
+          <label data-fa="ایمیل" data-en="Email">ایمیل</label>
+          <input name="email" type="email" required placeholder="client@example.com">
+        </div>
+        <div class="field">
+          <label data-fa="رمز اولیه" data-en="Temporary password">رمز اولیه</label>
+          <input name="password" type="password" minlength="6" required data-fa-placeholder="حداقل ۶ کاراکتر" data-en-placeholder="At least 6 characters" placeholder="At least 6 characters">
+        </div>
+        <div class="field">
+          <label data-fa="نقش" data-en="Role">نقش</label>
+          <select name="role">
+            <option value="client" data-fa="کاربر / مشتری" data-en="Client user">کاربر / مشتری</option>
+            <option value="admin" data-fa="مدیر" data-en="Admin">مدیر</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" type="submit" data-fa="ساخت کاربر" data-en="Create user">ساخت کاربر</button>
+        <p class="login-error" data-admin-user-error hidden></p>
+      </form>
       <div style="overflow-x:auto">
         <table class="ptable">
           <thead>
@@ -536,11 +563,84 @@
               <th data-fa="دسترسی" data-en="Access">دسترسی</th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td data-fa="مدیر استودیو" data-en="Studio Admin">مدیر استودیو</td><td>admin@studio.ir</td><td>Administrator</td><td><span class="badge badge-green" data-fa="کامل" data-en="Full">کامل</span></td></tr>
-            <tr><td data-fa="ویرایشگر محتوا" data-en="Content Editor">ویرایشگر محتوا</td><td>editor@studio.ir</td><td>Editor</td><td><span class="badge badge-orange" data-fa="محتوا" data-en="Content">محتوا</span></td></tr>
-          </tbody>
+          <tbody data-users-table></tbody>
         </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION -->
+  <section id="automation" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="اتوماسیون پنل" data-en="Panel Automation">اتوماسیون پنل</h2>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px" data-fa="کارهای تکراری را برای مدیر ساده می‌کند؛ مناسب پیگیری لید، یادآوری پرداخت و تحویل فایل." data-en="Simplifies repetitive admin work such as lead follow-up, payment reminders and file delivery.">Simplifies repetitive admin work such as lead follow-up, payment reminders and file delivery.</p>
+        <div class="smart-checklist">
+          <label><input type="checkbox" checked> <span data-fa="ارسال پیام خوش‌آمد بعد از ثبت‌نام" data-en="Send welcome message after registration">Send welcome message after registration</span></label>
+          <label><input type="checkbox" checked> <span data-fa="یادآوری پرداخت مرحله‌ای" data-en="Milestone payment reminder">Milestone payment reminder</span></label>
+          <label><input type="checkbox"> <span data-fa="ساخت خودکار تیکت از فرم سفارش" data-en="Auto-create ticket from order form">Auto-create ticket from order form</span></label>
+          <label><input type="checkbox" checked> <span data-fa="گزارش هفتگی وضعیت پروژه" data-en="Weekly project status report">Weekly project status report</span></label>
+        </div>
+      </div>
+      <div class="p-card automation-card">
+        <h2 data-fa="سناریوی سریع" data-en="Quick Scenario">Quick Scenario</h2>
+        <div class="automation-flow">
+          <span data-fa="فرم سفارش" data-en="Order form">Order form</span>
+          <i></i>
+          <span data-fa="لید CRM" data-en="CRM lead">CRM lead</span>
+          <i></i>
+          <span data-fa="تیکت پیگیری" data-en="Follow-up ticket">Follow-up ticket</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAMPAIGNS -->
+  <section id="campaigns" style="margin-top:32px">
+    <div class="p-card">
+      <div class="wp-card-head">
+        <div>
+          <h2 data-fa="کمپین‌ها و پیشنهادها" data-en="Campaigns and Offers">Campaigns and Offers</h2>
+          <p data-fa="برای ساخت بنر، پاپ‌آپ، CTA و پیشنهادهای زمان‌دار سایت." data-en="For creating banners, popups, CTAs and time-limited website offers.">For creating banners, popups, CTAs and time-limited website offers.</p>
+        </div>
+      </div>
+      <div class="campaign-grid">
+        <article><b data-fa="پیشنهاد طراحی سایت" data-en="Website design offer">Website design offer</b><span data-fa="فعال روی صفحه خانه" data-en="Active on homepage">Active on homepage</span></article>
+        <article><b data-fa="بررسی رایگان سایت" data-en="Free website audit">Free website audit</b><span data-fa="CTA پیشنهادی" data-en="Suggested CTA">Suggested CTA</span></article>
+        <article><b data-fa="پشتیبانی ماهانه" data-en="Monthly support">Monthly support</b><span data-fa="آماده انتشار" data-en="Ready to publish">Ready to publish</span></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECURITY -->
+  <section id="security" style="margin-top:32px">
+    <div class="portal-grid">
+      <div class="p-card">
+        <h2 data-fa="امنیت و دسترسی" data-en="Security and Access">Security and Access</h2>
+        <div class="security-list">
+          <div><b data-fa="ورود نقش‌محور" data-en="Role-based login">Role-based login</b><span class="badge badge-green" data-fa="فعال" data-en="Active">Active</span></div>
+          <div><b data-fa="مخفی‌سازی پنل مدیریت از کاربر" data-en="Admin panel hidden from clients">Admin panel hidden from clients</b><span class="badge badge-green" data-fa="فعال" data-en="Active">Active</span></div>
+          <div><b data-fa="نمایش ندادن اطلاعات ورود" data-en="Credentials not displayed">Credentials not displayed</b><span class="badge badge-green" data-fa="فعال" data-en="Active">Active</span></div>
+        </div>
+      </div>
+      <div class="p-card">
+        <h2 data-fa="سطح دسترسی پیشنهادی" data-en="Suggested roles">Suggested roles</h2>
+        <div class="role-grid">
+          <span>Admin</span><span>Editor</span><span>Support</span><span>Client</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITE HEALTH -->
+  <section id="health" style="margin-top:32px">
+    <div class="p-card">
+      <h2 data-fa="سلامت سایت" data-en="Site Health">Site Health</h2>
+      <div class="health-grid">
+        <article><strong>98</strong><span data-fa="سرعت" data-en="Speed">Speed</span></article>
+        <article><strong>100</strong><span data-fa="سئو پایه" data-en="Base SEO">Base SEO</span></article>
+        <article><strong>0</strong><span data-fa="متن خراب" data-en="Broken text">Broken text</span></article>
+        <article><strong>OK</strong><span data-fa="ریسپانسیو" data-en="Responsive">Responsive</span></article>
       </div>
     </div>
   </section>
@@ -783,7 +883,7 @@
 
 </main>
 
-<script src="app.js?v=20260718-clean2"></script>
+<script src="app.js?v=20260718-panel-upgrade2"></script>
 <script>
 // Update dashboard stats
 (function(){

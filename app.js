@@ -337,6 +337,7 @@
 
   /* section */
   var AUTH_KEY = 's-auth-user';
+  var USERS_KEY = 's-registered-users';
   var demoAccounts = {
     'vitra-admin': {
       password: 'Vitra@2026',
@@ -381,25 +382,48 @@
     sessionStorage.removeItem(AUTH_KEY);
   }
 
+  function getRegisteredUsers() {
+    try { return JSON.parse(localStorage.getItem(USERS_KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function saveRegisteredUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  }
+
+  function allAccounts() {
+    var accounts = {};
+    Object.keys(demoAccounts).forEach(function(key){ accounts[key] = demoAccounts[key]; });
+    getRegisteredUsers().forEach(function(user) {
+      if (!user.email) return;
+      accounts[user.email.toLowerCase()] = user;
+      if (user.username) accounts[user.username.toLowerCase()] = user;
+    });
+    return accounts;
+  }
+
+  function renderRegisteredUsers() {
+    var body = document.querySelector('[data-users-table]');
+    if (!body) return;
+    var defaults = [
+      { name: 'Vitra Studio Admin', nameFa: 'مدیر ویترا استودیو', email: 'admin@vitra.studio', role: 'admin', accessFa: 'کامل', accessEn: 'Full' },
+      { name: 'Demo Client', nameFa: 'مشتری نمونه', email: 'client@vitra.studio', role: 'client', accessFa: 'پنل کاربری', accessEn: 'Client portal' }
+    ];
+    var users = defaults.concat(getRegisteredUsers());
+    body.innerHTML = users.map(function(user) {
+      var role = lang === 'en' ? (user.role === 'admin' ? 'Administrator' : 'Client') : (user.role === 'admin' ? 'مدیر' : 'مشتری');
+      var access = lang === 'en' ? (user.accessEn || (user.role === 'admin' ? 'Full' : 'Client portal')) : (user.accessFa || (user.role === 'admin' ? 'کامل' : 'پنل کاربری'));
+      return '<tr><td>' + (lang === 'en' ? (user.name || user.nameFa) : fixMojibakeText(user.nameFa || user.name)) + '</td><td>' + user.email + '</td><td>' + role + '</td><td><span class="badge badge-green">' + access + '</span></td></tr>';
+    }).join('');
+  }
+
   var loginForm = document.querySelector('[data-login-form]');
   if (loginForm) {
-    document.querySelectorAll('[data-fill-login]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var kind = btn.dataset.fillLogin;
-        var username = kind === 'client' ? 'vitra-client' : 'vitra-admin';
-        var password = kind === 'client' ? 'Client@2026' : 'Vitra@2026';
-        var userInput = loginForm.querySelector('[name=username]');
-        var passInput = loginForm.querySelector('[name=password]');
-        if (userInput) userInput.value = username;
-        if (passInput) passInput.value = password;
-      });
-    });
-
     loginForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var u = ((loginForm.querySelector('[name=username]') || loginForm.querySelector('[name=email]') || {}).value || '').trim().toLowerCase();
       var p = ((loginForm.querySelector('[name=password]') || {}).value || '').trim();
-      var account = demoAccounts[u];
+      var account = allAccounts()[u];
       var loginScope = loginForm.dataset.loginScope || (document.body.dataset.page === 'admin-login' ? 'admin' : 'any');
       var error = document.querySelector('[data-login-error]');
       var scopeMismatch = account && loginScope !== 'any' && account.role !== loginScope;
@@ -420,6 +444,113 @@
       window.location.href = account.role === 'admin' ? 'admin.html' : 'client.html';
     });
   }
+
+  var registerForm = document.querySelector('[data-register-form]');
+  if (registerForm) {
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = (registerForm.querySelector('[name=fullName]') || {}).value || '';
+      var email = ((registerForm.querySelector('[name=email]') || {}).value || '').trim().toLowerCase();
+      var pass = ((registerForm.querySelector('[name=password]') || {}).value || '').trim();
+      var project = (registerForm.querySelector('[name=projectType]') || {}).value || 'Website project';
+      var error = document.querySelector('[data-register-error]');
+      if (!name.trim() || !email || pass.length < 6) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = lang === 'en' ? 'Please enter name, email and a password with at least 6 characters.' : 'نام، ایمیل و رمز عبور حداقل ۶ کاراکتری را وارد کنید.';
+        }
+        return;
+      }
+      if (allAccounts()[email]) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = lang === 'en' ? 'An account with this email already exists.' : 'با این ایمیل قبلاً حساب ساخته شده است.';
+        }
+        return;
+      }
+      var users = getRegisteredUsers();
+      var user = {
+        username: email,
+        password: pass,
+        role: 'client',
+        name: name.trim(),
+        nameFa: name.trim(),
+        email: email,
+        projectType: project,
+        accessFa: 'پنل کاربری',
+        accessEn: 'Client portal',
+        createdAt: new Date().toISOString()
+      };
+      users.push(user);
+      saveRegisteredUsers(users);
+      setAuthUser({
+        role: user.role,
+        name: user.name,
+        nameFa: user.nameFa,
+        email: user.email,
+        loginAt: new Date().toISOString()
+      });
+      window.location.href = 'client.html';
+    });
+  }
+
+  var adminCreateUserForm = document.querySelector('[data-admin-create-user]');
+  if (adminCreateUserForm) {
+    adminCreateUserForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = (adminCreateUserForm.querySelector('[name=fullName]') || {}).value || '';
+      var email = ((adminCreateUserForm.querySelector('[name=email]') || {}).value || '').trim().toLowerCase();
+      var pass = ((adminCreateUserForm.querySelector('[name=password]') || {}).value || '').trim();
+      var role = ((adminCreateUserForm.querySelector('[name=role]') || {}).value || 'client').trim();
+      var error = document.querySelector('[data-admin-user-error]');
+      if (!name.trim() || !email || pass.length < 6) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = lang === 'en' ? 'Enter name, email and a password with at least 6 characters.' : 'نام، ایمیل و رمز عبور حداقل ۶ کاراکتری را وارد کنید.';
+        }
+        return;
+      }
+      if (allAccounts()[email]) {
+        if (error) {
+          error.hidden = false;
+          error.textContent = lang === 'en' ? 'This email already has an account.' : 'برای این ایمیل قبلاً حساب ساخته شده است.';
+        }
+        return;
+      }
+      var users = getRegisteredUsers();
+      users.push({
+        username: email,
+        password: pass,
+        role: role === 'admin' ? 'admin' : 'client',
+        name: name.trim(),
+        nameFa: name.trim(),
+        email: email,
+        projectType: 'Created by admin',
+        accessFa: role === 'admin' ? 'کامل' : 'پنل کاربری',
+        accessEn: role === 'admin' ? 'Full' : 'Client portal',
+        createdAt: new Date().toISOString()
+      });
+      saveRegisteredUsers(users);
+      adminCreateUserForm.reset();
+      if (error) {
+        error.hidden = false;
+        error.textContent = lang === 'en' ? 'User created successfully.' : 'کاربر با موفقیت ساخته شد.';
+      }
+      renderRegisteredUsers();
+    });
+  }
+
+  document.querySelectorAll('[data-auth-tab]').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.dataset.authTab;
+      document.querySelectorAll('[data-auth-tab]').forEach(function(item) {
+        item.classList.toggle('active', item === tab);
+      });
+      document.querySelectorAll('[data-auth-panel]').forEach(function(panel) {
+        panel.classList.toggle('active', panel.dataset.authPanel === target);
+      });
+    });
+  });
 
   document.querySelectorAll('[data-logout], .sb-exit, .back-site').forEach(function(link) {
     link.addEventListener('click', function() { clearAuthUser(); });
@@ -451,6 +582,7 @@
   }
 
   protectPortal();
+  renderRegisteredUsers();
 
   /* section */
   document.querySelectorAll('[data-new-ticket]').forEach(function (btn) {
@@ -2167,4 +2299,3 @@
   if (typeof repairVisibleMojibakeText === 'function') repairVisibleMojibakeText(document.body);
 
 })();
-

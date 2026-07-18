@@ -2011,6 +2011,73 @@ body::after {
 img{height:auto}
 @media(prefers-reduced-motion:reduce){.auto-page-poster::before,.poster-chips em,.lab-console::after,.lab-orbit b{animation:none!important}}
 
+/* Panel/auth upgrade */
+.auth-page{background:#07150f;color:var(--ink)}
+.auth-stage{position:relative;min-height:100vh;display:grid;place-items:center;padding:120px 18px 70px;overflow:hidden;background:
+  radial-gradient(circle at 20% 18%,rgba(82,183,136,.28),transparent 30%),
+  radial-gradient(circle at 82% 72%,rgba(244,162,97,.18),transparent 28%),
+  linear-gradient(135deg,#06110d,#10251b 54%,#07150f)}
+.auth-orb{position:absolute;width:420px;height:420px;border-radius:50%;filter:blur(30px);opacity:.5;animation:authFloat 10s ease-in-out infinite alternate;pointer-events:none}
+.auth-orb-a{top:12%;left:-120px;background:rgba(82,183,136,.28)}
+.auth-orb-b{right:-140px;bottom:4%;background:rgba(244,162,97,.22);animation-delay:-4s}
+.auth-shell{position:relative;z-index:1;width:min(1120px,100%);display:grid;grid-template-columns:1fr 470px;gap:28px;align-items:stretch}
+.auth-shell-single{max-width:980px}
+.auth-copy,.auth-card{border:1px solid rgba(255,255,255,.14);background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.055));box-shadow:0 34px 120px rgba(0,0,0,.28);backdrop-filter:blur(22px);border-radius:34px}
+.auth-copy{display:grid;align-content:center;padding:clamp(28px,5vw,62px);color:#fff;overflow:hidden}
+.auth-copy h1{font-size:clamp(36px,6vw,76px);line-height:.96;letter-spacing:-.05em;margin:12px 0 20px}
+.auth-copy p{max-width:640px;color:rgba(255,255,255,.72);line-height:1.9}
+.auth-points{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.auth-points span{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);font-size:13px;font-weight:800}
+.auth-card{padding:22px;color:#fff}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px;border-radius:999px;background:rgba(255,255,255,.08);margin-bottom:18px}
+.auth-tabs button{border:0;border-radius:999px;min-height:46px;background:transparent;color:rgba(255,255,255,.68);font-weight:950;cursor:pointer;transition:.25s ease}
+.auth-tabs button.active{color:#062016;background:linear-gradient(135deg,#fff,#b7f4d6);box-shadow:0 14px 34px rgba(82,183,136,.22)}
+.auth-form{display:none;gap:14px;animation:authPanelIn .42s ease both}
+.auth-form.active{display:grid}
+.auth-form .field{display:grid;gap:7px}
+.auth-form label{font-size:12px;font-weight:900;color:rgba(255,255,255,.78)}
+.auth-form input,.auth-form select{width:100%;min-height:52px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.1);color:#fff;padding:0 15px;outline:0;transition:border-color .22s,box-shadow .22s,transform .22s}
+.auth-form input:focus,.auth-form select:focus{border-color:rgba(82,183,136,.75);box-shadow:0 0 0 5px rgba(82,183,136,.14);transform:translateY(-1px)}
+.auth-form option{color:#111}
+.auth-submit{width:100%;justify-content:center;min-height:52px;margin-top:4px}
+.login-error{margin:0;padding:10px 12px;border-radius:14px;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.26);color:#fecaca;font-size:13px}
+@keyframes authFloat{from{transform:translate3d(0,0,0) scale(.95)}to{transform:translate3d(30px,-24px,0) scale(1.05)}}
+@keyframes authPanelIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.portal-body .p-card,.portal-body .manager-card{position:relative;overflow:hidden}
+.portal-body .p-card::before,.portal-body .manager-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,85%) var(--my,0%),rgba(82,183,136,.13),transparent 30%);opacity:.75;pointer-events:none}
+.admin-user-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:12px;align-items:end;margin:18px 0 20px;padding:16px;border-radius:24px;border:1px solid rgba(45,123,92,.12);background:radial-gradient(circle at 8% 0%,rgba(82,183,136,.18),transparent 32%),linear-gradient(135deg,rgba(255,255,255,.94),rgba(246,250,247,.8));box-shadow:0 22px 60px rgba(22,75,55,.1)}
+.admin-user-form .field{margin:0;display:grid;gap:7px}
+.admin-user-form .field label{font-size:12px;color:var(--muted);font-weight:900}
+.admin-user-form .field input,.admin-user-form .field select{width:100%;min-height:46px;border-radius:16px;border:1px solid rgba(45,123,92,.14);background:rgba(255,255,255,.78);padding:0 13px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8);transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease}
+.admin-user-form .field input:focus,.admin-user-form .field select:focus{outline:none;border-color:rgba(82,183,136,.78);box-shadow:0 0 0 4px rgba(82,183,136,.14),0 18px 46px rgba(82,183,136,.12);transform:translateY(-1px)}
+.admin-user-form .login-error{grid-column:1 / -1;margin:0}
+.smart-checklist,.security-list{display:grid;gap:12px}
+.smart-checklist label,.security-list div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,var(--soft))}
+.smart-checklist input{accent-color:var(--accent);width:18px;height:18px}
+.automation-flow{min-height:230px;display:grid;place-items:center;gap:14px;text-align:center}
+.automation-flow span{width:min(260px,100%);padding:14px 18px;border-radius:999px;background:var(--ink);color:#fff;font-weight:900;box-shadow:0 18px 46px rgba(28,26,23,.18)}
+.automation-flow i{width:2px;height:28px;background:linear-gradient(var(--accent),transparent);animation:flowPulse 1.6s ease-in-out infinite}
+.campaign-grid,.health-grid,.role-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:16px}
+.campaign-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.campaign-grid article,.health-grid article,.role-grid span{padding:18px;border-radius:22px;background:linear-gradient(135deg,var(--soft),#fff);border:1px solid var(--line);box-shadow:0 14px 38px rgba(27,67,50,.06)}
+.campaign-grid b,.health-grid strong{display:block;font-size:clamp(20px,3vw,34px);color:var(--deep)}
+.campaign-grid span,.health-grid span{color:var(--muted);font-size:13px}
+.role-grid span{text-align:center;font-weight:950;color:var(--accent)}
+@keyframes flowPulse{0%,100%{opacity:.35;transform:scaleY(.72)}50%{opacity:1;transform:scaleY(1.2)}}
+
+@media(max-width:900px){
+  .auth-shell{grid-template-columns:1fr}
+  .auth-stage{padding-top:96px}
+  .admin-user-form{grid-template-columns:1fr 1fr}
+  .campaign-grid,.health-grid,.role-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .admin-user-form{grid-template-columns:1fr}
+  .campaign-grid,.health-grid,.role-grid{grid-template-columns:1fr}
+  .auth-card,.auth-copy{border-radius:26px}
+}
+
 /* Digital scroll text motion */
 .reveal{filter:blur(10px);transform:translateY(28px) scale(.985)}
 .reveal.in,.reveal.show{filter:blur(0);transform:translateY(0) scale(1)}
