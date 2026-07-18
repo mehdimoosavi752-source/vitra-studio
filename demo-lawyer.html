@@ -56,7 +56,8 @@
     .btn-outline-white:hover{border-color:rgba(255,255,255,.5);color:#fff}
 
     /* Hero card */
-    .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px;backdrop-filter:blur(10px)}
+    .hero-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:28px;backdrop-filter:blur(10px);box-shadow:0 28px 70px rgba(0,0,0,.2)}
+    .hero-card::before{content:'';display:block;height:185px;border-radius:14px;margin-bottom:18px;background:linear-gradient(180deg,rgba(27,45,79,.08),rgba(27,45,79,.55)),url('assets/demo-lawyer-cover.webp') center/cover no-repeat;border:1px solid rgba(255,255,255,.1)}
     .hc-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.1)}
     .hc-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
     .hc-row:last-child{border-bottom:none}

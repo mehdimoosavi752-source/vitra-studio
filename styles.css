@@ -1959,3 +1959,41 @@ body::after {
 @keyframes labFloat{0%,100%{margin-top:0}50%{margin-top:-10px}}
 @keyframes labPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:.55}}
 @media (max-width:900px){.lab-hero-grid,.lab-cap-grid,.lab-feature-grid{grid-template-columns:1fr}.lab-flow{grid-template-columns:1fr}.lab-flow::before{display:none}.lab-metrics{grid-template-columns:1fr}.lab-console{min-height:auto}}
+
+/* Page cinematic posters */
+.auto-page-poster{position:relative;margin-top:28px;min-height:230px;border-radius:32px;overflow:hidden;border:1px solid rgba(27,67,50,.14);box-shadow:0 28px 80px rgba(27,67,50,.14);background:linear-gradient(135deg,#0b231a,#214d3b 48%,#e8d5a6);isolation:isolate}
+.auto-page-poster::before{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.26),transparent 25%),radial-gradient(circle at 78% 28%,rgba(82,183,136,.35),transparent 22%),linear-gradient(120deg,transparent,rgba(255,255,255,.16),transparent);animation:posterSweep 8s ease-in-out infinite}
+.auto-page-poster::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,28,21,.92),rgba(8,28,21,.22)),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 42px);opacity:.9}
+.poster-glass{position:relative;z-index:1;min-height:230px;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff}
+.poster-glass span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.72;margin-bottom:8px}
+.poster-glass b{font-size:clamp(30px,5vw,68px);line-height:.95;max-width:740px;font-family:'Fraunces',Georgia,serif}
+.poster-glass p{max-width:520px;margin-top:14px;color:rgba(255,255,255,.76)}
+.poster-glass i{position:absolute;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);backdrop-filter:blur(10px);box-shadow:0 22px 50px rgba(0,0,0,.18)}
+.poster-glass i:nth-of-type(1){width:150px;height:92px;border-radius:22px;right:36px;top:34px;animation:labFloat 5.5s ease-in-out infinite}
+.poster-glass i:nth-of-type(2){width:92px;height:92px;border-radius:50%;right:168px;top:98px;animation:labFloat 6s ease-in-out infinite .3s}
+.poster-glass i:nth-of-type(3){width:210px;height:18px;border-radius:999px;right:48px;bottom:48px;background:rgba(82,183,136,.35);animation:posterLine 4s ease-in-out infinite}
+.poster-order,.poster-packages{background:linear-gradient(135deg,#10281f,#2d6a4f,#d9b65f)}
+.poster-blog,.poster-studio-lab{background:linear-gradient(135deg,#061913,#1b4332,#52b788)}
+.poster-portfolio{background:linear-gradient(135deg,#0b231a,#1b4332,#b89758)}
+.poster-faq,.poster-about{background:linear-gradient(135deg,#10251d,#345d4b,#f1e2bd)}
+@keyframes posterSweep{0%,100%{transform:translateX(-3%) rotate(0deg)}50%{transform:translateX(3%) rotate(4deg)}}
+@keyframes posterLine{0%,100%{transform:scaleX(.65);opacity:.55}50%{transform:scaleX(1);opacity:1}}
+@media(max-width:700px){.auto-page-poster{min-height:190px;border-radius:24px}.poster-glass{padding:24px;min-height:190px}.poster-glass i{display:none}}
+
+/* Blog upgrades */
+.blog-featured-img{width:100%;height:290px;object-fit:cover;border-radius:22px;box-shadow:0 22px 58px rgba(27,67,50,.14)}
+.blog-thumb-img{width:100%;height:174px;object-fit:cover;display:block}
+.blog-cat-inline{display:inline-flex;width:max-content;padding:5px 10px;border-radius:999px;background:rgba(45,106,79,.09);color:var(--accent);font-size:11px;font-weight:800;margin-bottom:10px}
+.article-hero{padding-top:130px}
+.article-shell{max-width:980px;margin:auto}
+.article-cover{width:100%;border-radius:32px;box-shadow:0 32px 80px rgba(27,67,50,.16);margin:24px 0 34px;display:block}
+.article-body{background:rgba(255,255,255,.9);border:1px solid rgba(27,67,50,.1);border-radius:30px;padding:clamp(22px,4vw,46px);box-shadow:0 22px 58px rgba(27,67,50,.08)}
+.article-body p{font-size:17px;line-height:2;color:var(--muted);margin-bottom:18px}
+.article-body h2{font-size:clamp(24px,3vw,38px);margin:30px 0 14px;color:var(--ink)}
+.article-list{display:grid;gap:12px;margin:20px 0}
+.article-list li{padding:14px 16px;border-radius:18px;background:rgba(45,106,79,.06);border:1px solid rgba(45,106,79,.08);color:var(--ink)}
+
+/* Safe performance boosts */
+.sec{content-visibility:auto;contain-intrinsic-size:1px 720px}
+img{height:auto}
+@media(prefers-reduced-motion:reduce){.auto-page-poster::before,.poster-glass i,.lab-console::after,.lab-orbit b{animation:none!important}}

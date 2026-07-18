@@ -60,6 +60,10 @@
     if (e.target.matches('.lang-btn, .sb-lang, #drawer-lang, .df-lang')) {
       applyLang(lang === 'fa' ? 'en' : 'fa');
       if (typeof applySiteContent === 'function') applySiteContent();
+      if (typeof renderBlogPage === 'function') renderBlogPage();
+      if (typeof renderArticlePage === 'function') renderArticlePage();
+      if (typeof renderPosts === 'function') renderPosts();
+      if (typeof fixBlogEditorTexts === 'function') fixBlogEditorTexts();
     }
   });
 
@@ -439,6 +443,39 @@
   }
 
   ensureStudioLabLinks();
+
+  function injectPagePoster() {
+    var pageName = (document.body.dataset.page || '').toLowerCase();
+    if (!pageName || pageName === 'home' || document.querySelector('.auto-page-poster')) return;
+    var hero = document.querySelector('.page-hero .container, .page-hero');
+    if (!hero) return;
+    var data = {
+      services: ['Services Engine', 'خدمات قابل مدیریت', 'From offer to request'],
+      portfolio: ['Demo Gallery', 'گالری دموها', 'Industry-specific live previews'],
+      packages: ['Package Builder', 'پکیج و قیمت‌گذاری', 'Clear scope, clear revisions'],
+      process: ['Delivery Roadmap', 'مسیر اجرای پروژه', 'Milestone-based production'],
+      faq: ['Answer Hub', 'مرکز پاسخ‌ها', 'Less doubt, faster decision'],
+      about: ['Studio Story', 'داستان استودیو', 'Design, systems and growth'],
+      order: ['Project Builder', 'ساخت پروژه', 'Smart request and estimate'],
+      audit: ['Website Audit', 'بررسی سایت', 'Find leaks before redesign'],
+      blog: ['Growth Journal', 'مجله رشد', 'Articles, SEO and strategy'],
+      'studio-lab': ['Capability Lab', 'آزمایشگاه توانایی‌ها', 'A live showcase of what we build']
+    };
+    var item = data[pageName];
+    if (!item) return;
+    var poster = document.createElement('div');
+    poster.className = 'auto-page-poster reveal poster-' + pageName;
+    poster.innerHTML =
+      '<div class="poster-glass">' +
+      '<span data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</span>' +
+      '<b data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</b>' +
+      '<p data-fa="' + item[1] + '" data-en="' + item[2] + '">' + (lang === 'en' ? item[2] : item[1]) + '</p>' +
+      '<i></i><i></i><i></i>' +
+      '</div>';
+    hero.appendChild(poster);
+  }
+
+  injectPagePoster();
 
   var page = (document.body.dataset.page || '').toLowerCase();
   document.querySelectorAll('.t-nav a, .sb-nav a').forEach(function (a) {
@@ -934,6 +971,22 @@
     } catch(e) { return defaults; }
   }
   function saveList(key, list) { localStorage.setItem(key, JSON.stringify(list)); }
+  var DEFAULT_POSTS = [
+    {titleFa:'WordPress vs custom website',titleEn:"Why a WordPress site isn't enough for many businesses",categoryFa:'Web Strategy',categoryEn:'Web Strategy',excerptFa:'A custom system can support portals, performance, security and growth workflows.',excerptEn:'WordPress can be a good start, but dedicated portals, performance, security and growth workflows often need a more custom system.',image:'assets/blog-redesign.webp',url:'article-wordpress-vs-custom.html',status:'published',readFa:'8 min read',readEn:'8 min read'}
+  ];
+  function getPosts() {
+    var saved = storageList('s-posts', []);
+    DEFAULT_POSTS = [
+      {titleFa:'چرا سایت وردپرسی برای خیلی از کسب‌وکارها کافی نیست؟',titleEn:"Why a WordPress site isn't enough for many businesses",categoryFa:'استراتژی سایت',categoryEn:'Web Strategy',excerptFa:'وردپرس برای شروع خوب است، اما وقتی پنل اختصاصی، سرعت، امنیت و مسیر رشد مهم می‌شود، محدودیت‌ها خودش را نشان می‌دهد.',excerptEn:'WordPress can be a good start, but dedicated portals, performance, security and growth workflows often need a more custom system.',image:'assets/blog-redesign.webp',url:'article-wordpress-vs-custom.html',status:'published',readFa:'۸ دقیقه مطالعه',readEn:'8 min read'},
+      {titleFa:'پنل مدیریت چیست و چرا هر کسب‌وکاری به آن نیاز دارد؟',titleEn:'What is an admin portal and why does every business need one?',categoryFa:'پنل مدیریت',categoryEn:'Admin Portal',excerptFa:'اگر برای تغییر یک قیمت، متن یا تصویر باید منتظر طراح بمانید، سایت شما هنوز سیستم مدیریتی واقعی ندارد.',excerptEn:'If you need to wait for a developer to change one price, image or line of copy, your website does not yet have a real management system.',image:'assets/blog-admin-portal.webp',url:'article-admin-portal.html',status:'published',readFa:'۷ دقیقه مطالعه',readEn:'7 min read'},
+      {titleFa:'۷ اشتباه رایج سئو که رشد سایت را کند می‌کند',titleEn:'7 common SEO mistakes that slow website growth',categoryFa:'سئو',categoryEn:'SEO',excerptFa:'از عنوان‌های تکراری تا سرعت پایین و محتوای بدون ساختار؛ این‌ها همان خطاهایی هستند که رشد سایت را کند می‌کنند.',excerptEn:'From duplicate titles to slow pages and unstructured content, these are the mistakes that slow website growth.',image:'assets/blog-seo-growth.webp',url:'article-seo-mistakes.html',status:'published',readFa:'۶ دقیقه مطالعه',readEn:'6 min read'},
+      {titleFa:'چرا بازدیدکننده سایت تماس نمی‌گیرد؟',titleEn:"Why isn't your website visitor contacting you?",categoryFa:'تبدیل مشتری',categoryEn:'Conversion',excerptFa:'گاهی سایت ترافیک دارد، اما مسیر اعتماد، پیشنهاد روشن و فراخوان اقدام درست ندارد.',excerptEn:'Sometimes a site has traffic, but lacks trust, a clear offer and a strong call to action.',image:'assets/blog-conversion-funnel.webp',url:'article-conversion.html',status:'published',readFa:'۵ دقیقه مطالعه',readEn:'5 min read'},
+      {titleFa:'قبل از ساخت فروشگاه آنلاین این ۶ سوال را بپرسید',titleEn:'Ask these 6 questions before building an online shop',categoryFa:'فروشگاه',categoryEn:'E-commerce',excerptFa:'فروشگاه فقط صفحه محصول نیست؛ پرداخت، ارسال، موجودی، اعتماد و پشتیبانی هم باید درست طراحی شوند.',excerptEn:'An online shop is not just product pages; payment, delivery, inventory, trust and support need design too.',image:'assets/blog-ecommerce.webp',url:'article-ecommerce.html',status:'published',readFa:'۹ دقیقه مطالعه',readEn:'9 min read'},
+      {titleFa:'سرعت سایت چقدر روی فروش اثر می‌گذارد؟',titleEn:'How much does site speed affect sales?',categoryFa:'سرعت',categoryEn:'Performance',excerptFa:'هر ثانیه تأخیر، تجربه کاربر و نرخ تبدیل را پایین می‌آورد؛ مخصوصاً در موبایل.',excerptEn:'Every extra second hurts user experience and conversion, especially on mobile.',image:'assets/blog-speed.webp',url:'article-site-speed.html',status:'published',readFa:'۴ دقیقه مطالعه',readEn:'4 min read'}
+    ];
+    return saved.length ? saved : DEFAULT_POSTS;
+  }
+
   function logActivity(text) {
     var items = storageList('s-activity-log', []);
     items.unshift({ text: text, at: new Date().toLocaleString() });
@@ -954,11 +1007,12 @@
   function renderPosts() {
     var el = document.querySelector('[data-admin-posts]');
     if (!el) return;
-    var posts = storageList('s-posts', [
-      { title: 'چک‌لیست طراحی سایت حرفه‌ای', category: 'طراحی سایت', excerpt: 'قبل از شروع طراحی سایت، این موارد را مشخص کنید.', status: 'published' }
-    ]);
+    var posts = getPosts();
     el.innerHTML = posts.map(function(p) {
-      return '<div><b>' + p.title + '</b><span>' + p.category + ' · ' + p.status + '</span><small>' + p.excerpt + '</small></div>';
+      var title = lang === 'en' ? (p.titleEn || p.titleFa || p.title) : (p.titleFa || p.titleEn || p.title);
+      var cat = lang === 'en' ? (p.categoryEn || p.categoryFa || p.category) : (p.categoryFa || p.categoryEn || p.category);
+      var ex = lang === 'en' ? (p.excerptEn || p.excerptFa || p.excerpt) : (p.excerptFa || p.excerptEn || p.excerpt);
+      return '<div><b>' + title + '</b><span>' + cat + ' ? ' + (p.status || 'published') + '</span><small>' + ex + '</small></div>';
     }).join('');
   }
   var postForm = document.querySelector('[data-post-form]');
@@ -966,16 +1020,104 @@
     e.preventDefault();
     var posts = storageList('s-posts', []);
     posts.unshift({
-      title: postForm.querySelector('[name=title]').value,
-      category: postForm.querySelector('[name=category]').value,
-      excerpt: postForm.querySelector('[name=excerpt]').value,
-      status: postForm.querySelector('[name=status]').value
+      titleFa: postForm.querySelector('[name=titleFa]').value,
+      titleEn: postForm.querySelector('[name=titleEn]').value,
+      categoryFa: postForm.querySelector('[name=categoryFa]').value,
+      categoryEn: postForm.querySelector('[name=categoryEn]').value,
+      excerptFa: postForm.querySelector('[name=excerptFa]').value,
+      excerptEn: postForm.querySelector('[name=excerptEn]').value,
+      bodyFa: postForm.querySelector('[name=bodyFa]').value,
+      bodyEn: postForm.querySelector('[name=bodyEn]').value,
+      image: postForm.querySelector('[name=image]').value,
+      url: postForm.querySelector('[name=url]').value,
+      seoTitle: postForm.querySelector('[name=seoTitle]').value,
+      seoDesc: postForm.querySelector('[name=seoDesc]').value,
+      status: postForm.querySelector('[name=status]').value,
+      readFa: '۶ دقیقه مطالعه',
+      readEn: '6 min read'
     });
     saveList('s-posts', posts);
     renderPosts();
+    renderBlogPage();
     logActivity(lang === 'en' ? 'Blog post saved' : 'نوشته وبلاگ ذخیره شد');
   });
   renderPosts();
+
+  function fixBlogEditorTexts() {
+    var map = [
+      ['titleFa','عنوان فارسی','Persian title'],
+      ['titleEn','عنوان انگلیسی','English title'],
+      ['categoryFa','دسته‌بندی فارسی','Persian category'],
+      ['categoryEn','دسته‌بندی انگلیسی','English category'],
+      ['image','تصویر شاخص','Featured image'],
+      ['url','آدرس مقاله','Article URL'],
+      ['excerptFa','خلاصه فارسی','Persian excerpt'],
+      ['excerptEn','خلاصه انگلیسی','English excerpt'],
+      ['bodyFa','متن مقاله فارسی','Persian body'],
+      ['bodyEn','متن مقاله انگلیسی','English body'],
+      ['seoTitle','عنوان سئو','SEO title'],
+      ['seoDesc','توضیحات متا','Meta description'],
+      ['status','وضعیت','Status']
+    ];
+    map.forEach(function(item) {
+      var input = postForm && postForm.querySelector('[name=' + item[0] + ']');
+      var label = input && input.closest('div') && input.closest('div').querySelector('label');
+      if (!label) return;
+      label.dataset.fa = item[1];
+      label.dataset.en = item[2];
+      label.textContent = lang === 'en' ? item[2] : item[1];
+    });
+    var save = postForm && postForm.querySelector('button[type=submit]');
+    if (save) {
+      save.dataset.fa = 'ذخیره نوشته';
+      save.dataset.en = 'Save post';
+      save.textContent = lang === 'en' ? 'Save post' : 'ذخیره نوشته';
+    }
+  }
+  fixBlogEditorTexts();
+
+  function renderBlogPage() {
+    var grid = document.querySelector('[data-blog-grid]');
+    var featured = document.querySelector('[data-blog-featured]');
+    if (!grid && !featured) return;
+    var posts = getPosts().filter(function(p){ return (p.status || 'published') === 'published'; });
+    function card(p) {
+      var title = lang === 'en' ? (p.titleEn || p.titleFa) : (p.titleFa || p.titleEn);
+      var cat = lang === 'en' ? (p.categoryEn || p.categoryFa) : (p.categoryFa || p.categoryEn);
+      var ex = lang === 'en' ? (p.excerptEn || p.excerptFa) : (p.excerptFa || p.excerptEn);
+      var read = lang === 'en' ? (p.readEn || '6 min read') : (p.readFa || '۶ دقیقه مطالعه');
+      return '<a class="blog-card reveal" href="' + (p.url || '#') + '"><img class="blog-thumb-img" loading="lazy" decoding="async" src="' + (p.image || 'assets/blog-redesign.webp') + '" alt=""><div class="blog-body"><span class="blog-cat-inline">' + cat + '</span><div class="blog-meta"><span>' + read + '</span></div><h3>' + title + '</h3><p>' + ex + '</p><span class="blog-read">' + (lang === 'en' ? 'Read more' : 'ادامه مطلب') + '</span></div></a>';
+    }
+    if (featured && posts[0]) {
+      var p = posts[0];
+      var title = lang === 'en' ? p.titleEn : p.titleFa;
+      var ex = lang === 'en' ? p.excerptEn : p.excerptFa;
+      featured.innerHTML = '<img class="blog-featured-img" loading="eager" decoding="async" src="' + p.image + '" alt=""><div><p class="kicker">' + (lang === 'en' ? 'Featured article' : 'مقاله ویژه') + '</p><h2>' + title + '</h2><p style="margin-bottom:20px">' + ex + '</p><a class="btn btn-primary" href="' + p.url + '">' + (lang === 'en' ? 'Read article' : 'مطالعه مقاله') + '</a></div>';
+    }
+    if (grid) grid.innerHTML = posts.slice(1).map(card).join('');
+  }
+  renderBlogPage();
+
+  function renderArticlePage() {
+    var shell = document.querySelector('[data-article-shell]');
+    if (!shell) return;
+    var url = document.body.getAttribute('data-article-url') || location.pathname.split('/').pop();
+    var post = getPosts().filter(function(p){ return p.url === url; })[0] || getPosts()[0];
+    var title = lang === 'en' ? (post.titleEn || post.titleFa) : (post.titleFa || post.titleEn);
+    var ex = lang === 'en' ? (post.excerptEn || post.excerptFa) : (post.excerptFa || post.excerptEn);
+    var body = lang === 'en' ? (post.bodyEn || post.excerptEn || post.excerptFa) : (post.bodyFa || post.excerptFa || post.excerptEn);
+    shell.innerHTML =
+      '<p class="kicker">' + (lang === 'en' ? 'Growth journal' : 'مجله رشد') + '</p>' +
+      '<h1>' + title + '</h1>' +
+      '<p class="lead">' + ex + '</p>' +
+      '<img class="article-cover" src="' + (post.image || 'assets/blog-redesign.webp') + '" loading="eager" decoding="async" alt="">' +
+      '<article class="article-body"><p>' + body + '</p>' +
+      '<h2>' + (lang === 'en' ? 'Practical takeaways' : 'نکته‌های اجرایی') + '</h2>' +
+      '<ul class="article-list"><li>' + (lang === 'en' ? 'Define the page goal before design starts.' : 'هدف صفحه را قبل از طراحی مشخص کنید.') + '</li><li>' + (lang === 'en' ? 'Copy, visuals and calls to action should work together.' : 'محتوا، تصویر و مسیر اقدام باید هماهنگ باشند.') + '</li><li>' + (lang === 'en' ? 'Prepare the portal and site structure for future growth.' : 'پنل و ساختار سایت را برای رشد آینده آماده کنید.') + '</li></ul>' +
+      '<p>' + (lang === 'en' ? 'If you want this path designed for your website, submit your request from the start project page.' : 'اگر می‌خواهید همین مسیر برای سایت شما طراحی شود، از صفحه شروع پروژه درخواستتان را ثبت کنید.') + '</p>' +
+      '<a class="btn btn-primary" href="order.html">' + (lang === 'en' ? 'Start project' : 'شروع پروژه') + '</a></article>';
+  }
+  renderArticlePage();
 
   function renderServicesAdmin() {
     var el = document.querySelector('[data-admin-services]');

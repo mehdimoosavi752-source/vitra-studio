@@ -39,7 +39,7 @@
 <body data-page="blog">
   <header class="topbar" id="topbar">
     <a class="brand" href="index.html">
-      <span class="brand-mark"><img src="assets/vitra-logo.svg" alt=""/></span>
+      <span class="brand-mark"><img src="assets/vitra-logo.svg" alt="" decoding="async"></span>
       <span class="brand-name" data-fa="استودیو" data-en="Studio">استودیو</span>
     </a>
     <nav class="t-nav">
@@ -79,75 +79,10 @@
     </div>
 
     <div class="sec">
-      <!-- Featured post -->
-      <div class="blog-featured reveal">
-        <div class="blog-featured-vis">🌐</div>
-        <div>
-          <p class="kicker" data-fa="مقاله ویژه" data-en="Featured">مقاله ویژه</p>
-          <h2 style="margin-bottom:12px" data-fa="چرا سایت وردپرسی برای خیلی از کسب‌وکارها کافی نیست" data-en="Why a WordPress site isn't enough for many businesses">چرا سایت وردپرسی برای خیلی از کسب‌وکارها کافی نیست</h2>
-          <p style="margin-bottom:20px" data-fa="وردپرس سریع و ارزانه، ولی پلاگین روی پلاگین، آپدیت‌های نگران‌کننده و نبود پنل اختصاصی، خیلی وقت‌ها هزینه واقعی رو بعداً نشون می‌ده. این مقاله می‌گه کِی وردپرس مناسبه و کِی نه." data-en="WordPress is fast and cheap, but plugin stacking, worrying updates, and no dedicated portal often show their real cost later. This article explains when WordPress fits and when it doesn't.">وردپرس سریع و ارزانه، ولی پلاگین روی پلاگین، آپدیت‌های نگران‌کننده و نبود پنل اختصاصی، خیلی وقت‌ها هزینه واقعی رو بعداً نشون می‌ده. این مقاله می‌گه کِی وردپرس مناسبه و کِی نه.</p>
-          <a class="btn btn-primary" href="#" data-fa="مطالعه مقاله" data-en="Read article">مطالعه مقاله</a>
-        </div>
-      </div>
+      <!-- Dynamic featured post -->
+      <div class="blog-featured reveal" data-blog-featured></div>
 
-      <div class="blog-grid stagger-group">
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(45,106,79,.12),rgba(82,183,136,.08))">⊞<span class="blog-cat" data-fa="پنل مدیریت" data-en="Admin Portal">پنل مدیریت</span></div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۸ دقیقه مطالعه" data-en="8 min read">۸ دقیقه مطالعه</span></div>
-            <h3 data-fa="پنل مدیریت چیست و چرا هر کسب‌وکاری بهش نیاز داره؟" data-en="What is an admin portal and why every business needs one?">پنل مدیریت چیست و چرا هر کسب‌وکاری بهش نیاز داره؟</h3>
-            <p data-fa="اگه برای تغییر یک قیمت باید به طراح زنگ بزنید، این مقاله رو بخونید." data-en="If you have to call your developer to change one price, read this.">اگه برای تغییر یک قیمت باید به طراح زنگ بزنید، این مقاله رو بخونید.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(231,111,81,.12),rgba(244,162,97,.08))">📈<span class="blog-cat" data-fa="سئو" data-en="SEO">سئو</span></div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۶ دقیقه مطالعه" data-en="6 min read">۶ دقیقه مطالعه</span></div>
-            <h3 data-fa="۷ اشتباه رایج سئو که کسب‌وکارهای کوچک مرتکب می‌شوند" data-en="7 common SEO mistakes small businesses make">۷ اشتباه رایج سئو که کسب‌وکارهای کوچک مرتکب می‌شوند</h3>
-            <p data-fa="از عنوان‌های تکراری تا سرعت پایین — لیست کاملی از خطاهای رایج." data-en="From duplicate titles to slow speed — a complete list of common mistakes.">از عنوان‌های تکراری تا سرعت پایین — لیست کاملی از خطاهای رایج.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(8,145,178,.12),rgba(6,182,212,.08))">💬<span class="blog-cat" data-fa="تبدیل" data-en="Conversion">تبدیل</span></div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۵ دقیقه مطالعه" data-en="5 min read">۵ دقیقه مطالعه</span></div>
-            <h3 data-fa="چرا بازدیدکننده سایتتان تماس نمی‌گیرد؟" data-en="Why isn't your website visitor calling you?">چرا بازدیدکننده سایتتان تماس نمی‌گیرد؟</h3>
-            <p data-fa="۵ دلیل رایجی که سایت ترافیک داره ولی مشتری نه." data-en="5 common reasons a site has traffic but no clients.">۵ دلیل رایجی که سایت ترافیک داره ولی مشتری نه.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(167,139,250,.06))">🎨<span class="blog-cat" data-fa="طراحی" data-en="Design">طراحی</span></div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۷ دقیقه مطالعه" data-en="7 min read">۷ دقیقه مطالعه</span></div>
-            <h3 data-fa="چطور بفهمیم سایت‌مان نیاز به بازطراحی دارد؟" data-en="How to know if your site needs a redesign">چطور بفهمیم سایت‌مان نیاز به بازطراحی دارد؟</h3>
-            <p data-fa="چک‌لیست ساده‌ای که در ۱۰ دقیقه جواب می‌ده." data-en="A simple checklist that answers in 10 minutes.">چک‌لیست ساده‌ای که در ۱۰ دقیقه جواب می‌ده.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(217,119,6,.1),rgba(245,158,11,.06))">🛒<span class="blog-cat" data-fa="فروشگاه" data-en="E-commerce">فروشگاه</span></div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۹ دقیقه مطالعه" data-en="9 min read">۹ دقیقه مطالعه</span></div>
-            <h3 data-fa="قبل از ساخت فروشگاه آنلاین این ۶ سوال را از خود بپرسید" data-en="Ask yourself these 6 questions before building an online shop">قبل از ساخت فروشگاه آنلاین این ۶ سوال را از خود بپرسید</h3>
-            <p data-fa="خیلی از فروشگاه‌های آنلاین به این دلایل ساده شکست می‌خورن." data-en="Many online shops fail for these simple reasons.">خیلی از فروشگاه‌های آنلاین به این دلایل ساده شکست می‌خورن.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-        <a class="blog-card reveal" href="#">
-          <div class="blog-thumb" style="background:linear-gradient(135deg,rgba(220,38,38,.1),rgba(248,113,113,.06))">⚡</div>
-          <div class="blog-body">
-            <div class="blog-meta"><span data-fa="۴ دقیقه مطالعه" data-en="4 min read">۴ دقیقه مطالعه</span></div>
-            <h3 data-fa="سرعت سایت چقدر روی فروش شما اثر می‌گذارد؟" data-en="How much does site speed affect your sales?">سرعت سایت چقدر روی فروش شما اثر می‌گذارد؟</h3>
-            <p data-fa="هر ثانیه تأخیر، یعنی از دست دادن مشتری. اعداد واقعی." data-en="Every second of delay means losing customers. Real numbers.">هر ثانیه تأخیر، یعنی از دست دادن مشتری. اعداد واقعی.</p>
-            <span class="blog-read" data-fa="ادامه مطلب" data-en="Read more">ادامه مطلب</span>
-          </div>
-        </a>
-      </div>
-    </div>
-
+      <div class="blog-grid stagger-group" data-blog-grid></div>
     <div class="sec">
       <div class="cta-band reveal">
         <div>

@@ -32,7 +32,7 @@
 
 <aside class="sidebar" id="sidebar">
   <a class="sb-brand" href="index.html">
-    <img src="assets/vitra-logo.svg" alt=""/>
+    <img src="assets/vitra-logo.svg" alt="" decoding="async">
     <span data-fa="پنل مدیریت" data-en="Admin Panel">پنل مدیریت</span>
   </a>
   <div class="sb-user">
@@ -219,12 +219,12 @@
         </div>
       </div>
       <div class="media-grid" data-media-library>
-        <button class="media-item" type="button" data-asset="assets/vitra-hero.webp"><img src="assets/vitra-hero.webp" alt="Vitra hero"/><span>vitra-hero.webp</span></button>
-        <button class="media-item" type="button" data-asset="assets/studio-command-hero.webp"><img src="assets/studio-command-hero.webp" alt="Studio command"/><span>studio-command-hero.webp</span></button>
-        <button class="media-item" type="button" data-asset="assets/shop-hero-photo.webp"><img src="assets/shop-hero-photo.webp" alt="Shop demo"/><span>shop-hero-photo.webp</span></button>
-        <button class="media-item" type="button" data-asset="assets/salon-hero-photo.webp"><img src="assets/salon-hero-photo.webp" alt="Salon demo"/><span>salon-hero-photo.webp</span></button>
-        <button class="media-item" type="button" data-asset="assets/clinic-hero-photo.webp"><img src="assets/clinic-hero-photo.webp" alt="Clinic demo"/><span>clinic-hero-photo.webp</span></button>
-        <button class="media-item" type="button" data-asset="assets/academy-hero-photo.webp"><img src="assets/academy-hero-photo.webp" alt="Academy demo"/><span>academy-hero-photo.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/vitra-hero.webp"><img src="assets/vitra-hero.webp" alt="Vitra hero" decoding="async"><span>vitra-hero.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/studio-command-hero.webp"><img src="assets/studio-command-hero.webp" alt="Studio command" decoding="async"><span>studio-command-hero.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/shop-hero-photo.webp"><img src="assets/shop-hero-photo.webp" alt="Shop demo" decoding="async"><span>shop-hero-photo.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/salon-hero-photo.webp"><img src="assets/salon-hero-photo.webp" alt="Salon demo" decoding="async"><span>salon-hero-photo.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/clinic-hero-photo.webp"><img src="assets/clinic-hero-photo.webp" alt="Clinic demo" decoding="async"><span>clinic-hero-photo.webp</span></button>
+        <button class="media-item" type="button" data-asset="assets/academy-hero-photo.webp"><img src="assets/academy-hero-photo.webp" alt="Academy demo" decoding="async"><span>academy-hero-photo.webp</span></button>
       </div>
       <div class="p-form" style="margin-top:14px">
         <div>
@@ -298,11 +298,20 @@
         <h2 data-fa="وبلاگ و نوشته‌ها" data-en="Blog Posts">وبلاگ و نوشته‌ها</h2>
         <div class="mini-list admin-list" data-admin-posts></div>
         <form class="p-form" data-post-form style="margin-top:14px">
-          <div><label data-fa="عنوان نوشته" data-en="Post title">عنوان نوشته</label><input name="title" required value="چک‌لیست طراحی سایت حرفه‌ای"/></div>
-          <div><label data-fa="دسته‌بندی" data-en="Category">دسته‌بندی</label><input name="category" value="طراحی سایت"/></div>
-          <div class="pf-full"><label data-fa="خلاصه" data-en="Excerpt">خلاصه</label><textarea name="excerpt">قبل از شروع طراحی سایت، این موارد را مشخص کنید.</textarea></div>
-          <div><label data-fa="وضعیت" data-en="Status">وضعیت</label><select name="status"><option value="published" data-fa="منتشرشده" data-en="Published">منتشرشده</option><option value="draft" data-fa="پیش‌نویس" data-en="Draft">پیش‌نویس</option></select></div>
-          <div style="display:flex;align-items:flex-end"><button class="btn btn-primary btn-sm" type="submit" data-fa="ذخیره نوشته" data-en="Save post">ذخیره نوشته</button></div>
+          <div><label data-fa="Persian title" data-en="Persian title">Persian title</label><input name="titleFa" required value="Professional website checklist"/></div>
+          <div><label data-fa="English title" data-en="English title">English title</label><input name="titleEn" required value="Professional website checklist"/></div>
+          <div><label data-fa="Persian category" data-en="Persian category">Persian category</label><input name="categoryFa" value="Web Design"/></div>
+          <div><label data-fa="English category" data-en="English category">English category</label><input name="categoryEn" value="Web Design"/></div>
+          <div><label data-fa="Featured image" data-en="Featured image">Featured image</label><input name="image" value="assets/blog-redesign.webp"/></div>
+          <div><label data-fa="Article URL" data-en="Article URL">Article URL</label><input name="url" value="article-website-checklist.html"/></div>
+          <div class="pf-full"><label data-fa="Persian excerpt" data-en="Persian excerpt">Persian excerpt</label><textarea name="excerptFa">Before starting a website project, define the essentials.</textarea></div>
+          <div class="pf-full"><label data-fa="English excerpt" data-en="English excerpt">English excerpt</label><textarea name="excerptEn">Before starting a website project, define these essentials so production moves faster and cleaner.</textarea></div>
+          <div class="pf-full"><label data-fa="Persian body" data-en="Persian body">Persian body</label><textarea name="bodyFa">Write the full article here.</textarea></div>
+          <div class="pf-full"><label data-fa="English body" data-en="English body">English body</label><textarea name="bodyEn">Write the full article here. The admin can control title, excerpt, image, URL, body and publish status.</textarea></div>
+          <div><label data-fa="SEO title" data-en="SEO title">SEO title</label><input name="seoTitle" value="Website Design Checklist"/></div>
+          <div><label data-fa="Meta description" data-en="Meta description">Meta description</label><input name="seoDesc" value="A practical checklist for planning a professional website."/></div>
+          <div><label data-fa="Status" data-en="Status">Status</label><select name="status"><option value="published" data-fa="Published" data-en="Published">Published</option><option value="draft" data-fa="Draft" data-en="Draft">Draft</option></select></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn btn-primary btn-sm" type="submit" data-fa="Save post" data-en="Save post">Save post</button></div>
         </form>
       </div>
       <div class="p-card">
