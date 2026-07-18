@@ -19,13 +19,28 @@ function applyLang(lang) {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "fa" ? "rtl" : "ltr";
   $$("[data-fa][data-en]").forEach((node) => {
-    node.textContent = lang === "fa" ? fixMojibakeText(node.dataset.fa) : node.dataset.en;
+    node.textContent = lang === "fa" ? fixMojibakeText(node.dataset.fa) : fixMojibakeText(node.dataset.en);
   });
   $$("[data-fa-placeholder][data-en-placeholder]").forEach((node) => {
-    node.placeholder = lang === "fa" ? fixMojibakeText(node.dataset.faPlaceholder) : node.dataset.enPlaceholder;
+    node.placeholder = lang === "fa" ? fixMojibakeText(node.dataset.faPlaceholder) : fixMojibakeText(node.dataset.enPlaceholder);
   });
   const toggle = $("[data-lang-toggle]");
   if (toggle) toggle.textContent = lang === "fa" ? "EN" : "FA";
+  repairVisibleMojibakeText(document.body);
+}
+
+function repairVisibleMojibakeText(root = document.body) {
+  if (!root) return;
+  const bad = /[ØÙÛÃÂ]|â€|â€”/;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT)$/i.test(parent.tagName)) return NodeFilter.FILTER_REJECT;
+      return bad.test(node.nodeValue || "") ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+    }
+  });
+  let node;
+  while ((node = walker.nextNode())) node.nodeValue = fixMojibakeText(node.nodeValue);
 }
 
 function openModal(id, title) {
@@ -144,5 +159,69 @@ $("[data-track-order]")?.addEventListener("click", () => {
   const code = $("[data-order-code]")?.value || "ML-2048";
   $("[data-track-output]").textContent = activeLang === "fa" ? `سفارش ${code} در مرحله آماده سازی است.` : `Order ${code} is being packed.`;
 });
+
+function injectWebsiteDepth() {
+  const main = $("main");
+  if (!main || $(".demo-real-depth")) return;
+  const isSalon = document.body.classList.contains("salon-suite");
+  const isAcademy = document.body.classList.contains("academy-suite");
+  const isClinic = document.body.classList.contains("clinic-suite");
+  const isShop = document.body.classList.contains("shop-suite");
+  const brand = isSalon ? "Velora" : isAcademy ? "Lingua Orbit" : isClinic ? "DentaLine" : isShop ? "Moodline" : "Vitra Demo";
+  const industry = isSalon ? "Beauty booking" : isAcademy ? "Language academy" : isClinic ? "Dental clinic" : isShop ? "Fashion commerce" : "Business website";
+  const leadFa = isSalon ? "رزرو آنلاین، پروفایل سالن، گالری، امتیازها و مسیر تماس واقعی برای مشتری." :
+    isAcademy ? "مسیر آموزشی، ثبت نام، معرفی استاد، برنامه کلاس و گزارش پیشرفت زبان آموز." :
+    isClinic ? "نوبت دهی، پروفایل پزشک، خدمات درمانی، راهنمای بیمار و پیگیری مراجعه." :
+    isShop ? "محصول، فیلتر، رنگ و سایز، سبد خرید، پیگیری سفارش و کمپین فروش." :
+    "صفحه های واقعی، فرم، محتوا، اعتمادسازی و پنل مدیریت.";
+  const leadEn = isSalon ? "Online booking, salon profile, gallery, ratings and a real contact path." :
+    isAcademy ? "Learning paths, enrollment, teacher profiles, class schedule and progress reports." :
+    isClinic ? "Appointments, doctor profiles, medical services, patient guides and follow-up." :
+    isShop ? "Products, filters, colors, sizes, cart, order tracking and sales campaigns." :
+    "Real pages, forms, content, trust blocks and admin management.";
+  const section = document.createElement("section");
+  section.className = "suite-section demo-real-depth";
+  section.innerHTML = `
+    <div class="real-depth-copy">
+      <span class="eyebrow" data-fa="حس یک سایت واقعی" data-en="Real website feeling">Real website feeling</span>
+      <h2 data-fa="این دمو فقط چند کارت نیست؛ مسیر واقعی مشتری را نشان می‌دهد." data-en="This demo is not just a few cards; it shows the real customer journey.">This demo is not just a few cards; it shows the real customer journey.</h2>
+      <p data-fa="${leadFa}" data-en="${leadEn}">${leadEn}</p>
+      <div class="real-depth-actions">
+        <a href="order.html?demo=${brand.toLowerCase().replaceAll(" ", "-")}" data-fa="سفارش سایت مشابه" data-en="Order a similar site">Order a similar site</a>
+        <a href="portfolio.html" data-fa="دیدن بقیه دموها" data-en="See more demos">See more demos</a>
+      </div>
+    </div>
+    <div class="real-depth-board">
+      <article><b>${brand}</b><span>${industry}</span></article>
+      <article><b>Live CMS</b><span data-fa="محتوا قابل ویرایش" data-en="Editable content">Editable content</span></article>
+      <article><b>Mobile ready</b><span data-fa="آماده موبایل" data-en="Responsive flow">Responsive flow</span></article>
+      <article><b>Conversion</b><span data-fa="مسیر تبدیل کاربر" data-en="Customer conversion path">Customer conversion path</span></article>
+    </div>`;
+  main.appendChild(section);
+
+  const footer = document.createElement("footer");
+  footer.className = "demo-real-footer";
+  footer.innerHTML = `
+    <strong>${brand}</strong>
+    <nav>
+      <a href="#" data-fa="خدمات" data-en="Services">Services</a>
+      <a href="#" data-fa="تماس" data-en="Contact">Contact</a>
+      <a href="#" data-fa="قوانین" data-en="Terms">Terms</a>
+    </nav>
+    <span data-fa="دموی آماده سفارش توسط ویترا" data-en="Order-ready demo by Vitra">Order-ready demo by Vitra</span>`;
+  main.appendChild(footer);
+}
+
+injectWebsiteDepth();
+
+if (window.matchMedia("(hover:hover) and (pointer:fine)").matches) {
+  $$(".venue-card,.doctor-card,.fashion-card,.path-card").forEach((card) => {
+    card.addEventListener("mousemove", (event) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+      card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+    });
+  });
+}
 
 applyLang(activeLang);

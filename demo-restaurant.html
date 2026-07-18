@@ -26,7 +26,9 @@
     .dish-card:hover{transform:translateY(-8px)}.dish-card b{display:block;font-size:22px;margin-top:92px}.dish-card span{color:#f7b267;font-weight:900}.dish-card p{color:rgba(255,255,255,.65);line-height:1.8}
     .dish-card::before{content:"";position:absolute;top:18px;left:18px;width:86px;height:86px;border-radius:28px;background:radial-gradient(circle,#f7b267,#e46f2f 65%,transparent 66%);box-shadow:0 24px 50px rgba(228,111,47,.28)}
     .food-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.food-flow article{padding:22px;border-radius:24px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1)}.food-flow b{display:block;margin-bottom:8px}.food-flow p{color:rgba(255,255,255,.65);line-height:1.8}
-    @media(max-width:900px){.food-hero,.menu-grid,.food-flow{grid-template-columns:1fr}.booking-card{position:relative;right:auto;bottom:auto;left:auto;border-radius:0;grid-template-columns:1fr}.food-visual-real img{height:auto}}
+    .food-real-depth{display:grid;grid-template-columns:.95fr 1.05fr;gap:20px;align-items:stretch;margin:20px clamp(18px,5vw,70px) 0;padding:26px;border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.12);box-shadow:0 28px 90px rgba(0,0,0,.28)}
+    .food-real-depth h2{font-size:clamp(28px,4vw,54px);line-height:1.05;margin-bottom:12px}.food-real-depth p{color:rgba(255,255,255,.68);line-height:1.9}.food-real-board{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.food-real-board article{min-height:132px;padding:18px;border-radius:24px;background:linear-gradient(180deg,rgba(247,178,103,.18),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.12);display:grid;align-content:end}.food-real-board b{font-size:24px}.food-footer{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:22px clamp(18px,5vw,70px) 0;padding:22px 0;border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.62)}.food-footer strong{color:#f7b267}.food-footer nav{display:flex;gap:14px;flex-wrap:wrap}
+    @media(max-width:900px){.food-hero,.menu-grid,.food-flow,.food-real-depth,.food-real-board{grid-template-columns:1fr}.booking-card{position:relative;right:auto;bottom:auto;left:auto;border-radius:0;grid-template-columns:1fr}.food-visual-real img{height:auto}}
   </style>
 </head>
 <body data-page="restaurant-demo">
@@ -68,6 +70,20 @@
         <article class="reveal"><b data-fa="سفارش سریع" data-en="Quick order">Quick order</b><p data-fa="کاهش مسیر سفارش و افزایش تماس/رزرو." data-en="Shorter order path, more calls and bookings.">Shorter order path, more calls and bookings.</p></article>
       </div>
     </section>
+    <section class="food-real-depth">
+      <div>
+        <small data-fa="Ø­Ø³ ÛŒÚ© Ø³Ø§ÛŒØª Ø±Ø³ØªÙˆØ±Ø§Ù†ÛŒ ÙˆØ§Ù‚Ø¹ÛŒ" data-en="Real restaurant website feeling">Real restaurant website feeling</small>
+        <h2 data-fa="Ø§Ø² Ø¯ÛŒØ¯Ù† Ù…Ù†Ùˆ ØªØ§ Ø±Ø²Ø±Ùˆ Ù…ÛŒØ²ØŒ Ù…Ø³ÛŒØ± Ú©Ø§Ø±Ø¨Ø± Ú©Ø§Ù…Ù„ Ø§Ø³Øª." data-en="From menu discovery to table booking, the customer path is complete.">From menu discovery to table booking, the customer path is complete.</h2>
+        <p data-fa="Ø§ÛŒÙ† Ø¯Ù…Ùˆ Ù…ÛŒâ€ŒØªÙˆØ§Ù†Ø¯ Ø¨Ø®Ø´ Ø¯Ø§Ø³ØªØ§Ù† Ø±Ø³ØªÙˆØ±Ø§Ù†ØŒ Ù…Ù†ÙˆÛŒ Ø¯ÛŒØ¬ÛŒØªØ§Ù„ØŒ Ø³ÙØ§Ø±Ø´ Ø³Ø±ÛŒØ¹ØŒ Ú©Ù…Ù¾ÛŒÙ† Ø±ÙˆØ²ØŒ Ù†Ø¸Ø±Ø§Øª Ùˆ Ù¾Ù†Ù„ Ù…Ø¯ÛŒØ±ÛŒØª ØºØ°Ø§Ù‡Ø§ Ø¯Ø§Ø´ØªÙ‡ Ø¨Ø§Ø´Ø¯." data-en="This demo can include restaurant story, digital menu, quick ordering, daily campaigns, reviews and food management panel.">This demo can include restaurant story, digital menu, quick ordering, daily campaigns, reviews and food management panel.</p>
+      </div>
+      <div class="food-real-board">
+        <article><b>Menu CMS</b><span data-fa="ÙˆÛŒØ±Ø§ÛŒØ´ ØºØ°Ø§ Ùˆ Ù‚ÛŒÙ…Øª" data-en="Edit dishes and prices">Edit dishes and prices</span></article>
+        <article><b>Reservations</b><span data-fa="Ù…ÛŒØ²ØŒ ØªØ§Ø±ÛŒØ® Ùˆ ØªØ¹Ø¯Ø§Ø¯ Ù†ÙØ±Ø§Øª" data-en="Table, date and guests">Table, date and guests</span></article>
+        <article><b>Reviews</b><span data-fa="Ø§Ø¹ØªÙ…Ø§Ø¯Ø³Ø§Ø²ÛŒ Ø¨Ø§ Ù†Ø¸Ø±Ø§Øª" data-en="Trust through reviews">Trust through reviews</span></article>
+        <article><b>Campaigns</b><span data-fa="Ù¾ÛŒØ´Ù†Ù‡Ø§Ø¯ Ø±ÙˆØ² Ùˆ ÙØ±ÙˆØ´ Ø¨ÛŒØ´ØªØ±" data-en="Daily specials and upsell">Daily specials and upsell</span></article>
+      </div>
+    </section>
+    <footer class="food-footer"><strong>Volcano Table</strong><nav><a href="#menu">Menu</a><a href="#booking">Booking</a><a href="order.html?demo=restaurant">Order similar</a></nav><span>Order-ready demo by Vitra</span></footer>
   </main>
   <script src="app.js"></script>
 </body>

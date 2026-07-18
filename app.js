@@ -44,23 +44,23 @@
 
     /* translate all [data-fa][data-en] */
     document.querySelectorAll('[data-fa][data-en]').forEach(function (el) {
-      el.textContent = l === 'en' ? el.dataset.en : fixMojibakeText(el.dataset.fa);
+      el.textContent = l === 'en' ? fixMojibakeText(el.dataset.en) : fixMojibakeText(el.dataset.fa);
     });
     /* placeholders */
     document.querySelectorAll('[data-fa-placeholder][data-en-placeholder]').forEach(function (el) {
-      el.placeholder = l === 'en' ? el.dataset.enPlaceholder : fixMojibakeText(el.dataset.faPlaceholder);
+      el.placeholder = l === 'en' ? fixMojibakeText(el.dataset.enPlaceholder) : fixMojibakeText(el.dataset.faPlaceholder);
     });
     /* meta content (description, etc.) */
     document.querySelectorAll('[data-fa-content][data-en-content]').forEach(function (el) {
-      el.content = l === 'en' ? el.dataset.enContent : fixMojibakeText(el.dataset.faContent);
+      el.content = l === 'en' ? fixMojibakeText(el.dataset.enContent) : fixMojibakeText(el.dataset.faContent);
     });
     /* image alt text */
     document.querySelectorAll('img[data-fa-alt][data-en-alt]').forEach(function (el) {
-      el.alt = l === 'en' ? el.dataset.enAlt : fixMojibakeText(el.dataset.faAlt);
+      el.alt = l === 'en' ? fixMojibakeText(el.dataset.enAlt) : fixMojibakeText(el.dataset.faAlt);
     });
     /* options inside selects */
     document.querySelectorAll('option[data-fa][data-en]').forEach(function (el) {
-      el.textContent = l === 'en' ? el.dataset.en : fixMojibakeText(el.dataset.fa);
+      el.textContent = l === 'en' ? fixMojibakeText(el.dataset.en) : fixMojibakeText(el.dataset.fa);
     });
     /* lang buttons */
     document.querySelectorAll('.lang-btn, .sb-lang, .df-lang').forEach(function (b) {
@@ -73,6 +73,7 @@
     var codeLabel = document.getElementById('order-code-label');
     if (codeLabel) codeLabel.textContent = l === 'en' ? 'Tracking code' : 'Ú©Ø¯ Ù¾ÛŒÚ¯ÛŒØ±ÛŒ';
     applyHumanCopy();
+    repairVisibleMojibakeText(document.body);
   }
   window.__applyLang = applyLang;
 
@@ -82,7 +83,7 @@
       if (!el) return;
       el.dataset.fa = fa;
       el.dataset.en = en;
-      el.textContent = lang === 'en' ? en : fixMojibakeText(fa);
+      el.textContent = lang === 'en' ? fixMojibakeText(en) : fixMojibakeText(fa);
     }
     setCopy('.hero-cue[data-cue="0"] .hero-tag','Ø·Ø±Ø§Ø­ÛŒ Ø³Ø§ÛŒØª Ø¨Ø±Ø§ÛŒ ÙØ±ÙˆØ´ØŒ Ù†Ù‡ ÙÙ‚Ø· Ù†Ù…Ø§ÛŒØ´','Websites built to sell, not just sit there');
     setCopy('.hero-cue[data-cue="0"] h1','Ø¢Ø®Ø±ÛŒÙ† Ø¨Ø§Ø±ÛŒ Ú©Ù‡ Ø³Ø§ÛŒØªØª Ø¨Ø±Ø§ÛŒØª Ù…Ø´ØªØ±ÛŒ Ø¢ÙˆØ±Ø¯ØŒ Ú©ÛŒ Ø¨ÙˆØ¯ØŸ','When was the last time your website brought you a client?');
@@ -103,15 +104,38 @@
     setCopy('body[data-page="process"] .page-hero .lead','Ù…Ø±Ø­Ù„Ù‡â€ŒØ¨Ù‡â€ŒÙ…Ø±Ø­Ù„Ù‡ Ø¬Ù„Ùˆ Ù…ÛŒâ€ŒØ±ÙˆÛŒÙ…: Ø´Ù†Ø§Ø®ØªØŒ Ù†Ø³Ø®Ù‡ Ø§ÙˆÙ„ÛŒÙ‡ØŒ Ø§ØµÙ„Ø§Ø­ÛŒÙ‡ØŒ ØªÙˆØ³Ø¹Ù‡ØŒ ØªØ³Øª Ùˆ ØªØ­ÙˆÛŒÙ„.','We move step by step: discovery, first draft, revisions, development, testing and launch.');
   }
 
+  function repairVisibleMojibakeText(root) {
+    if (!root) return;
+    var bad = /[ØÙÛÃÂ]|â€|â€”/;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(node) {
+        var parent = node.parentElement;
+        if (!parent || /^(SCRIPT|STYLE|NOSCRIPT|TEXTAREA|INPUT)$/i.test(parent.tagName)) return NodeFilter.FILTER_REJECT;
+        return bad.test(node.nodeValue || '') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    });
+    var node;
+    while ((node = walker.nextNode())) {
+      node.nodeValue = fixMojibakeText(node.nodeValue);
+    }
+    document.querySelectorAll('[title],[aria-label]').forEach(function(el) {
+      if (el.title && bad.test(el.title)) el.title = fixMojibakeText(el.title);
+      var label = el.getAttribute('aria-label');
+      if (label && bad.test(label)) el.setAttribute('aria-label', fixMojibakeText(label));
+    });
+  }
+
   /* bind all lang buttons */
   document.addEventListener('click', function (e) {
     if (e.target.matches('.lang-btn, .sb-lang, #drawer-lang, .df-lang')) {
       applyLang(lang === 'fa' ? 'en' : 'fa');
       if (typeof applySiteContent === 'function') applySiteContent();
+      if (typeof applyHumanCopy === 'function') applyHumanCopy();
       if (typeof renderBlogPage === 'function') renderBlogPage();
       if (typeof renderArticlePage === 'function') renderArticlePage();
       if (typeof renderPosts === 'function') renderPosts();
       if (typeof fixBlogEditorTexts === 'function') fixBlogEditorTexts();
+      if (typeof repairVisibleMojibakeText === 'function') repairVisibleMojibakeText(document.body);
     }
   });
 
@@ -419,7 +443,7 @@
     }
     document.body.setAttribute('data-user-role', user.role);
     document.querySelectorAll('[data-auth-name]').forEach(function(el) {
-      el.textContent = lang === 'en' ? user.name : (user.nameFa || user.name);
+      el.textContent = lang === 'en' ? user.name : fixMojibakeText(user.nameFa || user.name);
     });
     document.querySelectorAll('[data-auth-email]').forEach(function(el) {
       el.textContent = user.email;
@@ -438,7 +462,7 @@
       var row = document.createElement('div');
       row.className = 'ticket-item';
       row.innerHTML = '<span class="t-dot urgent"></span><div><b>' + title +
-        '</b><span>' + (lang === 'en' ? 'Just now â€” Open' : 'Ù‡Ù…ÛŒÙ† Ø§Ù„Ø§Ù† â€” Ø¨Ø§Ø²') + '</span></div>';
+        '</b><span>' + (lang === 'en' ? 'Just now - Open' : fixMojibakeText('Ù‡Ù…ÛŒÙ† Ø§Ù„Ø§Ù† â€” Ø¨Ø§Ø²')) + '</span></div>';
       list.prepend(row);
       var cnt = document.querySelector('[data-ticket-count]');
       if (cnt) cnt.textContent = String(parseInt(cnt.textContent || 0) + 1);
@@ -452,7 +476,7 @@
     function updateBudget() {
       bOut.textContent = lang === 'en'
         ? 'About ' + bRange.value + 'M toman'
-        : 'Ø­Ø¯ÙˆØ¯ ' + new Intl.NumberFormat('fa-IR').format(bRange.value) + ' Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†';
+        : fixMojibakeText('Ø­Ø¯ÙˆØ¯ ') + new Intl.NumberFormat('fa-IR').format(bRange.value) + fixMojibakeText(' Ù…ÛŒÙ„ÛŒÙˆÙ† ØªÙˆÙ…Ø§Ù†');
     }
     bRange.addEventListener('input', updateBudget);
     updateBudget();
@@ -515,9 +539,9 @@
     poster.className = 'auto-page-poster reveal poster-' + pageName;
     poster.innerHTML =
       '<div class="poster-glass">' +
-      '<span data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</span>' +
-      '<b data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? item[0] : item[1]) + '</b>' +
-      '<p data-fa="' + item[1] + '" data-en="' + item[2] + '">' + (lang === 'en' ? item[2] : item[1]) + '</p>' +
+      '<span data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? fixMojibakeText(item[0]) : fixMojibakeText(item[1])) + '</span>' +
+      '<b data-fa="' + item[1] + '" data-en="' + item[0] + '">' + (lang === 'en' ? fixMojibakeText(item[0]) : fixMojibakeText(item[1])) + '</b>' +
+      '<p data-fa="' + item[1] + '" data-en="' + item[2] + '">' + (lang === 'en' ? fixMojibakeText(item[2]) : fixMojibakeText(item[1])) + '</p>' +
       '<div class="poster-chips">' + item[3].map(function(x){ return '<em>' + x + '</em>'; }).join('') + '</div>' +
       '</div>';
     hero.appendChild(poster);
@@ -783,19 +807,19 @@
       var value = blockValue(key);
       if (def.meta === 'title') {
         if (document.body.dataset.page !== 'home') return;
-        document.title = value[currentLang] || value.en || value.fa || document.title;
+        document.title = currentLang === 'en' ? fixMojibakeText(value.en || value.fa || document.title) : fixMojibakeText(value.fa || value.en || document.title);
         return;
       }
       if (def.meta === 'description') {
         if (document.body.dataset.page !== 'home') return;
         var desc = document.querySelector('meta[name="description"]');
-        if (desc) desc.setAttribute('content', value[currentLang] || value.en || value.fa || '');
+        if (desc) desc.setAttribute('content', currentLang === 'en' ? fixMojibakeText(value.en || value.fa || '') : fixMojibakeText(value.fa || value.en || ''));
         return;
       }
       document.querySelectorAll(def.selector).forEach(function(el) {
         el.dataset.fa = value.fa;
         el.dataset.en = value.en;
-        el.textContent = currentLang === 'en' ? value.en : value.fa;
+        el.textContent = currentLang === 'en' ? fixMojibakeText(value.en) : fixMojibakeText(value.fa);
       });
     });
   }
@@ -810,6 +834,8 @@
 
   applyThemeSettings();
   applySiteContent();
+  applyHumanCopy();
+  repairVisibleMojibakeText(document.body);
 
   function initSiteEditor() {
     var pagesList = document.querySelector('[data-wp-pages-list]');
@@ -859,7 +885,7 @@
         enInput.value = value.en;
         if (typeInput) typeInput.value = editableBlocks[key] && editableBlocks[key].meta ? 'SEO meta' : 'Text block';
         if (previewTitle) previewTitle.textContent = value.label;
-        if (previewBody) previewBody.textContent = lang === 'en' ? value.en : value.fa;
+        if (previewBody) previewBody.textContent = lang === 'en' ? fixMojibakeText(value.en) : fixMojibakeText(value.fa);
       }
 
       if (pageInput) pageInput.addEventListener('change', function() {
@@ -869,7 +895,7 @@
       keyInput.addEventListener('change', loadBlock);
       [faInput, enInput].forEach(function(input) {
         input.addEventListener('input', function() {
-          if (previewBody) previewBody.textContent = lang === 'en' ? enInput.value : faInput.value;
+          if (previewBody) previewBody.textContent = lang === 'en' ? fixMojibakeText(enInput.value) : fixMojibakeText(faInput.value);
         });
       });
 
@@ -884,8 +910,9 @@
         all[keyInput.value] = { fa: faInput.value.trim(), en: enInput.value.trim(), updatedAt: new Date().toISOString() };
         saveSiteContent(all);
         applySiteContent();
+        applyHumanCopy();
         if (status) {
-          status.textContent = lang === 'en' ? 'Saved and published in this browser.' : 'Ø°Ø®ÛŒØ±Ù‡ Ùˆ Ø¯Ø± Ù‡Ù…ÛŒÙ† Ù…Ø±ÙˆØ±Ú¯Ø± Ù…Ù†ØªØ´Ø± Ø´Ø¯.';
+          status.textContent = lang === 'en' ? 'Saved and published in this browser.' : fixMojibakeText('Ø°Ø®ÛŒØ±Ù‡ Ùˆ Ø¯Ø± Ù‡Ù…ÛŒÙ† Ù…Ø±ÙˆØ±Ú¯Ø± Ù…Ù†ØªØ´Ø± Ø´Ø¯.');
           setTimeout(function(){ status.textContent = ''; }, 2600);
         }
       });
@@ -896,6 +923,7 @@
         localStorage.removeItem(SITE_CONTENT_KEY);
         loadBlock();
         applySiteContent();
+        applyHumanCopy();
       });
 
       document.querySelectorAll('[data-edit-page]').forEach(function(link) {
@@ -1060,9 +1088,9 @@
     if (!el) return;
     var posts = getPosts();
     el.innerHTML = posts.map(function(p) {
-      var title = lang === 'en' ? (p.titleEn || p.titleFa || p.title) : (p.titleFa || p.titleEn || p.title);
-      var cat = lang === 'en' ? (p.categoryEn || p.categoryFa || p.category) : (p.categoryFa || p.categoryEn || p.category);
-      var ex = lang === 'en' ? (p.excerptEn || p.excerptFa || p.excerpt) : (p.excerptFa || p.excerptEn || p.excerpt);
+      var title = lang === 'en' ? fixMojibakeText(p.titleEn || p.titleFa || p.title) : fixMojibakeText(p.titleFa || p.titleEn || p.title);
+      var cat = lang === 'en' ? fixMojibakeText(p.categoryEn || p.categoryFa || p.category) : fixMojibakeText(p.categoryFa || p.categoryEn || p.category);
+      var ex = lang === 'en' ? fixMojibakeText(p.excerptEn || p.excerptFa || p.excerpt) : fixMojibakeText(p.excerptFa || p.excerptEn || p.excerpt);
       return '<div><b>' + title + '</b><span>' + cat + ' ? ' + (p.status || 'published') + '</span><small>' + ex + '</small></div>';
     }).join('');
   }
@@ -1116,13 +1144,13 @@
       if (!label) return;
       label.dataset.fa = item[1];
       label.dataset.en = item[2];
-      label.textContent = lang === 'en' ? item[2] : item[1];
+      label.textContent = lang === 'en' ? fixMojibakeText(item[2]) : fixMojibakeText(item[1]);
     });
     var save = postForm && postForm.querySelector('button[type=submit]');
     if (save) {
       save.dataset.fa = 'Ø°Ø®ÛŒØ±Ù‡ Ù†ÙˆØ´ØªÙ‡';
       save.dataset.en = 'Save post';
-      save.textContent = lang === 'en' ? 'Save post' : 'Ø°Ø®ÛŒØ±Ù‡ Ù†ÙˆØ´ØªÙ‡';
+      save.textContent = lang === 'en' ? 'Save post' : fixMojibakeText('Ø°Ø®ÛŒØ±Ù‡ Ù†ÙˆØ´ØªÙ‡');
     }
   }
   fixBlogEditorTexts();
@@ -1133,17 +1161,17 @@
     if (!grid && !featured) return;
     var posts = getPosts().filter(function(p){ return (p.status || 'published') === 'published'; });
     function card(p) {
-      var title = lang === 'en' ? (p.titleEn || p.titleFa) : (p.titleFa || p.titleEn);
-      var cat = lang === 'en' ? (p.categoryEn || p.categoryFa) : (p.categoryFa || p.categoryEn);
-      var ex = lang === 'en' ? (p.excerptEn || p.excerptFa) : (p.excerptFa || p.excerptEn);
-      var read = lang === 'en' ? (p.readEn || '6 min read') : (p.readFa || 'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡');
-      return '<a class="blog-card reveal" href="' + (p.url || '#') + '"><img class="blog-thumb-img" loading="lazy" decoding="async" src="' + (p.image || 'assets/blog-redesign.webp') + '" alt=""><div class="blog-body"><span class="blog-cat-inline">' + cat + '</span><div class="blog-meta"><span>' + read + '</span></div><h3>' + title + '</h3><p>' + ex + '</p><span class="blog-read">' + (lang === 'en' ? 'Read more' : 'Ø§Ø¯Ø§Ù…Ù‡ Ù…Ø·Ù„Ø¨') + '</span></div></a>';
+      var title = lang === 'en' ? fixMojibakeText(p.titleEn || p.titleFa) : fixMojibakeText(p.titleFa || p.titleEn);
+      var cat = lang === 'en' ? fixMojibakeText(p.categoryEn || p.categoryFa) : fixMojibakeText(p.categoryFa || p.categoryEn);
+      var ex = lang === 'en' ? fixMojibakeText(p.excerptEn || p.excerptFa) : fixMojibakeText(p.excerptFa || p.excerptEn);
+      var read = lang === 'en' ? fixMojibakeText(p.readEn || '6 min read') : fixMojibakeText(p.readFa || 'Û¶ Ø¯Ù‚ÛŒÙ‚Ù‡ Ù…Ø·Ø§Ù„Ø¹Ù‡');
+      return '<a class="blog-card reveal" href="' + (p.url || '#') + '"><img class="blog-thumb-img" loading="lazy" decoding="async" src="' + (p.image || 'assets/blog-redesign.webp') + '" alt=""><div class="blog-body"><span class="blog-cat-inline">' + cat + '</span><div class="blog-meta"><span>' + read + '</span></div><h3>' + title + '</h3><p>' + ex + '</p><span class="blog-read">' + (lang === 'en' ? 'Read more' : fixMojibakeText('Ø§Ø¯Ø§Ù…Ù‡ Ù…Ø·Ù„Ø¨')) + '</span></div></a>';
     }
     if (featured && posts[0]) {
       var p = posts[0];
-      var title = lang === 'en' ? p.titleEn : p.titleFa;
-      var ex = lang === 'en' ? p.excerptEn : p.excerptFa;
-      featured.innerHTML = '<img class="blog-featured-img" loading="eager" decoding="async" src="' + p.image + '" alt=""><div><p class="kicker">' + (lang === 'en' ? 'Featured article' : 'Ù…Ù‚Ø§Ù„Ù‡ ÙˆÛŒÚ˜Ù‡') + '</p><h2>' + title + '</h2><p style="margin-bottom:20px">' + ex + '</p><a class="btn btn-primary" href="' + p.url + '">' + (lang === 'en' ? 'Read article' : 'Ù…Ø·Ø§Ù„Ø¹Ù‡ Ù…Ù‚Ø§Ù„Ù‡') + '</a></div>';
+      var title = lang === 'en' ? fixMojibakeText(p.titleEn) : fixMojibakeText(p.titleFa);
+      var ex = lang === 'en' ? fixMojibakeText(p.excerptEn) : fixMojibakeText(p.excerptFa);
+      featured.innerHTML = '<img class="blog-featured-img" loading="eager" decoding="async" src="' + p.image + '" alt=""><div><p class="kicker">' + (lang === 'en' ? 'Featured article' : fixMojibakeText('Ù…Ù‚Ø§Ù„Ù‡ ÙˆÛŒÚ˜Ù‡')) + '</p><h2>' + title + '</h2><p style="margin-bottom:20px">' + ex + '</p><a class="btn btn-primary" href="' + p.url + '">' + (lang === 'en' ? 'Read article' : fixMojibakeText('Ù…Ø·Ø§Ù„Ø¹Ù‡ Ù…Ù‚Ø§Ù„Ù‡')) + '</a></div>';
     }
     if (grid) grid.innerHTML = posts.slice(1).map(card).join('');
   }
@@ -1154,19 +1182,19 @@
     if (!shell) return;
     var url = document.body.getAttribute('data-article-url') || location.pathname.split('/').pop();
     var post = getPosts().filter(function(p){ return p.url === url; })[0] || getPosts()[0];
-    var title = lang === 'en' ? (post.titleEn || post.titleFa) : (post.titleFa || post.titleEn);
-    var ex = lang === 'en' ? (post.excerptEn || post.excerptFa) : (post.excerptFa || post.excerptEn);
-    var body = lang === 'en' ? (post.bodyEn || post.excerptEn || post.excerptFa) : (post.bodyFa || post.excerptFa || post.excerptEn);
+    var title = lang === 'en' ? fixMojibakeText(post.titleEn || post.titleFa) : fixMojibakeText(post.titleFa || post.titleEn);
+    var ex = lang === 'en' ? fixMojibakeText(post.excerptEn || post.excerptFa) : fixMojibakeText(post.excerptFa || post.excerptEn);
+    var body = lang === 'en' ? fixMojibakeText(post.bodyEn || post.excerptEn || post.excerptFa) : fixMojibakeText(post.bodyFa || post.excerptFa || post.excerptEn);
     shell.innerHTML =
-      '<p class="kicker">' + (lang === 'en' ? 'Growth journal' : 'Ù…Ø¬Ù„Ù‡ Ø±Ø´Ø¯') + '</p>' +
+      '<p class="kicker">' + (lang === 'en' ? 'Growth journal' : fixMojibakeText('Ù…Ø¬Ù„Ù‡ Ø±Ø´Ø¯')) + '</p>' +
       '<h1>' + title + '</h1>' +
       '<p class="lead">' + ex + '</p>' +
       '<img class="article-cover" src="' + (post.image || 'assets/blog-redesign.webp') + '" loading="eager" decoding="async" alt="">' +
       '<article class="article-body"><p>' + body + '</p>' +
-      '<h2>' + (lang === 'en' ? 'Practical takeaways' : 'Ù†Ú©ØªÙ‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬Ø±Ø§ÛŒÛŒ') + '</h2>' +
-      '<ul class="article-list"><li>' + (lang === 'en' ? 'Define the page goal before design starts.' : 'Ù‡Ø¯Ù ØµÙØ­Ù‡ Ø±Ø§ Ù‚Ø¨Ù„ Ø§Ø² Ø·Ø±Ø§Ø­ÛŒ Ù…Ø´Ø®Øµ Ú©Ù†ÛŒØ¯.') + '</li><li>' + (lang === 'en' ? 'Copy, visuals and calls to action should work together.' : 'Ù…Ø­ØªÙˆØ§ØŒ ØªØµÙˆÛŒØ± Ùˆ Ù…Ø³ÛŒØ± Ø§Ù‚Ø¯Ø§Ù… Ø¨Ø§ÛŒØ¯ Ù‡Ù…Ø§Ù‡Ù†Ú¯ Ø¨Ø§Ø´Ù†Ø¯.') + '</li><li>' + (lang === 'en' ? 'Prepare the portal and site structure for future growth.' : 'Ù¾Ù†Ù„ Ùˆ Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§ÛŒØª Ø±Ø§ Ø¨Ø±Ø§ÛŒ Ø±Ø´Ø¯ Ø¢ÛŒÙ†Ø¯Ù‡ Ø¢Ù…Ø§Ø¯Ù‡ Ú©Ù†ÛŒØ¯.') + '</li></ul>' +
-      '<p>' + (lang === 'en' ? 'If you want this path designed for your website, submit your request from the start project page.' : 'Ø§Ú¯Ø± Ù…ÛŒâ€ŒØ®ÙˆØ§Ù‡ÛŒØ¯ Ù‡Ù…ÛŒÙ† Ù…Ø³ÛŒØ± Ø¨Ø±Ø§ÛŒ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ø·Ø±Ø§Ø­ÛŒ Ø´ÙˆØ¯ØŒ Ø§Ø² ØµÙØ­Ù‡ Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡ Ø¯Ø±Ø®ÙˆØ§Ø³ØªØªØ§Ù† Ø±Ø§ Ø«Ø¨Øª Ú©Ù†ÛŒØ¯.') + '</p>' +
-      '<a class="btn btn-primary" href="order.html">' + (lang === 'en' ? 'Start project' : 'Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡') + '</a></article>';
+      '<h2>' + (lang === 'en' ? 'Practical takeaways' : fixMojibakeText('Ù†Ú©ØªÙ‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬Ø±Ø§ÛŒÛŒ')) + '</h2>' +
+      '<ul class="article-list"><li>' + (lang === 'en' ? 'Define the page goal before design starts.' : fixMojibakeText('Ù‡Ø¯Ù ØµÙØ­Ù‡ Ø±Ø§ Ù‚Ø¨Ù„ Ø§Ø² Ø·Ø±Ø§Ø­ÛŒ Ù…Ø´Ø®Øµ Ú©Ù†ÛŒØ¯.')) + '</li><li>' + (lang === 'en' ? 'Copy, visuals and calls to action should work together.' : fixMojibakeText('Ù…Ø­ØªÙˆØ§ØŒ ØªØµÙˆÛŒØ± Ùˆ Ù…Ø³ÛŒØ± Ø§Ù‚Ø¯Ø§Ù… Ø¨Ø§ÛŒØ¯ Ù‡Ù…Ø§Ù‡Ù†Ú¯ Ø¨Ø§Ø´Ù†Ø¯.')) + '</li><li>' + (lang === 'en' ? 'Prepare the portal and site structure for future growth.' : fixMojibakeText('Ù¾Ù†Ù„ Ùˆ Ø³Ø§Ø®ØªØ§Ø± Ø³Ø§ÛŒØª Ø±Ø§ Ø¨Ø±Ø§ÛŒ Ø±Ø´Ø¯ Ø¢ÛŒÙ†Ø¯Ù‡ Ø¢Ù…Ø§Ø¯Ù‡ Ú©Ù†ÛŒØ¯.')) + '</li></ul>' +
+      '<p>' + (lang === 'en' ? 'If you want this path designed for your website, submit your request from the start project page.' : fixMojibakeText('Ø§Ú¯Ø± Ù…ÛŒâ€ŒØ®ÙˆØ§Ù‡ÛŒØ¯ Ù‡Ù…ÛŒÙ† Ù…Ø³ÛŒØ± Ø¨Ø±Ø§ÛŒ Ø³Ø§ÛŒØª Ø´Ù…Ø§ Ø·Ø±Ø§Ø­ÛŒ Ø´ÙˆØ¯ØŒ Ø§Ø² ØµÙØ­Ù‡ Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡ Ø¯Ø±Ø®ÙˆØ§Ø³ØªØªØ§Ù† Ø±Ø§ Ø«Ø¨Øª Ú©Ù†ÛŒØ¯.')) + '</p>' +
+      '<a class="btn btn-primary" href="order.html">' + (lang === 'en' ? 'Start project' : fixMojibakeText('Ø´Ø±ÙˆØ¹ Ù¾Ø±ÙˆÚ˜Ù‡')) + '</a></article>';
   }
   renderArticlePage();
 
@@ -1972,7 +2000,7 @@
     var cue0 = document.querySelector('.hero-cue[data-cue="0"] h1');
     if (!cue0) return;
     if (document.documentElement.lang !== 'en') {
-      cue0.textContent = cue0.dataset.fa || cue0.textContent;
+      cue0.textContent = fixMojibakeText(cue0.dataset.fa || cue0.textContent);
       return;
     }
     var fullText = cue0.dataset[document.documentElement.lang === 'en' ? 'en' : 'fa'] || cue0.textContent;

@@ -949,3 +949,271 @@
     top: auto;
   }
 }
+
+/* Stronger "real website" treatment for demo interiors */
+.suite-demo .demo-frame-wrap {
+  min-height: calc(100vh - 54px);
+  border-radius: 0 0 28px 28px;
+  overflow: clip;
+}
+
+.suite-demo .suite-nav {
+  min-height: 74px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72)),
+    color-mix(in srgb, var(--panel), transparent 6%);
+}
+
+.academy-suite .suite-nav,
+.shop-suite .suite-nav {
+  background:
+    linear-gradient(180deg, rgba(8,12,28,.82), rgba(8,12,28,.54)),
+    color-mix(in srgb, var(--panel), transparent 8%);
+  color: #fff;
+}
+
+.suite-nav strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -.02em;
+}
+
+.suite-nav strong::before {
+  content: "";
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--button);
+  box-shadow: 0 12px 30px var(--glow);
+}
+
+.suite-demo main {
+  padding-top: clamp(18px, 3vw, 34px);
+}
+
+.suite-demo main > section {
+  animation: demoSectionRise .7s ease both;
+}
+
+.suite-demo main > section:nth-child(2) { animation-delay: .05s; }
+.suite-demo main > section:nth-child(3) { animation-delay: .1s; }
+.suite-demo main > section:nth-child(4) { animation-delay: .15s; }
+
+.salon-finder,
+.academy-landing,
+.clinic-search-hero,
+.shop-landing {
+  border: 1px solid color-mix(in srgb, var(--line), transparent 10%);
+  box-shadow: 0 36px 110px color-mix(in srgb, var(--shadow), rgba(0,0,0,.08) 32%);
+}
+
+.salon-finder::after,
+.academy-landing::after,
+.clinic-search-hero::after,
+.shop-landing::after {
+  content: "";
+  position: absolute;
+  inset: auto 28px 24px auto;
+  width: min(420px, 42%);
+  height: 92px;
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.28));
+  border: 1px solid rgba(255,255,255,.42);
+  box-shadow: 0 24px 60px rgba(0,0,0,.12);
+  backdrop-filter: blur(18px);
+  pointer-events: none;
+}
+
+.academy-landing::after,
+.shop-landing::after {
+  background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+  border-color: rgba(255,255,255,.22);
+}
+
+.suite-demo .search-panel,
+.suite-demo .order-track-mini,
+.suite-demo .timeline-card,
+.suite-demo .clinic-filter-card {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.72), 0 22px 70px rgba(0,0,0,.1);
+}
+
+.venue-card,
+.doctor-card,
+.fashion-card,
+.path-card,
+.teachers-strip article,
+.clinic-feature-list article,
+.shop-service-row article,
+.article-row article,
+.pricing-row article {
+  position: relative;
+  overflow: hidden;
+  transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+}
+
+.venue-card::after,
+.doctor-card::after,
+.fashion-card::after,
+.path-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 70%) var(--my, 15%), rgba(255,255,255,.5), transparent 28%);
+  opacity: 0;
+  transition: opacity .28s ease;
+  pointer-events: none;
+}
+
+.venue-card:hover,
+.doctor-card:hover,
+.fashion-card:hover,
+.path-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 30px 84px color-mix(in srgb, var(--shadow), rgba(0,0,0,.14) 40%);
+  border-color: color-mix(in srgb, var(--accent), transparent 52%);
+}
+
+.venue-card:hover::after,
+.doctor-card:hover::after,
+.fashion-card:hover::after,
+.path-card:hover::after {
+  opacity: 1;
+}
+
+.venue-art,
+.cloth-art {
+  isolation: isolate;
+}
+
+.venue-art::before,
+.cloth-art::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,.45);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+}
+
+.doctor-card b::before,
+.fashion-card h2::before,
+.path-card h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent), transparent 82%);
+}
+
+.demo-real-depth {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+  gap: 22px;
+  align-items: stretch;
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--accent), transparent 78%), transparent 34%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel), white 24%), color-mix(in srgb, var(--soft), white 18%));
+}
+
+.real-depth-copy {
+  display: grid;
+  align-content: center;
+}
+
+.real-depth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.real-depth-actions a {
+  border-radius: 999px;
+  padding: 12px 18px;
+  font-weight: 900;
+  background: var(--button);
+  color: var(--button-ink);
+  box-shadow: 0 16px 40px var(--glow);
+}
+
+.real-depth-actions a + a {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.real-depth-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.real-depth-board article {
+  min-height: 140px;
+  display: grid;
+  align-content: end;
+  padding: 20px;
+  border-radius: 28px;
+  color: white;
+  background:
+    linear-gradient(180deg, transparent, rgba(0,0,0,.58)),
+    radial-gradient(circle at 70% 20%, color-mix(in srgb, var(--accent), white 18%), transparent 36%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent), #111 42%), #111827);
+  box-shadow: 0 22px 60px color-mix(in srgb, var(--shadow), rgba(0,0,0,.22) 52%);
+}
+
+.real-depth-board b {
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1;
+}
+
+.real-depth-board span {
+  color: rgba(255,255,255,.72);
+  margin-top: 8px;
+}
+
+.demo-real-footer {
+  width: min(1320px, calc(100% - 32px));
+  margin: 24px auto 0;
+  padding: 22px clamp(18px, 3vw, 30px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  border-radius: 28px 28px 0 0;
+  color: white;
+  background: linear-gradient(135deg, #111827, color-mix(in srgb, var(--accent), #111827 62%));
+}
+
+.demo-real-footer nav {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  opacity: .86;
+}
+
+@keyframes demoSectionRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .salon-finder::after,
+  .academy-landing::after,
+  .clinic-search-hero::after,
+  .shop-landing::after {
+    display: none;
+  }
+
+  .demo-real-depth,
+  .real-depth-board {
+    grid-template-columns: 1fr;
+  }
+}
