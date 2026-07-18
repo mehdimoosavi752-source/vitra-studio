@@ -27,6 +27,7 @@ function applyLang(lang) {
   const toggle = $("[data-lang-toggle]");
   if (toggle) toggle.textContent = lang === "fa" ? "EN" : "FA";
   repairVisibleMojibakeText(document.body);
+  normalizeDemoChrome(lang);
 }
 
 function repairVisibleMojibakeText(root = document.body) {
@@ -41,6 +42,78 @@ function repairVisibleMojibakeText(root = document.body) {
   });
   let node;
   while ((node = walker.nextNode())) node.nodeValue = fixMojibakeText(node.nodeValue);
+}
+
+function demoKind() {
+  if (document.body.classList.contains("salon-suite")) return "salon";
+  if (document.body.classList.contains("academy-suite")) return "academy";
+  if (document.body.classList.contains("clinic-suite")) return "clinic";
+  if (document.body.classList.contains("shop-suite")) return "shop";
+  return "demo";
+}
+
+function normalizeDemoChrome(lang = activeLang) {
+  const kind = demoKind();
+  const prices = {
+    salon: ["از ۲۸ میلیون", "From 28M"],
+    academy: ["از ۲۲ میلیون", "From 22M"],
+    clinic: ["از ۲۴ میلیون", "From 24M"],
+    shop: ["از ۳۵ میلیون", "From 35M"],
+    demo: ["قیمت اختصاصی", "Custom quote"]
+  };
+  const price = $(".demo-price");
+  if (price) {
+    price.dataset.fa = prices[kind][0];
+    price.dataset.en = prices[kind][1];
+    price.textContent = lang === "fa" ? prices[kind][0] : prices[kind][1];
+  }
+
+  const vpLabels = {
+    mobile: ["موبایل", "Mobile"],
+    tablet: ["تبلت", "Tablet"],
+    desktop: ["دسکتاپ", "Desktop"]
+  };
+  $$("[data-vp]").forEach((button) => {
+    const item = vpLabels[button.dataset.vp] || ["نما", "View"];
+    button.dataset.fa = item[0];
+    button.dataset.en = item[1];
+    button.title = item[1];
+    button.textContent = lang === "fa" ? item[0] : item[1];
+  });
+
+  const salonCity = $(".salon-suite .search-panel label:nth-child(2) input");
+  if (salonCity) salonCity.value = lang === "fa" ? "تهران" : "Tehran";
+
+  $$(".clinic-suite [data-city-filter] option").forEach((option) => {
+    const map = {
+      all: ["همه شهرها", "All cities"],
+      tehran: ["تهران", "Tehran"],
+      yazd: ["یزد", "Yazd"],
+      isfahan: ["اصفهان", "Isfahan"]
+    };
+    const item = map[option.value];
+    if (item) option.textContent = lang === "fa" ? item[0] : item[1];
+  });
+
+  $$(".clinic-suite [data-sort-doctors] option").forEach((option) => {
+    const map = {
+      soon: ["اولین نوبت", "Earliest slot"],
+      rating: ["بیشترین امتیاز", "Highest rating"],
+      recommend: ["بیشترین توصیه", "Most recommended"]
+    };
+    const item = map[option.value];
+    if (item) option.textContent = lang === "fa" ? item[0] : item[1];
+  });
+
+  $$(".shop-suite [data-shop-sort] option").forEach((option) => {
+    const map = {
+      latest: ["جدیدترین", "Latest"],
+      low: ["ارزان ترین", "Lowest price"],
+      high: ["گران ترین", "Highest price"]
+    };
+    const item = map[option.value];
+    if (item) option.textContent = lang === "fa" ? item[0] : item[1];
+  });
 }
 
 function openModal(id, title) {
