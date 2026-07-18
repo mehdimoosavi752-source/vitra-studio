@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="WhatsApp contact icon">
+  <defs>
+    <linearGradient id="g" x1="38" y1="222" x2="214" y2="34" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#18b75e"/>
+      <stop offset="0.48" stop-color="#23d879"/>
+      <stop offset="1" stop-color="#87f7b4"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#0b4f2c" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <circle cx="128" cy="128" r="104" fill="url(#g)" filter="url(#shadow)"/>
+  <path d="M74.5 199.2 83 167.7a76.1 76.1 0 1 1 28.4 27.1l-36.9 4.4Z" fill="#fff" opacity=".96"/>
+  <path d="M95.6 157.2a58.1 58.1 0 1 1 21.4 20.3l-22.6 2.7 5.2-19.4-4-3.6Z" fill="#16bd63"/>
+  <path d="M160.2 142.1c-2.4-1.2-14.1-7-16.3-7.8-2.2-.8-3.8-1.2-5.4 1.2-1.6 2.4-6.2 7.8-7.6 9.4-1.4 1.6-2.8 1.8-5.2.6-2.4-1.2-10.1-3.7-19.2-11.8-7.1-6.3-11.9-14.1-13.3-16.5-1.4-2.4-.1-3.7 1.1-4.9 1.1-1.1 2.4-2.8 3.6-4.2 1.2-1.4 1.6-2.4 2.4-4 .8-1.6.4-3-.2-4.2-.6-1.2-5.4-13-7.4-17.8-1.9-4.6-3.9-4-5.4-4.1h-4.6c-1.6 0-4.2.6-6.4 3-2.2 2.4-8.4 8.2-8.4 20s8.6 23.2 9.8 24.8c1.2 1.6 16.9 25.8 41 36.2 5.7 2.5 10.2 4 13.7 5.1 5.8 1.8 11 1.6 15.1 1 4.6-.7 14.1-5.8 16.1-11.4 2-5.6 2-10.4 1.4-11.4-.6-1-2.2-1.6-4.6-2.8Z" fill="#fff"/>
+</svg>

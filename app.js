@@ -253,10 +253,10 @@
   /* section */
   function syncSocials() {
     var defaults = {
-      instagram: 'https://instagram.com/',
-      telegram:  'https://t.me/',
-      whatsapp:  'https://wa.me/',
-      linkedin:  'https://linkedin.com/',
+      instagram: 'https://instagram.com/vitr_astudio',
+      telegram:  'https://t.me/+yDCkJCSlJJwzNjE0',
+      whatsapp:  'https://wa.me/447412970774',
+      linkedin:  'https://www.linkedin.com/company/136066760/',
       email:     'mailto:hello@studio.ir'
     };
     document.querySelectorAll('[data-social-link]').forEach(function (a) {

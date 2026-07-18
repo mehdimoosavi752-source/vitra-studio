@@ -2106,3 +2106,36 @@ img{height:auto}
 .demo-card:hover{transform:translateY(-9px) rotateX(1deg)!important;box-shadow:0 34px 90px color-mix(in srgb,var(--demo-accent) 22%,rgba(27,67,50,.12))!important}
 .demo-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 18%,color-mix(in srgb,var(--demo-accent) 20%,transparent),transparent 32%);opacity:0;transition:.35s;pointer-events:none}
 .demo-card:hover::before{opacity:1}
+
+/* Live safety patch: never leave animated sections invisible if JS, lazy media or mobile browser timing fails */
+.hero-sticky{
+  background:
+    linear-gradient(160deg,rgba(0,0,0,.2),rgba(0,0,0,.62)),
+    url("assets/vitra-hero.webp") center/cover no-repeat;
+}
+.hero-sticky video{
+  background:url("assets/vitra-hero.webp") center/cover no-repeat;
+}
+.reveal,
+.reveal-left,
+.reveal-right,
+.reveal-scale{
+  opacity:1!important;
+  visibility:visible!important;
+}
+.reveal:not(.in):not(.show){
+  filter:blur(3px);
+}
+.reveal-left:not(.in),
+.reveal-right:not(.in),
+.reveal-scale:not(.in){
+  transform:none!important;
+}
+.panel-vis img,
+.demo-thumb img,
+.ba-wrap img,
+.blog-thumb-img,
+.blog-featured-img{
+  opacity:1!important;
+  visibility:visible!important;
+}

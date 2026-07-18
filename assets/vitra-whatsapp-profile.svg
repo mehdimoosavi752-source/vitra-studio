@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Vitra Studio profile logo">
+  <defs>
+    <linearGradient id="bg" x1="120" y1="120" x2="904" y2="904" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#07110d"/>
+      <stop offset=".48" stop-color="#10231a"/>
+      <stop offset="1" stop-color="#030504"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="50%" cy="36%" r="62%">
+      <stop offset="0" stop-color="#3affad" stop-opacity=".28"/>
+      <stop offset=".52" stop-color="#ff934d" stop-opacity=".14"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="copper" x1="304" y1="220" x2="704" y2="812" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe2bd"/>
+      <stop offset=".42" stop-color="#ff984f"/>
+      <stop offset="1" stop-color="#b85a2b"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="736" y1="240" x2="440" y2="808" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#cffff8"/>
+      <stop offset=".46" stop-color="#65f4e5"/>
+      <stop offset="1" stop-color="#16857f"/>
+    </linearGradient>
+    <filter id="logoGlow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="1 0 0 0 1 0 .55 0 0 .34 0 0 .24 0 0.55 0 0 0 1 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="30" stdDeviation="28" flood-color="#000000" flood-opacity=".38"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="248" fill="url(#bg)"/>
+  <circle cx="512" cy="468" r="420" fill="url(#halo)"/>
+  <path d="M160 792C286 742 392 738 512 792C632 846 750 842 864 782" fill="none" stroke="#ffffff" stroke-opacity=".055" stroke-width="42" stroke-linecap="round"/>
+  <rect x="126" y="126" width="772" height="772" rx="214" fill="none" stroke="#ff984f" stroke-opacity=".24" stroke-width="10"/>
+  <rect x="150" y="150" width="724" height="724" rx="194" fill="none" stroke="#64f4e5" stroke-opacity=".10" stroke-width="4"/>
+  <g filter="url(#softShadow)">
+    <path d="M248 256h150l116 342 118-342h148L610 768H432L248 256Z" fill="url(#copper)" filter="url(#logoGlow)"/>
+    <path d="M628 256h152L610 768H474l154-512Z" fill="url(#cyan)" opacity=".98"/>
+    <path d="M368 256h82l82 252 96-252h70L554 664h-78L368 256Z" fill="#fff7e8" opacity=".16"/>
+  </g>
+  <circle cx="752" cy="254" r="28" fill="#64f4e5" opacity=".98"/>
+  <circle cx="260" cy="758" r="23" fill="#ff984f" opacity=".92"/>
+  <circle cx="810" cy="748" r="10" fill="#ffffff" opacity=".28"/>
+</svg>
