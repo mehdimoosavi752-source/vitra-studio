@@ -1,0 +1,27 @@
+Vitra Studio — SEO setup after deployment
+
+1) Google Search Console
+- Open https://search.google.com/search-console
+- Add property: https://vitrastudio.co.uk
+- Choose Domain or URL prefix verification.
+- If using DNS verification, add the TXT record inside Netlify DNS.
+- Submit sitemap: https://vitrastudio.co.uk/sitemap.xml
+
+2) Google Analytics 4
+- Open https://analytics.google.com
+- Create a GA4 property for Vitra Studio.
+- Copy the Measurement ID, for example G-XXXXXXXXXX.
+- Add it to the site head when ready.
+
+3) First SEO pages included
+- /landing-web-design-uk.html
+- /landing-clinic-web-design.html
+- /landing-academy-web-design.html
+- /landing-ecommerce-web-design.html
+- /landing-salon-web-design.html
+- /landing-admin-panel.html
+
+4) After publishing
+- Test pages in Google Rich Results Test.
+- Test speed in PageSpeed Insights.
+- Request indexing for homepage and service landing pages.
