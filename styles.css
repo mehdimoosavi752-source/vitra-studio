@@ -2039,6 +2039,22 @@ img{height:auto}
 .auth-form input,.auth-form select{width:100%;min-height:52px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.1);color:#fff;padding:0 15px;outline:0;transition:border-color .22s,box-shadow .22s,transform .22s}
 .auth-form input:focus,.auth-form select:focus{border-color:rgba(82,183,136,.75);box-shadow:0 0 0 5px rgba(82,183,136,.14);transform:translateY(-1px)}
 .auth-form option{color:#111}
+.auth-page .auth-form input,
+.auth-page .auth-form select{
+  background:rgba(255,255,255,.96)!important;
+  color:#102018!important;
+  caret-color:#2d6a4f;
+  border-color:rgba(82,183,136,.34)!important;
+}
+.auth-page .auth-form input::placeholder{
+  color:rgba(16,32,24,.52)!important;
+}
+.auth-page .auth-form input:-webkit-autofill,
+.auth-page .auth-form input:-webkit-autofill:hover,
+.auth-page .auth-form input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#102018!important;
+  box-shadow:0 0 0 1000px rgba(255,255,255,.96) inset!important;
+}
 .auth-submit{width:100%;justify-content:center;min-height:52px;margin-top:4px}
 .login-error{margin:0;padding:10px 12px;border-radius:14px;background:rgba(239,68,68,.14);border:1px solid rgba(239,68,68,.26);color:#fecaca;font-size:13px}
 @keyframes authFloat{from{transform:translate3d(0,0,0) scale(.95)}to{transform:translate3d(30px,-24px,0) scale(1.05)}}
@@ -2046,6 +2062,15 @@ img{height:auto}
 
 .portal-body .p-card,.portal-body .manager-card{position:relative;overflow:hidden}
 .portal-body .p-card::before,.portal-body .manager-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,85%) var(--my,0%),rgba(82,183,136,.13),transparent 30%);opacity:.75;pointer-events:none}
+.portal-body .p-card{overflow:visible!important}
+.portal-body .portal-grid,.portal-body .manager-grid{align-items:start}
+.portal-body .p-card > *{position:relative;z-index:1}
+.message-editor-form{margin-top:16px}
+.message-preview-list{display:grid;gap:12px}
+.message-preview-list article{padding:16px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(135deg,#fff,var(--soft))}
+.message-preview-list span{display:block;font-size:11px;font-weight:900;color:var(--accent);margin-bottom:8px}
+.message-preview-list p{font-size:13px;line-height:1.8;margin:0;color:var(--muted)}
+.client-welcome-message{margin-top:14px;padding:14px 16px;border-radius:18px;background:rgba(45,106,79,.08);border:1px solid rgba(45,106,79,.14);color:var(--accent)!important;font-weight:800}
 .admin-user-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:12px;align-items:end;margin:18px 0 20px;padding:16px;border-radius:24px;border:1px solid rgba(45,123,92,.12);background:radial-gradient(circle at 8% 0%,rgba(82,183,136,.18),transparent 32%),linear-gradient(135deg,rgba(255,255,255,.94),rgba(246,250,247,.8));box-shadow:0 22px 60px rgba(22,75,55,.1)}
 .admin-user-form .field{margin:0;display:grid;gap:7px}
 .admin-user-form .field label{font-size:12px;color:var(--muted);font-weight:900}
@@ -2071,6 +2096,17 @@ img{height:auto}
   .auth-stage{padding-top:96px}
   .admin-user-form{grid-template-columns:1fr 1fr}
   .campaign-grid,.health-grid,.role-grid{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:1320px){
+  body[data-page="admin"] .portal-grid,
+  body[data-page="admin"] .manager-grid,
+  body[data-page="admin"] .messages-grid{
+    grid-template-columns:1fr!important;
+  }
+  body[data-page="admin"] .p-form{
+    grid-template-columns:1fr!important;
+  }
 }
 @media(max-width:560px){
   .admin-user-form{grid-template-columns:1fr}

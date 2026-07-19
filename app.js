@@ -266,6 +266,63 @@
   }
   syncSocials();
 
+  /* section */
+  var MESSAGE_KEY = 's-message-templates';
+  var defaultMessages = {
+    welcomeFa: 'خوش آمدید. اینجا می‌توانید وضعیت پروژه، فایل‌ها، تیکت‌ها، پرداخت‌ها و درخواست‌های تغییر سایت را پیگیری کنید.',
+    welcomeEn: 'Welcome. Here you can track your project status, files, tickets, payments and website change requests.',
+    requestFa: 'درخواست شما ثبت شد. تیم ویترا بعد از بررسی جزئیات، مرحله بعدی و زمان‌بندی را اعلام می‌کند.',
+    requestEn: 'Your request has been received. Vitra will review the details and share the next step and timeline.',
+    paymentFa: 'یادآوری پرداخت: برای ادامه مرحله بعد پروژه، لطفاً پرداخت مرحله‌ای را طبق توافق انجام دهید.',
+    paymentEn: 'Payment reminder: to continue the next project stage, please complete the agreed milestone payment.',
+    deliveryFa: 'نسخه آماده تحویل است. لطفاً فایل‌ها و صفحات را بررسی کنید و اصلاحیه‌ها را در پنل ثبت کنید.',
+    deliveryEn: 'The delivery version is ready. Please review files and pages, then submit revisions inside the portal.'
+  };
+
+  function getMessageTemplates() {
+    try {
+      return Object.assign({}, defaultMessages, JSON.parse(localStorage.getItem(MESSAGE_KEY) || '{}'));
+    } catch(e) {
+      return Object.assign({}, defaultMessages);
+    }
+  }
+
+  function saveMessageTemplates(data) {
+    localStorage.setItem(MESSAGE_KEY, JSON.stringify(Object.assign({}, getMessageTemplates(), data)));
+  }
+
+  function renderMessageTemplates() {
+    var messages = getMessageTemplates();
+    document.querySelectorAll('[data-message-field]').forEach(function(field) {
+      var key = field.dataset.messageField;
+      if (messages[key] !== undefined) field.value = messages[key];
+    });
+    document.querySelectorAll('[data-message-preview]').forEach(function(el) {
+      var key = el.dataset.messagePreview;
+      el.textContent = messages[key] || '';
+    });
+    document.querySelectorAll('[data-client-message="welcome"]').forEach(function(el) {
+      el.textContent = lang === 'en' ? messages.welcomeEn : fixMojibakeText(messages.welcomeFa);
+    });
+  }
+
+  var messageForm = document.querySelector('[data-message-form]');
+  if (messageForm) {
+    messageForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var data = {};
+      messageForm.querySelectorAll('[data-message-field]').forEach(function(field) {
+        data[field.dataset.messageField] = field.value.trim();
+      });
+      saveMessageTemplates(data);
+      renderMessageTemplates();
+      var status = document.querySelector('[data-message-status]');
+      if (status) status.textContent = lang === 'en' ? 'Messages saved.' : 'پیام‌ها ذخیره شدند.';
+      if (typeof logActivity === 'function') logActivity(lang === 'en' ? 'Message templates updated' : 'پیام‌های آماده ویرایش شدند');
+    });
+  }
+  renderMessageTemplates();
+
   document.querySelectorAll('[data-save-socials]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('[data-social-input]').forEach(function (inp) {

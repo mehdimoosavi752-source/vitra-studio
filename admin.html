@@ -10,7 +10,7 @@
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()"/>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
-  <link rel="stylesheet" href="styles.css?v=20260719-livefix"/>
+  <link rel="stylesheet" href="styles.css?v=20260719-loginfix"/>
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="Vitra Studio"/>
   <meta property="og:image" content="assets/og-image.jpg"/>
@@ -55,6 +55,7 @@
     <a href="#clients"><span class="sb-icon">👤</span><span data-fa="مشتریان" data-en="Clients">مشتریان</span></a>
     <a href="#users"><span class="sb-icon">◉</span><span data-fa="کاربران" data-en="Users">کاربران</span></a>
     <a href="#automation"><span class="sb-icon">⚡</span><span data-fa="اتوماسیون" data-en="Automation">اتوماسیون</span></a>
+    <a href="#messages"><span class="sb-icon">✉</span><span data-fa="پیام‌ها" data-en="Messages">پیام‌ها</span></a>
     <a href="#campaigns"><span class="sb-icon">◆</span><span data-fa="کمپین‌ها" data-en="Campaigns">کمپین‌ها</span></a>
     <a href="#security"><span class="sb-icon">◎</span><span data-fa="امنیت" data-en="Security">امنیت</span></a>
     <a href="#health"><span class="sb-icon">✓</span><span data-fa="سلامت سایت" data-en="Site Health">سلامت سایت</span></a>
@@ -595,6 +596,67 @@
     </div>
   </section>
 
+  <!-- MESSAGES -->
+  <section id="messages" style="margin-top:32px">
+    <div class="portal-grid messages-grid">
+      <div class="p-card">
+        <div class="wp-card-head">
+          <div>
+            <h2 data-fa="پیام‌ها و متن‌های آماده" data-en="Messages and Templates">پیام‌ها و متن‌های آماده</h2>
+            <p data-fa="متن‌هایی مثل خوش‌آمدگویی، ثبت درخواست، یادآوری پرداخت و تحویل پروژه را از اینجا تغییر دهید." data-en="Edit messages such as welcome, request confirmation, payment reminder and delivery note from here.">متن‌هایی مثل خوش‌آمدگویی، ثبت درخواست، یادآوری پرداخت و تحویل پروژه را از اینجا تغییر دهید.</p>
+          </div>
+        </div>
+        <form class="p-form message-editor-form" data-message-form>
+          <div class="pf-full">
+            <label data-fa="خوش‌آمدگویی فارسی" data-en="Persian welcome message">خوش‌آمدگویی فارسی</label>
+            <textarea name="welcomeFa" data-message-field="welcomeFa"></textarea>
+          </div>
+          <div class="pf-full">
+            <label data-fa="Welcome message English" data-en="English welcome message">Welcome message English</label>
+            <textarea name="welcomeEn" data-message-field="welcomeEn"></textarea>
+          </div>
+          <div class="pf-full">
+            <label data-fa="پیام ثبت درخواست" data-en="Request confirmation">پیام ثبت درخواست</label>
+            <textarea name="requestFa" data-message-field="requestFa"></textarea>
+          </div>
+          <div class="pf-full">
+            <label data-fa="پیام یادآوری پرداخت" data-en="Payment reminder">پیام یادآوری پرداخت</label>
+            <textarea name="paymentFa" data-message-field="paymentFa"></textarea>
+          </div>
+          <div class="pf-full">
+            <label data-fa="پیام تحویل پروژه" data-en="Delivery message">پیام تحویل پروژه</label>
+            <textarea name="deliveryFa" data-message-field="deliveryFa"></textarea>
+          </div>
+          <div>
+            <button class="btn btn-primary btn-sm" type="submit" data-fa="ذخیره پیام‌ها" data-en="Save messages">ذخیره پیام‌ها</button>
+          </div>
+          <p class="wp-save-note pf-full" data-message-status></p>
+        </form>
+      </div>
+      <div class="p-card message-preview-card">
+        <h2 data-fa="پیش‌نمایش پیام‌ها" data-en="Message Preview">پیش‌نمایش پیام‌ها</h2>
+        <div class="message-preview-list">
+          <article>
+            <span data-fa="خوش‌آمدگویی پنل مشتری" data-en="Client portal welcome">خوش‌آمدگویی پنل مشتری</span>
+            <p data-message-preview="welcomeFa"></p>
+          </article>
+          <article>
+            <span data-fa="ثبت درخواست" data-en="Request">ثبت درخواست</span>
+            <p data-message-preview="requestFa"></p>
+          </article>
+          <article>
+            <span data-fa="یادآوری پرداخت" data-en="Payment">یادآوری پرداخت</span>
+            <p data-message-preview="paymentFa"></p>
+          </article>
+          <article>
+            <span data-fa="تحویل پروژه" data-en="Delivery">تحویل پروژه</span>
+            <p data-message-preview="deliveryFa"></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CAMPAIGNS -->
   <section id="campaigns" style="margin-top:32px">
     <div class="p-card">
@@ -883,7 +945,7 @@
 
 </main>
 
-<script src="app.js?v=20260719-livefix"></script>
+<script src="app.js?v=20260719-loginfix"></script>
 <script>
 // Update dashboard stats
 (function(){
