@@ -7,10 +7,20 @@ services:
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: allameh-sokhan-db
-          property: connectionString
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
       - key: ADMIN_EMAIL
         value: admin@asmdi.ir
       - key: ADMIN_PASSWORD
@@ -21,11 +31,5 @@ services:
         value: "false"
       - key: COOKIE_SECURE
         value: "true"
-      - key: NODE_ENV
-        value: production
-
-databases:
-  - name: allameh-sokhan-db
-    plan: free
-    databaseName: allameh_sokhan
-    user: allameh
+      - key: SESSION_SECRET
+        sync: false

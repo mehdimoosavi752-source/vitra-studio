@@ -36,7 +36,7 @@ services:
       DB_PASSWORD: allameh_password_change_me
       ADMIN_EMAIL: admin@asmdi.ir
       ADMIN_PASSWORD: Admin1234
-      ADMIN_NAME: مدیر سایت
+      ADMIN_NAME: "مدیر سایت"
       SESSION_SECRET: change_this_to_a_long_random_secret
       RESET_ADMIN_PASSWORD: "false"
 
