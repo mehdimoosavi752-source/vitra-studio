@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const zlib = require("zlib");
-const mysql = require("mysql2/promise");
+const { Pool } = require("pg");
 
 const root = __dirname;
 const port = Number(process.env.PORT || 8080);
@@ -199,52 +199,36 @@ const pageSeo = {
   },
 };
 
-const dbConfig = {
-  host: process.env.DB_HOST || "mysql",
-  port: Number(process.env.DB_PORT || 3306),
-  user: process.env.DB_USER || "allameh",
-  password: process.env.DB_PASSWORD || "allameh_password",
-  database: process.env.DB_NAME || "allameh_sokhan",
-  waitForConnections: true,
-  connectionLimit: Number(process.env.DB_POOL_SIZE || 10),
-  queueLimit: 0,
-  charset: "utf8mb4",
-  timezone: "Z",
-};
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is required");
+}
 
-const mysqlPool = mysql.createPool(dbConfig);
+const pgPool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
+  max: Number(process.env.DB_POOL_SIZE || 10),
+});
 
-function mysqlStatement(sql, params = []) {
-  const values = [];
-  const text = String(sql)
-    .replace(/data->>'([^']+)'/g, "JSON_UNQUOTE(JSON_EXTRACT(data, '$.$1'))")
-    .replace(/\$(\d+)/g, (_, index) => {
-      values.push(params[Number(index) - 1]);
-      return "?";
-    });
-  return { sql: text, params: values.length ? values : params };
+function postgresPlaceholders(sql) {
+  let index = 0;
+  return String(sql).replace(/\?/g, () => `$${index += 1}`);
 }
 
 const pool = {
   async query(sql, params = []) {
-    const statement = mysqlStatement(sql, params);
-    const [rows, fields] = await mysqlPool.query(statement.sql, statement.params);
-    return [rows, { rows, fields }];
+    const result = await pgPool.query(postgresPlaceholders(sql), params);
+    return [result.rows, result];
   },
   async execute(sql, params = []) {
-    const statement = mysqlStatement(sql, params);
-    const [rows, fields] = await mysqlPool.execute(statement.sql, statement.params);
-    return [rows, { rows, fields }];
+    return this.query(sql, params);
   },
 };
 
 async function dbClient() {
-  const client = await mysqlPool.getConnection();
+  const client = await pgPool.connect();
   return {
     async query(sql, params = []) {
-      const statement = mysqlStatement(sql, params);
-      const [rows, fields] = await client.query(statement.sql, statement.params);
-      return { rows, fields };
+      return client.query(postgresPlaceholders(sql), params);
     },
     release() {
       client.release();
@@ -400,7 +384,7 @@ async function initializeDatabase() {
       salt VARCHAR(64) NOT NULL,
       password_hash VARCHAR(128) NOT NULL,
       role VARCHAR(20) NOT NULL DEFAULT 'student',
-      data JSON NOT NULL,
+      data JSONB NOT NULL,
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )
@@ -409,17 +393,16 @@ async function initializeDatabase() {
     CREATE TABLE IF NOT EXISTS app_documents (
       collection_name VARCHAR(80) NOT NULL,
       document_id VARCHAR(100) NOT NULL,
-      data JSON NOT NULL,
+      data JSONB NOT NULL,
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (collection_name, document_id)
     )
   `);
-  try {
-    await pool.query("CREATE INDEX idx_collection_created ON app_documents (collection_name, created_at)");
-  } catch (error) {
-    if (!["ER_DUP_KEYNAME", "ER_CANT_CREATE_TABLE"].includes(error.code)) throw error;
-  }
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_collection_created
+    ON app_documents (collection_name, created_at)
+  `);
 
   const [rows] = await pool.execute("SELECT uid, data FROM app_users WHERE email = ? LIMIT 1", [adminEmail]);
   if (!rows.length) {
@@ -818,7 +801,8 @@ async function saveDocument(collection, documentId, data) {
   await pool.execute(
     `INSERT INTO app_documents (collection_name, document_id, data)
      VALUES (?, ?, ?)
-     ON DUPLICATE KEY UPDATE data = VALUES(data), updated_at = CURRENT_TIMESTAMP`,
+     ON CONFLICT (collection_name, document_id)
+     DO UPDATE SET data = EXCLUDED.data, updated_at = CURRENT_TIMESTAMP`,
     [collection, documentId, JSON.stringify(data)]
   );
 }
@@ -2497,7 +2481,7 @@ async function handleApi(req, res) {
   validateCsrf(req, url);
   if (url.pathname === "/api/health" && req.method === "GET") {
     await pool.query("SELECT 1");
-    return send(res, 200, { ok: true, database: "mysql" });
+    return send(res, 200, { ok: true, database: "postgresql" });
   }
   const authResult = await handleAuth(req, res, url.pathname);
   if (authResult !== false) return authResult;

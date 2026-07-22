@@ -1,54 +1,43 @@
-# راه‌اندازی روی Render با MySQL خارجی
+# راه‌اندازی ساده روی Render
 
-این بسته نسخه Node.js سایت و پنل موسسه علامه سخن است و برای دیتابیس از MySQL استفاده می‌کند. Render به صورت پیش‌فرض دیتابیس MySQL داخلی نمی‌سازد، پس باید یک MySQL خارجی داشته باشید؛ مثل MySQL هاست خودتان، Aiven، Railway یا هر سرویس MySQL دیگر.
+این بسته مخصوص Render است و از Node.js و PostgreSQL استفاده می‌کند. برای تست و پیش‌نمایش، ساده‌ترین روش همان Blueprint است.
 
-## آپلود روی GitHub
+## روش پیشنهادی: Blueprint
 
 1. فایل ZIP را Extract کنید.
 2. همه فایل‌ها و پوشه‌های داخل پوشه Extract شده را در ریشه مخزن GitHub آپلود کنید.
-3. فایل‌های `index.html`، `server.js`، `package.json` و `render.yaml` باید مستقیم در صفحه اصلی مخزن دیده شوند.
-4. فایل `.env` واقعی را در GitHub آپلود نکنید.
+3. در Render گزینه `New` و سپس `Blueprint` را بزنید.
+4. مخزن GitHub سایت را انتخاب کنید.
+5. Render فایل `render.yaml` را می‌خواند و خودش Web Service و PostgreSQL Database را می‌سازد.
+6. هنگام ساخت، برای `ADMIN_PASSWORD` رمز مدیر را وارد کنید. برای ریست رمز فعلاً می‌توانید `Admin1234` بگذارید.
+7. بعد از Live شدن سایت، وارد پنل شوید.
 
-## ساخت سرویس در Render
+## ورود مدیر
 
-1. در Render گزینه `New` و سپس `Web Service` را بزنید.
-2. مخزن GitHub سایت را انتخاب کنید.
-3. Runtime را روی `Node` بگذارید.
-4. Build Command:
-
-```bash
-npm install
+```text
+ایمیل: admin@asmdi.ir
+رمز: مقداری که در ADMIN_PASSWORD گذاشتید
 ```
 
-5. Start Command:
+در این بسته مقدار `RESET_ADMIN_PASSWORD=true` است تا رمز مدیر روی مقدار جدید اعمال شود. بعد از ورود موفق، در Render مقدار آن را `false` کنید و سرویس را Restart کنید.
 
-```bash
-npm start
+## مسیر تست سلامت
+
+بعد از Live شدن:
+
+```text
+/api/health
 ```
 
-6. در بخش Environment Variables این مقادیر را وارد کنید:
+خروجی درست:
 
-```env
-NODE_ENV=production
-PORT=10000
-DB_HOST=آدرس هاست MySQL
-DB_PORT=3306
-DB_NAME=نام دیتابیس
-DB_USER=نام کاربری دیتابیس
-DB_PASSWORD=رمز دیتابیس
-ADMIN_EMAIL=admin@asmdi.ir
-ADMIN_PASSWORD=رمز مدیر
-ADMIN_NAME=مدیر سایت
-RESET_ADMIN_PASSWORD=false
-COOKIE_SECURE=true
-SESSION_SECRET=یک_رشته_طولانی_تصادفی
+```json
+{"ok":true,"database":"postgresql"}
 ```
-
-اگر سرویس MySQL به جای مقادیر جداگانه، Connection String می‌دهد، می‌توانید `DATABASE_URL` را هم وارد کنید؛ ولی برای این نسخه، مقادیر `DB_HOST`، `DB_PORT`، `DB_NAME`، `DB_USER` و `DB_PASSWORD` واضح‌تر و کم‌خطاتر است.
 
 ## پیامک ملی‌پیامک
 
-کلید پیامک را داخل GitHub نگذارید. در Environment Variables وارد کنید:
+اگر خواستید پیامک فعال شود، در Render داخل Environment Variables مقدارها را وارد کنید:
 
 ```env
 SMS_ENABLED=true
@@ -56,22 +45,8 @@ SMS_PROVIDER=melipayamak
 SMS_USERNAME=نام کاربری ملی پیامک
 SMS_API_KEY=رمز یا API Key
 SMS_SENDER=شماره فرستنده
-SMS_ADMIN_NUMBERS=شماره‌های مدیر، با کاما یا خط جدید
+SMS_ADMIN_NUMBERS=شماره‌های مدیر
 SMS_MELIPAYAMAK_URL=https://rest.payamak-panel.com/api/SendSMS/SendSMS
 ```
 
-بعد از ذخیره Environment Variables، سرویس را Redeploy کنید.
-
-## تست سلامت
-
-بعد از Live شدن، این مسیر را باز کنید:
-
-```text
-/api/health
-```
-
-خروجی درست باید شامل این مقدار باشد:
-
-```json
-{"ok":true,"database":"mysql"}
-```
+کلید پیامک را داخل GitHub قرار ندهید.
