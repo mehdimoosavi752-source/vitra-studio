@@ -3,14 +3,13 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const zlib = require("zlib");
-const { Pool } = require("pg");
+const mysql = require("mysql2/promise");
 
 const root = __dirname;
 const port = Number(process.env.PORT || 8080);
 const adminEmail = String(process.env.ADMIN_EMAIL || "admin@asmdi.ir").trim().toLowerCase();
 const adminPassword = String(process.env.ADMIN_PASSWORD || "");
-const adminName = String(process.env.ADMIN_NAME || "Ù…Ø¯ÛŒØ± Ø³Ø§ÛŒØª").trim();
-const sessionSecret = String(process.env.SESSION_SECRET || process.env.ADMIN_PASSWORD || "allameh-sokhan-session-secret");
+const adminName = String(process.env.ADMIN_NAME || "مدیر سایت").trim();
 const sessions = new Map();
 const loginAttempts = new Map();
 const apiAttempts = new Map();
@@ -28,205 +27,235 @@ setInterval(() => {
 }, 10 * 60 * 1000).unref();
 const articleSeo = {
   "toefl-2026-changes": {
-    title: "ØªØºÛŒÛŒØ±Ø§Øª Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT Ø¯Ø± Ø³Ø§Ù„ Û²Û°Û²Û¶ | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ ØªØºÛŒÛŒØ±Ø§Øª Ù†Ø³Ø®Ù‡ Ø¬Ø¯ÛŒØ¯ TOEFL iBT Ø§Ø² Û²Û± Ú˜Ø§Ù†ÙˆÛŒÙ‡ Û²Û°Û²Û¶ØŒ Ø³Ø§Ø®ØªØ§Ø± ØªØ·Ø¨ÛŒÙ‚ÛŒØŒ Ù…Ù‚ÛŒØ§Ø³ Ù†Ù…Ø±Ù‡ Û± ØªØ§ Û¶ Ùˆ Ù†Ú©Ø§Øª Ø«Ø¨Øªâ€ŒÙ†Ø§Ù….",
+    title: "تغییرات آزمون TOEFL iBT در سال ۲۰۲۶ | موسسه علامه سخن",
+    description: "راهنمای تغییرات نسخه جدید TOEFL iBT از ۲۱ ژانویه ۲۰۲۶، ساختار تطبیقی، مقیاس نمره ۱ تا ۶ و نکات ثبت‌نام.",
   },
   "toefl-mock-benefits": {
-    title: "ÙÙˆØ§ÛŒØ¯ Ø¢Ø²Ù…ÙˆÙ† Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ TOEFL | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "ÙÙˆØ§ÛŒØ¯ Ù…Ø§Ú© TOEFLØŒ Ø²Ù…Ø§Ù† Ù…Ù†Ø§Ø³Ø¨ Ø´Ø±Ú©ØªØŒ ØªØ­Ù„ÛŒÙ„ Ú†Ù‡Ø§Ø± Ù…Ù‡Ø§Ø±Øª Ùˆ Ù†Ù‚Ø´ Ø´Ø¨ÛŒÙ‡â€ŒØ³Ø§Ø²ÛŒ Ø¯Ø± Ú©Ø§Ù‡Ø´ Ø§Ø³ØªØ±Ø³ Ø±ÙˆØ² Ø¢Ø²Ù…ÙˆÙ†.",
+    title: "فواید آزمون آزمایشی TOEFL | موسسه علامه سخن",
+    description: "فواید ماک TOEFL، زمان مناسب شرکت، تحلیل چهار مهارت و نقش شبیه‌سازی در کاهش استرس روز آزمون.",
   },
   "register-toefl-gre-iran": {
-    title: "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… TOEFL Ùˆ GRE Ø§Ø² Ø§ÛŒØ±Ø§Ù† Ùˆ Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… TOEFL iBT Ùˆ GRE Ø§Ø² Ø§ÛŒØ±Ø§Ù†ØŒ Ù¾Ø±Ø¯Ø§Ø®Øª Ø§Ø±Ø²ÛŒØŒ Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± Ùˆ Ù†Ú©Ø§Øª Ø§Ù…Ù†ÛŒØªÛŒ.",
+    title: "ثبت‌نام TOEFL و GRE از ایران و خرید ووچر | علامه سخن",
+    description: "راهنمای ثبت‌نام TOEFL iBT و GRE از ایران، پرداخت ارزی، خرید ووچر و نکات امنیتی.",
   },
   "allameh-new-toefl-mock": {
-    title: "Ø¢Ø²Ù…ÙˆÙ† Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ TOEFL Ø¨Ø§ ÙØ±Ù…Øª Ø¬Ø¯ÛŒØ¯ | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ù…Ø¹Ø±ÙÛŒ Ù…Ø§Ú© TOEFL ÙØ±Ù…Øª Ø¬Ø¯ÛŒØ¯ Ø¨Ø§ Ø³ÙˆØ§Ù„Ø§Øª Ø§Ø³ØªØ§Ù†Ø¯Ø§Ø±Ø¯ØŒ Ù…Ø­ÛŒØ· Ø³Ù†ØªØ± Ùˆ Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ Speaking Ùˆ Writing.",
+    title: "آزمون آزمایشی TOEFL با فرمت جدید | علامه سخن",
+    description: "معرفی ماک TOEFL فرمت جدید با سوالات استاندارد، محیط سنتر و ارزیابی Speaking و Writing.",
   },
   "ets-centers-tehran": {
-    title: "Ù…Ø±Ø§Ú©Ø² ETS Ø¯Ø± ØªÙ‡Ø±Ø§Ù† Ùˆ Ø§Ù†ØªØ®Ø§Ø¨ Ø³Ù†ØªØ± Ø¢Ø²Ù…ÙˆÙ† | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ ÛŒØ§ÙØªÙ† ÙÙ‡Ø±Ø³Øª Ø¨Ù‡â€ŒØ±ÙˆØ² Ù…Ø±Ø§Ú©Ø² ETS ØªÙ‡Ø±Ø§Ù† Ùˆ Ù…Ø¹ÛŒØ§Ø±Ù‡Ø§ÛŒ Ø§Ù†ØªØ®Ø§Ø¨ Ø³Ù†ØªØ± Ù…Ù†Ø§Ø³Ø¨ TOEFL Ùˆ GRE.",
+    title: "مراکز ETS در تهران و انتخاب سنتر آزمون | علامه سخن",
+    description: "راهنمای یافتن فهرست به‌روز مراکز ETS تهران و معیارهای انتخاب سنتر مناسب TOEFL و GRE.",
   },
   "toefl-test-guide": {
-    title: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ú©Ø§Ù…Ù„ Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¢Ø´Ù†Ø§ÛŒÛŒ Ø¨Ø§ Ú†Ù‡Ø§Ø± Ù…Ù‡Ø§Ø±Øª TOEFL iBTØŒ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø±ÙˆØ² Ø¢Ø²Ù…ÙˆÙ†ØŒ Ù…Ø¯Ø§Ø±Ú© Ùˆ Ù…Ø³ÛŒØ± Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ùˆ Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø±.",
+    title: "راهنمای کامل آزمون TOEFL iBT | موسسه علامه سخن",
+    description: "آشنایی با چهار مهارت TOEFL iBT، آمادگی روز آزمون، مدارک و مسیر ثبت‌نام و خرید ووچر.",
   },
 };
 const pageSeo = {
   "/toefl": {
     page: "toefl",
-    title: "Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT Ø¯Ø± ØªÙ‡Ø±Ø§Ù† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø§Ø·Ù„Ø§Ø¹Ø§ØªØŒ ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ØŒ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ùˆ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†ØŒ Ù…Ø±Ú©Ø² Ø±Ø³Ù…ÛŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ ETS Ø¯Ø± ØªÙ‡Ø±Ø§Ù†.",
+    title: "آزمون TOEFL iBT در تهران | موسسه علامه سخن",
+    description: "اطلاعات، تاریخ‌ها، ثبت‌نام و آمادگی آزمون TOEFL iBT در موسسه علامه سخن، مرکز رسمی آزمون‌های ETS در تهران.",
   },
   "/gre": {
     page: "gre",
-    title: "Ø¢Ø²Ù…ÙˆÙ† GRE General Ø¯Ø± ØªÙ‡Ø±Ø§Ù† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ† GRE GeneralØŒ ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ØŒ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù…ØŒ ÙˆÙˆÚ†Ø± Ùˆ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ GRE Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "آزمون GRE General در تهران | موسسه علامه سخن",
+    description: "راهنمای آزمون GRE General، تاریخ‌ها، ثبت‌نام، ووچر و آمادگی GRE در موسسه علامه سخن.",
   },
   "/mock-toefl": {
     page: "mock-toefl",
-    title: "Ø¢Ø²Ù…ÙˆÙ† Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ TOEFL iBT | Ù…Ø§Ú© ØªØ§ÙÙ„ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø´Ø¨ÛŒÙ‡â€ŒØ³Ø§Ø²ÛŒ TOEFL iBT Ø¨Ø§ ØªØ¬Ù‡ÛŒØ²Ø§Øª Ø³Ù†ØªØ±ØŒ Ø³ÙˆØ§Ù„Ø§Øª Ø§Ø³ØªØ§Ù†Ø¯Ø§Ø±Ø¯ØŒ Ù…Ø­ÛŒØ· Ø¢Ø²Ù…ÙˆÙ† Ùˆ Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ ØªØ®ØµØµÛŒ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§.",
+    title: "آزمون آزمایشی TOEFL iBT | ماک تافل علامه سخن",
+    description: "شبیه‌سازی TOEFL iBT با تجهیزات سنتر، سوالات استاندارد، محیط آزمون و ارزیابی تخصصی مهارت‌ها.",
   },
   "/mock-gre": {
     page: "mock-gre",
-    title: "Ø¢Ø²Ù…ÙˆÙ† Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ GRE General | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¢Ø²Ù…ÙˆÙ† Mock GRE General Ø¨Ø±Ø§ÛŒ Ø§Ø±Ø²ÛŒØ§Ø¨ÛŒ Ø¢Ù…Ø§Ø¯Ú¯ÛŒØŒ Ù…Ø¯ÛŒØ±ÛŒØª Ø²Ù…Ø§Ù† Ùˆ Ø´Ù†Ø§Ø®Øª Ù†Ù‚Ø§Ø· Ù‚Ø§Ø¨Ù„ Ø¨Ù‡Ø¨ÙˆØ¯ Ù¾ÛŒØ´ Ø§Ø² Ø¢Ø²Ù…ÙˆÙ† Ø§ØµÙ„ÛŒ.",
+    title: "آزمون آزمایشی GRE General | موسسه علامه سخن",
+    description: "آزمون Mock GRE General برای ارزیابی آمادگی، مدیریت زمان و شناخت نقاط قابل بهبود پیش از آزمون اصلی.",
   },
   "/mock": {
     page: "mock",
-    title: "Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ† Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ Ùˆ ØªØ¹ÛŒÛŒÙ† Ø³Ø·Ø­ Ø¨Ø±Ø§ÛŒ Ø³Ù†Ø¬Ø´ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒØŒ TOEFL iBT Ùˆ GRE General Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "آزمون‌های آزمایشی زبان و آزمون بین‌المللی | علامه سخن",
+    description: "آزمون‌های آزمایشی و تعیین سطح برای سنجش آمادگی زبان انگلیسی، TOEFL iBT و GRE General در موسسه علامه سخن.",
   },
   "/toefl-dates": {
     page: "toefl-dates",
-    title: "ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ù…Ø´Ø§Ù‡Ø¯Ù‡ ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ÛŒ ÙØ¹Ø§Ù„ Ø¢Ø²Ù…ÙˆÙ† TOEFL iBTØŒ Ø¸Ø±ÙÛŒØªâ€ŒÙ‡Ø§ Ùˆ Ù…Ø³ÛŒØ± Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "تاریخ‌های آزمون TOEFL iBT | موسسه علامه سخن",
+    description: "مشاهده تاریخ‌های فعال آزمون TOEFL iBT، ظرفیت‌ها و مسیر ثبت‌نام در موسسه علامه سخن.",
   },
   "/gre-dates": {
     page: "gre-dates",
-    title: "ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ† GRE General | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "ØªÙ‚ÙˆÛŒÙ… ØªØ§Ø±ÛŒØ®â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ† GRE GeneralØŒ Ø¸Ø±ÙÛŒØªâ€ŒÙ‡Ø§ÛŒ Ø§Ø¹Ù„Ø§Ù…â€ŒØ´Ø¯Ù‡ Ùˆ Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø¢Ø²Ù…ÙˆÙ† Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "تاریخ‌های آزمون GRE General | موسسه علامه سخن",
+    description: "تقویم تاریخ‌های آزمون GRE General، ظرفیت‌های اعلام‌شده و ثبت درخواست آزمون در موسسه علامه سخن.",
   },
   "/mock-dates": {
     page: "mock-dates",
-    title: "ØªØ§Ø±ÛŒØ® Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ TOEFL Ùˆ GRE | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "ØªÙ‚ÙˆÛŒÙ… Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ Mock TOEFL iBT Ùˆ Mock GRE General Ø¨Ø§ Ø´Ø±Ø§ÛŒØ· Ø´Ø¨ÛŒÙ‡â€ŒØ³Ø§Ø²ÛŒâ€ŒØ´Ø¯Ù‡ Ø¢Ø²Ù…ÙˆÙ† Ø§ØµÙ„ÛŒ.",
+    title: "تاریخ آزمون‌های آزمایشی TOEFL و GRE | علامه سخن",
+    description: "تقویم آزمون‌های آزمایشی Mock TOEFL iBT و Mock GRE General با شرایط شبیه‌سازی‌شده آزمون اصلی.",
   },
   "/exam-registration": {
     page: "exam-registration",
-    title: "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¢Ø²Ù…ÙˆÙ† TOEFL iBT Ùˆ GRE | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "ÙØ±Ù… Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø¢Ø²Ù…ÙˆÙ† Ø±Ø³Ù…ÛŒ TOEFL iBT Ùˆ GREØŒ Ø§Ù†ØªØ®Ø§Ø¨ ØªØ§Ø±ÛŒØ®ØŒ Ø«Ø¨Øª Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø¯Ø§ÙˆØ·Ù„Ø¨ Ùˆ Ù¾ÛŒÚ¯ÛŒØ±ÛŒ Ø§Ø² Ù¾Ù†Ù„ Ú©Ø§Ø±Ø¨Ø±ÛŒ.",
+    title: "ثبت‌نام آزمون TOEFL iBT و GRE | موسسه علامه سخن",
+    description: "فرم ثبت درخواست آزمون رسمی TOEFL iBT و GRE، انتخاب تاریخ، ثبت اطلاعات داوطلب و پیگیری از پنل کاربری.",
   },
   "/course-registration": {
     page: "course-registration",
-    title: "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¢Ø²Ù…ÙˆÙ† | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù† Ø¹Ù…ÙˆÙ…ÛŒØŒ Ø¢Ú©Ø§Ø¯Ù…ÛŒÚ©ØŒ TOEFLØŒ GREØŒ IELTS Ùˆ Ú©Ù„Ø§Ø³â€ŒÙ‡Ø§ÛŒ Ù…Ù‡Ø§Ø±ØªÛŒ Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "ثبت‌نام دوره‌های زبان و آمادگی آزمون | علامه سخن",
+    description: "ثبت‌نام دوره‌های زبان عمومی، آکادمیک، TOEFL، GRE، IELTS و کلاس‌های مهارتی در موسسه علامه سخن.",
   },
   "/placement": {
     page: "placement",
-    title: "ØªØ¹ÛŒÛŒÙ† Ø³Ø·Ø­ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ Ùˆ TOEFL | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¢Ø²Ù…ÙˆÙ† ØªØ¹ÛŒÛŒÙ† Ø³Ø·Ø­ Ø¬Ù†Ø±Ø§Ù„ Ùˆ ØªØ¹ÛŒÛŒÙ† Ø³Ø·Ø­ ØªØ®ØµØµÛŒ TOEFL Ø¨Ø§ ReadingØŒ Listening Ùˆ Writing Ùˆ Ø°Ø®ÛŒØ±Ù‡ Ù†ØªÛŒØ¬Ù‡ Ø¯Ø± Ù¾Ù†Ù„ Ú©Ø§Ø±Ø¨Ø±ÛŒ.",
+    title: "تعیین سطح زبان انگلیسی و TOEFL | موسسه علامه سخن",
+    description: "آزمون تعیین سطح جنرال و تعیین سطح تخصصی TOEFL با Reading، Listening و Writing و ذخیره نتیجه در پنل کاربری.",
   },
   "/consultation": {
     page: "consultation",
-    title: "Ø±Ø²Ø±Ùˆ Ù…Ø´Ø§ÙˆØ±Ù‡ ØªØ®ØµØµÛŒ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø±Ø²Ø±Ùˆ ÙˆÙ‚Øª Ù…Ø´Ø§ÙˆØ±Ù‡ Ø¨Ø±Ø§ÛŒ Ø§Ù†ØªØ®Ø§Ø¨ Ø¯ÙˆØ±Ù‡ØŒ ØªØ­Ù„ÛŒÙ„ Ù†ØªÛŒØ¬Ù‡ Ø¢Ø²Ù…ÙˆÙ† Ùˆ Ø¨Ø±Ù†Ø§Ù…Ù‡â€ŒØ±ÛŒØ²ÛŒ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ TOEFLØŒ GRE Ùˆ Ø²Ø¨Ø§Ù† Ø¹Ù…ÙˆÙ…ÛŒ.",
+    title: "رزرو مشاوره تخصصی زبان و آزمون | موسسه علامه سخن",
+    description: "رزرو وقت مشاوره برای انتخاب دوره، تحلیل نتیجه آزمون و برنامه‌ریزی آمادگی TOEFL، GRE و زبان عمومی.",
   },
   "/toefl-voucher": {
     page: "toefl-voucher",
-    title: "Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± TOEFL iBT | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± TOEFL iBT Ø¨Ø§ Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒÛŒØŒ Ù¾Ø´ØªÛŒØ¨Ø§Ù†ÛŒ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ùˆ Ø¨Ø±Ø±Ø³ÛŒ Ø§Ø¹ØªØ¨Ø§Ø± ÙˆÙˆÚ†Ø±.",
+    title: "خرید ووچر TOEFL iBT | موسسه علامه سخن",
+    description: "ثبت درخواست خرید ووچر TOEFL iBT با راهنمایی، پشتیبانی ثبت‌نام و بررسی اعتبار ووچر.",
   },
   "/gre-voucher": {
     page: "gre-voucher",
-    title: "Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± GRE | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø®Ø±ÛŒØ¯ ÙˆÙˆÚ†Ø± GRE Ùˆ Ø¯Ø±ÛŒØ§ÙØª Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒÛŒ Ø¨Ø±Ø§ÛŒ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ø§Ø² Ú©Ø¯ ÙˆÙˆÚ†Ø± Ùˆ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¢Ø²Ù…ÙˆÙ†.",
+    title: "خرید ووچر GRE | موسسه علامه سخن",
+    description: "ثبت درخواست خرید ووچر GRE و دریافت راهنمایی برای استفاده از کد ووچر و ثبت‌نام آزمون.",
   },
   "/about": {
     page: "about",
-    title: "Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù† | Ø¨ÛŒØ´ Ø§Ø² Û³Û° Ø³Ø§Ù„ ØªØ¬Ø±Ø¨Ù‡",
-    description: "Ù…Ø¹Ø±ÙÛŒ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†ØŒ Ù…Ø±Ú©Ø² Ø¢Ù…ÙˆØ²Ø´ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ Ùˆ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ TOEFL iBT Ùˆ GRE.",
+    title: "درباره موسسه علامه سخن | بیش از ۳۰ سال تجربه",
+    description: "معرفی موسسه علامه سخن، مرکز آموزش زبان انگلیسی و آزمون‌های بین‌المللی TOEFL iBT و GRE.",
   },
   "/contact": {
     page: "contact",
-    title: "Ø§Ø±ØªØ¨Ø§Ø· Ø¨Ø§ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù† | ØªÙ„ÙÙ†ØŒ Ø¢Ø¯Ø±Ø³ Ùˆ Ù…Ø´Ø§ÙˆØ±Ù‡",
-    description: "Ø±Ø§Ù‡â€ŒÙ‡Ø§ÛŒ Ø§Ø±ØªØ¨Ø§Ø· Ø¨Ø§ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†ØŒ Ø´Ù…Ø§Ø±Ù‡ ØªÙ…Ø§Ø³ØŒ Ø¢Ø¯Ø±Ø³ Ù…Ø±Ú©Ø² Ùˆ Ø«Ø¨Øª Ù¾ÛŒØ§Ù… Ø¨Ø±Ø§ÛŒ Ù…Ø´Ø§ÙˆØ±Ù‡ Ø¯ÙˆØ±Ù‡ Ùˆ Ø¢Ø²Ù…ÙˆÙ†.",
+    title: "ارتباط با موسسه علامه سخن | تلفن، آدرس و مشاوره",
+    description: "راه‌های ارتباط با موسسه علامه سخن، شماره تماس، آدرس مرکز و ثبت پیام برای مشاوره دوره و آزمون.",
   },
   "/history": {
     page: "history",
-    title: "ØªØ§Ø±ÛŒØ®Ú†Ù‡ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù† | Ø§Ø² Û±Û³Û·Û´ ØªØ§ Ø§Ù…Ø±ÙˆØ²",
-    description: "Ù…Ø±ÙˆØ±ÛŒ Ø¨Ø± ØªØ§Ø±ÛŒØ®Ú†Ù‡ Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†ØŒ Ø¢ØºØ§Ø² ÙØ¹Ø§Ù„ÛŒØª Ø¢Ù…ÙˆØ²Ø´ÛŒØŒ ØªÙˆØ³Ø¹Ù‡ Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ† Ùˆ Ù…Ø±Ú©Ø² Ø±Ø³Ù…ÛŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ.",
+    title: "تاریخچه موسسه علامه سخن | از ۱۳۷۴ تا امروز",
+    description: "مروری بر تاریخچه موسسه علامه سخن، آغاز فعالیت آموزشی، توسعه دوره‌های آزمون و مرکز رسمی آزمون‌های بین‌المللی.",
   },
   "/stats": {
     page: "achievements",
-    title: "Ø¢Ù…Ø§Ø± Ùˆ Ø§ÙØªØ®Ø§Ø±Ø§Øª Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¨ÛŒØ´ Ø§Ø² Û³Û° Ø³Ø§Ù„ Ø³Ø§Ø¨Ù‚Ù‡ Ø¢Ù…ÙˆØ²Ø´ Ø²Ø¨Ø§Ù†ØŒ Ù‡Ø²Ø§Ø±Ø§Ù† Ø¯Ø§Ù†Ø´Ø¬ÙˆÛŒ Ù…ÙˆÙÙ‚ Ùˆ ØµØ¯Ù‡Ø§ Ø¯ÙˆØ±Ù‡ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¯Ø± Ø­ÙˆØ²Ù‡ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ.",
+    title: "آمار و افتخارات موسسه علامه سخن",
+    description: "بیش از ۳۰ سال سابقه آموزش زبان، هزاران دانشجوی موفق و صدها دوره آموزشی در حوزه زبان و آزمون‌های بین‌المللی.",
   },
   "/achievements": {
     page: "achievements",
-    title: "Ø¢Ù…Ø§Ø± Ùˆ Ø§ÙØªØ®Ø§Ø±Ø§Øª Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¨ÛŒØ´ Ø§Ø² Û³Û° Ø³Ø§Ù„ Ø³Ø§Ø¨Ù‚Ù‡ Ø¢Ù…ÙˆØ²Ø´ Ø²Ø¨Ø§Ù†ØŒ Ù‡Ø²Ø§Ø±Ø§Ù† Ø¯Ø§Ù†Ø´Ø¬ÙˆÛŒ Ù…ÙˆÙÙ‚ Ùˆ ØµØ¯Ù‡Ø§ Ø¯ÙˆØ±Ù‡ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¯Ø± Ø­ÙˆØ²Ù‡ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ.",
+    title: "آمار و افتخارات موسسه علامه سخن",
+    description: "بیش از ۳۰ سال سابقه آموزش زبان، هزاران دانشجوی موفق و صدها دوره آموزشی در حوزه زبان و آزمون‌های بین‌المللی.",
   },
   "/faq": {
     page: "faq",
-    title: "Ø³ÙˆØ§Ù„Ø§Øª Ù¾Ø±ØªÚ©Ø±Ø§Ø± Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ù¾Ø§Ø³Ø® Ø¨Ù‡ Ø³ÙˆØ§Ù„Ø§Øª Ø±Ø§ÛŒØ¬ Ø¯Ø±Ø¨Ø§Ø±Ù‡ Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù†ØŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ TOEFL iBT Ùˆ GREØŒ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù…ØŒ ÙˆÙˆÚ†Ø± Ùˆ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ.",
+    title: "سوالات پرتکرار زبان و آزمون | موسسه علامه سخن",
+    description: "پاسخ به سوالات رایج درباره دوره‌های زبان، آزمون‌های TOEFL iBT و GRE، ثبت‌نام، ووچر و آزمون‌های آزمایشی.",
   },
   "/general": {
     page: "general",
-    title: "Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù† Ø¹Ù…ÙˆÙ…ÛŒ Ùˆ Ø¢Ú©Ø§Ø¯Ù…ÛŒÚ© | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ Ø²Ø¨Ø§Ù† Ø¹Ù…ÙˆÙ…ÛŒ Ùˆ Ø¢Ú©Ø§Ø¯Ù…ÛŒÚ© Ø¨Ø±Ø§ÛŒ ØªÙ‚ÙˆÛŒØª Ù¾Ø§ÛŒÙ‡ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒØŒ Ù…Ú©Ø§Ù„Ù…Ù‡ØŒ Ø®ÙˆØ§Ù†Ø¯Ù†ØŒ Ù†ÙˆØ´ØªÙ† Ùˆ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ù…Ø³ÛŒØ±Ù‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ.",
+    title: "دوره‌های زبان عمومی و آکادمیک | موسسه علامه سخن",
+    description: "دوره‌های زبان عمومی و آکادمیک برای تقویت پایه زبان انگلیسی، مکالمه، خواندن، نوشتن و آمادگی مسیرهای بین‌المللی.",
   },
   "/specialized": {
     page: "specialized",
-    title: "Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ ØªØ®ØµØµÛŒ TOEFLØŒ IELTS Ùˆ GRE | Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¯ÙˆØ±Ù‡â€ŒÙ‡Ø§ÛŒ ØªØ®ØµØµÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ Ø¨Ø±Ø§ÛŒ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ TOEFL iBTØŒ IELTS Academic Ùˆ General Ùˆ GRE General.",
+    title: "دوره‌های تخصصی TOEFL، IELTS و GRE | علامه سخن",
+    description: "دوره‌های تخصصی بین‌المللی برای آمادگی آزمون‌های TOEFL iBT، IELTS Academic و General و GRE General.",
   },
   "/conversation": {
     page: "communication",
-    title: "Ø¯ÙˆØ±Ù‡ Ù…Ú©Ø§Ù„Ù…Ù‡ Ùˆ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø§Ø±ØªØ¨Ø§Ø·ÛŒ | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ú©Ù„Ø§Ø³â€ŒÙ‡Ø§ÛŒ Ù…Ú©Ø§Ù„Ù…Ù‡ Ùˆ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø§Ø±ØªØ¨Ø§Ø·ÛŒ Ø¨Ø±Ø§ÛŒ ØªÙ‚ÙˆÛŒØª fluencyØŒ Ø§Ø¹ØªÙ…Ø§Ø¯Ø¨Ù‡â€ŒÙ†ÙØ³ Ùˆ Ú©Ø§Ø±Ø¨Ø±Ø¯ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ Ø¯Ø± Ù…ÙˆÙ‚Ø¹ÛŒØªâ€ŒÙ‡Ø§ÛŒ ÙˆØ§Ù‚Ø¹ÛŒ.",
+    title: "دوره مکالمه و مهارت‌های ارتباطی | موسسه علامه سخن",
+    description: "کلاس‌های مکالمه و مهارت‌های ارتباطی برای تقویت fluency، اعتمادبه‌نفس و کاربرد زبان انگلیسی در موقعیت‌های واقعی.",
   },
   "/communication": {
     page: "communication",
-    title: "Ø¯ÙˆØ±Ù‡ Ù…Ú©Ø§Ù„Ù…Ù‡ Ùˆ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø§Ø±ØªØ¨Ø§Ø·ÛŒ | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ú©Ù„Ø§Ø³â€ŒÙ‡Ø§ÛŒ Ù…Ú©Ø§Ù„Ù…Ù‡ Ùˆ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø§Ø±ØªØ¨Ø§Ø·ÛŒ Ø¨Ø±Ø§ÛŒ ØªÙ‚ÙˆÛŒØª fluencyØŒ Ø§Ø¹ØªÙ…Ø§Ø¯Ø¨Ù‡â€ŒÙ†ÙØ³ Ùˆ Ú©Ø§Ø±Ø¨Ø±Ø¯ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ Ø¯Ø± Ù…ÙˆÙ‚Ø¹ÛŒØªâ€ŒÙ‡Ø§ÛŒ ÙˆØ§Ù‚Ø¹ÛŒ.",
+    title: "دوره مکالمه و مهارت‌های ارتباطی | موسسه علامه سخن",
+    description: "کلاس‌های مکالمه و مهارت‌های ارتباطی برای تقویت fluency، اعتمادبه‌نفس و کاربرد زبان انگلیسی در موقعیت‌های واقعی.",
   },
   "/newsletter": {
     page: "newsletter",
-    title: "Ø®Ø¨Ø±Ù†Ø§Ù…Ù‡ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ø¢Ø®Ø±ÛŒÙ† Ù…Ù‚Ø§Ù„Ù‡â€ŒÙ‡Ø§ØŒ Ø±Ø§Ù‡Ù†Ù…Ø§Ù‡Ø§ Ùˆ Ø®Ø¨Ø±Ù‡Ø§ÛŒ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¯Ø±Ø¨Ø§Ø±Ù‡ TOEFL iBTØŒ GREØŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ Ùˆ Ù…Ø³ÛŒØ± Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø²Ø¨Ø§Ù†.",
+    title: "خبرنامه زبان و آزمون‌های بین‌المللی | موسسه علامه سخن",
+    description: "آخرین مقاله‌ها، راهنماها و خبرهای آموزشی درباره TOEFL iBT، GRE، آزمون‌های آزمایشی و مسیر آمادگی زبان.",
   },
   "/gallery": {
     page: "gallery",
-    title: "Ú¯Ø§Ù„Ø±ÛŒ ØªØµØ§ÙˆÛŒØ± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù† | ÙØ¶Ø§ÛŒ Ø¢Ù…ÙˆØ²Ø´ Ùˆ Ø¢Ø²Ù…ÙˆÙ†",
-    description: "ØªØµØ§ÙˆÛŒØ± Ù…Ø­ÛŒØ· Ø¢Ù…ÙˆØ²Ø´ÛŒØŒ ØªØ¬Ù‡ÛŒØ²Ø§Øª Ùˆ Ù…Ø­Ù„ Ø¨Ø±Ú¯Ø²Ø§Ø±ÛŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø±Ø³Ù…ÛŒ TOEFL iBT Ùˆ GRE General Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†.",
+    title: "گالری تصاویر موسسه علامه سخن | فضای آموزش و آزمون",
+    description: "تصاویر محیط آموزشی، تجهیزات و محل برگزاری آزمون‌های رسمی TOEFL iBT و GRE General در موسسه علامه سخن.",
   },
   "/library": {
     page: "library",
-    title: "Ú©ØªØ§Ø¨Ø®Ø§Ù†Ù‡ Ø±Ø§ÛŒÚ¯Ø§Ù† Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒ | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ù…Ù†Ø§Ø¨Ø¹ Ø±Ø§ÛŒÚ¯Ø§Ù† Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒØŒ Ú©ØªØ§Ø¨ØŒ Ø¬Ø²ÙˆÙ‡ Ùˆ ÙØ§ÛŒÙ„ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¯Ø³ØªÙ‡â€ŒØ¨Ù†Ø¯ÛŒâ€ŒØ´Ø¯Ù‡ Ø¨Ø± Ø§Ø³Ø§Ø³ Ø³Ø·Ø­ Ùˆ Ø¢Ø²Ù…ÙˆÙ†.",
+    title: "کتابخانه رایگان زبان انگلیسی | موسسه علامه سخن",
+    description: "منابع رایگان زبان انگلیسی، کتاب، جزوه و فایل آموزشی دسته‌بندی‌شده بر اساس سطح و آزمون.",
   },
   "/learning-articles": {
     page: "learning-articles",
-    title: "Ù…Ù‚Ø§Ù„Ù‡â€ŒÙ‡Ø§ÛŒ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "Ù…Ù‚Ø§Ù„Ù‡â€ŒÙ‡Ø§ÛŒ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¨Ø±Ø§ÛŒ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒØŒ TOEFLØŒ GRE Ùˆ Ø¢Ù…Ø§Ø¯Ú¯ÛŒ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø¨ÛŒÙ†â€ŒØ§Ù„Ù…Ù„Ù„ÛŒ.",
+    title: "مقاله‌های آموزشی زبان و آزمون | موسسه علامه سخن",
+    description: "مقاله‌های آموزشی برای زبان انگلیسی، TOEFL، GRE و آمادگی آزمون‌های بین‌المللی.",
   },
   "/learning-videos": {
     page: "learning-videos",
-    title: "ÙˆÛŒØ¯ÛŒÙˆÙ‡Ø§ÛŒ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø²Ø¨Ø§Ù† Ùˆ Ø¢Ø²Ù…ÙˆÙ† | Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†",
-    description: "ÙˆÛŒØ¯ÛŒÙˆÙ‡Ø§ Ùˆ ÙØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ú†Ù†Ø¯Ø±Ø³Ø§Ù†Ù‡â€ŒØ§ÛŒ Ø¢Ù…ÙˆØ²Ø´ÛŒ Ø¨Ø±Ø§ÛŒ Ø²Ø¨Ø§Ù† Ø§Ù†Ú¯Ù„ÛŒØ³ÛŒØŒ TOEFLØŒ GRE Ùˆ Ù…Ù‡Ø§Ø±Øªâ€ŒÙ‡Ø§ÛŒ Ø¢Ø²Ù…ÙˆÙ†.",
+    title: "ویدیوهای آموزشی زبان و آزمون | موسسه علامه سخن",
+    description: "ویدیوها و فایل‌های چندرسانه‌ای آموزشی برای زبان انگلیسی، TOEFL، GRE و مهارت‌های آزمون.",
   },
 };
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is required");
-}
+const dbConfig = {
+  host: process.env.DB_HOST || "mysql",
+  port: Number(process.env.DB_PORT || 3306),
+  user: process.env.DB_USER || "allameh",
+  password: process.env.DB_PASSWORD || "allameh_password",
+  database: process.env.DB_NAME || "allameh_sokhan",
+  waitForConnections: true,
+  connectionLimit: Number(process.env.DB_POOL_SIZE || 10),
+  queueLimit: 0,
+  charset: "utf8mb4",
+  timezone: "Z",
+};
 
-const pgPool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,
-  max: Number(process.env.DB_POOL_SIZE || 10),
-});
+const mysqlPool = mysql.createPool(dbConfig);
 
-function postgresPlaceholders(sql) {
-  let index = 0;
-  return sql.replace(/\?/g, () => `$${index += 1}`);
+function mysqlStatement(sql, params = []) {
+  const values = [];
+  const text = String(sql)
+    .replace(/data->>'([^']+)'/g, "JSON_UNQUOTE(JSON_EXTRACT(data, '$.$1'))")
+    .replace(/\$(\d+)/g, (_, index) => {
+      values.push(params[Number(index) - 1]);
+      return "?";
+    });
+  return { sql: text, params: values.length ? values : params };
 }
 
 const pool = {
   async query(sql, params = []) {
-    const result = await pgPool.query(postgresPlaceholders(sql), params);
-    return [result.rows, result];
+    const statement = mysqlStatement(sql, params);
+    const [rows, fields] = await mysqlPool.query(statement.sql, statement.params);
+    return [rows, { rows, fields }];
   },
   async execute(sql, params = []) {
-    return this.query(sql, params);
+    const statement = mysqlStatement(sql, params);
+    const [rows, fields] = await mysqlPool.execute(statement.sql, statement.params);
+    return [rows, { rows, fields }];
   },
 };
 
+async function dbClient() {
+  const client = await mysqlPool.getConnection();
+  return {
+    async query(sql, params = []) {
+      const statement = mysqlStatement(sql, params);
+      const [rows, fields] = await client.query(statement.sql, statement.params);
+      return { rows, fields };
+    },
+    release() {
+      client.release();
+    },
+  };
+}
+
 const privateCollections = new Set([
   "exam_registrations",
+  "mock_reschedule_requests",
+  "mock_vouchers",
   "exam_waitlist",
   "exam_results",
   "course_registrations",
@@ -245,6 +274,8 @@ const privateCollections = new Set([
 ]);
 const studentCreateCollections = new Set([
   "exam_registrations",
+  "mock_reschedule_requests",
+  "mock_vouchers",
   "exam_waitlist",
   "course_registrations",
   "placement_registrations",
@@ -272,6 +303,8 @@ const publicReadCollections = new Set([
 
 const collectionPermissions = {
   exam_registrations: "registrations",
+  mock_reschedule_requests: "registrations",
+  mock_vouchers: "registrations",
   exam_waitlist: "registrations",
   exam_results: "results",
   course_registrations: "registrations",
@@ -367,7 +400,7 @@ async function initializeDatabase() {
       salt VARCHAR(64) NOT NULL,
       password_hash VARCHAR(128) NOT NULL,
       role VARCHAR(20) NOT NULL DEFAULT 'student',
-      data JSONB NOT NULL,
+      data JSON NOT NULL,
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )
@@ -376,16 +409,17 @@ async function initializeDatabase() {
     CREATE TABLE IF NOT EXISTS app_documents (
       collection_name VARCHAR(80) NOT NULL,
       document_id VARCHAR(100) NOT NULL,
-      data JSONB NOT NULL,
+      data JSON NOT NULL,
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (collection_name, document_id)
     )
   `);
-  await pool.query(`
-    CREATE INDEX IF NOT EXISTS idx_collection_created
-    ON app_documents (collection_name, created_at)
-  `);
+  try {
+    await pool.query("CREATE INDEX idx_collection_created ON app_documents (collection_name, created_at)");
+  } catch (error) {
+    if (!["ER_DUP_KEYNAME", "ER_CANT_CREATE_TABLE"].includes(error.code)) throw error;
+  }
 
   const [rows] = await pool.execute("SELECT uid, data FROM app_users WHERE email = ? LIMIT 1", [adminEmail]);
   if (!rows.length) {
@@ -428,7 +462,7 @@ function body(req) {
     req.on("data", (chunk) => {
       raw += chunk;
       if (raw.length > 24 * 1024 * 1024) {
-        reject(Object.assign(new Error("Ø­Ø¬Ù… Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø¨ÛŒØ´ Ø§Ø² Ø­Ø¯ Ù…Ø¬Ø§Ø² Ø§Ø³Øª"), { status: 413 }));
+        reject(Object.assign(new Error("حجم اطلاعات بیش از حد مجاز است"), { status: 413 }));
         req.destroy();
       }
     });
@@ -436,7 +470,7 @@ function body(req) {
       try {
         resolve(raw ? JSON.parse(raw) : {});
       } catch {
-        reject(Object.assign(new Error("ÙØ±Ù…Øª Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 400 }));
+        reject(Object.assign(new Error("فرمت اطلاعات معتبر نیست"), { status: 400 }));
       }
     });
     req.on("error", reject);
@@ -466,14 +500,12 @@ function cookie(req, name) {
 function currentSession(req) {
   const sid = cookie(req, "as_session");
   const session = sid ? sessions.get(sid) : null;
-  const verified = session || verifySessionCookie(sid);
-  if (!verified) return null;
-  if (verified.expiresAt <= Date.now()) {
+  if (!session) return null;
+  if (session.expiresAt <= Date.now()) {
     sessions.delete(sid);
     return null;
   }
-  if (!session) sessions.set(sid, verified);
-  return verified;
+  return session;
 }
 
 function ensureCsrfToken(session) {
@@ -498,32 +530,9 @@ function requestIsSecure(req) {
   return forwardedProto === "https" || Boolean(req.socket && req.socket.encrypted);
 }
 
-function signSessionValue(payload) {
-  const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  const signature = crypto.createHmac("sha256", sessionSecret).update(body).digest("base64url");
-  return `${body}.${signature}`;
-}
-
-function verifySessionCookie(value) {
-  if (!value || !value.includes(".")) return null;
-  const [body, signature] = value.split(".");
-  const expected = crypto.createHmac("sha256", sessionSecret).update(body).digest("base64url");
-  try {
-    const given = Buffer.from(signature || "");
-    const wanted = Buffer.from(expected);
-    if (given.length !== wanted.length || !crypto.timingSafeEqual(given, wanted)) return null;
-    const payload = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
-    if (!payload || !payload.user || !payload.expiresAt) return null;
-    return { user: payload.user, expiresAt: Number(payload.expiresAt), csrfToken: payload.csrfToken || "" };
-  } catch (error) {
-    return null;
-  }
-}
-
-function sessionCookie(req, sid, session) {
+function sessionCookie(req, sid) {
   const secure = requestIsSecure(req) ? "; Secure" : "";
-  const value = session ? signSessionValue({ user: session.user, expiresAt: session.expiresAt, csrfToken: ensureCsrfToken(session) }) : sid;
-  return `as_session=${encodeURIComponent(value)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400${secure}`;
+  return `as_session=${sid}; HttpOnly; SameSite=Strict; Path=/; Max-Age=86400${secure}`;
 }
 
 function securityHeaders() {
@@ -601,7 +610,7 @@ function apiRateLimited(req) {
 function validateRequestOrigin(req) {
   if (!["POST", "PUT", "PATCH", "DELETE"].includes(req.method)) return;
   if (String(req.headers["sec-fetch-site"] || "").toLowerCase() === "cross-site") {
-    throw Object.assign(new Error("Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø¨ÛŒÙ†â€ŒØ³Ø§ÛŒØªÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª"), { status: 403 });
+    throw Object.assign(new Error("درخواست بین‌سایتی مجاز نیست"), { status: 403 });
   }
   const origin = req.headers.origin;
   if (!origin) return;
@@ -609,11 +618,11 @@ function validateRequestOrigin(req) {
   try {
     originHost = new URL(origin).host;
   } catch {
-    throw Object.assign(new Error("Ù…Ø¨Ø¯Ø£ Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 403 });
+    throw Object.assign(new Error("مبدأ درخواست معتبر نیست"), { status: 403 });
   }
   const requestHost = String(req.headers["x-forwarded-host"] || req.headers.host || "").split(",")[0].trim();
   if (!requestHost || originHost !== requestHost) {
-    throw Object.assign(new Error("Ù…Ø¨Ø¯Ø£ Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª"), { status: 403 });
+    throw Object.assign(new Error("مبدأ درخواست مجاز نیست"), { status: 403 });
   }
 }
 
@@ -625,18 +634,18 @@ function parseChatWidgetCode(value) {
   const code = String(value || "").trim();
   if (!code) return { code: "", origins: [] };
   if (code.length > 30000) {
-    throw Object.assign(new Error("Ú©Ø¯ Ú†Øª Ø¢Ù†Ù„Ø§ÛŒÙ† Ø¨ÛŒØ´ Ø§Ø² Ø­Ø¯ Ù…Ø¬Ø§Ø² Ø·ÙˆÙ„Ø§Ù†ÛŒ Ø§Ø³Øª"), { status: 413 });
+    throw Object.assign(new Error("کد چت آنلاین بیش از حد مجاز طولانی است"), { status: 413 });
   }
   const scripts = [...code.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
   if (!scripts.length) {
-    throw Object.assign(new Error("Ú©Ø¯ Ø¨Ø§ÛŒØ¯ Ø´Ø§Ù…Ù„ ØªÚ¯ script Ø¨Ø§Ø´Ø¯"), { status: 400 });
+    throw Object.assign(new Error("کد باید شامل تگ script باشد"), { status: 400 });
   }
   const remaining = code
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
     .replace(/<!--[\s\S]*?-->/g, "")
     .trim();
   if (remaining) {
-    throw Object.assign(new Error("ÙÙ‚Ø· Ú©Ø¯Ù‡Ø§ÛŒ script Ø³Ø±ÙˆÛŒØ³ Ú†Øª Ù‚Ø§Ø¨Ù„ Ø«Ø¨Øª Ù‡Ø³ØªÙ†Ø¯"), { status: 400 });
+    throw Object.assign(new Error("فقط کدهای script سرویس چت قابل ثبت هستند"), { status: 400 });
   }
   const origins = new Set();
   function addOrigin(urlValue) {
@@ -658,10 +667,10 @@ function parseChatWidgetCode(value) {
       try {
         parsed = new URL(srcMatch[1]);
       } catch {
-        throw Object.assign(new Error("Ø¢Ø¯Ø±Ø³ Ø§Ø³Ú©Ø±ÛŒÙ¾Øª Ú†Øª Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 400 });
+        throw Object.assign(new Error("آدرس اسکریپت چت معتبر نیست"), { status: 400 });
       }
       if (parsed.protocol !== "https:") {
-        throw Object.assign(new Error("Ø§Ø³Ú©Ø±ÛŒÙ¾Øª Ú†Øª Ø¨Ø§ÛŒØ¯ Ø§Ø² Ø¢Ø¯Ø±Ø³ Ø§Ù…Ù† HTTPS Ø¨Ø§Ø±Ú¯Ø°Ø§Ø±ÛŒ Ø´ÙˆØ¯"), { status: 400 });
+        throw Object.assign(new Error("اسکریپت چت باید از آدرس امن HTTPS بارگذاری شود"), { status: 400 });
       }
       addOrigin(srcMatch[1]);
     }
@@ -694,23 +703,23 @@ function normalizePopup(input, existing = {}) {
   const title = cleanText(data.title, 120);
   const popupBody = cleanText(data.body, 1200);
   if (!title || !popupBody) {
-    throw Object.assign(new Error("Ø¹Ù†ÙˆØ§Ù† Ùˆ Ù…ØªÙ† Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ø§Ù„Ø²Ø§Ù…ÛŒ Ø§Ø³Øª"), { status: 400 });
+    throw Object.assign(new Error("عنوان و متن پاپ‌آپ الزامی است"), { status: 400 });
   }
   const link = cleanText(data.link, 500);
   if (link && !/^https?:\/\/[^\s]+$/i.test(link) && !/^#[a-z0-9-]+$/i.test(link)) {
-    throw Object.assign(new Error("Ù„ÛŒÙ†Ú© Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 400 });
+    throw Object.assign(new Error("لینک پاپ‌آپ معتبر نیست"), { status: 400 });
   }
   const image = String(data.image || "");
   if (image && !/^data:image\/(jpeg|png|webp);base64,[a-z0-9+/=\s]+$/i.test(image)) {
-    throw Object.assign(new Error("ÙØ±Ù…Øª ØªØµÙˆÛŒØ± Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 400 });
+    throw Object.assign(new Error("فرمت تصویر پاپ‌آپ معتبر نیست"), { status: 400 });
   }
   if (image.length > 7 * 1024 * 1024) {
-    throw Object.assign(new Error("Ø­Ø¬Ù… ØªØµÙˆÛŒØ± Ù¾Ø§Ù¾â€ŒØ¢Ù¾ Ø¨ÛŒØ´ Ø§Ø² Ø­Ø¯ Ù…Ø¬Ø§Ø² Ø§Ø³Øª"), { status: 413 });
+    throw Object.assign(new Error("حجم تصویر پاپ‌آپ بیش از حد مجاز است"), { status: 413 });
   }
   const startsAt = data.startsAt && !Number.isNaN(new Date(data.startsAt).getTime()) ? new Date(data.startsAt).toISOString() : "";
   const endsAt = data.endsAt && !Number.isNaN(new Date(data.endsAt).getTime()) ? new Date(data.endsAt).toISOString() : "";
   if (startsAt && endsAt && new Date(endsAt) <= new Date(startsAt)) {
-    throw Object.assign(new Error("Ø²Ù…Ø§Ù† Ù¾Ø§ÛŒØ§Ù† Ø¨Ø§ÛŒØ¯ Ø¨Ø¹Ø¯ Ø§Ø² Ø²Ù…Ø§Ù† Ø´Ø±ÙˆØ¹ Ø¨Ø§Ø´Ø¯"), { status: 400 });
+    throw Object.assign(new Error("زمان پایان باید بعد از زمان شروع باشد"), { status: 400 });
   }
   return {
     title,
@@ -743,14 +752,14 @@ function currentExamDateKey() {
 
 function requireUser(req) {
   const user = currentUser(req);
-  if (!user) throw Object.assign(new Error("Ø§Ø¨ØªØ¯Ø§ ÙˆØ§Ø±Ø¯ Ø­Ø³Ø§Ø¨ Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø´ÙˆÛŒØ¯"), { status: 401 });
+  if (!user) throw Object.assign(new Error("ابتدا وارد حساب کاربری شوید"), { status: 401 });
   return user;
 }
 
 function requireAdmin(req) {
   const user = requireUser(req);
   if (String(user.role).toLowerCase() !== "admin") {
-    throw Object.assign(new Error("Ø§ÛŒÙ† Ø¨Ø®Ø´ ÙÙ‚Ø· Ø¨Ø±Ø§ÛŒ Ù…Ø¯ÛŒØ± Ù‚Ø§Ø¨Ù„ Ø¯Ø³ØªØ±Ø³ÛŒ Ø§Ø³Øª"), { status: 403 });
+    throw Object.assign(new Error("این بخش فقط برای مدیر قابل دسترسی است"), { status: 403 });
   }
   return user;
 }
@@ -768,7 +777,7 @@ function hasPermission(user, permission) {
 function requirePermission(req, permission) {
   const user = requireUser(req);
   if (!hasPermission(user, permission)) {
-    throw Object.assign(new Error("Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† Ø¨Ø®Ø´ Ø¯Ø³ØªØ±Ø³ÛŒ Ù†Ø¯Ø§Ø±ÛŒØ¯"), { status: 403 });
+    throw Object.assign(new Error("برای این بخش دسترسی ندارید"), { status: 403 });
   }
   return user;
 }
@@ -809,51 +818,106 @@ async function saveDocument(collection, documentId, data) {
   await pool.execute(
     `INSERT INTO app_documents (collection_name, document_id, data)
      VALUES (?, ?, ?)
-     ON CONFLICT (collection_name, document_id)
-     DO UPDATE SET data = EXCLUDED.data, updated_at = CURRENT_TIMESTAMP`,
+     ON DUPLICATE KEY UPDATE data = VALUES(data), updated_at = CURRENT_TIMESTAMP`,
     [collection, documentId, JSON.stringify(data)]
   );
 }
 
 function serviceStatusLabel(status) {
   const map = {
-    requested: "Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª",
-    pending: "Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª",
-    preparing: "Ø¯Ø± Ø­Ø§Ù„ Ø¢Ù…Ø§Ø¯Ù‡â€ŒØ³Ø§Ø²ÛŒ",
-    processing: "Ø¯Ø± Ø­Ø§Ù„ Ø¢Ù…Ø§Ø¯Ù‡â€ŒØ³Ø§Ø²ÛŒ",
-    confirmed: "ØªØ£ÛŒÛŒØ¯ Ø´Ø¯",
-    completed: "Ø§Ù†Ø¬Ø§Ù… Ø´Ø¯",
-    sent: "Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯",
-    cancelled: "Ù„ØºÙˆ Ø´Ø¯",
+    requested: "ثبت درخواست",
+    pending: "ثبت درخواست",
+    preparing: "در حال آماده‌سازی",
+    processing: "در حال آماده‌سازی",
+    confirmed: "تأیید شد",
+    completed: "انجام شد",
+    sent: "ارسال شد",
+    cancelled: "لغو شد",
   };
-  return map[String(status || "").toLowerCase()] || cleanText(status || "Ø«Ø¨Øª Ø¯Ø±Ø®ÙˆØ§Ø³Øª", 80);
+  return map[String(status || "").toLowerCase()] || cleanText(status || "ثبت درخواست", 80);
 }
 
 function serviceRequestTitle(collection, data) {
-  if (collection === "exam_registrations") return data.examName || data.title || (data.type === "gre" ? "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… GRE" : "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… TOEFL");
-  if (collection === "course_registrations") return data.category === "voucher" ? `${String(data.voucherType || "").toUpperCase()} Voucher` : data.courseName || "Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¯ÙˆØ±Ù‡";
-  if (collection === "placement_registrations") return data.testName || "Ø¢Ø²Ù…ÙˆÙ† ØªØ¹ÛŒÛŒÙ† Ø³Ø·Ø­";
-  if (collection === "consultation_requests") return data.topic || data.title || "Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ù…Ø´Ø§ÙˆØ±Ù‡";
-  return data.title || data.examName || data.courseName || "Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø®Ø¯Ù…Ø§Øª";
+  if (collection === "exam_registrations") return data.examName || data.title || (data.type === "gre" ? "ثبت‌نام GRE" : "ثبت‌نام TOEFL");
+  if (collection === "course_registrations") return data.category === "voucher" ? `${String(data.voucherType || "").toUpperCase()} Voucher` : data.courseName || "ثبت‌نام دوره";
+  if (collection === "placement_registrations") return data.testName || "آزمون تعیین سطح";
+  if (collection === "consultation_requests") return data.topic || data.title || "درخواست مشاوره";
+  if (collection === "mock_vouchers") return data.examName || "ووچر آزمون آزمایشی";
+  return data.title || data.examName || data.courseName || "درخواست خدمات";
 }
 
 function publicSettingsData(documentId, item) {
   if (!item) return item;
-  if (documentId !== "signup") return item;
   const safe = { ...item };
-  delete safe.emailWebhookUrl;
-  delete safe.smsWebhookUrl;
-  delete safe.emailWebhookToken;
-  delete safe.smsWebhookToken;
-  delete safe.smsApiKey;
+  if (documentId === "signup") {
+    delete safe.emailWebhookUrl;
+    delete safe.smsWebhookUrl;
+    delete safe.emailWebhookToken;
+    delete safe.smsWebhookToken;
+    delete safe.smsApiKey;
+    delete safe.smsPassword;
+  }
+  if (documentId === "payment") {
+    if (safe.apiKey) safe.apiKeyConfigured = true;
+    delete safe.apiKey;
+  }
   return safe;
 }
 
 function deliveryChannels(settings) {
+  const smsEnabled = settings.smsEnabled === true || process.env.SMS_ENABLED === "true";
   const mode = String(settings.notificationChannel || "").toLowerCase();
   const email = mode === "email" || mode === "both" || (!mode && settings.emailEnabled);
-  const sms = mode === "sms" || mode === "both" || (!mode && settings.smsEnabled);
-  return { email: email && settings.emailEnabled !== false, sms: sms && settings.smsEnabled !== false };
+  const sms = mode === "sms" || mode === "both" || (!mode && smsEnabled);
+  const smsWebhookUrl = cleanText(process.env.SMS_WEBHOOK_URL || settings.smsWebhookUrl || "", 600);
+  const melipayamakReady = isMelipayamakEnabled(settings);
+  return {
+    email: email && settings.emailEnabled !== false,
+    sms: sms && smsEnabled && (!!smsWebhookUrl || melipayamakReady),
+  };
+}
+
+function isMelipayamakProvider(settings = {}) {
+  const provider = String(process.env.SMS_PROVIDER || settings.smsProvider || "").trim().toLowerCase();
+  return /melipayamak|meli\s*payamak|payamak|ملی\s*پیامک|ملیپیامک/.test(provider);
+}
+
+function melipayamakConfig(settings = {}) {
+  return {
+    provider: "melipayamak",
+    username: cleanText(process.env.SMS_USERNAME || settings.smsUsername || "", 120),
+    password: cleanText(process.env.SMS_PASSWORD || process.env.SMS_API_KEY || settings.smsPassword || settings.smsApiKey || settings.smsWebhookToken || "", 600),
+    from: cleanText(process.env.SMS_SENDER || settings.smsSender || "", 80),
+    endpoint: cleanText(process.env.SMS_MELIPAYAMAK_URL || settings.smsMelipayamakUrl || "https://rest.payamak-panel.com/api/SendSMS/SendSMS", 600),
+  };
+}
+
+function isMelipayamakEnabled(settings = {}) {
+  if (!isMelipayamakProvider(settings)) return false;
+  const cfg = melipayamakConfig(settings);
+  return !!(cfg.username && cfg.password && cfg.from && cfg.endpoint);
+}
+
+async function sendMelipayamakSms(to, text, settings = {}) {
+  const cfg = melipayamakConfig(settings);
+  if (!cfg.username || !cfg.password || !cfg.from || !cfg.endpoint) {
+    throw new Error("تنظیمات ملی پیامک کامل نیست");
+  }
+  const form = new URLSearchParams();
+  form.set("username", cfg.username);
+  form.set("password", cfg.password);
+  form.set("to", cleanText(to, 30).replace(/[^\d+]/g, ""));
+  form.set("from", cfg.from);
+  form.set("text", cleanText(text, 2000));
+  form.set("isflash", "false");
+  const response = await fetch(cfg.endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: form.toString(),
+  });
+  const bodyText = await response.text();
+  if (!response.ok) throw new Error(`MeliPayamak failed: ${response.status} ${bodyText.slice(0, 180)}`);
+  return bodyText;
 }
 
 async function postDeliveryWebhook(url, payload, token) {
@@ -871,32 +935,39 @@ async function postDeliveryWebhook(url, payload, token) {
 async function queueExternalDelivery(type, recipient, payload, settings) {
   if (!recipient) return;
   const queueId = id("delivery");
+  const useMelipayamak = type === "sms" && isMelipayamakEnabled(settings);
   const webhookUrl = type === "email"
     ? cleanText(process.env.EMAIL_WEBHOOK_URL || settings.emailWebhookUrl || "", 600)
     : cleanText(process.env.SMS_WEBHOOK_URL || settings.smsWebhookUrl || "", 600);
   const token = type === "email"
     ? cleanText(process.env.EMAIL_WEBHOOK_TOKEN || settings.emailWebhookToken || "", 600)
-    : cleanText(process.env.SMS_WEBHOOK_TOKEN || settings.smsWebhookToken || "", 600);
+    : cleanText(process.env.SMS_WEBHOOK_TOKEN || settings.smsWebhookToken || settings.smsApiKey || "", 600);
+  const smsEnabled = settings.smsEnabled === true || process.env.SMS_ENABLED === "true";
+  if (type === "sms" && (!smsEnabled || (!webhookUrl && !useMelipayamak))) return;
   const item = {
     type,
     recipient: cleanText(recipient, 190),
     subject: cleanText(payload.subject, 180),
     text: cleanText(payload.text, 2000),
-    status: webhookUrl ? "queued" : "pending-configuration",
-    provider: type === "sms" ? cleanText(settings.smsProvider, 120) : "email-webhook",
+    status: (webhookUrl || useMelipayamak) ? "queued" : "pending-configuration",
+    provider: type === "sms" ? (useMelipayamak ? "melipayamak" : cleanText(settings.smsProvider, 120)) : "email-webhook",
     createdAt: new Date().toISOString(),
   };
   await saveDocument("notification_delivery_queue", queueId, item);
-  if (!webhookUrl) return;
+  if (!webhookUrl && !useMelipayamak) return;
   try {
-    await postDeliveryWebhook(webhookUrl, {
-      type,
-      to: recipient,
-      subject: payload.subject,
-      text: payload.text,
-      from: type === "email" ? settings.emailFrom : settings.smsSender,
-      payload,
-    }, token);
+    if (useMelipayamak) {
+      item.providerResponse = cleanText(await sendMelipayamakSms(recipient, payload.text, settings), 600);
+    } else {
+      await postDeliveryWebhook(webhookUrl, {
+        type,
+        to: recipient,
+        subject: payload.subject,
+        text: payload.text,
+        from: type === "email" ? settings.emailFrom : settings.smsSender,
+        payload,
+      }, token);
+    }
     item.status = "sent";
     item.sentAt = new Date().toISOString();
   } catch (error) {
@@ -906,8 +977,91 @@ async function queueExternalDelivery(type, recipient, payload, settings) {
   await saveDocument("notification_delivery_queue", queueId, item);
 }
 
+function renderTemplate(settings, key, fallback, values = {}) {
+  const templates = settings && typeof settings.notificationTemplates === "object" ? settings.notificationTemplates : {};
+  const source = cleanText(templates[key] || fallback || "", 2000);
+  return source.replace(/\{([a-zA-Z0-9_]+)\}/g, (_, name) => {
+    const value = values[name];
+    return value === undefined || value === null ? "" : String(value);
+  });
+}
+
+function adminSmsRecipients(settings) {
+  return String(process.env.SMS_ADMIN_NUMBERS || settings.smsAdminNumbers || "")
+    .split(/\r?\n|,/)
+    .map((item) => cleanText(item, 30).replace(/[^\d+]/g, ""))
+    .filter(Boolean);
+}
+
+async function sendAutomaticSms(key, values, recipients, subject) {
+  const settings = await getDocument("settings", "signup") || {};
+  const channels = deliveryChannels(settings);
+  if (!channels.sms) return;
+  const text = renderTemplate(settings, key, values.defaultText || "", values);
+  const list = Array.isArray(recipients) ? recipients : [recipients];
+  await Promise.all(list.filter(Boolean).map((recipient) => queueExternalDelivery("sms", recipient, {
+    subject: subject || "Allameh Sokhan Notification",
+    text,
+    key,
+    values,
+  }, settings)));
+}
+
+async function notifyProfileCreatedOrUpdated(profile, kind) {
+  const settings = await getDocument("settings", "signup") || {};
+  const admins = adminSmsRecipients(settings);
+  const values = {
+    name: profile.name || profile.email || "",
+    email: profile.email || "",
+    mobile: profile.mobile || "",
+    defaultText: kind === "created" ? "New profile: {name} - {mobile} - {email}" : "Profile updated: {name} - {mobile}",
+  };
+  await sendAutomaticSms(kind === "created" ? "adminProfileCreated" : "adminProfileUpdated", values, admins, "Admin notification");
+  if (profile.mobile) {
+    await sendAutomaticSms(kind === "created" ? "studentProfileCreated" : "studentProfileUpdated", {
+      ...values,
+      defaultText: kind === "created" ? "Your Allameh Sokhan profile was created successfully." : "Your Allameh Sokhan profile was updated successfully.",
+    }, profile.mobile, "Student notification");
+  }
+}
+
+async function notifyMessageCreated(message) {
+  if (!message || !message.text) return;
+  const settings = await getDocument("settings", "signup") || {};
+  if (message.senderRole === "student" && message.receiverId === "admin") {
+    await sendAutomaticSms("adminStudentMessage", {
+      name: message.senderName || "",
+      text: message.text,
+      defaultText: "New student message from {name}: {text}",
+    }, adminSmsRecipients(settings), "New student message");
+    return;
+  }
+  if (message.senderRole === "admin" && message.receiverId) {
+    const user = await getDocument("users", message.receiverId);
+    if (user && user.mobile) {
+      await sendAutomaticSms("studentAdminReply", {
+        name: user.name || user.email || "",
+        text: message.text,
+        defaultText: "You have a new reply from Allameh Sokhan.",
+      }, user.mobile, "Admin reply");
+    }
+  }
+}
+
+async function notifyNewRegistration(data, service, collection = "") {
+  const settings = await getDocument("settings", "signup") || {};
+  const values = {
+    name: data.name || data.userName || "",
+    email: data.email || "",
+    mobile: data.mobile || "",
+    service: service || data.examName || data.courseName || data.title || "",
+    defaultText: "New request: {service} - {name} - {mobile}",
+  };
+  await sendAutomaticSms(collection === "mock_vouchers" ? "adminMockVoucherRequest" : "adminRegistrationClick", values, adminSmsRecipients(settings), "New registration");
+}
+
 async function notifyServiceStatusChange(collection, documentId, data, actor, previous = {}) {
-  const serviceCollections = new Set(["exam_registrations", "course_registrations", "placement_registrations", "consultation_requests"]);
+  const serviceCollections = new Set(["exam_registrations", "course_registrations", "placement_registrations", "consultation_requests", "mock_vouchers"]);
   if (!serviceCollections.has(collection) || !data || !data.userId) return;
   const status = data.voucherStatus || data.status || "pending";
   const oldStatus = previous.voucherStatus || previous.status || "";
@@ -915,13 +1069,26 @@ async function notifyServiceStatusChange(collection, documentId, data, actor, pr
   const settings = await getDocument("settings", "signup") || {};
   const title = serviceRequestTitle(collection, data);
   const statusText = serviceStatusLabel(status);
-  const body = `ÙˆØ¶Ø¹ÛŒØª Ø¯Ø±Ø®ÙˆØ§Ø³Øª Â«${title}Â» Ø¨Ù‡ Â«${statusText}Â» ØªØºÛŒÛŒØ± Ú©Ø±Ø¯.`;
+  const templateKey = collection === "mock_vouchers" && status === "issued"
+    ? "studentMockVoucherIssued"
+    : collection === "mock_vouchers" && status === "used"
+      ? "studentMockVoucherUsed"
+      : "";
+  const body = templateKey
+    ? renderTemplate(settings, templateKey, `وضعیت درخواست «${title}» به «${statusText}» تغییر کرد.`, {
+        name: data.name || data.userName || "",
+        email: data.email || data.userEmail || "",
+        mobile: data.mobile || "",
+        service: title,
+        status: statusText,
+      })
+    : `وضعیت درخواست «${title}» به «${statusText}» تغییر کرد.`;
   const notificationId = id("notification");
   await saveDocument("notifications", notificationId, {
     audience: "user",
     userId: cleanText(data.userId, 100),
     userName: cleanText(data.name || data.userName || data.email, 120),
-    title: `Ø¨Ù‡â€ŒØ±ÙˆØ²Ø±Ø³Ø§Ù†ÛŒ ÙˆØ¶Ø¹ÛŒØª ${title}`,
+    title: `به‌روزرسانی وضعیت ${title}`,
     body,
     kind: "service-status",
     collection,
@@ -931,7 +1098,7 @@ async function notifyServiceStatusChange(collection, documentId, data, actor, pr
     createdBy: actor ? actor.uid : "system",
   });
   const channels = deliveryChannels(settings);
-  const payload = { subject: `Ø¨Ù‡â€ŒØ±ÙˆØ²Ø±Ø³Ø§Ù†ÛŒ Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø´Ù…Ø§ Ø¯Ø± Ù…ÙˆØ³Ø³Ù‡ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†`, text: body, collection, documentId, status, title };
+  const payload = { subject: `به‌روزرسانی درخواست شما در موسسه علامه سخن`, text: body, collection, documentId, status, title };
   if (channels.email) await queueExternalDelivery("email", data.email, payload, settings);
   if (channels.sms) await queueExternalDelivery("sms", data.mobile, payload, settings);
 }
@@ -940,38 +1107,39 @@ async function createExamRegistration(actor, input) {
   const type = String(input.type || "").toLowerCase();
   const isMock = type === "mock";
   if (!["toefl", "gre", "mock"].includes(type)) {
-    throw Object.assign(new Error("Ù†ÙˆØ¹ Ø¢Ø²Ù…ÙˆÙ† Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 400 });
+    throw Object.assign(new Error("نوع آزمون معتبر نیست"), { status: 400 });
   }
   const mockType = isMock && input.mockType === "gre" ? "gre" : isMock ? "toefl" : "";
   const dateCollection = isMock ? "mock_dates" : `${type}_dates`;
   const dateId = cleanText(input.dateId, 100);
-  if (!dateId) throw Object.assign(new Error("ØªØ§Ø±ÛŒØ® Ø¢Ø²Ù…ÙˆÙ† Ø§Ù†ØªØ®Ø§Ø¨ Ù†Ø´Ø¯Ù‡ Ø§Ø³Øª"), { status: 400 });
+  if (!dateId) throw Object.assign(new Error("تاریخ آزمون انتخاب نشده است"), { status: 400 });
 
   const name = cleanText(input.name, 120);
   const email = cleanText(input.email, 190).toLowerCase();
   const mobile = cleanText(input.mobile, 20).replace(/\D/g, "");
   if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^09\d{9}$/.test(mobile)) {
-    throw Object.assign(new Error("Ù†Ø§Ù…ØŒ Ø§ÛŒÙ…ÛŒÙ„ Ùˆ Ø´Ù…Ø§Ø±Ù‡ Ù…ÙˆØ¨Ø§ÛŒÙ„ Ù…Ø¹ØªØ¨Ø± Ø§Ù„Ø²Ø§Ù…ÛŒ Ø§Ø³Øª"), { status: 400 });
+    throw Object.assign(new Error("نام، ایمیل و شماره موبایل معتبر الزامی است"), { status: 400 });
   }
 
-  const client = await pgPool.connect();
+  const client = await dbClient();
   try {
     await client.query("BEGIN");
     const dateResult = await client.query(
       "SELECT data FROM app_documents WHERE collection_name = $1 AND document_id = $2 FOR UPDATE",
       [dateCollection, dateId]
     );
-    if (!dateResult.rows.length) throw Object.assign(new Error("ØªØ§Ø±ÛŒØ® Ø§Ù†ØªØ®Ø§Ø¨â€ŒØ´Ø¯Ù‡ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 404 });
+    if (!dateResult.rows.length) throw Object.assign(new Error("تاریخ انتخاب‌شده معتبر نیست"), { status: 404 });
     const dateInfo = parseJson(dateResult.rows[0].data);
     const today = currentExamDateKey();
-    if (!dateInfo.date || dateInfo.date < today) throw Object.assign(new Error("Ø§ÛŒÙ† ØªØ§Ø±ÛŒØ® Ø¯ÛŒÚ¯Ø± ÙØ¹Ø§Ù„ Ù†ÛŒØ³Øª"), { status: 409 });
+    if (!dateInfo.date || dateInfo.date < today) throw Object.assign(new Error("این تاریخ دیگر فعال نیست"), { status: 409 });
 
     if (isMock) {
       const dateIsGre = /GRE/i.test(String(dateInfo.type || ""));
-      if ((mockType === "gre") !== dateIsGre) throw Object.assign(new Error("Ù†ÙˆØ¹ ØªØ§Ø±ÛŒØ® Ø¢Ø²Ù…ÙˆÙ† Ø¨Ø§ ÙØ±Ù… Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ù‡Ù…Ø§Ù‡Ù†Ú¯ Ù†ÛŒØ³Øª"), { status: 400 });
+      if ((mockType === "gre") !== dateIsGre) throw Object.assign(new Error("نوع تاریخ آزمون با فرم ثبت‌نام هماهنگ نیست"), { status: 400 });
       const capacity = Math.max(1, Number(dateInfo.capacity || 1));
       const registered = Math.max(0, Number(dateInfo.registered || 0));
-      if (registered >= capacity) throw Object.assign(new Error("Ø¸Ø±ÙÛŒØª Ø§ÛŒÙ† Ø¢Ø²Ù…ÙˆÙ† ØªÚ©Ù…ÛŒÙ„ Ø´Ø¯Ù‡ Ø§Ø³Øª"), { status: 409 });
+      const manualRegistered = Math.max(0, Number(dateInfo.manualRegistered || 0));
+      if (registered + manualRegistered >= capacity) throw Object.assign(new Error("ظرفیت این آزمون تکمیل شده است"), { status: 409 });
     }
 
     const duplicate = await client.query(
@@ -982,7 +1150,7 @@ async function createExamRegistration(actor, input) {
        LIMIT 1`,
       [actor.uid, dateId]
     );
-    if (duplicate.rows.length) throw Object.assign(new Error("Ø´Ù…Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† ØªØ§Ø±ÛŒØ® Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ú©Ø±Ø¯Ù‡â€ŒØ§ÛŒØ¯"), { status: 409 });
+    if (duplicate.rows.length) throw Object.assign(new Error("شما قبلاً برای این تاریخ ثبت‌نام کرده‌اید"), { status: 409 });
 
     const registrationId = id("exam_registrations");
     const examName = isMock
@@ -1031,6 +1199,7 @@ async function createExamRegistration(actor, input) {
       );
     }
     await client.query("COMMIT");
+    await notifyNewRegistration(registration, examName);
     return { id: registrationId, registration };
   } catch (error) {
     await client.query("ROLLBACK");
@@ -1049,12 +1218,12 @@ function validateCsrf(req, url) {
   if (csrfExempt(req, url)) return;
   const session = currentSession(req);
   if (!session) {
-    throw Object.assign(new Error("Ø§Ø¨ØªØ¯Ø§ ÙˆØ§Ø±Ø¯ Ø­Ø³Ø§Ø¨ Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø´ÙˆÛŒØ¯"), { status: 401 });
+    throw Object.assign(new Error("ابتدا وارد حساب کاربری شوید"), { status: 401 });
   }
   const expected = ensureCsrfToken(session);
   const received = String(req.headers["x-csrf-token"] || "");
   if (!received || received !== expected) {
-    throw Object.assign(new Error("Ø§Ù…Ù†ÛŒØª Ø¯Ø±Ø®ÙˆØ§Ø³Øª ØªØ§ÛŒÛŒØ¯ Ù†Ø´Ø¯Ø› ØµÙØ­Ù‡ Ø±Ø§ Ø±ÙØ±Ø´ Ú©Ù†ÛŒØ¯"), { status: 403 });
+    throw Object.assign(new Error("امنیت درخواست تایید نشد؛ صفحه را رفرش کنید"), { status: 403 });
   }
 }
 
@@ -1071,7 +1240,7 @@ function ownsDocument(collection, item, user) {
 
 async function handleAuth(req, res, pathname) {
   if (pathname === "/api/auth/login" && req.method === "POST") {
-    if (loginRateLimited(req)) return fail(res, 429, "ØªØ¹Ø¯Ø§Ø¯ ØªÙ„Ø§Ø´â€ŒÙ‡Ø§ÛŒ ÙˆØ±ÙˆØ¯ Ø²ÛŒØ§Ø¯ Ø§Ø³ØªØ› Û±Ûµ Ø¯Ù‚ÛŒÙ‚Ù‡ Ø¯ÛŒÚ¯Ø± Ø¯ÙˆØ¨Ø§Ø±Ù‡ ØªÙ„Ø§Ø´ Ú©Ù†ÛŒØ¯");
+    if (loginRateLimited(req)) return fail(res, 429, "تعداد تلاش‌های ورود زیاد است؛ ۱۵ دقیقه دیگر دوباره تلاش کنید");
     const data = await body(req);
     const email = String(data.email || "").trim().toLowerCase();
     const [rows] = await pool.execute(
@@ -1079,16 +1248,16 @@ async function handleAuth(req, res, pathname) {
       [email]
     );
     const row = rows[0];
-    if (!row || !verifyPassword(row, data.password || "")) return fail(res, 401, "Ø§ÛŒÙ…ÛŒÙ„ ÛŒØ§ Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª");
+    if (!row || !verifyPassword(row, data.password || "")) return fail(res, 401, "ایمیل یا رمز عبور اشتباه است");
     const user = publicUser(row);
-    if (user.active === false) return fail(res, 403, "Ø§ÛŒÙ† Ø­Ø³Ø§Ø¨ ØªÙˆØ³Ø· Ù…Ø¯ÛŒØ± Ø³Ø§ÛŒØª ØºÛŒØ±ÙØ¹Ø§Ù„ Ø´Ø¯Ù‡ Ø§Ø³Øª");
+    if (user.active === false) return fail(res, 403, "این حساب توسط مدیر سایت غیرفعال شده است");
     const sid = crypto.randomBytes(32).toString("hex");
     const session = { user, expiresAt: Date.now() + SESSION_MAX_AGE };
     ensureCsrfToken(session);
     sessions.set(sid, session);
     clearLoginAttempts(req);
     return send(res, 200, { user, csrfToken: session.csrfToken }, {
-      "Set-Cookie": sessionCookie(req, sid, session),
+      "Set-Cookie": sessionCookie(req, sid),
     });
   }
 
@@ -1096,10 +1265,10 @@ async function handleAuth(req, res, pathname) {
     const data = await body(req);
     const email = String(data.email || "").trim().toLowerCase();
     const password = String(data.password || "");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "Ø§ÛŒÙ…ÛŒÙ„ Ù…Ø¹ØªØ¨Ø± ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯");
-    if (password.length < 8) return fail(res, 400, "Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø¨Ø§ÛŒØ¯ Ø­Ø¯Ø§Ù‚Ù„ Û¸ Ú©Ø§Ø±Ø§Ú©ØªØ± Ø¨Ø§Ø´Ø¯");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "ایمیل معتبر وارد کنید");
+    if (password.length < 8) return fail(res, 400, "رمز عبور باید حداقل ۸ کاراکتر باشد");
     const [existing] = await pool.execute("SELECT uid FROM app_users WHERE email = ? LIMIT 1", [email]);
-    if (existing.length) return fail(res, 409, "Ø§ÛŒÙ† Ø§ÛŒÙ…ÛŒÙ„ Ù‚Ø¨Ù„Ø§Ù‹ Ø«Ø¨Øª Ø´Ø¯Ù‡ Ø§Ø³Øª");
+    if (existing.length) return fail(res, 409, "این ایمیل قبلاً ثبت شده است");
 
     const uid = id("user");
     const secret = makePassword(password);
@@ -1120,15 +1289,15 @@ async function handleAuth(req, res, pathname) {
     ensureCsrfToken(session);
     sessions.set(sid, session);
     return send(res, 200, { user, csrfToken: session.csrfToken }, {
-      "Set-Cookie": sessionCookie(req, sid, session),
+      "Set-Cookie": sessionCookie(req, sid),
     });
   }
 
   if (pathname === "/api/auth/request-password-reset" && req.method === "POST") {
-    if (loginRateLimited(req)) return fail(res, 429, "ØªØ¹Ø¯Ø§Ø¯ Ø¯Ø±Ø®ÙˆØ§Ø³Øªâ€ŒÙ‡Ø§ Ø²ÛŒØ§Ø¯ Ø§Ø³ØªØ› Ú©Ù…ÛŒ Ø¨Ø¹Ø¯ Ø¯ÙˆØ¨Ø§Ø±Ù‡ ØªÙ„Ø§Ø´ Ú©Ù†ÛŒØ¯");
+    if (loginRateLimited(req)) return fail(res, 429, "تعداد درخواست‌ها زیاد است؛ کمی بعد دوباره تلاش کنید");
     const data = await body(req);
     const email = String(data.email || "").trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "Ø§ÛŒÙ…ÛŒÙ„ Ù…Ø¹ØªØ¨Ø± ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "ایمیل معتبر وارد کنید");
     const [rows] = await pool.execute("SELECT uid, data FROM app_users WHERE email = ? LIMIT 1", [email]);
     if (rows.length) {
       const profile = parseJson(rows[0].data);
@@ -1141,7 +1310,7 @@ async function handleAuth(req, res, pathname) {
         createdAt: new Date().toISOString(),
       });
     }
-    return send(res, 200, { ok: true, message: "Ø§Ú¯Ø± Ø­Ø³Ø§Ø¨ÛŒ Ø¨Ø§ Ø§ÛŒÙ† Ø§ÛŒÙ…ÛŒÙ„ ÙˆØ¬ÙˆØ¯ Ø¯Ø§Ø´ØªÙ‡ Ø¨Ø§Ø´Ø¯ØŒ Ø¯Ø±Ø®ÙˆØ§Ø³Øª Ø¨Ø±Ø§ÛŒ Ù…Ø¯ÛŒØ± Ø«Ø¨Øª Ù…ÛŒâ€ŒØ´ÙˆØ¯" });
+    return send(res, 200, { ok: true, message: "اگر حسابی با این ایمیل وجود داشته باشد، درخواست برای مدیر ثبت می‌شود" });
   }
 
   if (pathname === "/api/auth/me" && req.method === "GET") {
@@ -1151,7 +1320,7 @@ async function handleAuth(req, res, pathname) {
 
   if (pathname === "/api/auth/csrf" && req.method === "GET") {
     const session = currentSession(req);
-    if (!session) return fail(res, 401, "Ø§Ø¨ØªØ¯Ø§ ÙˆØ§Ø±Ø¯ Ø­Ø³Ø§Ø¨ Ú©Ø§Ø±Ø¨Ø±ÛŒ Ø´ÙˆÛŒØ¯");
+    if (!session) return fail(res, 401, "ابتدا وارد حساب کاربری شوید");
     return send(res, 200, { csrfToken: ensureCsrfToken(session) });
   }
 
@@ -1171,9 +1340,9 @@ async function handleAuth(req, res, pathname) {
       [session.uid]
     );
     if (!rows[0] || !verifyPassword(rows[0], data.currentPassword || "")) {
-      return fail(res, 401, "Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± ÙØ¹Ù„ÛŒ Ø§Ø´ØªØ¨Ø§Ù‡ Ø§Ø³Øª");
+      return fail(res, 401, "رمز عبور فعلی اشتباه است");
     }
-    if (String(data.newPassword || "").length < 8) return fail(res, 400, "Ø±Ù…Ø² Ø¬Ø¯ÛŒØ¯ Ø¨Ø§ÛŒØ¯ Ø­Ø¯Ø§Ù‚Ù„ Û¸ Ú©Ø§Ø±Ø§Ú©ØªØ± Ø¨Ø§Ø´Ø¯");
+    if (String(data.newPassword || "").length < 8) return fail(res, 400, "رمز جدید باید حداقل ۸ کاراکتر باشد");
     const secret = makePassword(data.newPassword);
     await pool.execute(
       "UPDATE app_users SET salt = ?, password_hash = ? WHERE uid = ?",
@@ -1190,7 +1359,7 @@ async function handleCollections(req, res, url) {
   if (parts[0] !== "api" || parts[1] !== "collections") return false;
   const collection = decodeURIComponent(parts[2] || "");
   const documentId = decodeURIComponent(parts[3] || "");
-  if (!/^[a-z][a-z0-9_]{1,79}$/.test(collection)) return fail(res, 404, "Ù…Ø³ÛŒØ± Ù†Ø§Ù…Ø¹ØªØ¨Ø± Ø§Ø³Øª");
+  if (!/^[a-z][a-z0-9_]{1,79}$/.test(collection)) return fail(res, 404, "مسیر نامعتبر است");
 
   const user = currentUser(req);
   const isAdmin = isSiteManager(user);
@@ -1200,14 +1369,14 @@ async function handleCollections(req, res, url) {
     if (!documentId && req.method === "GET") {
       const listActor = requireUser(req);
       if (!["users", "results", "notifications", "attendance", "reports"].some((permission) => hasPermission(listActor, permission))) {
-        return fail(res, 403, "Ø¯Ø³ØªØ±Ø³ÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+        return fail(res, 403, "دسترسی مجاز نیست");
       }
       const [rows] = await pool.query("SELECT uid, email, role, data FROM app_users ORDER BY created_at DESC");
       return send(res, 200, { items: Object.fromEntries(rows.map((row) => [row.uid, publicUser(row)])) });
     }
-    if (!documentId) return fail(res, 400, "Ø´Ù†Ø§Ø³Ù‡ Ú©Ø§Ø±Ø¨Ø± Ù„Ø§Ø²Ù… Ø§Ø³Øª");
+    if (!documentId) return fail(res, 400, "شناسه کاربر لازم است");
     const canReadUser = user && (user.uid === documentId || ["users", "results", "notifications", "attendance", "reports"].some((permission) => hasPermission(user, permission)));
-    if (!canReadUser) return fail(res, 403, "Ø¯Ø³ØªØ±Ø³ÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+    if (!canReadUser) return fail(res, 403, "دسترسی مجاز نیست");
 
     if (req.method === "GET") {
       const item = await getDocument("users", documentId);
@@ -1230,20 +1399,25 @@ async function handleCollections(req, res, url) {
         }));
       }
       const [rows] = await pool.execute("SELECT data FROM app_users WHERE uid = ? LIMIT 1", [documentId]);
-      if (!rows.length) return fail(res, 404, "Ú©Ø§Ø±Ø¨Ø± Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯");
+      if (!rows.length) return fail(res, 404, "کاربر پیدا نشد");
       const profile = parseJson(rows[0].data);
+      const previousProfile = JSON.parse(JSON.stringify(profile));
       if (req.method === "PUT") Object.assign(profile, changes);
       else applyDottedUpdate(profile, changes);
       await pool.execute(
         "UPDATE app_users SET data = ?, updated_at = CURRENT_TIMESTAMP WHERE uid = ?",
         [JSON.stringify(profile), documentId]
       );
+      const profileFieldsChanged = Object.keys(changes).some((key) => ["name", "mobile", "mobileVerified"].includes(key));
+      if (profileFieldsChanged || req.method === "PUT") {
+        await notifyProfileCreatedOrUpdated(profile, previousProfile.mobile ? "updated" : "created");
+      }
       if (isSiteManager(user) || String(user.role || "").toLowerCase() === "staff") {
         await writeAudit(user, "update-user", "users", documentId, { fields: Object.keys(changes).slice(0, 20) });
       }
       return send(res, 200, { ok: true });
     }
-    return fail(res, 405, "Ø¹Ù…Ù„ÛŒØ§Øª Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+    return fail(res, 405, "عملیات مجاز نیست");
   }
 
   if (!documentId && req.method === "GET") {
@@ -1253,7 +1427,7 @@ async function handleCollections(req, res, url) {
       [collection]
     );
     let items = rows.map((row) => [row.document_id, parseJson(row.data)]);
-    if (collection === "settings" && !canManage) {
+    if (collection === "settings") {
       items = items.map(([key, item]) => [key, publicSettingsData(key, item)]);
     }
     if (collection === "popups" && !canManage) {
@@ -1281,7 +1455,7 @@ async function handleCollections(req, res, url) {
 
   if (!documentId && req.method === "POST") {
     const actor = requireUser(req);
-    if (!canManage && !studentCreateCollections.has(collection)) return fail(res, 403, "Ø§ÛŒÙ† Ø¹Ù…Ù„ÛŒØ§Øª ÙÙ‚Ø· Ø¨Ø±Ø§ÛŒ Ù…Ø¯ÛŒØ± Ù…Ø¬Ø§Ø² Ø§Ø³Øª");
+    if (!canManage && !studentCreateCollections.has(collection)) return fail(res, 403, "این عملیات فقط برای مدیر مجاز است");
     let data = await body(req);
     if (collection === "popups") data = normalizePopup(data);
     if (collection === "exam_registrations" && !canManage) {
@@ -1293,8 +1467,8 @@ async function handleCollections(req, res, url) {
       if (collection === "testimonials") {
         data.userName = cleanText(actor.name || data.userName, 120);
         data.userEmail = cleanText(actor.email || data.userEmail, 190);
-        data.displayName = cleanText(data.displayName || actor.name || "Ø¯Ø§Ù†Ø´Ø¬ÙˆÛŒ Ø¹Ù„Ø§Ù…Ù‡ Ø³Ø®Ù†", 120);
-        data.title = cleanText(data.title || "ØªØ¬Ø±Ø¨Ù‡ Ø¯Ø§Ù†Ø´Ø¬Ùˆ", 160);
+        data.displayName = cleanText(data.displayName || actor.name || "دانشجوی علامه سخن", 120);
+        data.title = cleanText(data.title || "تجربه دانشجو", 160);
         data.body = cleanText(data.body || "", 1200);
         data.rating = Math.max(1, Math.min(5, Number(data.rating || 5)));
         data.status = "pending";
@@ -1314,7 +1488,7 @@ async function handleCollections(req, res, url) {
           "SELECT document_id FROM app_documents WHERE collection_name = 'exam_waitlist' AND data->>'userId' = ? AND data->>'dateId' = ? AND COALESCE(data->>'status','waiting') = 'waiting' LIMIT 1",
           [actor.uid, data.dateId]
         );
-        if (duplicates.length) return fail(res, 409, "Ø´Ù…Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø¯Ø± ÙÙ‡Ø±Ø³Øª Ø§Ù†ØªØ¸Ø§Ø± Ø§ÛŒÙ† Ø¢Ø²Ù…ÙˆÙ† Ù‚Ø±Ø§Ø± Ú¯Ø±ÙØªÙ‡â€ŒØ§ÛŒØ¯");
+        if (duplicates.length) return fail(res, 409, "شما قبلاً در فهرست انتظار این آزمون قرار گرفته‌اید");
       }
       if (collection === "password_reset_requests") {
         data.email = cleanText(actor.email, 190);
@@ -1327,7 +1501,7 @@ async function handleCollections(req, res, url) {
         data.senderName = cleanText(actor.name || actor.email, 120);
         data.senderRole = "student";
         data.receiverId = "admin";
-        data.receiverName = "Ù…Ø¯ÛŒØ±ÛŒØª Ù…ÙˆØ³Ø³Ù‡";
+        data.receiverName = "مدیریت موسسه";
         data.conversationId = `admin_${actor.uid}`;
         data.text = cleanText(data.text, 4000);
         data.createdAt = new Date().toISOString();
@@ -1336,17 +1510,21 @@ async function handleCollections(req, res, url) {
     }
     const newId = id(collection);
     await saveDocument(collection, newId, data);
+    if (collection === "messages") await notifyMessageCreated(data);
+    if (["exam_registrations", "course_registrations", "placement_registrations", "consultation_requests", "mock_reschedule_requests", "mock_vouchers"].includes(collection)) {
+      await notifyNewRegistration(data, data.examName || data.courseName || data.testName || data.topic || data.title || collection, collection);
+    }
     if (canManage) await writeAudit(actor, "create", collection, newId, { title: cleanText(data.title || data.examName || data.name, 120) });
     return send(res, 200, { id: newId });
   }
 
-  if (!documentId) return fail(res, 400, "Ø´Ù†Ø§Ø³Ù‡ Ù„Ø§Ø²Ù… Ø§Ø³Øª");
+  if (!documentId) return fail(res, 400, "شناسه لازم است");
   const existing = await getDocument(collection, documentId);
 
   if (req.method === "GET") {
     if (!publicReadCollections.has(collection)) {
       const actor = requireUser(req);
-      if (!canManage && !ownsDocument(collection, existing, actor)) return fail(res, 403, "Ø¯Ø³ØªØ±Ø³ÛŒ Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+      if (!canManage && !ownsDocument(collection, existing, actor)) return fail(res, 403, "دسترسی مجاز نیست");
     }
     if (collection === "popups" && !canManage && existing) {
       const now = Date.now();
@@ -1357,7 +1535,7 @@ async function handleCollections(req, res, url) {
         && (!endsAt || endsAt >= now);
       if (!visible) return send(res, 200, { exists: false, item: null });
     }
-    return send(res, 200, { exists: !!existing, item: collection === "settings" && !canManage ? publicSettingsData(documentId, existing) : existing });
+    return send(res, 200, { exists: !!existing, item: collection === "settings" ? publicSettingsData(documentId, existing) : existing });
   }
 
   if (req.method === "PUT" || req.method === "PATCH") {
@@ -1368,7 +1546,7 @@ async function handleCollections(req, res, url) {
       if (collection === "consultation_slots" && existing && Object.hasOwn(changes, "booked")) {
         const booked = Number(existing.booked || 0);
         const capacity = Math.max(1, Number(existing.capacity || 1));
-        if (booked >= capacity) return fail(res, 409, "Ø¸Ø±ÙÛŒØª Ø§ÛŒÙ† Ø²Ù…Ø§Ù† Ù…Ø´Ø§ÙˆØ±Ù‡ ØªÚ©Ù…ÛŒÙ„ Ø´Ø¯Ù‡ Ø§Ø³Øª");
+        if (booked >= capacity) return fail(res, 409, "ظرفیت این زمان مشاوره تکمیل شده است");
         changes = { booked: booked + 1 };
       } else if (collection === "registration_assignments" && ownsDocument(collection, existing, actor)) {
         const allowed = new Set(["status", "viewedAt", "registeredAt"]);
@@ -1390,7 +1568,7 @@ async function handleCollections(req, res, url) {
           readAt: changes.read === true ? new Date().toISOString() : existing.readAt || "",
         };
       } else {
-        return fail(res, 403, "Ø§ÛŒÙ† Ø¹Ù…Ù„ÛŒØ§Øª ÙÙ‚Ø· Ø¨Ø±Ø§ÛŒ Ù…Ø¯ÛŒØ± Ù…Ø¬Ø§Ø² Ø§Ø³Øª");
+        return fail(res, 403, "این عملیات فقط برای مدیر مجاز است");
       }
     }
     const data = existing || {};
@@ -1398,7 +1576,7 @@ async function handleCollections(req, res, url) {
     else applyDottedUpdate(data, changes);
     const finalData = collection === "popups" ? normalizePopup(data, existing || {}) : data;
     await saveDocument(collection, documentId, finalData);
-    if (canManage && ["exam_registrations", "course_registrations", "placement_registrations", "consultation_requests"].includes(collection)) {
+    if (canManage && ["exam_registrations", "course_registrations", "placement_registrations", "consultation_requests", "mock_vouchers"].includes(collection)) {
       await notifyServiceStatusChange(collection, documentId, finalData, actor, previousData);
     }
     if (canManage) await writeAudit(actor, "update", collection, documentId, { fields: Object.keys(changes).slice(0, 20) });
@@ -1415,7 +1593,7 @@ async function handleCollections(req, res, url) {
     return send(res, 200, { ok: true });
   }
 
-  return fail(res, 405, "Ø¹Ù…Ù„ÛŒØ§Øª Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+  return fail(res, 405, "عملیات مجاز نیست");
 }
 
 async function handlePublicTestimonials(req, res, url) {
@@ -1425,32 +1603,22 @@ async function handlePublicTestimonials(req, res, url) {
     "SELECT document_id, data FROM app_documents WHERE collection_name = 'testimonials' ORDER BY created_at DESC"
   );
   const items = rows.map((row) => ({ id: row.document_id, ...parseJson(row.data) }))
-    .filter((item) => {
-      if (item.status !== "published") return false;
-      const target = String(item.targetPage || "home");
-      return target === page || target === "all" || (page === "home" && target === "home");
-    })
+    .filter((item) => item.status === "published" && String(item.targetPage || "home") === page)
     .slice(0, 12)
     .map((item) => ({
-      id: cleanText(item.id || "", 120),
-      displayName: cleanText(item.displayName || item.userName || "Student", 120),
-      photoUrl: cleanText(item.photoUrl || "", 500000),
+      id: cleanText(item.id || "", 160),
+      displayName: cleanText(item.displayName || item.userName || "دانشجوی علامه سخن", 120),
+      avatarUrl: String(item.avatarUrl || "").startsWith("data:image/") || String(item.avatarUrl || "").startsWith("https://") ? String(item.avatarUrl || "").slice(0, 1400000) : "",
       title: cleanText(item.title || "", 160),
       body: cleanText(item.body || "", 900),
       rating: Math.max(1, Math.min(5, Number(item.rating || 5))),
       targetPage: cleanText(item.targetPage || "home", 80),
       publishedAt: cleanText(item.publishedAt || item.createdAt || "", 60),
-      replies: Array.isArray(item.replies) ? item.replies
-        .filter((reply) => reply && reply.status === "published")
-        .slice(0, 8)
-        .map((reply) => ({
-          id: cleanText(reply.id || "", 120),
-          displayName: cleanText(reply.displayName || reply.userName || "Student", 120),
-          photoUrl: cleanText(reply.photoUrl || "", 500000),
-          body: cleanText(reply.body || "", 500),
-          createdAt: cleanText(reply.createdAt || "", 60),
-          status: "published",
-        })) : [],
+      replies: Array.isArray(item.replies) ? item.replies.filter((reply) => reply && reply.status === "published").slice(0, 8).map((reply) => ({
+        displayName: cleanText(reply.displayName || reply.userName || "دانشجو", 120),
+        body: cleanText(reply.body || "", 500),
+        createdAt: cleanText(reply.createdAt || "", 60),
+      })) : [],
     }));
   return send(res, 200, { items });
 }
@@ -1465,15 +1633,15 @@ async function handleAdminUsers(req, res, url) {
     const data = await body(req);
     const email = String(data.email || "").trim().toLowerCase();
     const password = String(data.password || "");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "Ø§ÛŒÙ…ÛŒÙ„ Ù…Ø¹ØªØ¨Ø± ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯");
-    if (password.length < 8) return fail(res, 400, "Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø¨Ø§ÛŒØ¯ Ø­Ø¯Ø§Ù‚Ù„ Û¸ Ú©Ø§Ø±Ø§Ú©ØªØ± Ø¨Ø§Ø´Ø¯");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail(res, 400, "ایمیل معتبر وارد کنید");
+    if (password.length < 8) return fail(res, 400, "رمز عبور باید حداقل ۸ کاراکتر باشد");
     const [existing] = await pool.execute("SELECT uid FROM app_users WHERE email = ? LIMIT 1", [email]);
-    if (existing.length) return fail(res, 409, "Ø§ÛŒÙ† Ø§ÛŒÙ…ÛŒÙ„ Ù‚Ø¨Ù„Ø§Ù‹ Ø«Ø¨Øª Ø´Ø¯Ù‡ Ø§Ø³Øª");
+    if (existing.length) return fail(res, 409, "این ایمیل قبلاً ثبت شده است");
     const newUid = id("staff");
     const secret = makePassword(password);
     const profile = {
       uid: newUid,
-      name: String(data.name || "Ø§Ø¯Ù…ÛŒÙ†").trim() || "Ø§Ø¯Ù…ÛŒÙ†",
+      name: String(data.name || "ادمین").trim() || "ادمین",
       email,
       role: "staff",
       permissions: Array.isArray(data.permissions) ? data.permissions : [],
@@ -1491,14 +1659,14 @@ async function handleAdminUsers(req, res, url) {
   if (uid && req.method === "PATCH") {
     const data = await body(req);
     const [rows] = await pool.execute("SELECT role, data FROM app_users WHERE uid = ? LIMIT 1", [uid]);
-    if (!rows.length || rows[0].role !== "staff") return fail(res, 404, "Ø§Ø¯Ù…ÛŒÙ† Ù…ÙˆØ±Ø¯ Ù†Ø¸Ø± Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯");
+    if (!rows.length || rows[0].role !== "staff") return fail(res, 404, "ادمین مورد نظر پیدا نشد");
     const profile = parseJson(rows[0].data);
     if (typeof data.name === "string") profile.name = data.name.trim() || profile.name;
     if (Array.isArray(data.permissions)) profile.permissions = data.permissions;
     if (typeof data.active === "boolean") profile.active = data.active;
     await pool.execute("UPDATE app_users SET data = ?, updated_at = CURRENT_TIMESTAMP WHERE uid = ?", [JSON.stringify(profile), uid]);
     if (typeof data.password === "string" && data.password) {
-      if (data.password.length < 8) return fail(res, 400, "Ø±Ù…Ø² Ø¹Ø¨ÙˆØ± Ø¨Ø§ÛŒØ¯ Ø­Ø¯Ø§Ù‚Ù„ Û¸ Ú©Ø§Ø±Ø§Ú©ØªØ± Ø¨Ø§Ø´Ø¯");
+      if (data.password.length < 8) return fail(res, 400, "رمز عبور باید حداقل ۸ کاراکتر باشد");
       const secret = makePassword(data.password);
       await pool.execute("UPDATE app_users SET salt = ?, password_hash = ? WHERE uid = ?", [secret.salt, secret.passwordHash, uid]);
     }
@@ -1508,9 +1676,9 @@ async function handleAdminUsers(req, res, url) {
   if (uid && parts[4] === "reset-password" && req.method === "POST") {
     const data = await body(req);
     const temporaryPassword = String(data.password || "");
-    if (temporaryPassword.length < 8) return fail(res, 400, "Ø±Ù…Ø² Ù…ÙˆÙ‚Øª Ø¨Ø§ÛŒØ¯ Ø­Ø¯Ø§Ù‚Ù„ Û¸ Ú©Ø§Ø±Ø§Ú©ØªØ± Ø¨Ø§Ø´Ø¯");
+    if (temporaryPassword.length < 8) return fail(res, 400, "رمز موقت باید حداقل ۸ کاراکتر باشد");
     const [rows] = await pool.execute("SELECT uid, email FROM app_users WHERE uid = ? LIMIT 1", [uid]);
-    if (!rows.length) return fail(res, 404, "Ú©Ø§Ø±Ø¨Ø± Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯");
+    if (!rows.length) return fail(res, 404, "کاربر پیدا نشد");
     const secret = makePassword(temporaryPassword);
     await pool.execute(
       "UPDATE app_users SET salt = ?, password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE uid = ?",
@@ -1520,7 +1688,7 @@ async function handleAdminUsers(req, res, url) {
     return send(res, 200, { ok: true });
   }
 
-  return fail(res, 405, "Ø¹Ù…Ù„ÛŒØ§Øª Ù…Ø¬Ø§Ø² Ù†ÛŒØ³Øª");
+  return fail(res, 405, "عملیات مجاز نیست");
 }
 
 async function handleChatWidget(req, res, url) {
@@ -1592,29 +1760,34 @@ function activeCouponCampaign(campaign, target, now = Date.now()) {
   return (!startsAt || startsAt <= now) && (!endsAt || endsAt >= now);
 }
 
-async function generateDiscountCodes(campaignId, quantity, mode, client = pgPool) {
+async function generateDiscountCodes(campaignId, quantity, mode, client = null) {
+  const activeClient = client || await dbClient();
   const total = mode === "shared" ? 1 : Math.min(500, Math.max(1, Number(quantity || 1)));
   const generated = [];
-  for (let index = 0; index < total; index += 1) {
-    let code = couponCode();
-    let inserted = false;
-    while (!inserted) {
-      const duplicate = await client.query(
-        "SELECT document_id FROM app_documents WHERE collection_name = 'discount_codes' AND data->>'code' = $1 LIMIT 1",
-        [code]
-      );
-      if (duplicate.rows.length) {
-        code = couponCode();
-        continue;
+  try {
+    for (let index = 0; index < total; index += 1) {
+      let code = couponCode();
+      let inserted = false;
+      while (!inserted) {
+        const duplicate = await activeClient.query(
+          "SELECT document_id FROM app_documents WHERE collection_name = 'discount_codes' AND data->>'code' = $1 LIMIT 1",
+          [code]
+        );
+        if (duplicate.rows.length) {
+          code = couponCode();
+          continue;
+        }
+        const documentId = id("discount_code");
+        await activeClient.query(
+          "INSERT INTO app_documents (collection_name, document_id, data) VALUES ('discount_codes', $1, $2)",
+          [documentId, JSON.stringify({ code, campaignId, mode, used: false, usedBy: [], createdAt: new Date().toISOString() })]
+        );
+        generated.push(code);
+        inserted = true;
       }
-      const documentId = id("discount_code");
-      await client.query(
-        "INSERT INTO app_documents (collection_name, document_id, data) VALUES ('discount_codes', $1, $2)",
-        [documentId, JSON.stringify({ code, campaignId, mode, used: false, usedBy: [], createdAt: new Date().toISOString() })]
-      );
-      generated.push(code);
-      inserted = true;
     }
+  } finally {
+    if (!client) activeClient.release();
   }
   return generated;
 }
@@ -1632,7 +1805,7 @@ async function handleCoupons(req, res, url) {
     return send(res, 200, {
       available: !!campaign,
       target,
-      hint: campaign ? cleanText(campaign.publicHint || "Ú©Ø¯ ØªØ®ÙÛŒÙ Ø®ÙˆØ¯ Ø±Ø§ ÙˆØ§Ø±Ø¯ Ú©Ù†ÛŒØ¯", 160) : "",
+      hint: campaign ? cleanText(campaign.publicHint || "کد تخفیف خود را وارد کنید", 160) : "",
     });
   }
 
@@ -1641,19 +1814,19 @@ async function handleCoupons(req, res, url) {
     const input = await body(req);
     const code = cleanText(input.code, 40).toUpperCase();
     const target = cleanText(input.target, 50);
-    if (!code || !couponTargets.has(target)) return fail(res, 400, "Ú©Ø¯ ÛŒØ§ Ø®Ø¯Ù…Øª Ø§Ù†ØªØ®Ø§Ø¨â€ŒØ´Ø¯Ù‡ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª");
+    if (!code || !couponTargets.has(target)) return fail(res, 400, "کد یا خدمت انتخاب‌شده معتبر نیست");
     const [codes] = await pool.execute(
       "SELECT data FROM app_documents WHERE collection_name = 'discount_codes' AND UPPER(data->>'code') = ? LIMIT 1",
       [code]
     );
-    if (!codes.length) return fail(res, 404, "Ú©Ø¯ ØªØ®ÙÛŒÙ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª");
+    if (!codes.length) return fail(res, 404, "کد تخفیف معتبر نیست");
     const codeData = parseJson(codes[0].data);
     const campaign = await getDocument("discount_campaigns", codeData.campaignId);
-    if (!activeCouponCampaign(campaign, target)) return fail(res, 409, "Ø§ÛŒÙ† Ú©Ø¯ Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† Ø®Ø¯Ù…Øª ÛŒØ§ Ø¯Ø± Ø§ÛŒÙ† ØªØ§Ø±ÛŒØ® ÙØ¹Ø§Ù„ Ù†ÛŒØ³Øª");
+    if (!activeCouponCampaign(campaign, target)) return fail(res, 409, "این کد برای این خدمت یا در این تاریخ فعال نیست");
     if (codeData.mode === "shared") {
-      if ((Array.isArray(codeData.usedBy) ? codeData.usedBy : []).includes(actor.uid)) return fail(res, 409, "Ø´Ù…Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø§Ø² Ø§ÛŒÙ† Ú©Ø¯ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ø±Ø¯Ù‡â€ŒØ§ÛŒØ¯");
+      if ((Array.isArray(codeData.usedBy) ? codeData.usedBy : []).includes(actor.uid)) return fail(res, 409, "شما قبلاً از این کد استفاده کرده‌اید");
     } else if (codeData.used === true) {
-      return fail(res, 409, "Ø§ÛŒÙ† Ú©Ø¯ Ù‚Ø¨Ù„Ø§Ù‹ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø§Ø³Øª");
+      return fail(res, 409, "این کد قبلاً استفاده شده است");
     }
     return send(res, 200, {
       valid: true,
@@ -1666,30 +1839,30 @@ async function handleCoupons(req, res, url) {
     const input = await body(req);
     const code = cleanText(input.code, 40).toUpperCase();
     const target = cleanText(input.target, 50);
-    if (!code || !couponTargets.has(target)) return fail(res, 400, "Ú©Ø¯ ÛŒØ§ Ø®Ø¯Ù…Øª Ø§Ù†ØªØ®Ø§Ø¨â€ŒØ´Ø¯Ù‡ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª");
-    const client = await pgPool.connect();
+    if (!code || !couponTargets.has(target)) return fail(res, 400, "کد یا خدمت انتخاب‌شده معتبر نیست");
+    const client = await dbClient();
     try {
       await client.query("BEGIN");
       const codeResult = await client.query(
         "SELECT document_id, data FROM app_documents WHERE collection_name = 'discount_codes' AND UPPER(data->>'code') = $1 FOR UPDATE",
         [code]
       );
-      if (!codeResult.rows.length) throw Object.assign(new Error("Ú©Ø¯ ØªØ®ÙÛŒÙ Ù…Ø¹ØªØ¨Ø± Ù†ÛŒØ³Øª"), { status: 404 });
+      if (!codeResult.rows.length) throw Object.assign(new Error("کد تخفیف معتبر نیست"), { status: 404 });
       const codeId = codeResult.rows[0].document_id;
       const codeData = parseJson(codeResult.rows[0].data);
       const campaignResult = await client.query(
         "SELECT data FROM app_documents WHERE collection_name = 'discount_campaigns' AND document_id = $1 LIMIT 1",
         [codeData.campaignId]
       );
-      if (!campaignResult.rows.length) throw Object.assign(new Error("Ú©Ù…Ù¾ÛŒÙ† Ø§ÛŒÙ† Ú©Ø¯ Ø¯ÛŒÚ¯Ø± ÙØ¹Ø§Ù„ Ù†ÛŒØ³Øª"), { status: 410 });
+      if (!campaignResult.rows.length) throw Object.assign(new Error("کمپین این کد دیگر فعال نیست"), { status: 410 });
       const campaign = parseJson(campaignResult.rows[0].data);
-      if (!activeCouponCampaign(campaign, target)) throw Object.assign(new Error("Ø§ÛŒÙ† Ú©Ø¯ Ø¨Ø±Ø§ÛŒ Ø§ÛŒÙ† Ø®Ø¯Ù…Øª ÛŒØ§ Ø¯Ø± Ø§ÛŒÙ† ØªØ§Ø±ÛŒØ® ÙØ¹Ø§Ù„ Ù†ÛŒØ³Øª"), { status: 409 });
+      if (!activeCouponCampaign(campaign, target)) throw Object.assign(new Error("این کد برای این خدمت یا در این تاریخ فعال نیست"), { status: 409 });
       const usedBy = Array.isArray(codeData.usedBy) ? codeData.usedBy : [];
       if (codeData.mode === "shared") {
-        if (usedBy.includes(actor.uid)) throw Object.assign(new Error("Ø´Ù…Ø§ Ù‚Ø¨Ù„Ø§Ù‹ Ø§Ø² Ø§ÛŒÙ† Ú©Ø¯ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ú©Ø±Ø¯Ù‡â€ŒØ§ÛŒØ¯"), { status: 409 });
+        if (usedBy.includes(actor.uid)) throw Object.assign(new Error("شما قبلاً از این کد استفاده کرده‌اید"), { status: 409 });
         codeData.usedBy = [...usedBy, actor.uid];
       } else {
-        if (codeData.used === true) throw Object.assign(new Error("Ø§ÛŒÙ† Ú©Ø¯ Ù‚Ø¨Ù„Ø§Ù‹ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø§Ø³Øª"), { status: 409 });
+        if (codeData.used === true) throw Object.assign(new Error("این کد قبلاً استفاده شده است"), { status: 409 });
         codeData.used = true;
         codeData.usedBy = [actor.uid];
       }
@@ -1725,11 +1898,11 @@ async function handleCoupons(req, res, url) {
     const mode = input.mode === "shared" ? "shared" : "unique";
     const discountType = input.discountType === "amount" ? "amount" : "percent";
     const value = Number(input.value || 0);
-    if (!cleanText(input.name, 120) || !couponTargets.has(target) || value <= 0) return fail(res, 400, "Ø¹Ù†ÙˆØ§Ù†ØŒ Ø®Ø¯Ù…Øª Ùˆ Ù…Ù‚Ø¯Ø§Ø± ØªØ®ÙÛŒÙ Ù…Ø¹ØªØ¨Ø± Ø§Ù„Ø²Ø§Ù…ÛŒ Ø§Ø³Øª");
-    if (discountType === "percent" && value > 100) return fail(res, 400, "Ø¯Ø±ØµØ¯ ØªØ®ÙÛŒÙ Ù†Ù…ÛŒâ€ŒØªÙˆØ§Ù†Ø¯ Ø¨ÛŒØ´ØªØ± Ø§Ø² Û±Û°Û° Ø¨Ø§Ø´Ø¯");
+    if (!cleanText(input.name, 120) || !couponTargets.has(target) || value <= 0) return fail(res, 400, "عنوان، خدمت و مقدار تخفیف معتبر الزامی است");
+    if (discountType === "percent" && value > 100) return fail(res, 400, "درصد تخفیف نمی‌تواند بیشتر از ۱۰۰ باشد");
     const startsAt = input.startsAt ? new Date(input.startsAt).toISOString() : "";
     const endsAt = input.endsAt ? new Date(input.endsAt).toISOString() : "";
-    if (startsAt && endsAt && new Date(endsAt) <= new Date(startsAt)) return fail(res, 400, "Ø²Ù…Ø§Ù† Ù¾Ø§ÛŒØ§Ù† Ø¨Ø§ÛŒØ¯ Ø¨Ø¹Ø¯ Ø§Ø² Ø´Ø±ÙˆØ¹ Ø¨Ø§Ø´Ø¯");
+    if (startsAt && endsAt && new Date(endsAt) <= new Date(startsAt)) return fail(res, 400, "زمان پایان باید بعد از شروع باشد");
     const campaignId = id("discount_campaign");
     const campaign = {
       name: cleanText(input.name, 120),
@@ -1744,7 +1917,7 @@ async function handleCoupons(req, res, url) {
       createdAt: new Date().toISOString(),
       createdBy: actor.uid,
     };
-    const client = await pgPool.connect();
+    const client = await dbClient();
     try {
       await client.query("BEGIN");
       await client.query(
@@ -1769,8 +1942,8 @@ async function handleCoupons(req, res, url) {
     const campaignId = decodeURIComponent(generateMatch[1]);
     const input = await body(req);
     const campaign = await getDocument("discount_campaigns", campaignId);
-    if (!campaign) return fail(res, 404, "Ú©Ù…Ù¾ÛŒÙ† Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯");
-    if (campaign.mode === "shared") return fail(res, 409, "Ú©Ù…Ù¾ÛŒÙ† Ø¹Ù…ÙˆÙ…ÛŒ ÛŒÚ© Ú©Ø¯ Ù…Ø´ØªØ±Ú© Ø¯Ø§Ø±Ø¯ Ùˆ Ù†ÛŒØ§Ø² Ø¨Ù‡ Ø§ÙØ²Ø§ÛŒØ´ ØªØ¹Ø¯Ø§Ø¯ Ù†Ø¯Ø§Ø±Ø¯");
+    if (!campaign) return fail(res, 404, "کمپین پیدا نشد");
+    if (campaign.mode === "shared") return fail(res, 409, "کمپین عمومی یک کد مشترک دارد و نیاز به افزایش تعداد ندارد");
     const codes = await generateDiscountCodes(campaignId, input.quantity, "unique");
     await writeAudit(actor, "generate-coupon-codes", "discount_codes", campaignId, { quantity: codes.length });
     return send(res, 200, { codes });
@@ -1835,8 +2008,8 @@ async function processExamReminders() {
       userName: item.name,
       registrationId: row.document_id,
       kind,
-      title: days === 7 ? "ÛŒÚ© Ù‡ÙØªÙ‡ ØªØ§ Ø¢Ø²Ù…ÙˆÙ† Ø´Ù…Ø§ Ø¨Ø§Ù‚ÛŒ Ù…Ø§Ù†Ø¯Ù‡ Ø§Ø³Øª" : "ÛŒØ§Ø¯Ø¢ÙˆØ±ÛŒ Ø¢Ø²Ù…ÙˆÙ† ÙØ±Ø¯Ø§",
-      body: `${cleanText(item.examName || "Ø¢Ø²Ù…ÙˆÙ†", 120)} Ø¯Ø± ØªØ§Ø±ÛŒØ® ${cleanText(item.examDate, 20)} Ø³Ø§Ø¹Øª ${cleanText(item.examTime || "09:00", 10)} Ø¨Ø±Ú¯Ø²Ø§Ø± Ù…ÛŒâ€ŒØ´ÙˆØ¯. Ù„Ø·ÙØ§Ù‹ Ù¾ÛŒØ´ Ø§Ø² Ø²Ù…Ø§Ù† Ø´Ø±ÙˆØ¹ Ø¯Ø± Ù…Ø­Ù„ Ø¢Ø²Ù…ÙˆÙ† Ø­Ø¶ÙˆØ± Ø¯Ø§Ø´ØªÙ‡ Ø¨Ø§Ø´ÛŒØ¯.`,
+      title: days === 7 ? "یک هفته تا آزمون شما باقی مانده است" : "یادآوری آزمون فردا",
+      body: `${cleanText(item.examName || "آزمون", 120)} در تاریخ ${cleanText(item.examDate, 20)} ساعت ${cleanText(item.examTime || "09:00", 10)} برگزار می‌شود. لطفاً پیش از زمان شروع در محل آزمون حضور داشته باشید.`,
     });
     created += 1;
   }
@@ -1861,17 +2034,18 @@ async function processSmartWaitlist() {
     );
     const available = Math.max(
       0,
-      Number(dateInfo.capacity || 0) - Number(dateInfo.registered || 0) - activeInvitations.length
+      Number(dateInfo.capacity || 0) - Number(dateInfo.registered || 0) - Number(dateInfo.manualRegistered || 0) - activeInvitations.length
     );
     if (!available) continue;
+    const invitationLimit = Math.max(1, Math.min(100, Math.floor(Number(available) || 0)));
     const [waitingRows] = await pool.execute(
       `SELECT document_id, data FROM app_documents
        WHERE collection_name = 'exam_waitlist'
          AND data->>'dateId' = ?
          AND COALESCE(data->>'status', 'waiting') = 'waiting'
        ORDER BY created_at ASC
-       LIMIT ?`,
-      [dateRow.document_id, available]
+       LIMIT ${invitationLimit}`,
+      [dateRow.document_id]
     );
     for (const waitingRow of waitingRows) {
       const waiting = parseJson(waitingRow.data);
@@ -1884,8 +2058,8 @@ async function processSmartWaitlist() {
         userName: waiting.name,
         registrationId: waitingRow.document_id,
         kind: "waitlist-invitation",
-        title: "Ø¸Ø±ÙÛŒØª Ø¢Ø²Ù…ÙˆÙ† Ø¨Ø±Ø§ÛŒ Ø´Ù…Ø§ Ø¨Ø§Ø² Ø´Ø¯",
-        body: `Ø¨Ø±Ø§ÛŒ ${cleanText(waiting.examName || dateInfo.type || "Ø¢Ø²Ù…ÙˆÙ† Ø¢Ø²Ù…Ø§ÛŒØ´ÛŒ", 120)} Ø¯Ø± ØªØ§Ø±ÛŒØ® ${cleanText(dateInfo.date, 20)} Ø¸Ø±ÙÛŒØª Ø¢Ø²Ø§Ø¯ Ø´Ø¯Ù‡ Ø§Ø³Øª. Ø§ÛŒÙ† ÙØ±ØµØª ØªØ§ Û²Û´ Ø³Ø§Ø¹Øª Ø¨Ø±Ø§ÛŒ Ø´Ù…Ø§ ÙØ¹Ø§Ù„ Ø§Ø³ØªØ› Ø¨Ø±Ø§ÛŒ ØªÚ©Ù…ÛŒÙ„ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¨Ù‡ Ø¨Ø®Ø´ Ø¢Ø²Ù…ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ù…Ù† Ù…Ø±Ø§Ø¬Ø¹Ù‡ Ú©Ù†ÛŒØ¯.`,
+        title: "ظرفیت آزمون برای شما باز شد",
+        body: `برای ${cleanText(waiting.examName || dateInfo.type || "آزمون آزمایشی", 120)} در تاریخ ${cleanText(dateInfo.date, 20)} ظرفیت آزاد شده است. این فرصت تا ۲۴ ساعت برای شما فعال است؛ برای تکمیل ثبت‌نام به بخش آزمون‌های من مراجعه کنید.`,
       });
       invited += 1;
     }
@@ -1913,6 +2087,26 @@ function monthKey(value) {
 
 async function handleAdminTools(req, res, url) {
   if (!url.pathname.startsWith("/api/admin/")) return false;
+  if (url.pathname === "/api/admin/sms-test" && req.method === "POST") {
+    const actor = requirePermission(req, "settings");
+    const settings = await getDocument("settings", "signup") || {};
+    const data = await body(req);
+    const to = cleanText(data.to || process.env.SMS_TEST_MOBILE || "", 30).replace(/[^\d+]/g, "");
+    const text = cleanText(data.text || "تست پیامک موسسه علامه سخن", 500);
+    if (!to) return fail(res, 400, "شماره تست را وارد کنید");
+    if (settings.smsEnabled !== true && process.env.SMS_ENABLED !== "true") {
+      settings.smsEnabled = true;
+      settings.notificationChannel = "sms";
+    }
+    await queueExternalDelivery("sms", to, {
+      subject: "SMS test",
+      text,
+      key: "smsTest",
+      values: { name: actor.name || actor.email || "admin" },
+    }, settings);
+    await writeAudit(actor, "sms-test", "settings", "signup", { to });
+    return send(res, 200, { ok: true });
+  }
   if (url.pathname === "/api/admin/dashboard" && req.method === "GET") {
     requirePermission(req, "reports");
     const [usersResult, documentsResult] = await Promise.all([
@@ -1936,11 +2130,11 @@ async function handleAdminTools(req, res, url) {
     const waiting = documents.filter((item) => item.collection === "exam_waitlist" && (item.data.status || "waiting") === "waiting");
     const popularMap = {};
     exams.forEach((item) => {
-      const name = cleanText(item.data.examName || item.data.type || "Ø¢Ø²Ù…ÙˆÙ†", 120);
+      const name = cleanText(item.data.examName || item.data.type || "آزمون", 120);
       popularMap[name] = (popularMap[name] || 0) + 1;
     });
     courses.forEach((item) => {
-      const name = cleanText(item.data.courseName || "Ø¯ÙˆØ±Ù‡ Ø¢Ù…ÙˆØ²Ø´ÛŒ", 120);
+      const name = cleanText(item.data.courseName || "دوره آموزشی", 120);
       popularMap[name] = (popularMap[name] || 0) + 1;
     });
     const popular = Object.entries(popularMap)
@@ -1967,8 +2161,9 @@ async function handleAdminTools(req, res, url) {
         date: item.data.date,
         capacity: Number(item.data.capacity || 0),
         registered: Number(item.data.registered || 0),
+        manualRegistered: Number(item.data.manualRegistered || 0),
         remaining: item.collection === "mock_dates"
-          ? Math.max(0, Number(item.data.capacity || 0) - Number(item.data.registered || 0))
+          ? Math.max(0, Number(item.data.capacity || 0) - Number(item.data.registered || 0) - Number(item.data.manualRegistered || 0))
           : null,
       }));
     return send(res, 200, {
@@ -1994,7 +2189,7 @@ async function handleAdminTools(req, res, url) {
       "SELECT uid, email, role, data, created_at, updated_at FROM app_users WHERE uid = ? AND role = 'student' LIMIT 1",
       [uid]
     );
-    if (!userRows.length) return fail(res, 404, "Ø¯Ø§Ù†Ø´Ø¬Ùˆ Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯");
+    if (!userRows.length) return fail(res, 404, "دانشجو پیدا نشد");
     const [documentRows] = await pool.query(
       `SELECT collection_name, document_id, data, created_at FROM app_documents
        WHERE collection_name IN ('exam_registrations','course_registrations','placement_registrations','exam_results','messages','notifications','exam_waitlist')
@@ -2024,7 +2219,7 @@ async function handleAdminTools(req, res, url) {
   if (url.pathname === "/api/admin/automations/run" && req.method === "POST") {
     const actor = requireUser(req);
     if (!hasPermission(actor, "notifications") && !hasPermission(actor, "reports")) {
-      return fail(res, 403, "Ø¨Ø±Ø§ÛŒ Ø§Ø¬Ø±Ø§ÛŒ ÛŒØ§Ø¯Ø¢ÙˆØ±Ù‡Ø§ Ø¯Ø³ØªØ±Ø³ÛŒ Ù†Ø¯Ø§Ø±ÛŒØ¯");
+      return fail(res, 403, "برای اجرای یادآورها دسترسی ندارید");
     }
     const result = await runSiteAutomations();
     await writeAudit(actor, "run-automations", "system", "reminders-waitlist", result);
@@ -2055,37 +2250,37 @@ async function handleAdminTools(req, res, url) {
       return sheet;
     }
     const docs = documents[0].map((row) => ({ collection: row.collection_name, id: row.document_id, ...parseJson(row.data), dbCreatedAt: row.created_at }));
-    addSheet("Ø¯Ø§Ù†Ø´Ø¬ÙˆÛŒØ§Ù†", [
-      { header: "Ø´Ù†Ø§Ø³Ù‡", key: "uid", width: 24 }, { header: "Ù†Ø§Ù…", key: "name" }, { header: "Ø§ÛŒÙ…ÛŒÙ„", key: "email", width: 30 },
-      { header: "Ù…ÙˆØ¨Ø§ÛŒÙ„", key: "mobile" }, { header: "Ø¢Ø®Ø±ÛŒÙ† ØµÙØ­Ù‡", key: "lastPageTitle", width: 28 },
-      { header: "Ø¢Ø®Ø±ÛŒÙ† ÙØ¹Ø§Ù„ÛŒØª", key: "lastActiveAt", width: 24 }, { header: "ØªØ§Ø±ÛŒØ® Ø¹Ø¶ÙˆÛŒØª", key: "createdAt", width: 24 },
+    addSheet("دانشجویان", [
+      { header: "شناسه", key: "uid", width: 24 }, { header: "نام", key: "name" }, { header: "ایمیل", key: "email", width: 30 },
+      { header: "موبایل", key: "mobile" }, { header: "آخرین صفحه", key: "lastPageTitle", width: 28 },
+      { header: "آخرین فعالیت", key: "lastActiveAt", width: 24 }, { header: "تاریخ عضویت", key: "createdAt", width: 24 },
     ], users[0].map((row) => ({ uid: row.uid, email: row.email, ...parseJson(row.data), createdAt: row.created_at })));
-    addSheet("Ø«Ø¨Øª Ù†Ø§Ù… Ù‡Ø§", [
-      { header: "Ø´Ù†Ø§Ø³Ù‡", key: "id", width: 25 }, { header: "Ù†ÙˆØ¹", key: "category" }, { header: "Ù†Ø§Ù…", key: "name" },
-      { header: "Ø§ÛŒÙ…ÛŒÙ„", key: "email", width: 28 }, { header: "Ù…ÙˆØ¨Ø§ÛŒÙ„", key: "mobile" }, { header: "Ø¹Ù†ÙˆØ§Ù†", key: "title", width: 30 },
-      { header: "ØªØ§Ø±ÛŒØ®", key: "date" }, { header: "Ø³Ø§Ø¹Øª", key: "time" }, { header: "ÙˆØ¶Ø¹ÛŒØª", key: "status" },
-      { header: "Ú©Ø¯ ØªØ®ÙÛŒÙ", key: "coupon" }, { header: "Ø²Ù…Ø§Ù† Ø«Ø¨Øª", key: "createdAt", width: 24 },
+    addSheet("ثبت نام ها", [
+      { header: "شناسه", key: "id", width: 25 }, { header: "نوع", key: "category" }, { header: "نام", key: "name" },
+      { header: "ایمیل", key: "email", width: 28 }, { header: "موبایل", key: "mobile" }, { header: "عنوان", key: "title", width: 30 },
+      { header: "تاریخ", key: "date" }, { header: "ساعت", key: "time" }, { header: "وضعیت", key: "status" },
+      { header: "کد تخفیف", key: "coupon" }, { header: "زمان ثبت", key: "createdAt", width: 24 },
     ], docs.filter((item) => ["exam_registrations", "course_registrations", "placement_registrations", "exam_waitlist"].includes(item.collection)).map((item) => ({
       id: item.id, category: item.category || item.type || item.collection, name: item.name, email: item.email, mobile: item.mobile,
       title: item.examName || item.courseName || item.testName, date: item.examDate || item.courseDate || item.testDate,
       time: item.examTime || "", status: item.status, coupon: item.discountCoupon && item.discountCoupon.code || "", createdAt: item.createdAt || item.dbCreatedAt,
     })));
-    addSheet("Ø­Ø¶ÙˆØ± Ùˆ ØºÛŒØ§Ø¨", [
-      { header: "Ù†Ø§Ù…", key: "name" }, { header: "Ø¢Ø²Ù…ÙˆÙ†", key: "examName", width: 28 }, { header: "ØªØ§Ø±ÛŒØ®", key: "examDate" },
-      { header: "Ø³Ø§Ø¹Øª", key: "examTime" }, { header: "ØµÙ†Ø¯Ù„ÛŒ", key: "seatNumber" }, { header: "Ø­Ø¶ÙˆØ±", key: "attended" },
+    addSheet("حضور و غیاب", [
+      { header: "نام", key: "name" }, { header: "آزمون", key: "examName", width: 28 }, { header: "تاریخ", key: "examDate" },
+      { header: "ساعت", key: "examTime" }, { header: "صندلی", key: "seatNumber" }, { header: "حضور", key: "attended" },
     ], docs.filter((item) => item.collection === "exam_registrations" && item.type === "mock").map((item) => ({
-      ...item, attended: item.attended ? "Ø­Ø§Ø¶Ø±" : "Ø«Ø¨Øª Ù†Ø´Ø¯Ù‡",
+      ...item, attended: item.attended ? "حاضر" : "ثبت نشده",
     })));
     const campaigns = Object.fromEntries(docs.filter((item) => item.collection === "discount_campaigns").map((item) => [item.id, item]));
-    addSheet("Ú©Ø¯Ù‡Ø§ÛŒ ØªØ®ÙÛŒÙ", [
-      { header: "Ú©Ø¯", key: "code" }, { header: "Ú©Ù…Ù¾ÛŒÙ†", key: "campaign" }, { header: "Ø®Ø¯Ù…Øª", key: "target" },
-      { header: "Ù†ÙˆØ¹", key: "discountType" }, { header: "Ù…Ù‚Ø¯Ø§Ø±", key: "value" }, { header: "Ù…ØµØ±Ù Ø´Ø¯Ù‡", key: "used" },
-      { header: "ØªØ¹Ø¯Ø§Ø¯ Ø§Ø³ØªÙØ§Ø¯Ù‡", key: "usedCount" }, { header: "ØªØ§Ø±ÛŒØ® Ø³Ø§Ø®Øª", key: "createdAt", width: 24 },
+    addSheet("کدهای تخفیف", [
+      { header: "کد", key: "code" }, { header: "کمپین", key: "campaign" }, { header: "خدمت", key: "target" },
+      { header: "نوع", key: "discountType" }, { header: "مقدار", key: "value" }, { header: "مصرف شده", key: "used" },
+      { header: "تعداد استفاده", key: "usedCount" }, { header: "تاریخ ساخت", key: "createdAt", width: 24 },
     ], docs.filter((item) => item.collection === "discount_codes").map((item) => {
       const campaign = campaigns[item.campaignId] || {};
       return {
         code: item.code, campaign: campaign.name || "", target: campaign.target || "", discountType: campaign.discountType || "",
-        value: campaign.value || "", used: item.used ? "Ø¨Ù„Ù‡" : "Ø®ÛŒØ±", usedCount: Array.isArray(item.usedBy) ? item.usedBy.length : 0, createdAt: item.createdAt,
+        value: campaign.value || "", used: item.used ? "بله" : "خیر", usedCount: Array.isArray(item.usedBy) ? item.usedBy.length : 0, createdAt: item.createdAt,
       };
     }));
     const buffer = await workbook.xlsx.writeBuffer();
@@ -2103,17 +2298,17 @@ async function handleAdminTools(req, res, url) {
   if (registrationMatch && req.method === "POST") {
     const actor = requireUser(req);
     if (!hasPermission(actor, "registrations") && !hasPermission(actor, "attendance")) {
-      return fail(res, 403, "Ø¨Ø±Ø§ÛŒ ØªØ£ÛŒÛŒØ¯ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ø¯Ø³ØªØ±Ø³ÛŒ Ù†Ø¯Ø§Ø±ÛŒØ¯");
+      return fail(res, 403, "برای تأیید ثبت‌نام دسترسی ندارید");
     }
     const registrationId = decodeURIComponent(registrationMatch[1]);
-    const client = await pgPool.connect();
+    const client = await dbClient();
     try {
       await client.query("BEGIN");
       const result = await client.query(
         "SELECT data FROM app_documents WHERE collection_name = 'exam_registrations' AND document_id = $1 FOR UPDATE",
         [registrationId]
       );
-      if (!result.rows.length) throw Object.assign(new Error("Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… Ù¾ÛŒØ¯Ø§ Ù†Ø´Ø¯"), { status: 404 });
+      if (!result.rows.length) throw Object.assign(new Error("ثبت‌نام پیدا نشد"), { status: 404 });
       const registration = parseJson(result.rows[0].data);
       if (registration.status === "confirmed") {
         await client.query("COMMIT");
@@ -2168,7 +2363,7 @@ async function handleAdminTools(req, res, url) {
     const [rows] = await pool.query(
       "SELECT document_id, data FROM app_documents WHERE collection_name IN ('exam_registrations','course_registrations','placement_registrations','exam_waitlist') ORDER BY created_at DESC"
     );
-    const lines = [["Ø´Ù†Ø§Ø³Ù‡", "Ù†ÙˆØ¹", "Ù†Ø§Ù…", "Ø§ÛŒÙ…ÛŒÙ„", "Ù…ÙˆØ¨Ø§ÛŒÙ„", "Ø¹Ù†ÙˆØ§Ù†", "ØªØ§Ø±ÛŒØ® Ø±ÙˆÛŒØ¯Ø§Ø¯", "Ø³Ø§Ø¹Øª", "ÙˆØ¶Ø¹ÛŒØª", "Ø²Ù…Ø§Ù† Ø«Ø¨Øª"].map(csvCell).join(",")];
+    const lines = [["شناسه", "نوع", "نام", "ایمیل", "موبایل", "عنوان", "تاریخ رویداد", "ساعت", "وضعیت", "زمان ثبت"].map(csvCell).join(",")];
     rows.forEach((row) => {
       const item = parseJson(row.data);
       lines.push([
@@ -2200,7 +2395,7 @@ function serveStatic(req, res) {
   try {
     url = new URL(req.url, "http://localhost");
     const rawRequested = decodeURIComponent(url.pathname.slice(1));
-    const allowedRootFiles = new Set(["index.html", "newsletter.css", "newsletter.js", "robots.txt", "sitemap.xml", "favicon.ico", "site.webmanifest", "BUILD_VERSION.txt"]);
+    const allowedRootFiles = new Set(["index.html", "newsletter.css", "newsletter.js", "robots.txt", "sitemap.xml", "favicon.ico", "site.webmanifest"]);
     seoRoute = pageSeo[url.pathname.replace(/\/$/, "")] || null;
     if (url.pathname !== "/" && !seoRoute && !url.pathname.startsWith("/news/") && !url.pathname.startsWith("/assets/") && !allowedRootFiles.has(rawRequested)) {
       res.writeHead(404, securityHeaders());
@@ -2263,8 +2458,8 @@ function serveStatic(req, res) {
     const payload = Buffer.isBuffer(output) ? output : Buffer.from(output);
     const etag = `"${crypto.createHash("sha1").update(payload).digest("hex")}"`;
     const versionedAsset = /[?&]v=/.test(req.url);
-    const cacheControl = extension === ".html" || requested === "robots.txt" || requested === "sitemap.xml" || requested === "BUILD_VERSION.txt"
-      ? "no-store"
+    const cacheControl = extension === ".html" || requested === "robots.txt" || requested === "sitemap.xml"
+      ? "no-cache"
       : ([".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico"].includes(extension)
         ? "public, max-age=2592000, stale-while-revalidate=86400"
         : (versionedAsset ? "public, max-age=31536000, immutable" : "public, max-age=604800, stale-while-revalidate=86400"));
@@ -2296,13 +2491,13 @@ function serveStatic(req, res) {
 }
 
 async function handleApi(req, res) {
-  if (apiRateLimited(req)) return fail(res, 429, "ØªØ¹Ø¯Ø§Ø¯ Ø¯Ø±Ø®ÙˆØ§Ø³Øªâ€ŒÙ‡Ø§ Ø²ÛŒØ§Ø¯ Ø§Ø³ØªØ› Ú©Ù…ÛŒ Ø¨Ø¹Ø¯ Ø¯ÙˆØ¨Ø§Ø±Ù‡ ØªÙ„Ø§Ø´ Ú©Ù†ÛŒØ¯");
+  if (apiRateLimited(req)) return fail(res, 429, "تعداد درخواست‌ها زیاد است؛ کمی بعد دوباره تلاش کنید");
   const url = new URL(req.url, "http://localhost");
   validateRequestOrigin(req);
   validateCsrf(req, url);
   if (url.pathname === "/api/health" && req.method === "GET") {
     await pool.query("SELECT 1");
-    return send(res, 200, { ok: true, database: "postgresql" });
+    return send(res, 200, { ok: true, database: "mysql" });
   }
   const authResult = await handleAuth(req, res, url.pathname);
   if (authResult !== false) return authResult;
@@ -2318,7 +2513,7 @@ async function handleApi(req, res) {
   if (publicTestimonialsResult !== false) return publicTestimonialsResult;
   const collectionResult = await handleCollections(req, res, url);
   if (collectionResult !== false) return collectionResult;
-  return fail(res, 404, "ÛŒØ§ÙØª Ù†Ø´Ø¯");
+  return fail(res, 404, "یافت نشد");
 }
 
 async function start() {
@@ -2332,7 +2527,7 @@ async function start() {
     if (req.url.startsWith("/api/")) {
       handleApi(req, res).catch((error) => {
         console.error(error);
-        if (!res.headersSent) fail(res, error.status || 500, error.status ? error.message : "Ø®Ø·Ø§ÛŒ Ø¯Ø§Ø®Ù„ÛŒ Ø³Ø±ÙˆØ±");
+        if (!res.headersSent) fail(res, error.status || 500, error.status ? error.message : "خطای داخلی سرور");
       });
       return;
     }
@@ -2342,7 +2537,7 @@ async function start() {
   server.headersTimeout = 15 * 1000;
   server.keepAliveTimeout = 5 * 1000;
   server.listen(port, "0.0.0.0", () => {
-    console.log(`Allameh Sokhan Node/PostgreSQL: http://0.0.0.0:${port}`);
+    console.log(`Allameh Sokhan Node/MySQL: http://0.0.0.0:${port}`);
   });
 }
 
@@ -2350,4 +2545,5 @@ start().catch((error) => {
   console.error("Startup failed:", error);
   process.exit(1);
 });
+
 

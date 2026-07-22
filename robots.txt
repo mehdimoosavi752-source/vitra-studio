@@ -1,6 +1,11 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
-Disallow: /client.html
-Disallow: /login.html
-Sitemap: https://vitrastudio.co.uk/sitemap.xml
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://asmdi.ir/sitemap.xml
