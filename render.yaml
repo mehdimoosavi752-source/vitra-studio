@@ -1,4 +1,4 @@
-services:
+﻿services:
   - type: web
     name: allameh-sokhan-site
     runtime: node
@@ -16,7 +16,7 @@ services:
       - key: ADMIN_PASSWORD
         sync: false
       - key: ADMIN_NAME
-        value: مدیر سایت
+        value: "مدیر سایت"
       - key: RESET_ADMIN_PASSWORD
         value: "true"
       - key: COOKIE_SECURE
@@ -30,7 +30,7 @@ services:
       - key: EMAIL_WEBHOOK_TOKEN
         sync: false
       - key: SMS_ENABLED
-        value: "false"
+        sync: false
       - key: SMS_PROVIDER
         value: melipayamak
       - key: SMS_USERNAME

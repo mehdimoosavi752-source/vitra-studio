@@ -722,7 +722,8 @@ textarea.form-input{height:100px;resize:none;}
 .sb-nav{list-style:none;}
 .sb-nav li a{display:flex;align-items:center;gap:0.65rem;padding:0.75rem 1.2rem;color:rgba(255,255,255,0.55);font-size:0.83rem;font-weight:500;transition:all 0.25s;cursor:pointer;border-right:3px solid transparent;position:relative;}
 .sb-nav li a:hover,.sb-nav li a.active{background:rgba(99,102,241,0.15);color:white;border-right-color:var(--teal-light);}
-.sb-icon{font-size:0.9rem;width:18px;text-align:center;}
+.sb-icon{width:30px;height:30px;min-width:30px;display:inline-grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(20,184,166,.10));border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 10px 24px rgba(4,10,34,.18);font-size:1rem;line-height:1;text-align:center;transition:transform .22s ease,box-shadow .22s ease,background .22s ease;}
+.sb-nav li a:hover .sb-icon,.sb-nav li a.active .sb-icon{transform:translateY(-1px) scale(1.06);background:linear-gradient(145deg,rgba(20,184,166,.34),rgba(99,102,241,.26));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 14px 30px rgba(20,184,166,.18);}
 .message-unread-dot{position:absolute;left:0.85rem;top:0.62rem;width:10px;height:10px;border-radius:50%;background:#ef4444;border:2px solid #1a2744;box-shadow:0 0 0 3px rgba(239,68,68,0.16),0 3px 9px rgba(239,68,68,0.5);}
 .message-unread-dot[hidden]{display:none;}
 .payment-notice-overlay{position:fixed;inset:0;z-index:2450;display:grid;place-items:center;padding:1rem;background:rgba(7,12,31,.58);backdrop-filter:blur(10px);opacity:0;visibility:hidden;transition:.22s}
@@ -2305,7 +2306,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
     </div>
     <div class="footer-bottom">
       <p>© ۱۴۰۵ موسسه علامه سخن — بیش از ۳۰ سال تجربه در آموزش زبان انگلیسی و برگزاری آزمون‌های بین‌المللی</p>
-      <a class="footer-credit" id="footer-vira-credit" href="#" target="_blank" rel="noopener" aria-label="طراحی شده توسط Vira Studio">
+      <a class="footer-credit" id="footer-vira-credit" href="https://vitrastudio.co.uk/admin.html#media" target="_blank" rel="noopener" aria-label="طراحی شده توسط Vira Studio">
         <span data-en="Designed by">طراحی شده توسط</span>
         <img src="assets/vira-studio-logo.svg" alt="Vira Studio" loading="lazy" decoding="async">
       </a>
@@ -3221,7 +3222,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
                   <option value="jalali">ورود تاریخ شمسی</option>
                 </select>
                 <input class="form-input" id="toefl-month-input" type="month" onchange="renderExamDayPicker('toefl')">
-                <input class="form-input" id="toefl-jalali-month-input" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('toefl')" style="display:none;">
+                <input class="form-input" id="toefl-jalali-month-input" type="month" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('toefl')" style="display:none;">
                 <input id="toefl-date-input" type="hidden">
                 <div class="multi-day-picker" id="toefl-day-picker"></div>
                 <div class="alert error" id="toefl-date-err" style="display:none;margin-top:0.4rem;padding:0.4rem 0.75rem;font-size:0.78rem;"></div>
@@ -3323,8 +3324,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
           <div class="tbox-head"><h3>تنظیمات تغییر تاریخ</h3><button class="card-btn" onclick="loadMockRescheduleSettings()">بارگذاری</button></div>
           <div style="padding:1.5rem;">
             <div class="manual-mock-grid">
-              <div class="form-group"><label class="form-label">هزینه تغییر تاریخ از ۵ روز تا ۲۴ ساعت قبل</label><input class="form-input" id="mock-reschedule-fee" placeholder="100000" inputmode="numeric"></div>
-              <div class="form-group"><label class="form-label">نمایش هزینه</label><input class="form-input" id="mock-reschedule-fee-label" placeholder="۱۰۰,۰۰۰ تومان"></div>
+              <div class="form-group"><label class="form-label">درصد هزینه تغییر بعد از نوبت رایگان</label><input class="form-input" id="mock-reschedule-fee" placeholder="40" inputmode="numeric"></div>
+              <div class="form-group"><label class="form-label">نمایش قانون هزینه</label><input class="form-input" id="mock-reschedule-fee-label" placeholder="۴۰٪ هزینه آزمون"></div>
               <div class="form-group full"><label class="form-label">توضیح قانون برای دانشجو</label><textarea class="form-input" id="mock-reschedule-policy-text" rows="3"></textarea></div>
             </div>
             <div class="alert error" id="admin-reschedule-settings-error"></div><div class="alert success" id="admin-reschedule-settings-success"></div>
@@ -3383,7 +3384,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
                   <option value="jalali">ورود تاریخ شمسی</option>
                 </select>
                 <input class="form-input" id="mock-month-input" type="month" onchange="renderExamDayPicker('mock')">
-                <input class="form-input" id="mock-jalali-month-input" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('mock')" style="display:none;">
+                <input class="form-input" id="mock-jalali-month-input" type="month" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('mock')" style="display:none;">
                 <input id="mock-date-input" type="hidden">
                 <div class="multi-day-picker" id="mock-day-picker"></div>
                 <div class="alert error" id="mock-date-err" style="display:none;margin-top:0.4rem;padding:0.4rem 0.75rem;font-size:0.78rem;"></div>
@@ -3434,7 +3435,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
           <div class="tbox-head"><h3>➕ افزودن تاریخ جدید GRE</h3></div>
           <div style="padding:1.5rem;">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
-              <div class="form-group multi-date-field"><label class="form-label">ماه آزمون و روزهای موردنظر</label><select class="form-input" id="gre-date-calendar" onchange="toggleExamDateCalendar('gre')" style="margin-bottom:0.55rem;"><option value="gregorian">ورود تاریخ میلادی</option><option value="jalali">ورود تاریخ شمسی</option></select><input class="form-input" id="gre-month-input" type="month" onchange="renderExamDayPicker('gre')"><input class="form-input" id="gre-jalali-month-input" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('gre')" style="display:none;"><input id="gre-date-input" type="hidden"><div class="multi-day-picker" id="gre-day-picker"></div><div class="alert error" id="gre-date-err" style="display:none;margin-top:0.4rem;padding:0.4rem 0.75rem;font-size:0.78rem;"></div></div>
+              <div class="form-group multi-date-field"><label class="form-label">ماه آزمون و روزهای موردنظر</label><select class="form-input" id="gre-date-calendar" onchange="toggleExamDateCalendar('gre')" style="margin-bottom:0.55rem;"><option value="gregorian">ورود تاریخ میلادی</option><option value="jalali">ورود تاریخ شمسی</option></select><input class="form-input" id="gre-month-input" type="month" onchange="renderExamDayPicker('gre')"><input class="form-input" id="gre-jalali-month-input" type="month" placeholder="ماه شمسی، مثلا 1405-04" inputmode="numeric" onchange="renderExamDayPicker('gre')" style="display:none;"><input id="gre-date-input" type="hidden"><div class="multi-day-picker" id="gre-day-picker"></div><div class="alert error" id="gre-date-err" style="display:none;margin-top:0.4rem;padding:0.4rem 0.75rem;font-size:0.78rem;"></div></div>
               <div class="form-group"><label class="form-label">ساعت شروع</label><input class="form-input" id="gre-time-input" type="time" value="09:00"></div>
               <div class="form-group"><label class="form-label">ظرفیت (نفر)</label><input class="form-input" id="gre-capacity-input" type="number" value="15" min="1" max="30" step="1"></div>
               <div class="form-group"><label class="form-label">هزینه ثبت‌نام</label><input class="form-input" id="gre-price-input" placeholder="مثلاً: ۲,۹۰۰,۰۰۰ تومان"></div>
@@ -3585,7 +3586,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
               <div class="form-group"><label class="form-label">Merchant ID</label><input class="form-input" id="payment-merchant-id" dir="ltr" placeholder="بعداً از درگاه دریافت می‌شود"></div>
               <div class="form-group"><label class="form-label">API Key یا Token</label><input class="form-input" id="payment-api-key" type="password" dir="ltr" placeholder="در مرورگر استفاده نمی‌شود"></div>
               <div class="form-group full"><label class="form-label">Callback URL</label><input class="form-input" id="payment-callback-url" dir="ltr" placeholder="https://your-domain.com/api/payment/callback"></div>
-              <div class="form-group full"><label class="form-label">متن اطلاعیه بعد از ثبت‌نام/پرداخت</label><textarea class="form-input" id="payment-notice-message">جهت تکمیل فرایند و نهایی شدن ثبت نام خود لطفا از طریق راههای ارتباطی زیر با موسسه تماس بگیرید.</textarea></div>
+              <div class="form-group full"><label class="form-label">متن اطلاعیه بعد از ثبت‌نام/پرداخت</label><textarea class="form-input" id="payment-notice-message">جهت تکمیل فرایند و نهایی شدن ثبت نام خود لطفا از طریق راه‌های ارتباطی زیر با موسسه تماس بگیرید.</textarea></div>
+              <div class="form-group full"><label class="form-label">متن اطلاعیه خرید ووچر ماک</label><textarea class="form-input" id="payment-mock-voucher-notice-message">برای پیگیری کد ووچر و اتمام خرید ووچر، از طریق راه‌های ارتباطی زیر با ما در ارتباط باشید.</textarea></div>
               <div class="form-group"><label class="form-label">شماره واتس‌اپ</label><input class="form-input" id="payment-whatsapp" dir="ltr" value="09379001701"></div>
               <div class="form-group"><label class="form-label">لینک یا شماره بله</label><input class="form-input" id="payment-bale" dir="ltr" value="09379001701"></div>
               <div class="form-group"><label class="form-label">شماره تماس</label><input class="form-input" id="payment-call" dir="ltr" value="09379001701"></div>
@@ -3795,6 +3797,12 @@ html[dir="ltr"] .hero .hero-event-card h3{
                 <option value="consultation">مشاوره</option><option value="about">درباره ما</option><option value="contact">ارتباط با ما</option>
               </select></div>
               <div class="form-group"><label class="form-label">نحوه تکرار</label><select class="form-input" id="popup-admin-frequency"><option value="session">یک‌بار در هر نشست</option><option value="visit">هر بار ورود به صفحه</option></select></div>
+              <div class="form-group"><label class="form-label">جایگاه نمایش پاپ‌آپ</label><select class="form-input" id="popup-admin-position">
+                <option value="center">وسط صفحه - تمام‌صفحه</option><option value="top">بالای صفحه - شناور</option><option value="bottom">پایین صفحه - شناور</option>
+                <option value="top-right">بالا راست</option><option value="top-left">بالا چپ</option>
+                <option value="bottom-right">پایین راست</option><option value="bottom-left">پایین چپ</option>
+                <option value="banner-top">نوار بالای صفحه</option><option value="banner-bottom">نوار پایین صفحه</option>
+              </select></div>
               <div class="form-group"><label class="form-label">شروع نمایش</label><input class="form-input" id="popup-admin-start" type="datetime-local"></div>
               <div class="form-group"><label class="form-label">پایان نمایش</label><input class="form-input" id="popup-admin-end" type="datetime-local"></div>
             </div>
@@ -4213,6 +4221,10 @@ html[dir="ltr"] .hero .hero-event-card h3{
       <div class="sms-status">ساختار تایید پیامکی آماده است؛ بعداً می‌توانید اتصال SMS را فعال کنید.</div>
       <div class="form-group"><label class="form-label">رمز عبور</label><input class="form-input" id="reg-pass" type="password" placeholder="حداقل ۸ کاراکتر"></div>
       <div class="form-group"><label class="form-label">تکرار رمز عبور</label><input class="form-input" id="reg-pass2" type="password" placeholder="تکرار رمز عبور"></div>
+      <label class="sms-status" style="display:flex;align-items:center;gap:.6rem;cursor:pointer;background:rgba(20,184,166,.08);">
+        <input type="checkbox" id="reg-human-check" style="width:18px;height:18px;accent-color:var(--teal);">
+        <span>من ربات نیستم و اطلاعات را با مسئولیت خودم ثبت می‌کنم.</span>
+      </label>
       <button class="btn-submit" onclick="doRegister()">ایجاد حساب</button>
       <div class="modal-switch">حساب دارید؟ <button onclick="switchTab('login')">وارد شوید</button></div>
     </div>
@@ -5327,7 +5339,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
 
   var siteNotificationTemplates = {};
   var oldPaymentNoticeMessage = 'اطلاعیه : جهت اطلاع و دریافت نتیجه فرایند ثبت نام در پیام رسان بله یا واتس اپ با ما در تماس باشید. متشکریم.';
-  var defaultPaymentNoticeMessage = 'جهت تکمیل فرایند و نهایی شدن ثبت نام خود لطفا از طریق راههای ارتباطی زیر با موسسه تماس بگیرید.';
+  var defaultPaymentNoticeMessage = 'جهت تکمیل فرایند و نهایی شدن ثبت نام خود لطفا از طریق راه‌های ارتباطی زیر با موسسه تماس بگیرید.';
+  var defaultMockVoucherNoticeMessage = 'برای پیگیری کد ووچر و اتمام خرید ووچر، از طریق راه‌های ارتباطی زیر با ما در ارتباط باشید.';
   function normalizedPaymentNoticeMessage(value) {
     var text = String(value || '').trim();
     return (!text || text === oldPaymentNoticeMessage) ? defaultPaymentNoticeMessage : text;
@@ -5336,6 +5349,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
     gatewayEnabled: false,
     noticeEnabled: true,
     noticeMessage: defaultPaymentNoticeMessage,
+    mockVoucherNoticeMessage: defaultMockVoucherNoticeMessage,
     whatsapp: '09379001701',
     bale: '09379001701',
     call: '09379001701'
@@ -6036,7 +6050,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
     telegramUrl: 'tg://resolve?phone=989379001701',
     youtubeUrl: '',
     aparatUrl: '',
-    viraUrl: 'https://vitrastudio.co.uk'
+    viraUrl: 'https://vitrastudio.co.uk/admin.html#media'
   };
 
   function applyContactSettings(settings) {
@@ -6699,7 +6713,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
     var wa = normalizedPhone(sitePaymentSettings.whatsapp || phone);
     var baleValue = String(sitePaymentSettings.bale || phone).trim();
     if (title) title.textContent = serviceName ? ('درخواست ' + serviceName + ' ثبت شد') : 'اطلاعیه ثبت‌نام';
-    if (text) text.textContent = normalizedPaymentNoticeMessage(sitePaymentSettings.noticeMessage);
+    var notice = /ووچر|Voucher/i.test(serviceName || '') ? (sitePaymentSettings.mockVoucherNoticeMessage || defaultMockVoucherNoticeMessage) : sitePaymentSettings.noticeMessage;
+    if (text) text.textContent = normalizedPaymentNoticeMessage(notice);
     if (whatsapp) whatsapp.href = 'https://wa.me/' + (wa.indexOf('0') === 0 ? '98' + wa.slice(1) : wa);
     if (bale) bale.href = /^https?:\/\//i.test(baleValue) ? baleValue : ('https://ble.ir/' + encodeURIComponent(baleValue));
     if (call) call.href = 'tel:' + phone;
@@ -6730,7 +6745,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
 
     if ((u.role || '').toLowerCase() === 'admin') {
       if (options.preserveRoute) {
-        applyHashRoute();
+        if (!applyHashRoute()) showPage('admin');
       } else {
         showPage('admin');
         showAdmin('overview');
@@ -6745,7 +6760,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
       document.getElementById('profile-mobile-status').textContent = u.mobileVerified ? 'شماره موبایل تایید شده است.' : 'شماره ذخیره می‌شود؛ تایید پیامکی فعلاً غیرفعال است.';
       refreshCurrentUserAvatar();
       if (options.preserveRoute) {
-        applyHashRoute();
+        if (!applyHashRoute()) showPage('dashboard');
       } else {
         showPage('dashboard');
         showDash('overview');
@@ -6781,6 +6796,20 @@ html[dir="ltr"] .hero .hero-event-card h3{
         showAlert('login-err', 'ایمیل یا رمز عبور اشتباه است');
       });
   }
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter') return;
+    var active = document.activeElement;
+    if (!active) return;
+    if (['login-email','login-pass'].indexOf(active.id) !== -1) {
+      event.preventDefault();
+      doLogin();
+    }
+    if (['reg-name','reg-email','reg-mobile','reg-pass','reg-pass2'].indexOf(active.id) !== -1) {
+      event.preventDefault();
+      doRegister();
+    }
+  });
 
   function requestPasswordReset() {
     var email = document.getElementById('login-email').value.trim();
@@ -7846,7 +7875,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
         if (item.type === 'mock' && item.examDate === date && (kind === 'all' || category === kind)) attendanceRows.push(Object.assign({ id: doc.id }, item));
       });
       attendanceRows.sort(function (a, b) { return String(a.name || '').localeCompare(String(b.name || ''), 'fa'); });
-      document.getElementById('attendance-title').textContent = 'شرکت‌کنندگان ' + displayExamDatePair(date);
+      document.getElementById('attendance-title').innerHTML = 'شرکت‌کنندگان <bdi dir="ltr">' + escapeHtml(formatGregorianDisplay(date)) + '</bdi> <span style="opacity:.55">|</span> <bdi dir="rtl">' + escapeHtml(formatJalaliDisplay(gregorianToJalali(date))) + '</bdi>';
       document.getElementById('attendance-count').textContent = attendanceRows.length.toLocaleString('fa-IR') + ' نفر';
       body.innerHTML = attendanceRows.length ? attendanceRows.map(function (item) {
         var registrationState = item.status === 'confirmed'
@@ -7856,7 +7885,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
           ? '<span class="payment-pill ok">ثبت دستی</span><br><small>' + escapeHtml(item.registrationMethod || '—') + '</small><br><small>ثبت‌کننده: ' + escapeHtml(item.createdByName || item.createdByEmail || 'مدیر') + '</small>'
           : '<span class="payment-pill">ثبت سایت</span>';
         var studentInfo = '<strong>' + escapeHtml(item.name || '—') + '</strong><div style="font-size:.68rem;color:var(--gray-400);line-height:1.7">' + escapeHtml(item.email || '') + '<br>آزمون: ' + escapeHtml(displayExamDatePair(item.examDate || date)) + (item.manualRegistrationDate ? '<br>ثبت‌نام: ' + escapeHtml(displayExamDatePair(item.manualRegistrationDate)) : '') + '</div>';
-        var actions = '<div class="admin-inline-actions"><button class="card-btn" onclick="editAttendanceRegistration(\'' + item.id + '\')">ویرایش</button><button class="card-btn" onclick="deleteAttendanceRegistration(\'' + item.id + '\')">حذف</button></div>';
+        var actions = '<div class="admin-inline-actions"><button class="card-btn" onclick="editAttendanceRegistration(\'' + item.id + '\')">ویرایش</button><button class="card-btn" onclick="adminMoveMockRegistration(\'' + item.id + '\')">تغییر تاریخ</button><button class="card-btn" onclick="deleteAttendanceRegistration(\'' + item.id + '\')">حذف</button></div>';
         return '<tr><td><input class="attendance-check" type="checkbox" ' + (item.attended ? 'checked' : '') + ' onchange="setExamAttendance(\'' + item.id + '\',this.checked)"></td><td>' + studentInfo + '</td><td><bdi dir="ltr">' + escapeHtml(item.mobile || '—') + '</bdi></td><td>' + escapeHtml(item.examName || '—') + '</td><td>' + escapeHtml(item.examTime || '—') + '</td><td>' + method + '</td><td><input class="form-input" style="min-width:85px;padding:.4rem" value="' + escapeHtml(item.seatNumber || '') + '" placeholder="مثلاً ۱۲" onchange="setExamSeat(\'' + item.id + '\',this.value)"></td><td>' + registrationState + '</td><td>' + actions + '</td></tr>';
       }).join('') : '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--gray-400)">برای این تاریخ شرکت‌کننده‌ای ثبت نشده است</td></tr>';
     }).catch(function (e) { body.innerHTML = '<tr><td colspan="9">' + escapeHtml(e.message) + '</td></tr>'; });
@@ -7930,6 +7959,54 @@ html[dir="ltr"] .hero .hero-event-card h3{
     }).catch(function (e) { alert(e.message || 'حذف انجام نشد'); });
   }
 
+  function adminMoveMockRegistration(id) {
+    var row = attendanceRows.find(function (item) { return item.id === id; });
+    if (!row) return alert('ثبت‌نام پیدا نشد.');
+    var kind = row.mockType === 'gre' || /GRE/i.test(row.examName || '') ? 'gre' : 'toefl';
+    db.collection('mock_dates').orderBy('date').get().then(function (snap) {
+      var today = currentExamDateKey();
+      var options = [];
+      snap.forEach(function (doc) {
+        var d = doc.data() || {};
+        if (!d.date || d.date < today || doc.id === row.dateId) return;
+        if (!mockDateMatches(d.type, kind)) return;
+        if (mockDateRemaining(d) <= 0) return;
+        options.push({ id: doc.id, data: d });
+      });
+      options.sort(sortExamDateItems);
+      if (!options.length) throw new Error('تاریخ باز دیگری برای این نوع آزمون وجود ندارد.');
+      var message = 'شماره تاریخ جدید را وارد کنید:\n\n' + options.map(function (item, index) {
+        return (index + 1) + ') ' + (item.data.type || 'Mock') + ' - ' + displayExamDatePair(item.data.date) + ' ساعت ' + (item.data.time || '09:00') + ' | ظرفیت باز ' + mockDateRemaining(item.data);
+      }).join('\n');
+      var choice = prompt(message, '1');
+      if (choice === null) throw new Error('cancelled');
+      var selected = options[(parseInt(toEnglishDigits(choice), 10) || 0) - 1];
+      if (!selected) throw new Error('شماره انتخاب‌شده معتبر نیست.');
+      if (!confirm('دانشجو به تاریخ جدید منتقل شود؟')) throw new Error('cancelled');
+      var countField = row.manualRegistrationAdvanced ? 'manualRegistered' : 'registered';
+      return Promise.all([
+        db.collection('exam_registrations').doc(id).update({
+          dateId: selected.id,
+          examDate: selected.data.date,
+          examTime: selected.data.time || '09:00',
+          examName: selected.data.type || row.examName,
+          rescheduledAt: new Date().toISOString(),
+          rescheduledBy: currentUser ? currentUser.uid : 'admin',
+          rescheduleByAdmin: true,
+          updatedAt: new Date().toISOString()
+        }),
+        adjustMockDateCount(row.dateId, countField, -1),
+        adjustMockDateCount(selected.id, countField, 1)
+      ]);
+    }).then(function () {
+      alert('تاریخ آزمون دانشجو تغییر کرد.');
+      loadExamAttendance();
+      loadAdminDates('mock');
+      loadPublicDates('mock', publicDatePages.mock || 1);
+      loadHeroUpcomingDates();
+    }).catch(function (e) { if (e.message !== 'cancelled') alert(e.message || 'تغییر تاریخ انجام نشد'); });
+  }
+
   function mockVoucherExamName(kind) {
     return kind === 'gre' ? 'Mock GRE General' : 'Mock TOEFL iBT';
   }
@@ -7986,7 +8063,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
       showAlert('mock-voucher-success', 'درخواست ووچر ثبت شد. پس از تایید مدیر، کد ووچر در همین بخش نمایش داده می‌شود.');
       document.getElementById('mock-voucher-note').value = '';
       loadStudentMockVouchers();
-      refreshNewRegistrationBadge();
+      serviceAfterRegistration('خرید ووچر ماک');
     }).catch(function (e) { showAlert('mock-voucher-error', e.message || 'ثبت درخواست ووچر انجام نشد'); });
   }
 
@@ -8106,9 +8183,9 @@ html[dir="ltr"] .hero .hero-event-card h3{
 
   function defaultMockRescheduleSettings() {
     return {
-      feeAmount: 100000,
-      feeLabel: '۱۰۰,۰۰۰ تومان',
-      policyText: 'تا ۵ روز قبل از آزمون تغییر تاریخ رایگان است. از ۵ روز تا ۲۴ ساعت قبل از آزمون با هزینه تعیین‌شده انجام می‌شود. کمتر از ۲۴ ساعت فقط با اجازه مستقیم مدیر سایت امکان‌پذیر است.'
+      feeAmount: 40,
+      feeLabel: '۴۰٪ هزینه آزمون',
+      policyText: 'تغییر تاریخ آزمون آزمایشی برای هر ثبت‌نام فقط بار اول رایگان است. از بار دوم به بعد، هر بار تغییر تاریخ شامل ۴۰٪ هزینه همان آزمون می‌شود و پس از هماهنگی پرداخت و تایید مدیر، ظرفیت تاریخ قبلی آزاد و ثبت‌نام به تاریخ جدید منتقل می‌شود.'
     };
   }
 
@@ -8118,8 +8195,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
       var fee = document.getElementById('mock-reschedule-fee');
       var label = document.getElementById('mock-reschedule-fee-label');
       var policy = document.getElementById('mock-reschedule-policy-text');
-      if (fee) fee.value = String(mockRescheduleSettingsCache.feeAmount || 100000);
-      if (label) label.value = mockRescheduleSettingsCache.feeLabel || '۱۰۰,۰۰۰ تومان';
+      if (fee) fee.value = String(mockRescheduleSettingsCache.feeAmount || 40);
+      if (label) label.value = mockRescheduleSettingsCache.feeLabel || '۴۰٪ هزینه آزمون';
       if (policy) policy.value = mockRescheduleSettingsCache.policyText || defaultMockRescheduleSettings().policyText;
       var studentPolicy = document.getElementById('mock-reschedule-policy');
       if (studentPolicy) studentPolicy.querySelector('p').textContent = mockRescheduleSettingsCache.policyText;
@@ -8131,10 +8208,10 @@ html[dir="ltr"] .hero .hero-event-card h3{
   }
 
   function saveMockRescheduleSettings() {
-    var amount = parseInt(toEnglishDigits((document.getElementById('mock-reschedule-fee') || {}).value || '100000'), 10) || 100000;
+    var amount = parseInt(toEnglishDigits((document.getElementById('mock-reschedule-fee') || {}).value || '0'), 10) || 0;
     var data = {
       feeAmount: Math.max(0, amount),
-      feeLabel: ((document.getElementById('mock-reschedule-fee-label') || {}).value || '').trim() || '۱۰۰,۰۰۰ تومان',
+      feeLabel: ((document.getElementById('mock-reschedule-fee-label') || {}).value || '').trim() || '۴۰٪ هزینه آزمون',
       policyText: ((document.getElementById('mock-reschedule-policy-text') || {}).value || '').trim() || defaultMockRescheduleSettings().policyText,
       updatedAt: new Date().toISOString(),
       updatedBy: currentUser ? currentUser.uid : 'admin'
@@ -8150,13 +8227,30 @@ html[dir="ltr"] .hero .hero-event-card h3{
     return new Date(String(dateValue || currentExamDateKey()) + 'T' + clock + ':00');
   }
 
+  function moneyNumber(value) {
+    return parseInt(toEnglishDigits(String(value || '').replace(/[^\d۰-۹٠-٩]/g, '')), 10) || 0;
+  }
+
+  function tomanLabel(value) {
+    var amount = Number(value || 0);
+    return amount ? amount.toLocaleString('fa-IR') + ' تومان' : '';
+  }
+
+  function mockRescheduleBasePrice(registration) {
+    return moneyNumber(registration.price || registration.examPrice || registration.fee || registration.amount || registration.paymentAmount || '');
+  }
+
   function classifyMockReschedule(registration) {
     var settings = mockRescheduleSettingsCache || defaultMockRescheduleSettings();
-    var start = examStartDateTime(registration.examDate, registration.examTime);
-    var hours = (start.getTime() - Date.now()) / 3600000;
-    if (hours < 24) return { code: 'manager-only', label: 'کمتر از ۲۴ ساعت؛ فقط با اجازه مستقیم مدیر', feeRequired: true, feeAmount: settings.feeAmount, feeLabel: settings.feeLabel };
-    if (hours < 120) return { code: 'paid', label: 'هزینه تغییر تاریخ: ' + settings.feeLabel, feeRequired: true, feeAmount: settings.feeAmount, feeLabel: settings.feeLabel };
-    return { code: 'free', label: 'رایگان', feeRequired: false, feeAmount: 0, feeLabel: 'رایگان' };
+    if (registration.rescheduleUsed || Number(registration.rescheduleCount || 0) > 0) {
+      var percent = Math.max(0, Number(settings.feeAmount || 40));
+      var basePrice = mockRescheduleBasePrice(registration);
+      var feeAmount = basePrice ? Math.round(basePrice * percent / 100) : 0;
+      var label = 'تغییر تاریخ با هزینه ' + (settings.feeLabel || (percent + '٪ هزینه آزمون'));
+      if (feeAmount) label += ' (' + tomanLabel(feeAmount) + ')';
+      return { code: 'paid-after-free', label: label, feeRequired: true, feeAmount: feeAmount, feePercent: percent, feeLabel: feeAmount ? tomanLabel(feeAmount) : (settings.feeLabel || (percent + '٪ هزینه آزمون')) };
+    }
+    return { code: 'free-once', label: 'بار اول تغییر تاریخ رایگان', feeRequired: false, feeAmount: 0, feePercent: 0, feeLabel: 'رایگان' };
   }
 
   function mockDateRemaining(date) {
@@ -8243,6 +8337,10 @@ html[dir="ltr"] .hero .hero-event-card h3{
     var target = studentMockDatesCache.find(function (item) { return item.id === targetId; });
     if (!current || !target) return showAlert('mock-reschedule-error', 'ثبت‌نام فعلی و تاریخ جدید را انتخاب کنید.');
     var rule = classifyMockReschedule(current.data);
+    var ruleMessage = rule.code === 'free-once'
+      ? 'قانون تغییر تاریخ:\nبرای این ثبت‌نام، اولین تغییر تاریخ رایگان است. درخواست شما بعد از تایید مدیر اعمال می‌شود.'
+      : 'قانون تغییر تاریخ:\nشما قبلاً از تغییر رایگان استفاده کرده‌اید. این درخواست شامل هزینه ' + (rule.feeLabel || '۴۰٪ هزینه آزمون') + ' است و پس از هماهنگی پرداخت و تایید مدیر اعمال می‌شود.';
+    if (!confirm(ruleMessage + '\n\nادامه می‌دهید؟')) return;
     db.collection('mock_reschedule_requests').add({
       userId: currentUser.uid,
       userName: currentUser.name || current.data.name || '',
@@ -8324,6 +8422,8 @@ html[dir="ltr"] .hero .hero-event-card h3{
           examName: newDate.type || req.examName || reg.examName,
           rescheduledAt: new Date().toISOString(),
           rescheduledBy: currentUser ? currentUser.uid : 'admin',
+          rescheduleUsed: true,
+          rescheduleCount: Number(reg.rescheduleCount || 0) + 1,
           rescheduleNote: adminNote,
           updatedAt: new Date().toISOString()
         }),
@@ -9675,7 +9775,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
   function formatJalaliDisplay(jalaliDate) {
     var m = String(jalaliDate || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (!m) return jalaliDate || '';
-    return Number(m[3]) + ' / ' + jalaliMonthNames[Number(m[2]) - 1] + ' / ' + m[1];
+    return Number(m[3]) + '/' + jalaliMonthNames[Number(m[2]) - 1] + '/' + m[1];
   }
   function jalaliToGregorian(jalaliDate) {
     var normalized = toEnglishDigits(jalaliDate).trim();
@@ -10549,6 +10649,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
     var pass  = document.getElementById('reg-pass').value;
     var pass2 = document.getElementById('reg-pass2').value;
     if (!name || !email || !mobile || !pass) return showAlert('reg-err', 'همه فیلدها را پر کنید');
+    if (!((document.getElementById('reg-human-check') || {}).checked)) return showAlert('reg-err', 'برای ساخت حساب، گزینه «من ربات نیستم» را تایید کنید.');
     if (!/^09\d{9}$/.test(mobile)) return showAlert('reg-err', 'شماره موبایل معتبر وارد کنید');
     if (pass.length < 8)         return showAlert('reg-err', 'رمز عبور حداقل ۸ کاراکتر');
     if (pass !== pass2)          return showAlert('reg-err', 'رمز عبور و تکرار یکسان نیستند');
@@ -10956,6 +11057,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
         'payment-merchant-id': data.merchantId || '',
         'payment-callback-url': data.callbackUrl || '',
         'payment-notice-message': normalizedPaymentNoticeMessage(data.noticeMessage || sitePaymentSettings.noticeMessage),
+        'payment-mock-voucher-notice-message': data.mockVoucherNoticeMessage || sitePaymentSettings.mockVoucherNoticeMessage || defaultMockVoucherNoticeMessage,
         'payment-whatsapp': data.whatsapp || sitePaymentSettings.whatsapp,
         'payment-bale': data.bale || sitePaymentSettings.bale,
         'payment-call': data.call || sitePaymentSettings.call
@@ -10987,6 +11089,7 @@ html[dir="ltr"] .hero .hero-event-card h3{
         merchantId: (document.getElementById('payment-merchant-id') || {}).value || '',
         callbackUrl: (document.getElementById('payment-callback-url') || {}).value || '',
         noticeMessage: (document.getElementById('payment-notice-message') || {}).value || '',
+        mockVoucherNoticeMessage: (document.getElementById('payment-mock-voucher-notice-message') || {}).value || '',
         whatsapp: (document.getElementById('payment-whatsapp') || {}).value || '',
         bale: (document.getElementById('payment-bale') || {}).value || '',
         call: (document.getElementById('payment-call') || {}).value || '',
@@ -11235,40 +11338,14 @@ html[dir="ltr"] .hero .hero-event-card h3{
     };
     var couponTarget = kind === 'gre' ? 'mock-gre' : 'mock-toefl';
     var redeem = window.redeemSelectedCoupon ? window.redeemSelectedCoupon(couponTarget) : Promise.resolve(null);
-    var voucherRecord = null;
-    collectionItemsWithIds('mock_vouchers').then(function (items) {
-      voucherRecord = items.find(function (item) {
-        var v = item.data || {};
-        return String(v.voucherCode || '').toUpperCase() === voucherCode;
-      });
-      if (!voucherRecord) throw new Error('کد ووچر پیدا نشد.');
-      var voucher = voucherRecord.data || {};
-      var status = voucher.voucherStatus || voucher.status || '';
-      if (status !== 'issued') throw new Error('این ووچر فعال نیست یا قبلاً استفاده شده است.');
-      if (voucher.mockType !== kind) throw new Error('نوع ووچر با نوع آزمون انتخاب‌شده هماهنگ نیست.');
-      if (voucher.userId && voucher.userId !== 'manual' && voucher.userId !== currentUser.uid) throw new Error('این ووچر برای حساب کاربری دیگری صادر شده است.');
-      if (voucher.mobile && voucher.userId === 'manual' && voucher.mobile !== mobile) throw new Error('شماره موبایل با ووچر دستی صادرشده هماهنگ نیست.');
-      if (voucher.expiresAt && voucher.expiresAt < currentExamDateKey()) throw new Error('اعتبار این ووچر تمام شده است.');
-      return redeem;
-    }).then(function (coupon) {
+    redeem.then(function (coupon) {
       registration.discountCoupon = coupon;
-      return db.collection('exam_registrations').add(registration);
-    }).then(function (regRef) {
-      registration.registrationId = regRef && regRef.id ? regRef.id : '';
-      var profileUpdate = { name: name, mobile: mobile };
-      profileUpdate['examRegistrations.' + makeId('registration')] = registration;
-      return Promise.all([
-        db.collection('users').doc(currentUser.uid).update(profileUpdate),
-        db.collection('mock_vouchers').doc(voucherRecord.id).update({
-          status: 'used',
-          voucherStatus: 'used',
-          usedAt: new Date().toISOString(),
-          usedBy: currentUser.uid,
-          usedRegistrationId: registration.registrationId,
-          usedDateId: dateId,
-          updatedAt: new Date().toISOString()
-        })
-      ]);
+      return apiFetch('/api/mock-voucher/register', {
+        method: 'POST',
+        body: JSON.stringify(registration)
+      });
+    }).then(function (result) {
+      registration.registrationId = result && result.id ? result.id : '';
     }).then(function () {
       currentUser.name = name;
       currentUser.mobile = mobile;

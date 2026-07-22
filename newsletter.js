@@ -1000,6 +1000,21 @@
     return pageId === 'all' ? 'همه صفحات عمومی' : (PAGE_LABELS[pageId] || pageId || 'صفحه خانه');
   }
 
+  function popupPositionLabel(position) {
+    var labels = {
+      center: 'وسط صفحه',
+      top: 'بالای صفحه',
+      bottom: 'پایین صفحه',
+      'top-right': 'بالا راست',
+      'top-left': 'بالا چپ',
+      'bottom-right': 'پایین راست',
+      'bottom-left': 'پایین چپ',
+      'banner-top': 'نوار بالای صفحه',
+      'banner-bottom': 'نوار پایین صفحه'
+    };
+    return labels[position] || labels.center;
+  }
+
   function popupDateTimeValue(value) {
     if (!value) return '';
     var date = new Date(value);
@@ -1022,6 +1037,7 @@
       bodyEn: document.getElementById('popup-admin-body-en').value.trim(),
       targetPage: document.getElementById('popup-admin-page').value || 'home',
       frequency: document.getElementById('popup-admin-frequency').value === 'visit' ? 'visit' : 'session',
+      position: document.getElementById('popup-admin-position').value || 'center',
       startsAt: startsAt ? new Date(startsAt).toISOString() : '',
       endsAt: endsAt ? new Date(endsAt).toISOString() : '',
       image: imageData || (existing && existing.image) || '',
@@ -1048,6 +1064,7 @@
     });
     document.getElementById('popup-admin-page').value = 'home';
     document.getElementById('popup-admin-frequency').value = 'session';
+    document.getElementById('popup-admin-position').value = 'center';
     document.getElementById('popup-admin-active').checked = true;
     renderPopupImagePreview('');
   };
@@ -1062,7 +1079,7 @@
       popupCache.sort(function (a, b) { return String(b.updatedAt || b.createdAt || '').localeCompare(String(a.updatedAt || a.createdAt || '')); });
       box.innerHTML = popupCache.map(function (item) {
         return '<div class="admin-article-item popup-admin-item"><span class="popup-admin-status' + (item.active === true ? '' : ' off') + '">' + (item.active === true ? 'فعال' : 'غیرفعال') + '</span>'
-          + '<strong>' + escapeHtml(item.title || 'بدون عنوان') + '</strong><p>نمایش در: ' + escapeHtml(popupPageLabel(item.targetPage)) + (item.endsAt ? ' · پایان: ' + toPersianDate(item.endsAt) : '') + '</p>'
+          + '<strong>' + escapeHtml(item.title || 'بدون عنوان') + '</strong><p>نمایش در: ' + escapeHtml(popupPageLabel(item.targetPage)) + ' · جایگاه: ' + escapeHtml(popupPositionLabel(item.position)) + (item.endsAt ? ' · پایان: ' + toPersianDate(item.endsAt) : '') + '</p>'
           + '<div class="admin-article-actions"><button onclick="editAdminPopup(\'' + item.id + '\')">ویرایش</button><button onclick="previewSavedPopup(\'' + item.id + '\')">پیش‌نمایش</button><button onclick="deleteAdminPopup(\'' + item.id + '\')">حذف</button></div></div>';
       }).join('') || '<div class="chat-empty">هنوز پاپ‌آپی ساخته نشده است.</div>';
     }).catch(function (e) { box.innerHTML = '<div class="chat-empty">خطا: ' + escapeHtml(e.message) + '</div>'; });
@@ -1078,6 +1095,7 @@
     document.getElementById('popup-admin-body-en').value = item.bodyEn || '';
     document.getElementById('popup-admin-page').value = item.targetPage || 'home';
     document.getElementById('popup-admin-frequency').value = item.frequency === 'visit' ? 'visit' : 'session';
+    document.getElementById('popup-admin-position').value = item.position || 'center';
     document.getElementById('popup-admin-start').value = popupDateTimeValue(item.startsAt);
     document.getElementById('popup-admin-end').value = popupDateTimeValue(item.endsAt);
     document.getElementById('popup-admin-button-text').value = item.buttonText || '';
@@ -1125,6 +1143,9 @@
     var card = overlay && overlay.querySelector('.site-popup-card');
     if (!overlay || !card || !item) return;
     activeSitePopup = preview ? null : item;
+    var popupPosition = item.position || 'center';
+    var popupIsModal = popupPosition === 'center';
+    overlay.dataset.position = popupPosition;
     var popupTitle = isEnglishNewsletter() ? (item.titleEn || item.title || '') : (item.title || item.titleEn || '');
     var popupBody = isEnglishNewsletter() ? (item.bodyEn || item.body || '') : (item.body || item.bodyEn || '');
     var popupButton = isEnglishNewsletter() ? (item.buttonTextEn || item.buttonText || '') : (item.buttonText || item.buttonTextEn || '');
@@ -1151,9 +1172,9 @@
       }
     };
     overlay.hidden = false;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = popupIsModal ? 'hidden' : '';
     if (!preview && item.frequency !== 'visit') sessionStorage.setItem('allameh_popup_seen_' + item.id, '1');
-    setTimeout(function () { document.querySelector('.site-popup-close').focus(); }, 30);
+    if (popupIsModal) setTimeout(function () { document.querySelector('.site-popup-close').focus(); }, 30);
   }
 
   window.closeSitePopup = function () {

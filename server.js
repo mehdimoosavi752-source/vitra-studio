@@ -682,6 +682,10 @@ function normalizePopup(input, existing = {}) {
     "communication", "course-registration", "exam-registration", "consultation",
     "about", "contact",
   ]);
+  const allowedPositions = new Set([
+    "center", "top", "bottom", "top-right", "top-left", "bottom-right",
+    "bottom-left", "banner-top", "banner-bottom",
+  ]);
   const data = { ...existing, ...input };
   const title = cleanText(data.title, 120);
   const popupBody = cleanText(data.body, 1200);
@@ -709,6 +713,7 @@ function normalizePopup(input, existing = {}) {
     body: popupBody,
     targetPage: allowedPages.has(data.targetPage) ? data.targetPage : "home",
     frequency: data.frequency === "visit" ? "visit" : "session",
+    position: allowedPositions.has(data.position) ? data.position : "center",
     startsAt,
     endsAt,
     image,
@@ -1160,6 +1165,7 @@ async function createExamRegistration(actor, input) {
       examName,
       examDate: cleanText(dateInfo.date, 20),
       examTime: cleanText(dateInfo.time || "09:00", 10),
+      price: cleanText(dateInfo.price || "", 120),
       name,
       email,
       mobile,
@@ -2069,6 +2075,128 @@ function monthKey(value) {
   return match ? `${match[1]}-${match[2]}` : "";
 }
 
+async function handleMockVoucherRegistration(req, res, url) {
+  if (url.pathname !== "/api/mock-voucher/register" || req.method !== "POST") return false;
+  const actor = requireUser(req);
+  const input = await body(req);
+  const kind = input.mockType === "gre" ? "gre" : "toefl";
+  const dateId = cleanText(input.dateId, 100);
+  const voucherCode = cleanText(input.mockVoucherCode, 80).toUpperCase();
+  const name = cleanText(input.name, 120);
+  const email = cleanText(input.email, 190).toLowerCase();
+  const mobile = cleanText(input.mobile, 20).replace(/\D/g, "");
+  if (!dateId) return fail(res, 400, "تاریخ آزمون انتخاب نشده است");
+  if (!voucherCode) return fail(res, 400, "کد ووچر را وارد کنید");
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !/^09\d{9}$/.test(mobile)) {
+    return fail(res, 400, "نام، ایمیل و شماره موبایل معتبر الزامی است");
+  }
+
+  const client = await pool.connect();
+  try {
+    await client.query("BEGIN");
+    const voucherResult = await client.query(
+      `SELECT document_id, data FROM app_documents
+       WHERE collection_name = 'mock_vouchers'
+         AND data->>'voucherCode' = $1
+       LIMIT 1 FOR UPDATE`,
+      [voucherCode]
+    );
+    if (!voucherResult.rows.length) throw Object.assign(new Error("کد ووچر پیدا نشد"), { status: 404 });
+    const voucherId = voucherResult.rows[0].document_id;
+    const voucher = parseJson(voucherResult.rows[0].data);
+    const voucherStatus = voucher.voucherStatus || voucher.status || "";
+    if (voucherStatus !== "issued") throw Object.assign(new Error("این ووچر فعال نیست یا قبلاً استفاده شده است"), { status: 409 });
+    if ((voucher.mockType === "gre" ? "gre" : "toefl") !== kind) throw Object.assign(new Error("نوع ووچر با نوع آزمون انتخاب‌شده هماهنگ نیست"), { status: 400 });
+    if (voucher.userId && voucher.userId !== "manual" && voucher.userId !== actor.uid) throw Object.assign(new Error("این ووچر برای حساب کاربری دیگری صادر شده است"), { status: 403 });
+    if (voucher.mobile && voucher.userId === "manual" && String(voucher.mobile).replace(/\D/g, "") !== mobile) throw Object.assign(new Error("شماره موبایل با ووچر دستی صادرشده هماهنگ نیست"), { status: 400 });
+    if (voucher.expiresAt && voucher.expiresAt < currentExamDateKey()) throw Object.assign(new Error("اعتبار این ووچر تمام شده است"), { status: 409 });
+
+    const dateResult = await client.query(
+      "SELECT data FROM app_documents WHERE collection_name = 'mock_dates' AND document_id = $1 FOR UPDATE",
+      [dateId]
+    );
+    if (!dateResult.rows.length) throw Object.assign(new Error("تاریخ انتخاب‌شده پیدا نشد"), { status: 404 });
+    const dateInfo = parseJson(dateResult.rows[0].data);
+    const dateIsGre = /GRE/i.test(String(dateInfo.type || ""));
+    if ((kind === "gre") !== dateIsGre) throw Object.assign(new Error("نوع تاریخ آزمون با فرم ثبت‌نام هماهنگ نیست"), { status: 400 });
+    if (!dateInfo.date || dateInfo.date < currentExamDateKey()) throw Object.assign(new Error("این تاریخ دیگر فعال نیست"), { status: 409 });
+    const capacity = Math.max(1, Number(dateInfo.capacity || 1));
+    const registered = Math.max(0, Number(dateInfo.registered || 0));
+    const manualRegistered = Math.max(0, Number(dateInfo.manualRegistered || 0));
+    if (registered + manualRegistered >= capacity) throw Object.assign(new Error("ظرفیت این آزمون تکمیل شده است"), { status: 409 });
+
+    const duplicate = await client.query(
+      `SELECT document_id FROM app_documents
+       WHERE collection_name = 'exam_registrations'
+         AND data->>'userId' = $1
+         AND data->>'dateId' = $2
+         AND COALESCE(data->>'status', '') <> 'cancelled'
+       LIMIT 1`,
+      [actor.uid, dateId]
+    );
+    if (duplicate.rows.length) throw Object.assign(new Error("شما قبلاً برای این تاریخ ثبت‌نام کرده‌اید"), { status: 409 });
+
+    const registrationId = id("exam_registrations");
+    const registration = {
+      userId: actor.uid,
+      type: "mock",
+      mockType: kind,
+      category: `mock-${kind}`,
+      dateId,
+      examName: kind === "gre" ? "Mock GRE General" : "Mock TOEFL iBT",
+      examDate: cleanText(dateInfo.date, 20),
+      examTime: cleanText(dateInfo.time || "09:00", 10),
+      name,
+      email,
+      mobile,
+      currentScore: cleanText(input.currentScore, 120),
+      note: cleanText(input.note, 2000),
+      mockVoucherCode: voucherCode,
+      discountCoupon: input.discountCoupon && typeof input.discountCoupon === "object" ? input.discountCoupon : null,
+      createdAt: new Date().toISOString(),
+      status: "pending",
+    };
+    await client.query(
+      "INSERT INTO app_documents (collection_name, document_id, data) VALUES ('exam_registrations', $1, $2)",
+      [registrationId, JSON.stringify(registration)]
+    );
+    dateInfo.registered = registered + 1;
+    await client.query(
+      "UPDATE app_documents SET data = $1, updated_at = CURRENT_TIMESTAMP WHERE collection_name = 'mock_dates' AND document_id = $2",
+      [JSON.stringify(dateInfo), dateId]
+    );
+    voucher.status = "used";
+    voucher.voucherStatus = "used";
+    voucher.usedAt = new Date().toISOString();
+    voucher.usedBy = actor.uid;
+    voucher.usedRegistrationId = registrationId;
+    voucher.usedDateId = dateId;
+    voucher.updatedAt = new Date().toISOString();
+    await client.query(
+      "UPDATE app_documents SET data = $1, updated_at = CURRENT_TIMESTAMP WHERE collection_name = 'mock_vouchers' AND document_id = $2",
+      [JSON.stringify(voucher), voucherId]
+    );
+
+    const userRows = await client.query("SELECT data FROM app_users WHERE uid = $1 LIMIT 1", [actor.uid]);
+    if (userRows.rows.length) {
+      const profile = parseJson(userRows.rows[0].data);
+      profile.name = name;
+      profile.mobile = mobile;
+      profile.examRegistrations = profile.examRegistrations || {};
+      profile.examRegistrations[registrationId] = registration;
+      await client.query("UPDATE app_users SET data = $1, updated_at = CURRENT_TIMESTAMP WHERE uid = $2", [JSON.stringify(profile), actor.uid]);
+    }
+    await client.query("COMMIT");
+    await notifyNewRegistration(registration, registration.examName, "exam_registrations");
+    return send(res, 200, { id: registrationId, ok: true });
+  } catch (error) {
+    await client.query("ROLLBACK");
+    return fail(res, error.status || 500, error.message || "ثبت‌نام با ووچر انجام نشد");
+  } finally {
+    client.release();
+  }
+}
+
 async function handleAdminTools(req, res, url) {
   if (!url.pathname.startsWith("/api/admin/")) return false;
   if (url.pathname === "/api/admin/sms-test" && req.method === "POST") {
@@ -2491,6 +2619,8 @@ async function handleApi(req, res) {
   if (chatWidgetResult !== false) return chatWidgetResult;
   const couponsResult = await handleCoupons(req, res, url);
   if (couponsResult !== false) return couponsResult;
+  const mockVoucherResult = await handleMockVoucherRegistration(req, res, url);
+  if (mockVoucherResult !== false) return mockVoucherResult;
   const adminToolsResult = await handleAdminTools(req, res, url);
   if (adminToolsResult !== false) return adminToolsResult;
   const publicTestimonialsResult = await handlePublicTestimonials(req, res, url);
